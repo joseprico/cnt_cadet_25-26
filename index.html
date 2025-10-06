@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Estadísticas - CN Terrassa</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0891b2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 32px; margin-bottom: 10px; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab.active { background: #06b6d4; }
+        .tab:hover { background: rgba(255,255,255,0.2); }
+        .upload-zone {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 3px dashed rgba(255,255,255,0.3);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-zone:hover { border-color: #22d3ee; background: rgba(255,255,255,0.15); }
+        .upload-zone input { display: none; }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .team-score { text-align: center; }
+        .team-name { font-size: 24px; font-weight: bold; color: #67e8f9; margin-bottom: 10px; }
+        .score { font-size: 64px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .separator { font-size: 48px; font-weight: bold; color: #67e8f9; }
+        .section-title { font-size: 22px; font-weight: bold; margin-bottom: 15px; color: #22d3ee; }
+        .periods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .period-card {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .period-label { font-size: 14px; color: #bae6fd; margin-bottom: 8px; }
+        .period-score { font-size: 32px; font-weight: bold; color: #fde047; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .player-stat {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .player-info { display: flex; align-items: center; gap: 10px; }
+        .player-num {
+            background: #06b6d4;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .player-num.rival { background: #ef4444; }
+        .player-name { font-weight: 600; }
+        .player-stats { display: flex; gap: 15px; font-size: 18px; font-weight: bold; }
+        .stat-item { display: flex; flex-direction: column; align-items: center; }
+        .stat-label { font-size: 10px; color: #bae6fd; }
+        .stat-value { color: #fde047; }
+        .lineup-section { margin-bottom: 20px; }
+        .lineup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .lineup-player {
+            background: rgba(34, 197, 94, 0.3);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            border: 2px solid #22c55e;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .info-label { font-size: 12px; color: #bae6fd; margin-bottom: 5px; }
+        .info-value { font-size: 18px; font-weight: bold; }
+        .observations {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #06b6d4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #0891b2; }
+        .btn-red { background: #ef4444; }
+        .btn-red:hover { background: #dc2626; }
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+            color: #bae6fd;
+        }
+        .hidden { display: none; }
+        .top-scorers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .top-scorer-item {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rank {
+            background: #fbbf24;
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .rank.gold { background: #fbbf24; }
+        .rank.silver { background: #d1d5db; }
+        .rank.bronze { background: #d97706; }
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .match-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .match-info { flex: 1; }
+        .match-date { font-size: 12px; color: #bae6fd; margin-bottom: 5px; }
+        .match-teams { font-size: 16px; font-weight: bold; }
+        .match-score { font-size: 24px; font-weight: bold; color: #fde047; margin: 0 15px; }
+        .match-actions { display: flex; gap: 10px; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .comparison-table th {
+            background: rgba(0,0,0,0.3);
+            color: #22d3ee;
+            font-weight: bold;
+        }
+        .comparison-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .win { color: #22c55e; font-weight: bold; }
+        .loss { color: #ef4444; font-weight: bold; }
+        .draw { color: #fbbf24; font-weight: bold; }
+        .titular-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .titular-item {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .titular-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .titular-quarters {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .quarter-badge {
+            background: rgba(6, 182, 212, 0.3);
+            border: 2px solid #06b6d4;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .total-badge {
+            background: #fbbf24;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Visualizador de Estadísticas</h1>
+            <p>CN Terrassa - Waterpolo</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('single')">Partido Individual</button>
+            <button class="tab" onclick="showTab('comparison')">Comparación de Partidos</button>
+            <button class="tab" onclick="showTab('titular')">Estadísticas de Titularidad</button>
+        </div>
+
+        <!-- TAB: PARTIDO INDIVIDUAL -->
+        <div id="singleTab">
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                <h2>📁 Cargar Archivo JSON</h2>
+                <p>Haz clic aquí o arrastra un archivo de partido</p>
+                <input type="file" id="fileInput" accept=".json" onchange="loadFile(event)">
+            </div>
+
+            <div id="noData" class="no-data">
+                Carga un archivo JSON para ver las estadísticas del partido
+            </div>
+
+            <div id="dataView" class="hidden">
+                <div class="card">
+                    <div class="scoreboard">
+                        <div class="team-score">
+                            <div class="team-name" id="teamCNT">CN TERRASSA</div>
+                            <div class="score" id="scoreCNT">0</div>
+                        </div>
+                        <div class="separator">-</div>
+                        <div class="team-score">
+                            <div class="team-name" id="teamRival">RIVAL</div>
+                            <div class="score" id="scoreRival">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Información del Partido</h2>
+                    <div class="info-grid" id="infoGrid"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Marcadores por Periodo</h2>
+                    <div class="periods-grid" id="periodsGrid"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">🏆 Top Goleadores - CN Terrassa</h2>
+                    <div class="top-scorers" id="topScorersCNT"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">🏆 Top Goleadores - Rival</h2>
+                    <div class="top-scorers" id="topScorersRival"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Estadísticas CN Terrassa</h2>
+                    <div class="stats-grid" id="statsCNT"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Estadísticas Rival</h2>
+                    <div class="stats-grid" id="statsRival"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Alineaciones por Cuarto</h2>
+                    <div id="lineupsContainer"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Observaciones</h2>
+                    <div class="observations" id="observations">No hay observaciones</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: COMPARACIÓN -->
+        <div id="comparisonTab" class="hidden">
+            <div class="upload-zone" onclick="document.getElementById('multiFileInput').click()">
+                <h2>📁 Cargar Múltiples Archivos JSON</h2>
+                <p>Selecciona varios archivos de partidos para compararlos</p>
+                <input type="file" id="multiFileInput" accept=".json" multiple onchange="loadMultipleFiles(event)">
+            </div>
+
+            <div id="comparisonView" class="hidden">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h2 class="section-title" style="margin: 0;">Partidos Cargados</h2>
+                        <button class="btn btn-red" onclick="clearComparison()">Limpiar Todo</button>
+                    </div>
+                    <div class="matches-list" id="matchesList"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Resumen de Resultados</h2>
+                    <div class="info-grid" id="summaryGrid"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Comparación de Estadísticas</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="comparison-table" id="comparisonTable"></table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-title">Top Goleadores (Todos los Partidos)</h2>
+                    <div class="top-scorers" id="allTimeScorers"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: TITULARIDAD -->
+        <div id="titularTab" class="hidden">
+            <div class="card">
+                <p style="margin-bottom: 15px; color: #bae6fd;">
+                    Esta sección muestra las estadísticas de titularidad basadas en los partidos cargados en la pestaña de Comparación.
+                </p>
+                <div id="titularView" class="no-data">
+                    Carga partidos en la pestaña "Comparación de Partidos" para ver las estadísticas de titularidad
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let matchData = null;
+        let allMatches = [];
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('singleTab').classList.add('hidden');
+            document.getElementById('comparisonTab').classList.add('hidden');
+            document.getElementById('titularTab').classList.add('hidden');
+
+            if (tabName === 'single') {
+                document.getElementById('singleTab').classList.remove('hidden');
+            } else if (tabName === 'comparison') {
+                document.getElementById('comparisonTab').classList.remove('hidden');
+            } else if (tabName === 'titular') {
+                document.getElementById('titularTab').classList.remove('hidden');
+                displayTitularStats();
+            }
+        }
+
+        function loadFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        matchData = JSON.parse(e.target.result);
+                        displayMatchData();
+                    } catch (error) {
+                        alert('Error al leer el archivo JSON');
+                        console.error(error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function loadMultipleFiles(event) {
+            const files = Array.from(event.target.files);
+            allMatches = [];
+            
+            let filesRead = 0;
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        allMatches.push(data);
+                        filesRead++;
+                        
+                        if (filesRead === files.length) {
+                            allMatches.sort((a, b) => new Date(b.data) - new Date(a.data));
+                            displayComparison();
+                        }
+                    } catch (error) {
+                        console.error('Error al leer archivo:', error);
+                        filesRead++;
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function displayMatchData() {
+            document.getElementById('noData').classList.add('hidden');
+            document.getElementById('dataView').classList.remove('hidden');
+
+            document.getElementById('scoreCNT').textContent = matchData.scoreCNT || 0;
+            document.getElementById('scoreRival').textContent = matchData.scoreRival || 0;
+            document.getElementById('teamRival').textContent = matchData.rivalTeam || 'RIVAL';
+
+            displayInfo();
+            displayPeriods();
+            displayTopScorers();
+            displayPlayerStats();
+            displayLineups();
+            document.getElementById('observations').textContent = matchData.observacions || 'No hay observaciones';
+        }
+
+        function displayInfo() {
+            const container = document.getElementById('infoGrid');
+            const date = new Date(matchData.data);
+            const totalExcCNT = matchData.jugadors.reduce((sum, j) => sum + j.estadistiques.exclusions, 0);
+            const totalExcRival = matchData.rivalStats.reduce((sum, j) => sum + j.exclusions, 0);
+
+            container.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">Fecha</div>
+                    <div class="info-value">${date.toLocaleDateString('es-ES')}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Temporada</div>
+                    <div class="info-value">${matchData.temporada || 'N/A'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Temps Mort CNT</div>
+                    <div class="info-value">${matchData.tempsMortCNT || 0}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Temps Mort Rival</div>
+                    <div class="info-value">${matchData.tempsMortRival || 0}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Exclusiones CNT</div>
+                    <div class="info-value">${totalExcCNT}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Exclusiones Rival</div>
+                    <div class="info-value">${totalExcRival}</div>
+                </div>
+            `;
+        }
+
+        function displayPeriods() {
+            const container = document.getElementById('periodsGrid');
+            if (!matchData.periodScores) {
+                container.innerHTML = '<p>No hay datos de marcadores por periodo</p>';
+                return;
+            }
+
+            const periods = ['q1', 'q2', 'q3', 'q4'];
+            const labels = ['1º Cuarto', '2º Cuarto', '3º Cuarto', '4º Cuarto'];
+            
+            container.innerHTML = periods.map((q, i) => `
+                <div class="period-card">
+                    <div class="period-label">${labels[i]}</div>
+                    <div class="period-score">
+                        ${matchData.periodScores[q].cnt} - ${matchData.periodScores[q].rival}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayTopScorers() {
+            const cntScorers = matchData.jugadors
+                .filter(j => j.estadistiques.gols > 0)
+                .sort((a, b) => b.estadistiques.gols - a.estadistiques.gols)
+                .slice(0, 5);
+
+            const containerCNT = document.getElementById('topScorersCNT');
+            if (cntScorers.length === 0) {
+                containerCNT.innerHTML = '<p>No hay goleadores</p>';
+            } else {
+                containerCNT.innerHTML = cntScorers.map((j, i) => {
+                    let rankClass = '';
+                    if (i === 0) rankClass = 'gold';
+                    else if (i === 1) rankClass = 'silver';
+                    else if (i === 2) rankClass = 'bronze';
+                    
+                    return `
+                        <div class="top-scorer-item">
+                            <div class="player-info">
+                                <div class="rank ${rankClass}">${i + 1}</div>
+                                <div class="player-num">${j.numero}</div>
+                                <div class="player-name">${j.nom}</div>
+                            </div>
+                            <div style="font-size: 24px; font-weight: bold; color: #fde047;">
+                                ${j.estadistiques.gols} ⚽
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const rivalScorers = matchData.rivalStats
+                .filter(j => j.gols > 0 && j.name)
+                .sort((a, b) => b.gols - a.gols)
+                .slice(0, 5);
+
+            const containerRival = document.getElementById('topScorersRival');
+            if (rivalScorers.length === 0) {
+                containerRival.innerHTML = '<p>No hay goleadores</p>';
+            } else {
+                containerRival.innerHTML = rivalScorers.map((j, i) => {
+                    let rankClass = '';
+                    if (i === 0) rankClass = 'gold';
+                    else if (i === 1) rankClass = 'silver';
+                    else if (i === 2) rankClass = 'bronze';
+                    
+                    return `
+                        <div class="top-scorer-item">
+                            <div class="player-info">
+                                <div class="rank ${rankClass}">${i + 1}</div>
+                                <div class="player-num rival">${j.num}</div>
+                                <div class="player-name">${j.name}</div>
+                            </div>
+                            <div style="font-size: 24px; font-weight: bold; color: #fde047;">
+                                ${j.gols} ⚽
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function displayPlayerStats() {
+            const containerCNT = document.getElementById('statsCNT');
+            containerCNT.innerHTML = matchData.jugadors.map(j => `
+                <div class="player-stat">
+                    <div class="player-info">
+                        <div class="player-num">${j.numero}</div>
+                        <div class="player-name">${j.nom}</div>
+                    </div>
+                    <div class="player-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Gols</div>
+                            <div class="stat-value">${j.estadistiques.gols}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Exc</div>
+                            <div class="stat-value">${j.estadistiques.exclusions}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const containerRival = document.getElementById('statsRival');
+            const rivalPlayers = matchData.rivalStats.filter(p => p.name || p.gols > 0 || p.exclusions > 0);
+            
+            if (rivalPlayers.length === 0) {
+                containerRival.innerHTML = '<p>No hay estadísticas del rival</p>';
+            } else {
+                containerRival.innerHTML = rivalPlayers.map(j => `
+                    <div class="player-stat">
+                        <div class="player-info">
+                            <div class="player-num rival">${j.num}</div>
+                            <div class="player-name">${j.name || 'Jugador ' + j.num}</div>
+                        </div>
+                        <div class="player-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Gols</div>
+                                <div class="stat-value">${j.gols}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Exc</div>
+                                <div class="stat-value">${j.exclusions}</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function displayLineups() {
+            const container = document.getElementById('lineupsContainer');
+            const quarters = ['q1', 'q2', 'q3', 'q4'];
+            const labels = ['1º Cuarto', '2º Cuarto', '3º Cuarto', '4º Cuarto'];
+
+            container.innerHTML = quarters.map((q, i) => {
+                const lineup = matchData.lineups[q] || [];
+                if (lineup.length === 0) return '';
+
+                const players = lineup.map(num => {
+                    const player = matchData.jugadors.find(j => j.numero === num);
+                    return player ? `${player.numero}. ${player.nom.split(' ')[0]}` : num;
+                });
+
+                return `
+                    <div class="lineup-section">
+                        <h3 style="margin-bottom: 10px; color: #22d3ee;">${labels[i]}</h3>
+                        <div class="lineup-grid">
+                            ${players.map(p => `<div class="lineup-player">${p}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayComparison() {
+            if (allMatches.length === 0) return;
+
+            document.getElementById('comparisonView').classList.remove('hidden');
+
+            // Lista de partidos
+            const matchesList = document.getElementById('matchesList');
+            matchesList.innerHTML = allMatches.map((match, idx) => {
+                const date = new Date(match.data);
+                const result = match.scoreCNT > match.scoreRival ? 'win' : 
+                              match.scoreCNT < match.scoreRival ? 'loss' : 'draw';
+                const resultText = result === 'win' ? 'Victoria' : 
+                                  result === 'loss' ? 'Derrota' : 'Empate';
+                
+                return `
+                    <div class="match-item">
+                        <div class="match-info">
+                            <div class="match-date">${date.toLocaleDateString('es-ES')}</div>
+                            <div class="match-teams">CNT vs ${match.rivalTeam || 'Rival'}</div>
+                            <div class="${result}">${resultText}</div>
+                        </div>
+                        <div class="match-score">${match.scoreCNT} - ${match.scoreRival}</div>
+                        <div class="match-actions">
+                            <button class="btn" onclick="removeMatch(${idx})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Resumen
+            const wins = allMatches.filter(m => m.scoreCNT > m.scoreRival).length;
+            const losses = allMatches.filter(m => m.scoreCNT < m.scoreRival).length;
+            const draws = allMatches.filter(m => m.scoreCNT === m.scoreRival).length;
+            const totalGoals = allMatches.reduce((sum, m) => sum + m.scoreCNT, 0);
+            const totalGoalsAgainst = allMatches.reduce((sum, m) => sum + m.scoreRival, 0);
+            const avgGoals = (totalGoals / allMatches.length).toFixed(1);
+            const avgGoalsAgainst = (totalGoalsAgainst / allMatches.length).toFixed(1);
+
+            document.getElementById('summaryGrid').innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">Partidos Jugados</div>
+                    <div class="info-value">${allMatches.length}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Victorias</div>
+                    <div class="info-value win">${wins}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Derrotas</div>
+                    <div class="info-value loss">${losses}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Empates</div>
+                    <div class="info-value draw">${draws}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Goles a Favor</div>
+                    <div class="info-value">${totalGoals}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Goles en Contra</div>
+                    <div class="info-value">${totalGoalsAgainst}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Media Goles/Partido</div>
+                    <div class="info-value">${avgGoals}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Media Goles en Contra</div>
+                    <div class="info-value">${avgGoalsAgainst}</div>
+                </div>
+            `;
+
+            // Tabla comparativa
+            displayComparisonTable();
+
+            // Top goleadores totales
+            displayAllTimeScorers();
+        }
+
+        function displayComparisonTable() {
+            const table = document.getElementById('comparisonTable');
+            
+            // Calcular estadísticas acumuladas por jugador
+            const playerStats = {};
+            
+            allMatches.forEach(match => {
+                match.jugadors.forEach(j => {
+                    if (!playerStats[j.numero]) {
+                        playerStats[j.numero] = {
+                            num: j.numero,
+                            name: j.nom,
+                            gols: 0,
+                            exclusions: 0,
+                            partidos: 0
+                        };
+                    }
+                    playerStats[j.numero].gols += j.estadistiques.gols;
+                    playerStats[j.numero].exclusions += j.estadistiques.exclusions;
+                    if (j.estadistiques.gols > 0 || j.estadistiques.exclusions > 0) {
+                        playerStats[j.numero].partidos++;
+                    }
+                });
+            });
+
+            const players = Object.values(playerStats).sort((a, b) => b.gols - a.gols);
+
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Jugador</th>
+                        <th>Partidos</th>
+                        <th>Goles</th>
+                        <th>Exclusiones</th>
+                        <th>Media Goles/Partido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${players.map(p => `
+                        <tr>
+                            <td><div class="player-num" style="width: 30px; height: 30px; font-size: 12px;">${p.num}</div></td>
+                            <td><strong>${p.name}</strong></td>
+                            <td>${p.partidos}</td>
+                            <td><strong style="color: #fde047;">${p.gols}</strong></td>
+                            <td>${p.exclusions}</td>
+                            <td>${p.partidos > 0 ? (p.gols / p.partidos).toFixed(1) : '0.0'}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+        }
+
+        function displayAllTimeScorers() {
+            const playerStats = {};
+            
+            allMatches.forEach(match => {
+                match.jugadors.forEach(j => {
+                    if (!playerStats[j.numero]) {
+                        playerStats[j.numero] = {
+                            num: j.numero,
+                            name: j.nom,
+                            gols: 0
+                        };
+                    }
+                    playerStats[j.numero].gols += j.estadistiques.gols;
+                });
+            });
+
+            const topScorers = Object.values(playerStats)
+                .filter(p => p.gols > 0)
+                .sort((a, b) => b.gols - a.gols)
+                .slice(0, 10);
+
+            const container = document.getElementById('allTimeScorers');
+            container.innerHTML = topScorers.map((p, i) => {
+                let rankClass = '';
+                if (i === 0) rankClass = 'gold';
+                else if (i === 1) rankClass = 'silver';
+                else if (i === 2) rankClass = 'bronze';
+                
+                return `
+                    <div class="top-scorer-item">
+                        <div class="player-info">
+                            <div class="rank ${rankClass}">${i + 1}</div>
+                            <div class="player-num">${p.num}</div>
+                            <div class="player-name">${p.name}</div>
+                        </div>
+                        <div style="font-size: 24px; font-weight: bold; color: #fde047;">
+                            ${p.gols} ⚽
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayTitularStats() {
+            const container = document.getElementById('titularView');
+            
+            if (allMatches.length === 0) {
+                container.innerHTML = '<div class="no-data">Carga partidos en la pestaña "Comparación de Partidos" para ver las estadísticas de titularidad</div>';
+                return;
+            }
+
+            // Calcular estadísticas de titularidad
+            const titularStats = {};
+            
+            allMatches.forEach(match => {
+                const quarters = ['q1', 'q2', 'q3', 'q4'];
+                quarters.forEach((q, qIdx) => {
+                    const lineup = match.lineups[q] || [];
+                    lineup.forEach(playerNum => {
+                        if (!titularStats[playerNum]) {
+                            const player = match.jugadors.find(j => j.numero === playerNum);
+                            titularStats[playerNum] = {
+                                num: playerNum,
+                                name: player ? player.nom : `Jugador ${playerNum}`,
+                                q1: 0,
+                                q2: 0,
+                                q3: 0,
+                                q4: 0,
+                                total: 0
+                            };
+                        }
+                        titularStats[playerNum][q]++;
+                        titularStats[playerNum].total++;
+                    });
+                });
+            });
+
+            const players = Object.values(titularStats).sort((a, b) => b.total - a.total);
+
+            container.innerHTML = `
+                <div class="card">
+                    <h2 class="section-title">Veces como Titular por Cuarto</h2>
+                    <p style="margin-bottom: 15px; color: #bae6fd; font-size: 14px;">
+                        Basado en ${allMatches.length} partido${allMatches.length !== 1 ? 's' : ''}
+                    </p>
+                    <div class="titular-stats">
+                        ${players.map(p => `
+                            <div class="titular-item">
+                                <div class="titular-header">
+                                    <div class="player-num">${p.num}</div>
+                                    <div style="flex: 1;">
+                                        <div class="player-name">${p.name}</div>
+                                        <div style="font-size: 12px; color: #bae6fd; margin-top: 4px;">
+                                            Total: <span class="total-badge">${p.total}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="titular-quarters">
+                                    <div class="quarter-badge">1Q: ${p.q1}</div>
+                                    <div class="quarter-badge">2Q: ${p.q2}</div>
+                                    <div class="quarter-badge">3Q: ${p.q3}</div>
+                                    <div class="quarter-badge">4Q: ${p.q4}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function removeMatch(idx) {
+            allMatches.splice(idx, 1);
+            if (allMatches.length === 0) {
+                document.getElementById('comparisonView').classList.add('hidden');
+            } else {
+                displayComparison();
+            }
+        }
+
+        function clearComparison() {
+            if (confirm('¿Seguro que quieres eliminar todos los partidos?')) {
+                allMatches = [];
+                document.getElementById('comparisonView').classList.add('hidden');
+            }
+        }
+
+        // Drag and drop para partido individual
+        const uploadZone = document.querySelector('.upload-zone');
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.style.borderColor = '#22d3ee';
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.style.borderColor = 'rgba(255,255,255,0.3)';
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.style.borderColor = 'rgba(255,255,255,0.3)';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        matchData = JSON.parse(event.target.result);
+                        displayMatchData();
+                    } catch (error) {
+                        alert('Error al leer el archivo JSON');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>
