@@ -63,6 +63,7 @@
   "tempsMortCNT": 0,
   "tempsMortRival": 2,
   "rivalTeam": "CN MONTJUIC",
+  "matchLocation": "home",
   "rivalStats": [
     {
       "num": 1,
