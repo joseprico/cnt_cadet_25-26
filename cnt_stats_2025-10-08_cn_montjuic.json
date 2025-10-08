@@ -1,7 +1,7 @@
 {
   "temporada": "25/26 CADET",
   "equip": "CN TERRASSA",
-  "data": "2025-10-08T15:34:22.864Z",
+  "data": "2025-10-08T15:42:06.030Z",
   "scoreCNT": 21,
   "scoreRival": 8,
   "lineups": {
@@ -600,5 +600,510 @@
       }
     }
   ],
-  "observacions": ""
+  "observacions": "",
+  "chronologicalActions": [
+    {
+      "timestamp": 1759936677243,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 11,
+      "playerName": "MARCELO BANS REIG"
+    },
+    {
+      "timestamp": 1759936684274,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1759936693362,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 5,
+      "playerName": "JOAN CAVERO LOPEZ"
+    },
+    {
+      "timestamp": 1759936698378,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "penalty",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759936709810,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 8,
+      "playerName": "DANIEL MEGIAS TEJEDOR"
+    },
+    {
+      "timestamp": 1759936713418,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759936724610,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "contra",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1759936738386,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 6,
+      "playerName": "MIGUEL CAMPANARIO LORENZO"
+    },
+    {
+      "timestamp": 1759936744122,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759936748362,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759936758242,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1759936761906,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1759936777794,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1759936785242,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "penalty",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "ADRIA BUIL MONTEVERDE"
+    },
+    {
+      "timestamp": 1759936796938,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1759936801065,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "rival",
+      "playerNum": 1,
+      "playerName": "IAGO CALVO RAMOS"
+    },
+    {
+      "timestamp": 1759936850521,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "ADRIA BUIL MONTEVERDE"
+    },
+    {
+      "timestamp": 1759936867474,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759936872777,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1759936880314,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1759936895345,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "YAHEL MUNOZ"
+    },
+    {
+      "timestamp": 1759936900241,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "penalty",
+      "team": "rival",
+      "playerNum": 1,
+      "playerName": "IAGO CALVO RAMOS"
+    },
+    {
+      "timestamp": 1759936909666,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 2,
+      "playerName": "ALEX ALVAREZ CASADEMONT"
+    },
+    {
+      "timestamp": 1759936920010,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1759936938353,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "YAHEL MUNOZ"
+    },
+    {
+      "timestamp": 1759936956938,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "ADRIA BUIL MONTEVERDE"
+    },
+    {
+      "timestamp": 1759936965913,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 11,
+      "playerName": "MARCELO BANS REIG"
+    },
+    {
+      "timestamp": 1759936970801,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "boya",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1759937049129,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 2,
+      "playerName": "ALEX ALVAREZ CASADEMONT"
+    },
+    {
+      "timestamp": 1759937061504,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 1,
+      "playerName": "IAGO CALVO RAMOS"
+    },
+    {
+      "timestamp": 1759937065985,
+      "quarter": "q3",
+      "type": "penalty-missed",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1759937074401,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "boya",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1759937092217,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1759937098344,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1759937108689,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 7,
+      "playerName": "DAVID EBRA MARTINEZ"
+    },
+    {
+      "timestamp": 1759937121673,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1759937127892,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1759937143153,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "rival",
+      "playerNum": 4,
+      "playerName": "Jorel Vasques Beltran"
+    },
+    {
+      "timestamp": 1759937153424,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1759937162936,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1759937167169,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "ADRIA BUIL MONTEVERDE"
+    },
+    {
+      "timestamp": 1759937213752,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 9,
+      "playerName": "ELOY SORIANO PEREZ"
+    },
+    {
+      "timestamp": 1759937220456,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "penalty",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1759937232096,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 11,
+      "playerName": "MARCELO BANS REIG"
+    },
+    {
+      "timestamp": 1759937239360,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1759937246280,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1759937260321,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1759937265472,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "h+",
+      "team": "rival",
+      "playerNum": 4,
+      "playerName": "Jorel Vasques Beltran"
+    },
+    {
+      "timestamp": 1759937273168,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "ADRIA BUIL MONTEVERDE"
+    },
+    {
+      "timestamp": 1759937285257,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1759937308760,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 5,
+      "playerName": "JOAN CAVERO LOPEZ"
+    },
+    {
+      "timestamp": 1759937318792,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "penalty",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1759937330303,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1759937332800,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1759937344800,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "boya",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1759937355088,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 2,
+      "playerName": "ALEX ALVAREZ CASADEMONT"
+    }
+  ]
 }
