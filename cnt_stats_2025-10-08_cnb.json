@@ -1,7 +1,7 @@
 {
   "temporada": "25/26 CADET",
   "equip": "CN TERRASSA",
-  "data": "2025-10-08T14:00:25.083Z",
+  "data": "2025-10-08T14:16:45.928Z",
   "scoreCNT": 8,
   "scoreRival": 3,
   "lineups": {
@@ -39,12 +39,12 @@
   "tempsMortCNT": 0,
   "tempsMortRival": 0,
   "rivalTeam": "CNB",
-  "matchlocation": "home",
+  "matchLocation": "home",
   "rivalStats": [
     {
       "num": 1,
-      "name": "",
-      "exclusions": 0,
+      "name": "DDD",
+      "exclusions": 2,
       "gols": 0,
       "penaltyMissed": 0,
       "goalTypes": {
@@ -55,7 +55,7 @@
         "boya": 0
       },
       "exclusionTypes": {
-        "normal": 0,
+        "normal": 2,
         "penalty": 0
       }
     },
@@ -359,7 +359,7 @@
       "numero": 4,
       "nom": "POL RICO",
       "estadistiques": {
-        "exclusions": 0,
+        "exclusions": 3,
         "gols": 3,
         "penaltyMissed": 0,
         "goalTypes": {
@@ -370,7 +370,7 @@
           "boya": 0
         },
         "exclusionTypes": {
-          "normal": 0,
+          "normal": 3,
           "penalty": 0
         }
       }
