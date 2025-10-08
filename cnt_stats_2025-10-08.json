@@ -1,50 +1,75 @@
 {
   "temporada": "25/26 CADET",
   "equip": "CN TERRASSA",
-  "data": "2025-10-08T06:30:14.640Z",
-  "scoreCNT": 4,
+  "data": "2025-10-08T10:40:10.146Z",
+  "scoreCNT": 10,
   "scoreRival": 1,
   "lineups": {
     "q1": [
       1,
       2,
       4,
-      3,
       5,
       6,
-      8
+      8,
+      7
     ],
-    "q2": [],
-    "q3": [],
-    "q4": []
+    "q2": [
+      1,
+      2,
+      4,
+      8,
+      9,
+      7,
+      5
+    ],
+    "q3": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      13,
+      3
+    ],
+    "q4": [
+      13,
+      11,
+      9,
+      7,
+      4,
+      10,
+      14
+    ]
   },
   "periodScores": {
     "q1": {
-      "cnt": 0,
+      "cnt": 4,
       "rival": 0
     },
     "q2": {
-      "cnt": 0,
+      "cnt": 2,
       "rival": 0
     },
     "q3": {
-      "cnt": 0,
-      "rival": 0
+      "cnt": 1,
+      "rival": 1
     },
     "q4": {
-      "cnt": 0,
+      "cnt": 3,
       "rival": 0
     }
   },
   "tempsMortCNT": 0,
   "tempsMortRival": 0,
-  "rivalTeam": "Prova",
+  "rivalTeam": "prova 3",
   "rivalStats": [
     {
       "num": 1,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -55,14 +80,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 2,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -73,14 +98,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 3,
       "name": "",
-      "exclusions": 0,
+      "exclusions": 1,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -89,34 +114,34 @@
         "boya": 0
       },
       "exclusionTypes": {
-        "normal": 0,
+        "normal": 1,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 4,
       "name": "",
-      "exclusions": 0,
-      "gols": 1,
+      "exclusions": 1,
+      "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
         "penalty": 0,
-        "contra": 1,
+        "contra": 0,
         "boya": 0
       },
       "exclusionTypes": {
-        "normal": 0,
+        "normal": 1,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 5,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -127,14 +152,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 6,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -145,14 +170,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 7,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -163,14 +188,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 8,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -181,14 +206,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 9,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -199,14 +224,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 10,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -217,17 +242,17 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 11,
       "name": "",
       "exclusions": 0,
-      "gols": 0,
+      "gols": 1,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
-        "h+": 0,
+        "h+": 1,
         "penalty": 0,
         "contra": 0,
         "boya": 0
@@ -235,14 +260,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 12,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -253,14 +278,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 13,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -271,14 +296,14 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     },
     {
       "num": 14,
       "name": "",
       "exclusions": 0,
       "gols": 0,
+      "penaltyMissed": 0,
       "goalTypes": {
         "normal": 0,
         "h+": 0,
@@ -289,8 +314,7 @@
       "exclusionTypes": {
         "normal": 0,
         "penalty": 0
-      },
-      "penaltyMissed": 0
+      }
     }
   ],
   "jugadors": [
@@ -300,6 +324,7 @@
       "estadistiques": {
         "exclusions": 0,
         "gols": 0,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -310,8 +335,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -319,47 +343,8 @@
       "nom": "SAMUEL DIAZ",
       "estadistiques": {
         "exclusions": 0,
-        "gols": 2,
-        "goalTypes": {
-          "normal": 1,
-          "h+": 0,
-          "penalty": 1,
-          "contra": 0,
-          "boya": 0
-        },
-        "exclusionTypes": {
-          "normal": 0,
-          "penalty": 0
-        },
-        "penaltyMissed": 0
-      }
-    },
-    {
-      "numero": 3,
-      "nom": "MAX CEREZO",
-      "estadistiques": {
-        "exclusions": 0,
-        "gols": 0,
-        "goalTypes": {
-          "normal": 0,
-          "h+": 0,
-          "penalty": 0,
-          "contra": 0,
-          "boya": 0
-        },
-        "exclusionTypes": {
-          "normal": 0,
-          "penalty": 0
-        },
-        "penaltyMissed": 0
-      }
-    },
-    {
-      "numero": 4,
-      "nom": "POL RICO",
-      "estadistiques": {
-        "exclusions": 0,
         "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -370,36 +355,16 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
-      "numero": 5,
-      "nom": "OLIVER HERRERA",
-      "estadistiques": {
-        "exclusions": 0,
-        "gols": 0,
-        "goalTypes": {
-          "normal": 0,
-          "h+": 0,
-          "penalty": 0,
-          "contra": 0,
-          "boya": 0
-        },
-        "exclusionTypes": {
-          "normal": 0,
-          "penalty": 0
-        },
-        "penaltyMissed": 0
-      }
-    },
-    {
-      "numero": 6,
-      "nom": "NIL CARDENAS",
+      "numero": 3,
+      "nom": "MAX CEREZO",
       "estadistiques": {
         "exclusions": 0,
         "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 1,
           "h+": 0,
@@ -410,16 +375,36 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
-      "numero": 7,
-      "nom": "LLATZER PEREZ",
+      "numero": 4,
+      "nom": "POL RICO",
+      "estadistiques": {
+        "exclusions": 1,
+        "gols": 3,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 3
+        },
+        "exclusionTypes": {
+          "normal": 1,
+          "penalty": 0
+        }
+      }
+    },
+    {
+      "numero": 5,
+      "nom": "OLIVER HERRERA",
       "estadistiques": {
         "exclusions": 0,
         "gols": 0,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -430,8 +415,47 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
+        }
+      }
+    },
+    {
+      "numero": 6,
+      "nom": "NIL CARDENAS",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
         },
-        "penaltyMissed": 0
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        }
+      }
+    },
+    {
+      "numero": 7,
+      "nom": "LLATZER PEREZ",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 1,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 1,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        }
       }
     },
     {
@@ -440,6 +464,7 @@
       "estadistiques": {
         "exclusions": 0,
         "gols": 0,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -450,8 +475,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -459,9 +483,10 @@
       "nom": "IVAN GALLEGO",
       "estadistiques": {
         "exclusions": 0,
-        "gols": 0,
+        "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
-          "normal": 0,
+          "normal": 1,
           "h+": 0,
           "penalty": 0,
           "contra": 0,
@@ -470,8 +495,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -480,6 +504,7 @@
       "estadistiques": {
         "exclusions": 0,
         "gols": 0,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -490,8 +515,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -499,10 +523,11 @@
       "nom": "HECTOR DIOS",
       "estadistiques": {
         "exclusions": 0,
-        "gols": 0,
+        "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
-          "h+": 0,
+          "h+": 1,
           "penalty": 0,
           "contra": 0,
           "boya": 0
@@ -510,8 +535,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -519,19 +543,19 @@
       "nom": "BIEL COBACHO",
       "estadistiques": {
         "exclusions": 0,
-        "gols": 0,
+        "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
           "penalty": 0,
-          "contra": 0,
+          "contra": 1,
           "boya": 0
         },
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -540,6 +564,7 @@
       "estadistiques": {
         "exclusions": 0,
         "gols": 0,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
@@ -550,8 +575,7 @@
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     },
     {
@@ -559,19 +583,19 @@
       "nom": "JOSE MANUEL LLENIN",
       "estadistiques": {
         "exclusions": 0,
-        "gols": 0,
+        "gols": 1,
+        "penaltyMissed": 0,
         "goalTypes": {
           "normal": 0,
           "h+": 0,
           "penalty": 0,
-          "contra": 0,
+          "contra": 1,
           "boya": 0
         },
         "exclusionTypes": {
           "normal": 0,
           "penalty": 0
-        },
-        "penaltyMissed": 0
+        }
       }
     }
   ],
