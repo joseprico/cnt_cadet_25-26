@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CN Terrassa - Estadísticas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; width: 100%; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0891b2 100%); color: white; min-height: 100vh; overflow-x: hidden; width: 100%; max-width: 100vw; position: relative; }
+        .container { max-width: 1024px; margin: 0 auto; padding: 8px; padding-top: 85px; padding-bottom: 80px; box-sizing: border-box; width: 100%; }
+        .header-fixed { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #1e3a8a 0%, #0891b2 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 4px solid #22d3ee; z-index: 1000; padding: 6px 0; }
+        .scoreboard { max-width: 1024px; margin: 0 auto; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+        .team-score { flex: 1; text-align: center; }
+        .team-label { font-size: 9px; font-weight: bold; color: #67e8f9; margin-bottom: 1px; }
+        .score-display { font-size: 28px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .score-separator { font-size: 18px; font-weight: bold; color: #67e8f9; }
+        .temps-mort-compact { font-size: 8px; color: #bae6fd; margin-top: 1px; display: flex; align-items: center; justify-content: center; gap: 3px; }
+        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 8px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; max-width: 100%; box-sizing: border-box; }
+        .btn { padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; touch-action: manipulation; }
+        .btn:active { transform: scale(0.95); }
+        .btn-red { background: #ef4444; color: white; }
+        .btn-green { background: #22c55e; color: white; }
+        .btn-blue { background: #3b82f6; color: white; }
+        .btn-yellow { background: #fbbf24; color: #000; }
+        .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px; }
+        .tab { padding: 10px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; }
+        .tab.active { background: #06b6d4; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .players-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; width: 100%; max-width: 100%; }
+        .player-card { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 4px; min-width: 0; }
+        .player-header { display: flex; align-items: center; gap: 2px; margin-bottom: 3px; flex-wrap: nowrap; }
+        .player-number { background: #06b6d4; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 9px; flex-shrink: 0; }
+        .player-number.rival { background: #ef4444; }
+        .player-number.active-player { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); } 50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9); } }
+        .player-name-input { flex: 1; padding: 2px; font-size: 7px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; min-width: 0; max-width: 100%; }
+        .player-name-input:focus { outline: none; border-color: #22d3ee; }
+        .player-name-input.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+        .player-name-input.exc-2 { background: #f97316; color: white; font-weight: bold; }
+        .player-name-input.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+        .status-btn { padding: 2px 3px; font-size: 6px; font-weight: bold; border: none; border-radius: 3px; cursor: pointer; min-width: 28px; max-width: 28px; flex-shrink: 0; white-space: nowrap; overflow: hidden; }
+        .status-btn.in-water { background: #22c55e; color: white; }
+        .status-btn.out-water { background: #6b7280; color: white; }
+        .stats-row { display: flex; gap: 3px; flex-direction: row; }
+        .stat-value { font-size: 16px; font-weight: 900; min-width: 16px; text-align: center; line-height: 1; }
+        .stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+        .stat-label { font-size: 6px; color: #bae6fd; }
+        .stat-controls { display: flex; align-items: center; gap: 2px; }
+        .stat-value { font-size: 12px; font-weight: bold; min-width: 16px; text-align: center; }
+        .stat-value.gols { color: #fde047; }
+        .goal-type-badge { display: inline-block; padding: 1px 2px; font-size: 6px; background: #fbbf24; color: #000; border-radius: 2px; margin-right: 1px; font-weight: bold; }
+        .input { width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-size: 14px; }
+        .input:focus { outline: none; border-color: #22d3ee; }
+        textarea.input { min-height: 80px; font-family: inherit; resize: vertical; }
+        .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .lineup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        .lineup-btn { padding: 10px; font-size: 13px; background: rgba(255,255,255,0.2); color: white; }
+        .lineup-btn.selected { background: #22c55e; box-shadow: 0 2px 8px rgba(34,197,94,0.4); }
+        .lineup-counter { text-align: center; font-size: 12px; color: #bae6fd; margin-bottom: 8px; }
+        .period-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 6px; }
+        .period-label { font-weight: bold; font-size: 14px; }
+        .period-score { font-size: 20px; font-weight: bold; color: #fde047; }
+        h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+        .hidden { display: none; }
+        label { display: block; font-size: 10px; font-weight: 600; margin-bottom: 4px; }
+        svg { display: inline-block; vertical-align: middle; }
+        .btn-small { padding: 1px; min-width: 18px; }
+        .icon-sm { width: 8px; height: 8px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.show { display: flex; }
+        .modal-content { background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%); border-radius: 12px; padding: 20px; max-width: 300px; width: 100%; }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; }
+        .modal-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .modal-btn { padding: 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .modal-btn:hover { background: rgba(255,255,255,0.3); }
+        .github-status { padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; text-align: center; }
+        .github-status.success { background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; }
+        .github-status.error { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
+        .github-status.warning { background: rgba(251, 191, 36, 0.3); border: 1px solid #fbbf24; color: #000; }
+        .undo-section { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30, 58, 138, 0.95); backdrop-filter: blur(10px); border-top: 2px solid #22d3ee; padding: 8px 12px; z-index: 999; box-shadow: 0 -4px 12px rgba(0,0,0,0.3); }
+        .undo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .undo-title { font-size: 10px; font-weight: bold; color: #67e8f9; }
+        .undo-clear { font-size: 9px; color: #fca5a5; background: none; border: none; padding: 2px 6px; cursor: pointer; }
+        .actions-list { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+        .action-item { background: rgba(255,255,255,0.15); padding: 6px 10px; border-radius: 6px; font-size: 9px; white-space: nowrap; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); }
+        .action-icon { font-size: 12px; }
+        .undo-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 8px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+        .quarter-info { background: rgba(34, 211, 238, 0.2); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #67e8f9; font-weight: bold; border: 1px solid #22d3ee; }
+        .compact-name.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+        .compact-name.exc-2 { background: #f97316; color: white; font-weight: bold; }
+        .compact-name.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+        .compact-view-toggle { position: fixed; top: 72px; right: 6px; z-index: 1001; background: rgba(6, 182, 212, 0.9); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 9px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .water-warning { display: none; position: fixed; top: 110px; left: 50%; transform: translateX(-50%); background: rgba(239, 68, 68, 0.95); color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: bold; z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.4); animation: slideDown 0.3s ease-out; max-width: 90%; text-align: center; }
+        @keyframes slideDown { from { top: 60px; opacity: 0; } to { top: 110px; opacity: 1; } }
+        #playersList.compact-grid, #rivalPlayersList.compact-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+        @media (min-width: 768px) { #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } }
+        @media (min-width: 1024px) { #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } }
+        .players-grid.compact-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        .compact-player { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 4px; }
+        .compact-header { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 10px; font-weight: bold; }
+        .compact-actions { display: flex; gap: 4px; }
+        .compact-btn { flex: 1; padding: 4px 2px; font-size: 9px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+        .compact-btn-gol { background: #22c55e; color: white; }
+        .compact-btn-exc { background: #ef4444; color: white; }
+        .compact-value { font-size: 16px; font-weight: 900; line-height: 1; }
+        @media (max-width: 480px) {
+            .container { padding: 6px !important; padding-top: 85px !important; padding-bottom: 80px !important; max-width: 100vw !important; }
+            .card { padding: 6px !important; margin-bottom: 10px !important; max-width: calc(100vw - 12px) !important; }
+            .player-card { padding: 3px !important; max-width: 100% !important; }
+            .player-number { width: 16px !important; height: 16px !important; font-size: 8px !important; }
+            .player-name-input { font-size: 6.5px !important; padding: 1px 2px !important; max-width: calc(100% - 48px) !important; }
+            .status-btn { font-size: 5.5px !important; padding: 2px !important; min-width: 26px !important; max-width: 26px !important; }
+            .stat-value { font-size: 11px !important; min-width: 14px !important; }
+            .stat-label { font-size: 5.5px !important; }
+            .goal-type-badge { font-size: 5.5px !important; padding: 0px 2px !important; }
+            .btn-small { padding: 1px !important; min-width: 16px !important; }
+            .icon-sm { width: 7px !important; height: 7px !important; }
+            .players-grid { gap: 2px !important; max-width: 100% !important; }
+            .stat-box { padding: 2px !important; }
+            .stat-controls { gap: 1px !important; }
+            .stats-row { gap: 2px !important; }
+            .player-header { gap: 1px !important; max-width: 100% !important; }
+            h2 { font-size: 16px !important; margin-bottom: 8px !important; }
+            .tabs { padding: 6px !important; gap: 6px !important; }
+            .tab { padding: 8px !important; font-size: 12px !important; }
+            .scoreboard { padding: 0 6px !important; gap: 2px !important; }
+            .team-label { font-size: 8px !important; }
+            .score-display { font-size: 24px !important; }
+            .temps-mort-compact { font-size: 7px !important; gap: 2px !important; }
+            .quarter-info { font-size: 9px !important; padding: 2px 6px !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-fixed">
+        <div style="position: absolute; top: 5px; right: 15px; font-size: 9px; color: rgba(255,255,255,0.5); font-style: italic;">by Josep Rico</div>
+        <div class="scoreboard">
+            <div class="team-score">
+                <div class="team-label">CNT</div>
+                <div class="score-display" id="scoreCNT">0</div>
+                <div class="temps-mort-compact">TM: <span id="tempsMortCNT">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(1)">+</button></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                <div class="score-separator">-</div>
+                <div class="quarter-info" id="quarterInfo">Q1: 0-0</div>
+            </div>
+            <div class="team-score">
+                <div class="team-label" id="rivalTeamLabel">RIVAL</div>
+                <div class="score-display" id="scoreRival">0</div>
+                <div class="temps-mort-compact">TM: <span id="tempsMortRival">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(1)">+</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="goalModal" class="modal"><div class="modal-content"><div class="modal-title">Tipo de Gol</div><div class="modal-buttons"><button class="modal-btn" onclick="selectGoalType('normal')">Normal</button><button class="modal-btn" onclick="selectGoalType('h+')">H+</button><button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button><button class="modal-btn" onclick="selectGoalType('contra')">Contra</button><button class="modal-btn" onclick="selectGoalType('boya')">Boya</button></div><button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button></div></div>
+    <div id="exclusionModal" class="modal"><div class="modal-content"><div class="modal-title">Tipo de Exclusión</div><div class="modal-buttons"><button class="modal-btn" onclick="selectExclusionType('normal')">Exclusión</button><button class="modal-btn" onclick="selectExclusionType('penalty')">Penalty</button></div><button class="btn btn-red" style="width: 100%;" onclick="closeExclusionModal()">Cancelar</button></div></div>
+    <div id="penaltyMissedModal" class="modal"><div class="modal-content" style="max-width: 400px;" id="penaltyModalContent"></div></div>
+    
+    <div id="waterWarning" class="water-warning">⚠️ Has de tenir exactament 7 jugadors DINS!</div>
+
+    <div class="container">
+        <button class="compact-view-toggle" onclick="toggleCompactMode()"><span id="compactToggleText">👁️ Vista Compacta</span></button>
+        <div class="card tabs">
+            <button class="btn tab active" onclick="showView('stats')">CNT</button>
+            <button class="btn tab" onclick="showView('rival')">Rival</button>
+            <button class="btn tab" onclick="showView('lineups')">Alineaciones</button>
+        </div>
+        <div id="statsView"><div class="card"><h2>CN TERRASSA</h2><div class="players-grid" id="playersList"></div></div></div>
+        <div id="rivalView" class="hidden"><div class="card"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;"><h2 style="margin: 0; flex: 1;"><input type="text" class="input" id="rivalTeamInput" placeholder="Nombre del rival" onchange="updateRivalTeam()" style="font-size: 18px; font-weight: bold; padding: 4px 8px;"></h2></div><div class="players-grid" id="rivalPlayersList"></div><div style="margin-top: 16px; padding-top: 16px; border-top: 2px solid rgba(255,255,255,0.2);"><label>Ubicación del partido</label><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><button class="btn lineup-btn" id="locationHome" onclick="setLocation('home')">🏠 Casa</button><button class="btn lineup-btn" id="locationAway" onclick="setLocation('away')">✈️ Fuera</button></div></div></div></div>
+        <div id="lineupsView" class="hidden"><div id="lineupsContainer"></div></div>
+        
+        <div id="configView" class="hidden"><div class="card"><h2>Configuración GitHub</h2><div id="githubStatus"></div><div style="margin-bottom: 12px;"><label>Token de GitHub</label><input type="password" class="input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" onchange="saveGithubConfig()"><p style="font-size: 10px; color: #bae6fd; margin-top: 4px;">Crea un token en: Settings → Developer settings → Personal access tokens</p></div><div style="margin-bottom: 12px;"><label>Usuario/Repositorio</label><input type="text" class="input" id="githubRepo" value="joseprico/cnt_cadet_25-26" onchange="saveGithubConfig()"></div><div style="margin-bottom: 12px;"><label>Rama</label><input type="text" class="input" id="githubBranch" value="main" onchange="saveGithubConfig()"></div><button class="btn btn-blue" onclick="testGithubConnection()">Probar conexión</button></div></div>
+        
+        <div class="card"><h2>Observacions / Penaltis Fallados</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><textarea class="input" id="observacions" placeholder="Anotaciones..." style="min-height: 100px;"></textarea><div><button class="btn btn-red" style="width: 100%; margin-bottom: 8px;" onclick="openPenaltyMissedModal()">❌ Penalty Fallado</button><button class="btn btn-blue" style="width: 100%; margin-bottom: 8px;" onclick="showPlayingTimes()">⏱️ Temps de Joc</button><div style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 8px; max-height: 84px; overflow-y: auto;"><div style="font-size: 10px; color: #bae6fd; margin-bottom: 4px;">Resumen:</div><div id="penaltyMissedSummary" style="font-size: 9px;"></div></div></div></div></div>
+        <div class="card"><h2>Marcadores por Periodo</h2><div id="periodScores"></div></div>
+        <div class="actions-grid" style="grid-template-columns: repeat(5, 1fr);">
+            <button class="btn btn-green" onclick="uploadToGithub()"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>GitHub</button>
+            <button class="btn btn-yellow" onclick="exportData()">💾 Guardar</button>
+            <label class="btn btn-blue" style="cursor: pointer;"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Importar<input type="file" accept=".json" onchange="importData(event)" style="display: none;"></label>
+            <button class="btn btn-blue" onclick="showView('config')">⚙️ Config</button>
+            <button class="btn btn-red" onclick="resetAll()"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Reset</button>
+        </div>
+        <div class="undo-section"><div class="undo-header"><div class="undo-title">↩️ ÚLTIMAS ACCIONES</div><button class="undo-clear" onclick="clearHistory()">Limpiar</button></div><div class="actions-list" id="actionsList"><div style="font-size: 9px; color: rgba(255,255,255,0.5); padding: 6px;">No hay acciones recientes</div></div></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+const players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'JORDI FARRE'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'JOSE MANUEL LLENIN'}];
+let stats={},rivalStats=[],lineups={q1:[],q2:[],q3:[],q4:[]},periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}},tempsMortCNT=0,tempsMortRival=0,rivalTeam='',matchLocation='home',observacions='',currentGoalContext=null,currentExclusionContext=null,actionsHistory=[],compactMode=true,chronologicalActions=[];
+let githubConfig={token:'',repo:'joseprico/cnt_cadet_25-26',branch:'main'};
+let playersInWater=new Set();
+let quarterStartTimes={q1:null,q2:null,q3:null,q4:null};
+let quarterRealEndTimes={q1:null,q2:null,q3:null,q4:null};
+let playerWaterChanges=[];
+
+function endQuarter(quarter) {
+    quarterRealEndTimes[quarter] = Date.now();
+    
+    // Tancar tots els jugadors que estiguin dins
+    playersInWater.forEach(num => {
+        playerWaterChanges.push({
+            playerNum: num,
+            quarter: quarter,
+            action: 'out',
+            timestamp: Date.now()
+        });
+    });
+    
+    saveToLocalStorage();
+}
+
+function calculatePlayingTimeForMatch(){
+    const result={};
+    const quarterDuration=480;
+    
+    players.forEach(p=>{
+        const times={q1:0,q2:0,q3:0,q4:0,total:0};
+        const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);
+        
+        ['q1','q2','q3','q4'].forEach(quarter=>{
+            const qChanges=playerChanges.filter(c=>c.quarter===quarter);
+            if(qChanges.length===0){
+                times[quarter]=0;
+                return;
+            }
+            
+            qChanges.sort((a,b)=>a.timestamp-b.timestamp);
+            
+            let timeInWater=0;
+            let lastInTime=null;
+            const quarterStartTime=quarterStartTimes[quarter];
+            
+            if(!quarterStartTime){
+                times[quarter]=0;
+                return;
+            }
+            
+            // ✅ Processar els canvis dins del forEach
+            qChanges.forEach(change=>{
+                if(change.action==='in'){
+                    lastInTime=change.timestamp;
+                } else if(change.action==='out'&&lastInTime!==null){
+                    timeInWater+=(change.timestamp-lastInTime)/1000;
+                    lastInTime=null;
+                }
+            });
+            
+            // ✅ Usar el temps real de finalització si existeix
+            if(lastInTime!==null){
+                const quarterEndTime = quarterRealEndTimes[quarter] || 
+                                      (quarterStartTime + quarterDuration * 1000);
+                timeInWater+=(quarterEndTime-lastInTime)/1000;
+            }
+            
+            times[quarter]=Math.round(timeInWater);
+        });
+        
+        times.total=times.q1+times.q2+times.q3+times.q4;
+        result[p.num]={name:p.name,times:times};
+    });
+    
+    return result;
+}
+function init(){loadFromLocalStorage();loadGithubConfig();if(Object.keys(stats).length===0){players.forEach(p=>{stats[p.num]={exclusions:0,gols:0,penaltyMissed:0,goalTypes:{normal:0,'h+':0,penalty:0,contra:0,boya:0},exclusionTypes:{normal:0,penalty:0}}})}if(rivalStats.length===0){for(let i=1;i<=14;i++){rivalStats.push({num:i,name:'',exclusions:0,gols:0,penaltyMissed:0,goalTypes:{normal:0,'h+':0,penalty:0,contra:0,boya:0},exclusionTypes:{normal:0,penalty:0}})}}renderPlayers();renderRivalPlayers();renderLineups();renderPeriodScores();updateScores();updatePenaltyMissedSummary();renderHistory();updateQuarterInfo();if(compactMode){const btn=document.getElementById('compactToggleText');if(btn)btn.textContent='📋 Vista Normal';renderCompactView()}}
+
+function openPenaltyMissedModal(){const c=document.getElementById('penaltyModalContent');if(!c)return;c.innerHTML=`<div class="modal-title">❌ Penalty Fallado - ¿Quién?</div><div style="max-height:400px;overflow-y:auto;margin-bottom:15px"><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">${players.map(p=>`<button class="modal-btn" onclick="selectPenaltyMissedPlayer(${p.num},false)">${p.num}. ${p.name.split(' ')[0]}</button>`).join('')}</div><div style="margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,255,255,0.2)"><div style="font-size:12px;margin-bottom:8px;color:#fca5a5">Rival:</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">${rivalStats.map((r,i)=>`<button class="modal-btn" onclick="selectPenaltyMissedPlayer(${i},true)">${r.name||'Rival '+(i+1)}</button>`).join('')}</div></div></div><button class="btn btn-red" style="width:100%" onclick="closePenaltyMissedModal()">Cancelar</button>`;document.getElementById('penaltyMissedModal').classList.add('show')}
+function closePenaltyMissedModal(){document.getElementById('penaltyMissedModal').classList.remove('show')}
+function selectPenaltyMissedPlayer(n,isR){const currentQuarter=getCurrentQuarter();const timestamp=Date.now();let playerName='';if(isR){playerName=rivalStats[n].name||`Rival ${n+1}`;rivalStats[n].penaltyMissed=(rivalStats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'rival',playerNum:n,playerName:playerName})}else{const player=players.find(p=>p.num===n);playerName=player?player.name:`Jugador ${n}`;stats[n].penaltyMissed=(stats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'cnt',playerNum:n,playerName:playerName})}updatePenaltyMissedSummary();saveToLocalStorage();closePenaltyMissedModal()}
+function updatePenaltyMissedSummary(){const c=document.getElementById('penaltyMissedSummary');if(!c)return;const s=[];players.forEach(p=>{const m=stats[p.num]?.penaltyMissed||0;if(m>0)s.push(`${p.num}. ${p.name.split(' ')[0]}: ${m}`)});rivalStats.forEach((r,i)=>{const m=r.penaltyMissed||0;if(m>0){const n=r.name||`Rival ${i+1}`;s.push(`<span style="color:#fca5a5">${n}: ${m}</span>`)}});c.innerHTML=s.length===0?'<span style="color:rgba(255,255,255,0.3)">No hay penaltis fallados</span>':s.join('<br>')}
+function saveToLocalStorage(){
+    localStorage.setItem('cntWaterpoloData',JSON.stringify({
+        stats,
+        rivalStats,
+        lineups,
+        periodScores,
+        tempsMortCNT,
+        tempsMortRival,
+        rivalTeam,
+        matchLocation,
+        observacions:document.getElementById('observacions')?.value||'',
+        players:players.map(p=>({num:p.num,name:p.name})),
+        actionsHistory:actionsHistory,
+        chronologicalActions:chronologicalActions,
+        playersInWater:Array.from(playersInWater),
+        quarterStartTimes:quarterStartTimes,
+        quarterRealEndTimes:quarterRealEndTimes,  // ✅ AFEGIR AIXÒ
+        playerWaterChanges:playerWaterChanges
+    }));
+}
+
+function loadFromLocalStorage(){
+    try{
+        const s=localStorage.getItem('cntWaterpoloData');
+        if(s){
+            const d=JSON.parse(s);
+            if(d.stats)stats=d.stats;
+            if(d.rivalStats)rivalStats=d.rivalStats;
+            if(d.lineups)lineups=d.lineups;
+            if(d.periodScores)periodScores=d.periodScores;
+            if(d.tempsMortCNT!==undefined)tempsMortCNT=d.tempsMortCNT;
+            if(d.tempsMortRival!==undefined)tempsMortRival=d.tempsMortRival;
+            if(d.rivalTeam)rivalTeam=d.rivalTeam;
+            if(d.matchLocation)matchLocation=d.matchLocation;
+            if(d.observacions)observacions=d.observacions;
+            if(d.players){
+                d.players.forEach(p=>{
+                    const pl=players.find(pl=>pl.num===p.num);
+                    if(pl)pl.name=p.name;
+                });
+            }
+            Object.keys(stats).forEach(k=>{
+                if(stats[k].penaltyMissed===undefined)stats[k].penaltyMissed=0;
+            });
+            rivalStats.forEach(p=>{
+                if(p.penaltyMissed===undefined)p.penaltyMissed=0;
+            });
+            const t1=document.getElementById('tempsMortCNT');
+            if(t1)t1.textContent=tempsMortCNT;
+            const t2=document.getElementById('tempsMortRival');
+            if(t2)t2.textContent=tempsMortRival;
+            const r1=document.getElementById('rivalTeamInput');
+            if(r1)r1.value=rivalTeam||'Rival';
+            const r2=document.getElementById('rivalTeamLabel');
+            if(r2)r2.textContent=rivalTeam||'RIVAL';
+            const o=document.getElementById('observacions');
+            if(d.actionsHistory)actionsHistory=d.actionsHistory;
+            if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;
+            if(d.playersInWater)playersInWater=new Set(d.playersInWater);
+            if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;
+            if(d.quarterRealEndTimes)quarterRealEndTimes=d.quarterRealEndTimes;  // ✅ AFEGIR AIXÒ
+            if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;
+            if(o)o.value=observacions;
+            if(matchLocation==='home'){
+                document.getElementById('locationHome')?.classList.add('selected');
+            }else{
+                document.getElementById('locationAway')?.classList.add('selected');
+            }
+        }
+    }catch(e){
+        console.error('Error:',e);
+    }
+}
+
+function openGoalModal(n,isR,inc){if(inc<0){if(isR){updateRivalStat(n,'gols',inc)}else{updateStat(n,'gols',inc)}return}currentGoalContext={playerNum:n,isRival:isR};document.getElementById('goalModal').classList.add('show')}
+function selectGoalType(t){if(!currentGoalContext)return;const{playerNum,isRival}=currentGoalContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].goalTypes)rivalStats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};rivalStats[playerNum].gols++;rivalStats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-gols-${playerNum}`).textContent=rivalStats[playerNum].gols;if(compactMode)renderCompactView();else renderRivalPlayers()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].goalTypes)stats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};stats[playerNum].gols++;stats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`gols-${playerNum}`).textContent=stats[playerNum].gols;if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'gol',playerNum:playerNum,isRival:isRival,goalType:t,text:`${playerName}: Gol ${t==='h+'?'H+':t==='penalty'?'Penalty':t==='contra'?'Contra':t==='boya'?'Boya':'Normal'}`});updateScores();updateQuarterInfo();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage();closeGoalModal()}
+function openExclusionModal(n,isR,inc){if(inc<0){if(isR){updateRivalExclusion(n,inc)}else{updateExclusion(n,inc)}return}currentExclusionContext={playerNum:n,isRival:isR};document.getElementById('exclusionModal').classList.add('show')}
+function selectExclusionType(t){if(!currentExclusionContext)return;const{playerNum,isRival}=currentExclusionContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].exclusionTypes)rivalStats[playerNum].exclusionTypes={normal:0,penalty:0};rivalStats[playerNum].exclusions++;rivalStats[playerNum].exclusionTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'exclusion',exclusionType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-exc-${playerNum}`).textContent=rivalStats[playerNum].exclusions;updateRivalNameColor(playerNum,rivalStats[playerNum].exclusions);if(compactMode)renderCompactView();else renderRivalPlayers()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].exclusionTypes)stats[playerNum].exclusionTypes={normal:0,penalty:0};stats[playerNum].exclusions++;stats[playerNum].exclusionTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'exclusion',exclusionType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`exc-${playerNum}`).textContent=stats[playerNum].exclusions;updatePlayerNameColor(playerNum,stats[playerNum].exclusions);if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'exclusion',playerNum:playerNum,isRival:isRival,exclusionType:t,text:`${playerName}: ${t==='penalty'?'Exclusión Penalty':'Exclusión'}`});saveToLocalStorage();closeExclusionModal()}
+function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderPlayers()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
+function updateRivalExclusion(i,inc){rivalStats[i].exclusions=Math.max(0,rivalStats[i].exclusions+inc);if(inc<0){const e=rivalStats[i].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderRivalPlayers()}document.getElementById(`rival-exc-${i}`).textContent=rivalStats[i].exclusions;updateRivalNameColor(i,rivalStats[i].exclusions);saveToLocalStorage()}
+function closeExclusionModal(){document.getElementById('exclusionModal').classList.remove('show');currentExclusionContext=null}
+function renderPlayers(){const c=document.getElementById('playersList');c.className='players-grid';c.innerHTML=players.map(p=>{const exc=stats[p.num]?.exclusions||0;let excC='';if(exc===1)excC='exc-1';else if(exc===2)excC='exc-2';else if(exc>=3)excC='exc-3';const gt=stats[p.num]?.goalTypes||{normal:0,'h+':0,penalty:0,contra:0,boya:0};let gtD='';if(gt['h+']>0)gtD+=`<span class="goal-type-badge">H+:${gt['h+']}</span>`;if(gt.penalty>0)gtD+=`<span class="goal-type-badge">P:${gt.penalty}</span>`;if(gt.contra>0)gtD+=`<span class="goal-type-badge">C:${gt.contra}</span>`;if(gt.boya>0)gtD+=`<span class="goal-type-badge">B:${gt.boya}</span>`;if(gt.normal>0)gtD+=`<span class="goal-type-badge">N:${gt.normal}</span>`;const et=stats[p.num]?.exclusionTypes||{normal:0,penalty:0};let etD='';if(et.normal>0)etD+=`<span class="goal-type-badge">EX:${et.normal}</span>`;if(et.penalty>0)etD+=`<span class="goal-type-badge">P:${et.penalty}</span>`;const isInWater=playersInWater.has(p.num);return `<div class="player-card"><div class="player-header"><div class="player-number ${isInWater?'active-player':''}">${p.num}</div><input type="text" class="player-name-input ${excC}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" placeholder="Nombre"><button class="status-btn ${isInWater?'in-water':'out-water'}" onclick="togglePlayerWaterStatus(${p.num})">${isInWater?'DINS':'FORA'}</button></div><div class="stats-row"><div class="stat-box"><div class="stat-header"><div class="stat-label">Gols</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openGoalModal(${p.num},false,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value gols" id="gols-${p.num}">${stats[p.num]?.gols||0}</span><button class="btn btn-green btn-small" onclick="openGoalModal(${p.num},false,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${gtD?`<div style="margin-top:3px">${gtD}</div>`:''}</div><div class="stat-box"><div class="stat-header"><div class="stat-label">Exclusions</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openExclusionModal(${p.num},false,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value" id="exc-${p.num}">${exc}</span><button class="btn btn-green btn-small" onclick="openExclusionModal(${p.num},false,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${etD?`<div style="margin-top:3px">${etD}</div>`:''}</div></div></div>`}).join('');setTimeout(checkPlayersInWater,100)}
+function renderRivalPlayers(){const c=document.getElementById('rivalPlayersList');c.className='players-grid';c.innerHTML=rivalStats.map((p,i)=>{const exc=p.exclusions||0;let excC='';if(exc===1)excC='exc-1';else if(exc===2)excC='exc-2';else if(exc>=3)excC='exc-3';const gt=p.goalTypes||{normal:0,'h+':0,penalty:0,contra:0,boya:0};let gtD='';if(gt['h+']>0)gtD+=`<span class="goal-type-badge">H+:${gt['h+']}</span>`;if(gt.penalty>0)gtD+=`<span class="goal-type-badge">P:${gt.penalty}</span>`;if(gt.contra>0)gtD+=`<span class="goal-type-badge">C:${gt.contra}</span>`;if(gt.boya>0)gtD+=`<span class="goal-type-badge">B:${gt.boya}</span>`;if(gt.normal>0)gtD+=`<span class="goal-type-badge">N:${gt.normal}</span>`;const et=p.exclusionTypes||{normal:0,penalty:0};let etD='';if(et.normal>0)etD+=`<span class="goal-type-badge">EX:${et.normal}</span>`;if(et.penalty>0)etD+=`<span class="goal-type-badge">P:${et.penalty}</span>`;return `<div class="player-card"><div class="player-header"><div class="player-number rival">${p.num}</div><input type="text" class="player-name-input ${excC}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Nombre"></div>
+<div class="stats-row"><div class="stat-box"><div class="stat-header"><div class="stat-label">Gols</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openGoalModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value gols" id="rival-gols-${i}">${p.gols||0}</span><button class="btn btn-green btn-small" onclick="openGoalModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${gtD?`<div style="margin-top:3px">${gtD}</div>`:''}</div><div class="stat-box"><div class="stat-header"><div class="stat-label">Exclusions</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openExclusionModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value" id="rival-exc-${i}">${exc}</span><button class="btn btn-green btn-small" onclick="openExclusionModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${etD?`<div style="margin-top:3px">${etD}</div>`:''}</div></div></div>`}).join('')}
+function renderLineups(){
+    const c=document.getElementById('lineupsContainer');
+    c.innerHTML=['q1','q2','q3','q4'].map((q,i)=>{
+        const isComplete = lineups[q].length === 7;
+        const isEnded = quarterRealEndTimes[q] !== null;
+        
+        return `<div class="card">
+            <h2>${i+1}º Cuarto - 7 Titulares</h2>
+            <div class="lineup-counter">${lineups[q].length}/7 seleccionados</div>
+            <div class="lineup-grid">
+                ${players.map(p=>`<button class="btn lineup-btn ${lineups[q].includes(p.num)?'selected':''}" onclick="toggleLineup('${q}',${p.num})">${p.num}. ${p.name.split(' ')[0]}</button>`).join('')}
+            </div>
+            ${isComplete ? `
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 2px solid rgba(255,255,255,0.2);">
+                    ${isEnded ? 
+                        `<div style="background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; padding: 10px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 14px; font-weight: bold; color: #22c55e;">✅ Cuarto Finalizado</div>
+                            <div style="font-size: 11px; color: #bae6fd; margin-top: 4px;">
+                                Temps registrat correctament
+                            </div>
+                        </div>` 
+                        : 
+                        `<button class="btn btn-green" onclick="endQuarter('${q}')" style="width: 100%; padding: 12px; font-size: 14px;">
+                            ⏱️ Finalitzar ${i+1}º Cuarto
+                        </button>
+                        <p style="font-size: 10px; color: #bae6fd; margin-top: 8px; text-align: center;">
+                            Prem aquest botó quan acabi el quart per registrar el temps real de joc
+                        </p>`
+                    }
+                </div>
+            ` : ''}
+        </div>`;
+    }).join('');
+}
+function renderPeriodScores(){const c=document.getElementById('periodScores');let h='';['q1','q2','q3','q4'].forEach((q,i)=>{h+=`<div class="period-row"><div class="period-label">${i+1}º Cuarto</div><div class="period-score">${periodScores[q].cnt} - ${periodScores[q].rival}</div></div>`});c.innerHTML=h}
+function updatePlayerName(n,name){const p=players.find(p=>p.num===n);if(p){p.name=name;renderLineups();saveToLocalStorage()}}
+function closeGoalModal(){document.getElementById('goalModal').classList.remove('show');currentGoalContext=null}
+function updateStat(n,stat,inc){stats[n][stat]=Math.max(0,stats[n][stat]+inc);document.getElementById(`${stat==='exclusions'?'exc':'gols'}-${n}`).textContent=stats[n][stat];if(stat==='exclusions')updatePlayerNameColor(n,stats[n][stat]);if(stat==='gols'&&inc<0){const gt=stats[n].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderPlayers()}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
+function updateRivalStat(i,stat,inc){rivalStats[i][stat]=Math.max(0,rivalStats[i][stat]+inc);document.getElementById(`rival-${stat==='exclusions'?'exc':'gols'}-${i}`).textContent=rivalStats[i][stat];if(stat==='exclusions')updateRivalNameColor(i,rivalStats[i][stat]);if(stat==='gols'&&inc<0){const gt=rivalStats[i].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderRivalPlayers()}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
+function updatePlayerNameColor(n,exc){const p=players.find(p=>p.num===n);if(!p)return;const inputs=document.querySelectorAll(`input.player-name-input[value="${p.name}"]`);inputs.forEach(input=>{input.classList.remove('exc-1','exc-2','exc-3');if(exc===1)input.classList.add('exc-1');else if(exc===2)input.classList.add('exc-2');else if(exc>=3)input.classList.add('exc-3')})}
+function updateRivalNameColor(i,exc){const cards=document.querySelectorAll('#rivalPlayersList .player-card');const input=cards[i]?.querySelector('.player-name-input');if(!input)return;input.classList.remove('exc-1','exc-2','exc-3');if(exc===1)input.classList.add('exc-1');else if(exc===2)input.classList.add('exc-2');else if(exc>=3)input.classList.add('exc-3')}
+function updateRivalName(i,name){rivalStats[i].name=name;saveToLocalStorage()}
+function updateTempsMortCNT(inc){tempsMortCNT=Math.max(0,tempsMortCNT+inc);document.getElementById('tempsMortCNT').textContent=tempsMortCNT;saveToLocalStorage()}
+function updateTempsMortRival(inc){tempsMortRival=Math.max(0,tempsMortRival+inc);document.getElementById('tempsMortRival').textContent=tempsMortRival;saveToLocalStorage()}
+function updateRivalTeam(){rivalTeam=document.getElementById('rivalTeamInput').value||'Rival';document.getElementById('rivalTeamLabel').textContent=rivalTeam;saveToLocalStorage()}
+function setLocation(loc){matchLocation=loc;document.getElementById('locationHome').classList.remove('selected');document.getElementById('locationAway').classList.remove('selected');document.getElementById('location'+(loc==='home'?'Home':'Away')).classList.add('selected');saveToLocalStorage()}
+function updateScores(){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);document.getElementById('scoreCNT').textContent=cs;document.getElementById('scoreRival').textContent=rs}
+function toggleLineup(q,n){const l=lineups[q];const i=l.indexOf(n);if(i>-1){l.splice(i,1)}else if(l.length<7){l.push(n)}if(l.length===7){const qs=['q1','q2','q3','q4'];const ci=qs.indexOf(q);if(ci>0){const pq=qs[ci-1];captureLineupScore(pq)}processQuarterStart(q)}renderLineups();saveToLocalStorage()}
+function captureLineupScore(q){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);const qs=['q1','q2','q3','q4'];const qi=qs.indexOf(q);const pq=qs.slice(0,qi);const pcs=pq.reduce((s,q)=>s+periodScores[q].cnt,0);const prs=pq.reduce((s,q)=>s+periodScores[q].rival,0);periodScores[q].cnt=cs-pcs;periodScores[q].rival=rs-prs;renderPeriodScores()}
+function calculateFinalQuarter(){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);const pcs=periodScores.q1.cnt+periodScores.q2.cnt+periodScores.q3.cnt;const prs=periodScores.q1.rival+periodScores.q2.rival+periodScores.q3.rival;periodScores.q4.cnt=cs-pcs;periodScores.q4.rival=rs-prs;renderPeriodScores()}
+function showView(v){const views=['statsView','rivalView','lineupsView','configView'];views.forEach(view=>{const element=document.getElementById(view);if(element)element.classList.add('hidden')});const targetView=document.getElementById(v+'View');if(targetView)targetView.classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(event&&event.target)event.target.classList.add('active')}
+function generateMatchData(){observacions=document.getElementById('observacions')?.value||'';return {temporada:'25/26 CADET',equip:'CN TERRASSA',data:new Date().toISOString(),scoreCNT:Object.values(stats).reduce((sum,s)=>sum+s.gols,0),scoreRival:rivalStats.reduce((sum,p)=>sum+p.gols,0),lineups,periodScores,tempsMortCNT,tempsMortRival,rivalTeam,matchLocation,rivalStats,jugadors:players.map(p=>({numero:p.num,nom:p.name,estadistiques:stats[p.num]})),observacions,chronologicalActions:chronologicalActions||[],quarterStartTimes:quarterStartTimes,playerWaterChanges:playerWaterChanges||[]}}
+function exportData(){const d=generateMatchData();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';a.download=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;a.click();URL.revokeObjectURL(u)}
+function importData(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.lineups)lineups=d.lineups;if(d.periodScores)periodScores=d.periodScores;if(d.tempsMortCNT!==undefined){tempsMortCNT=d.tempsMortCNT;document.getElementById('tempsMortCNT').textContent=tempsMortCNT}if(d.tempsMortRival!==undefined){tempsMortRival=d.tempsMortRival;document.getElementById('tempsMortRival').textContent=tempsMortRival}if(d.rivalTeam){rivalTeam=d.rivalTeam;document.getElementById('rivalTeamInput').value=rivalTeam;document.getElementById('rivalTeamLabel').textContent=rivalTeam}if(d.rivalStats)rivalStats=d.rivalStats;if(d.observacions)document.getElementById('observacions').value=d.observacions;if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;else chronologicalActions=[];if(d.playersInWater)playersInWater=new Set(d.playersInWater);else playersInWater=new Set();if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;else quarterStartTimes={q1:null,q2:null,q3:null,q4:null};if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;else playerWaterChanges=[];if(d.jugadors){d.jugadors.forEach(j=>{const p=players.find(p=>p.num===j.numero);if(p)p.name=j.nom;stats[j.numero]=j.estadistiques;if(stats[j.numero].penaltyMissed===undefined)stats[j.numero].penaltyMissed=0})}renderPlayers();renderRivalPlayers();renderLineups();renderPeriodScores();updateScores();alert('Datos importados correctamente')}catch(err){alert('Error al importar el archivo')}};r.readAsText(f)}}
+function resetAll(){if(confirm('¿Seguro que quieres resetear todas las estadísticas?')){players.forEach((p,i)=>{p.name=['DAVID CASADO','SAMUEL DIAZ','MAX CEREZO','POL RICO','OLIVER HERRERA','NIL CARDENAS','LLATZER PEREZ','JORDI FARRE','IVAN GALLEGO','ADAY ACUÑA','HECTOR DIOS','BIEL COBACHO','GUILLEM POLEY','JOSE MANUEL LLENIN'][i];stats[p.num]={exclusions:0,gols:0,penaltyMissed:0,goalTypes:{normal:0,'h+':0,penalty:0,contra:0,boya:0},exclusionTypes:{normal:0,penalty:0}}});rivalStats=[];for(let i=1;i<=14;i++){rivalStats.push({num:i,name:'',exclusions:0,gols:0,penaltyMissed:0,goalTypes:{normal:0,'h+':0,penalty:0,contra:0,boya:0},exclusionTypes:{normal:0,penalty:0}})}lineups={q1:[],q2:[],q3:[],q4:[]};periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}};tempsMortCNT=0;tempsMortRival=0;rivalTeam='';matchLocation='home';observacions='';chronologicalActions=[];playersInWater=new Set();quarterStartTimes={q1:null,q2:null,q3:null,q4:null};playerWaterChanges=[];const rivalInput=document.getElementById('rivalTeamInput');if(rivalInput)rivalInput.value='';const rivalLabel=document.getElementById('rivalTeamLabel');if(rivalLabel)rivalLabel.textContent='RIVAL';const locHome=document.getElementById('locationHome');if(locHome)locHome.classList.add('selected');const locAway=document.getElementById('locationAway');if(locAway)locAway.classList.remove('selected');const obs=document.getElementById('observacions');if(obs)obs.value='';const tmCNT=document.getElementById('tempsMortCNT');if(tmCNT)tmCNT.textContent='0';const tmRival=document.getElementById('tempsMortRival');if(tmRival)tmRival.textContent='0';renderPlayers();renderRivalPlayers();renderLineups();renderPeriodScores();updateScores();saveToLocalStorage()}}
+function addToHistory(action){actionsHistory.unshift(action);if(actionsHistory.length>10)actionsHistory.pop();renderHistory();saveToLocalStorage()}
+function renderHistory(){
+    const container=document.getElementById('actionsList');
+    if(!container)return;
+    if(actionsHistory.length===0){
+        container.innerHTML='<div style="font-size: 9px; color: rgba(255,255,255,0.5); padding: 6px;">No hay acciones recientes</div>';
+        return;
+    }
+    container.innerHTML=actionsHistory.map((action,index)=>{
+        let icon = '⚽';
+        if (action.type === 'gol') icon = '⚽';
+        else if (action.type === 'exclusion') icon = '🟥';
+        else if (action.type === 'water-change') {
+            icon = action.action === 'in' ? '🌊➡️' : '🌊⬅️';
+        } else {
+            icon = '⏱️';
+        }
+        
+        return `<div class="action-item"><span class="action-icon">${icon}</span><span>${action.text}</span><button class="undo-btn" onclick="undoAction(${index})">↩️ Deshacer</button></div>`;
+    }).join('');
+}
+function undoAction(index){
+    const action=actionsHistory[index];
+    if(!action)return;
+    
+    if(action.type==='gol'){
+        if(action.isRival){
+            rivalStats[action.playerNum].gols--;
+            if(rivalStats[action.playerNum].goalTypes&&rivalStats[action.playerNum].goalTypes[action.goalType]){
+                rivalStats[action.playerNum].goalTypes[action.goalType]--;
+            }
+            renderRivalPlayers();
+        }else{
+            stats[action.playerNum].gols--;
+            if(stats[action.playerNum].goalTypes&&stats[action.playerNum].goalTypes[action.goalType]){
+                stats[action.playerNum].goalTypes[action.goalType]--;
+            }
+            renderPlayers();
+        }
+    } else if(action.type==='exclusion'){
+        if(action.isRival){
+            rivalStats[action.playerNum].exclusions--;
+            if(rivalStats[action.playerNum].exclusionTypes&&rivalStats[action.playerNum].exclusionTypes[action.exclusionType]){
+                rivalStats[action.playerNum].exclusionTypes[action.exclusionType]--;
+            }
+            updateRivalNameColor(action.playerNum,rivalStats[action.playerNum].exclusions);
+            renderRivalPlayers();
+        }else{
+            stats[action.playerNum].exclusions--;
+            if(stats[action.playerNum].exclusionTypes&&stats[action.playerNum].exclusionTypes[action.exclusionType]){
+                stats[action.playerNum].exclusionTypes[action.exclusionType]--;
+            }
+            updatePlayerNameColor(action.playerNum,stats[action.playerNum].exclusions);
+            renderPlayers();
+        }
+    } else if(action.type === 'water-change'){
+        // ✅ DESFER CANVI D'AIGUA
+        if(action.action === 'in'){
+            playersInWater.delete(action.playerNum);
+        } else {
+            playersInWater.add(action.playerNum);
+        }
+        
+        // Eliminar l'últim canvi de playerWaterChanges
+        const lastChangeIndex = playerWaterChanges.map((c, i) => ({...c, index: i}))
+            .reverse()
+            .find(c => c.playerNum === action.playerNum && c.action === action.action);
+        
+        if(lastChangeIndex){
+            playerWaterChanges.splice(lastChangeIndex.index, 1);
+        }
+        
+        // Eliminar de chronologicalActions
+        const lastChronIndex = chronologicalActions.map((a, i) => ({...a, index: i}))
+            .reverse()
+            .find(a => a.type === 'water-change' && 
+                      a.playerNum === action.playerNum && 
+                      a.action === action.action);
+        
+        if(lastChronIndex){
+            chronologicalActions.splice(lastChronIndex.index, 1);
+        }
+        
+        renderPlayers();
+        if(compactMode) renderCompactView();
+    }
+    
+    actionsHistory.splice(index,1);
+    updateScores();
+    updateQuarterInfo();
+    renderHistory();
+    
+    if(action.type==='gol'){
+        const lastGoalIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='goal'&&a.team===(action.isRival?'rival':'cnt')&&a.playerNum===action.playerNum&&a.goalType===action.goalType);
+        if(lastGoalIndex){
+            chronologicalActions.splice(lastGoalIndex.index,1);
+        }
+    } else if(action.type==='exclusion'){
+        const lastExcIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='exclusion'&&a.team===(action.isRival?'rival':'cnt')&&a.playerNum===action.playerNum&&a.exclusionType===action.exclusionType);
+        if(lastExcIndex){
+            chronologicalActions.splice(lastExcIndex.index,1);
+        }
+    }
+    
+    saveToLocalStorage();
+}
+function clearHistory(){if(confirm('¿Limpiar el historial de acciones?')){actionsHistory=[];renderHistory();saveToLocalStorage()}}
+function updateQuarterInfo(){const container=document.getElementById('quarterInfo');if(!container)return;const currentQuarter=getCurrentQuarter();const qNum=currentQuarter==='q1'?'1':currentQuarter==='q2'?'2':currentQuarter==='q3'?'3':'4';const totalCNT=Object.values(stats).reduce((s,st)=>s+st.gols,0);const totalRival=rivalStats.reduce((s,p)=>s+p.gols,0);const quarters=['q1','q2','q3','q4'];const currentIndex=quarters.indexOf(currentQuarter);let previousCNT=0;let previousRival=0;for(let i=0;i<currentIndex;i++){previousCNT+=periodScores[quarters[i]].cnt;previousRival+=periodScores[quarters[i]].rival}const qScoreCNT=totalCNT-previousCNT;const qScoreRival=totalRival-previousRival;container.textContent=`Q${qNum}: ${qScoreCNT}-${qScoreRival}`}
+function getCurrentQuarter(){if(lineups.q4.length===7)return 'q4';if(lineups.q3.length===7)return 'q3';if(lineups.q2.length===7)return 'q2';return 'q1'}
+function toggleCompactMode(){compactMode=!compactMode;const btn=document.getElementById('compactToggleText');if(btn){btn.textContent=compactMode?'📋 Vista Normal':'👁️ Vista Compacta'}if(compactMode){renderCompactView()}else{renderPlayers();renderRivalPlayers()}}
+function renderCompactView(){
+    const cntContainer=document.getElementById('playersList');
+    const rivalContainer=document.getElementById('rivalPlayersList');
+    cntContainer.className='compact-grid';
+    rivalContainer.className='compact-grid';
+    
+    cntContainer.innerHTML=players.map(p=>{
+        const gols=stats[p.num]?.gols||0;
+        const exc=stats[p.num]?.exclusions||0;
+        const isInWater=playersInWater.has(p.num);
+        let excClass='';
+        if(exc===1)excClass='exc-1';
+        else if(exc===2)excClass='exc-2';
+        else if(exc>=3)excClass='exc-3';
+        
+        return `<div class="compact-player">
+            <div class="compact-header" style="margin-bottom: 2px;">
+                <div class="player-number ${isInWater?'active-player':''}">${p.num}</div>
+                <input type="text" class="compact-name player-name-input ${excClass}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" style="flex: 1; font-size: 8px; padding: 2px 3px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); color: white; background: rgba(255,255,255,0.2);">
+            </div>
+            <div class="compact-actions">
+                <button class="compact-btn compact-btn-gol" onclick="openGoalModal(${p.num}, false, 1)">
+                    <div class="compact-value" id="gols-${p.num}">${gols}</div>
+                    <div>⚽</div>
+                </button>
+                <button class="compact-btn compact-btn-exc" onclick="openExclusionModal(${p.num}, false, 1)">
+                    <div class="compact-value" id="exc-${p.num}">${exc}</div>
+                    <div>🟥</div>
+                </button>
+                <button class="compact-btn ${isInWater?'compact-btn-gol':'compact-btn-water out'}" onclick="togglePlayerWaterStatus(${p.num})">
+                    <div class="compact-value" style="font-size: 10px;">${isInWater?'DINS':'FORA'}</div>
+                    <div>💧</div>
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+    
+    rivalContainer.innerHTML=rivalStats.map((p,i)=>{
+        const gols=p.gols||0;
+        const exc=p.exclusions||0;
+        let excClass='';
+        if(exc===1)excClass='exc-1';
+        else if(exc===2)excClass='exc-2';
+        else if(exc>=3)excClass='exc-3';
+        
+        return `<div class="compact-player">
+            <div class="compact-header">
+                <div class="player-number rival">${p.num}</div>
+                <input type="text" class="compact-name player-name-input ${excClass}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Rival ${p.num}" style="flex: 1; font-size: 9px; padding: 2px 4px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); color: white; background: rgba(255,255,255,0.2);">
+            </div>
+            <div class="compact-actions">
+                <button class="compact-btn compact-btn-gol" onclick="openGoalModal(${i}, true, 1)">
+                    <div class="compact-value" id="rival-gols-${i}">${gols}</div>
+                    <div>⚽</div>
+                </button>
+                <button class="compact-btn compact-btn-exc" onclick="openExclusionModal(${i}, true, 1)">
+                    <div class="compact-value" id="rival-exc-${i}">${exc}</div>
+                    <div>🟥</div>
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+    
+    setTimeout(checkPlayersInWater,100);
+}
+function saveGithubConfig(){githubConfig.token=document.getElementById('githubToken').value;githubConfig.repo=document.getElementById('githubRepo').value;githubConfig.branch=document.getElementById('githubBranch').value;localStorage.setItem('githubConfig',JSON.stringify(githubConfig));updateGithubStatus()}
+function loadGithubConfig(){const saved=localStorage.getItem('githubConfig');if(saved){githubConfig=JSON.parse(saved);if(document.getElementById('githubToken')){document.getElementById('githubToken').value=githubConfig.token;document.getElementById('githubRepo').value=githubConfig.repo;document.getElementById('githubBranch').value=githubConfig.branch}}}
+function updateGithubStatus(){const statusDiv=document.getElementById('githubStatus');if(!statusDiv)return;if(!githubConfig.token){statusDiv.innerHTML='<div class="github-status warning">⚠️ Token de GitHub no configurado</div>'}else{statusDiv.innerHTML='<div class="github-status success">✓ Configuración guardada</div>'}}
+async function testGithubConnection(){const statusDiv=document.getElementById('githubStatus');if(!githubConfig.token){statusDiv.innerHTML='<div class="github-status error">❌ Configura primero el token</div>';return}statusDiv.innerHTML='<div class="github-status">🔄 Probando conexión...</div>';try{const[owner,repo]=githubConfig.repo.split('/');const response=await fetch(`https://api.github.com/repos/${owner}/${repo}`,{headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json'}});if(response.ok){statusDiv.innerHTML='<div class="github-status success">✓ Conexión exitosa</div>'}else{statusDiv.innerHTML='<div class="github-status error">❌ Error: Verifica token y repositorio</div>'}}catch(error){statusDiv.innerHTML='<div class="github-status error">❌ Error de conexión</div>'}}
+async function uploadToGithub(){if(!githubConfig.token){alert('Configura primero el token de GitHub en la pestaña Config');return}const data=generateMatchData();const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';const fileName=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;const[owner,repo]=githubConfig.repo.split('/');try{let sha=null;try{const checkResponse=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${fileName}?ref=${githubConfig.branch}`,{headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json'}});if(checkResponse.ok){const fileData=await checkResponse.json();sha=fileData.sha}}catch(e){}const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));const uploadData={message:`Actualizar estadísticas - ${new Date().toLocaleDateString('es-ES')}`,content:content,branch:githubConfig.branch};if(sha){uploadData.sha=sha}const response=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`,{method:'PUT',headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(uploadData)});if(response.ok){alert('✅ Archivo subido exitosamente a GitHub')}else{const error=await response.json();alert('Error al subir: '+(error.message||'Error desconocido'))}}catch(error){alert('Error de conexión: '+error.message)}}
+function togglePlayerWaterStatus(playerNum){
+    const timestamp=Date.now();
+    const currentQuarter=getCurrentQuarter();
+    const player = players.find(p => p.num === playerNum);
+    const playerName = player ? player.name : `Jugador ${playerNum}`;
+    
+    if(playersInWater.has(playerNum)){
+        playersInWater.delete(playerNum);
+        playerWaterChanges.push({
+            playerNum:playerNum,
+            quarter:currentQuarter,
+            action:'out',
+            timestamp:timestamp
+        });
+        
+        // ✅ AFEGIR A L'HISTORIAL
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'out',
+            text: `${playerName}: Surt de l'aigua`
+        });
+        
+        // ✅ AFEGIR A CHRONOLOGICAL ACTIONS
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'out',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    } else {
+        playersInWater.add(playerNum);
+        playerWaterChanges.push({
+            playerNum:playerNum,
+            quarter:currentQuarter,
+            action:'in',
+            timestamp:timestamp
+        });
+        
+        // ✅ AFEGIR A L'HISTORIAL
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'in',
+            text: `${playerName}: Entra a l'aigua`
+        });
+        
+        // ✅ AFEGIR A CHRONOLOGICAL ACTIONS
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'in',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    }
+    
+    renderPlayers();
+    if(compactMode)renderCompactView();
+    saveToLocalStorage();
+    checkPlayersInWater();
+}
+function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
+function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderPlayers();if(compactMode)renderCompactView();saveToLocalStorage()}
+function calculatePlayingTimeForMatch(){const result={};const quarterDuration=480;players.forEach(p=>{const times={q1:0,q2:0,q3:0,q4:0,total:0};const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);['q1','q2','q3','q4'].forEach(quarter=>{const qChanges=playerChanges.filter(c=>c.quarter===quarter);if(qChanges.length===0){times[quarter]=0;return}qChanges.sort((a,b)=>a.timestamp-b.timestamp);let timeInWater=0;let lastInTime=null;const quarterStartTime=quarterStartTimes[quarter];if(!quarterStartTime){times[quarter]=0;return}qChanges.forEach(change=>{if(change.action==='in'){lastInTime=change.timestamp}else if(change.action==='out'&&lastInTime!==null){timeInWater+=(change.timestamp-lastInTime)/1000;lastInTime=null}});if(lastInTime!==null){const quarterEndTime=quarterStartTime+quarterDuration*1000;timeInWater+=(quarterEndTime-lastInTime)/1000}times[quarter]=Math.round(timeInWater)});times.total=times.q1+times.q2+times.q3+times.q4;result[p.num]={name:p.name,times:times}});return result}
+function formatTime(seconds){const mins=Math.floor(seconds/60);const secs=seconds%60;return `${mins}:${secs.toString().padStart(2,'0')}`}
+function showPlayingTimes(){const times=calculatePlayingTimeForMatch();let report='⏱️ TEMPS DE JOC PER JUGADOR\n\n';players.forEach(p=>{const t=times[p.num].times;report+=`${p.num}. ${p.name}\n`;report+=`  Q1: ${formatTime(t.q1)} | Q2: ${formatTime(t.q2)} | Q3: ${formatTime(t.q3)} | Q4: ${formatTime(t.q4)}\n`;report+=`  TOTAL: ${formatTime(t.total)} (${Math.round((t.total/1920)*100)}%)\n\n`});alert(report)}
+function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
+document.addEventListener('DOMContentLoaded',function(){const o=document.getElementById('observacions');if(o){o.addEventListener('input',function(){saveToLocalStorage()})}init()});
+</script>
+<script>
+    // 🔒 Bloqueo de clic derecho y atajos
+    document.addEventListener("contextmenu", event => event.preventDefault());
+    document.addEventListener("keydown", event => {
+      if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
+          event.key === "F12") {
+        event.preventDefault();
+      }
+    });
+    </script>
+</body>
+</html>
