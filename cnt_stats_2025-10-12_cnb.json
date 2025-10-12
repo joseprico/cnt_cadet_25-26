@@ -1,7 +1,7 @@
 {
   "temporada": "25/26 CADET",
   "equip": "CN TERRASSA",
-  "data": "2025-10-12T15:27:08.602Z",
+  "data": "2025-10-12T15:55:27.164Z",
   "scoreCNT": 1,
   "scoreRival": 0,
   "lineups": {
@@ -354,7 +354,7 @@
         "assistencies": 1,
         "robatoris": 1,
         "perdues": 0,
-        "xutsFallats": 1,
+        "xutsFallats": 4,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -384,7 +384,7 @@
         "assistencies": 0,
         "robatoris": 1,
         "perdues": 0,
-        "xutsFallats": 1,
+        "xutsFallats": 3,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -414,7 +414,7 @@
         "assistencies": 1,
         "robatoris": 0,
         "perdues": 1,
-        "xutsFallats": 0,
+        "xutsFallats": 2,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -504,7 +504,7 @@
         "assistencies": 0,
         "robatoris": 0,
         "perdues": 1,
-        "xutsFallats": 0,
+        "xutsFallats": 2,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -869,6 +869,87 @@
       "team": "cnt",
       "playerNum": 3,
       "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1760284511836,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1760284513382,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1760284514860,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1760284516804,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1760284518228,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1760284519774,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1760284521388,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1760284522708,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1760284523990,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
     }
   ],
   "quarterStartTimes": {
