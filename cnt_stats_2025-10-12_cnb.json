@@ -1,7 +1,7 @@
 {
   "temporada": "25/26 CADET",
   "equip": "CN TERRASSA",
-  "data": "2025-10-12T15:06:30.286Z",
+  "data": "2025-10-12T15:27:08.602Z",
   "scoreCNT": 1,
   "scoreRival": 0,
   "lineups": {
@@ -14,13 +14,21 @@
       6,
       8
     ],
-    "q2": [],
+    "q2": [
+      1,
+      2,
+      4,
+      3,
+      5,
+      6,
+      8
+    ],
     "q3": [],
     "q4": []
   },
   "periodScores": {
     "q1": {
-      "cnt": 0,
+      "cnt": 1,
       "rival": 0
     },
     "q2": {
@@ -346,7 +354,7 @@
         "assistencies": 1,
         "robatoris": 1,
         "perdues": 0,
-        "xutsFallats": 0,
+        "xutsFallats": 1,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -376,7 +384,7 @@
         "assistencies": 0,
         "robatoris": 1,
         "perdues": 0,
-        "xutsFallats": 0,
+        "xutsFallats": 1,
         "paradeTypes": {
           "corner": 0,
           "rebuig": 0,
@@ -403,7 +411,7 @@
           "normal": 0,
           "penalty": 0
         },
-        "assistencies": 0,
+        "assistencies": 1,
         "robatoris": 0,
         "perdues": 1,
         "xutsFallats": 0,
@@ -525,7 +533,7 @@
         },
         "assistencies": 0,
         "robatoris": 0,
-        "perdues": 0,
+        "perdues": 1,
         "xutsFallats": 1,
         "paradeTypes": {
           "corner": 0,
@@ -584,7 +592,7 @@
           "penalty": 0
         },
         "assistencies": 0,
-        "robatoris": 0,
+        "robatoris": 1,
         "perdues": 0,
         "xutsFallats": 0,
         "paradeTypes": {
@@ -614,7 +622,7 @@
           "penalty": 0
         },
         "assistencies": 0,
-        "robatoris": 0,
+        "robatoris": 1,
         "perdues": 0,
         "xutsFallats": 0,
         "paradeTypes": {
@@ -807,11 +815,65 @@
       "team": "cnt",
       "playerNum": 4,
       "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1760282807739,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1760282809780,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1760282811698,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1760282813715,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1760282815955,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1760282823626,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
     }
   ],
   "quarterStartTimes": {
     "q1": 1760281550190,
-    "q2": null,
+    "q2": 1760282800051,
     "q3": null,
     "q4": null
   },
@@ -857,6 +919,48 @@
       "quarter": "q1",
       "action": "in",
       "timestamp": 1760281550190
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1760282800051
     }
   ]
 }
