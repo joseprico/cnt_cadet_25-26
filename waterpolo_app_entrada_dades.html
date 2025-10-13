@@ -282,7 +282,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-const players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'JORDI FARRE'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'JOSE MANUEL LLENIN'}];
+let players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'JORDI FARRE'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'JOSE MANUEL LLENIN'}];
 let stats={},rivalStats=[],lineups={q1:[],q2:[],q3:[],q4:[]},periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}},tempsMortCNT=0,tempsMortRival=0,rivalTeam='',matchLocation='home',observacions='',currentGoalContext=null,currentExclusionContext=null,currentSaveContext=null,currentActionContext=null,actionsHistory=[],compactMode=true,chronologicalActions=[];
 let githubConfig={token:'',repo:'joseprico/cnt_cadet_25-26',branch:'main'};
 let playersInWater=new Set();
@@ -946,84 +946,86 @@ function showView(v){const views=['statsView','rivalView','lineupsView','configV
 function generateMatchData(){observacions=document.getElementById('observacions')?.value||'';return {temporada:'25/26 CADET',equip:'CN TERRASSA',data:new Date().toISOString(),scoreCNT:Object.values(stats).reduce((sum,s)=>sum+s.gols,0),scoreRival:rivalStats.reduce((sum,p)=>sum+p.gols,0),lineups,periodScores,tempsMortCNT,tempsMortRival,rivalTeam,matchLocation,rivalStats,jugadors:players.map(p=>({numero:p.num,nom:p.name,estadistiques:stats[p.num]})),observacions,chronologicalActions:chronologicalActions||[],quarterStartTimes:quarterStartTimes,playerWaterChanges:playerWaterChanges||[]}}
 function exportData(){const d=generateMatchData();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';a.download=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;a.click();URL.revokeObjectURL(u)}
 function importData(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.lineups)lineups=d.lineups;if(d.periodScores)periodScores=d.periodScores;if(d.tempsMortCNT!==undefined){tempsMortCNT=d.tempsMortCNT;document.getElementById('tempsMortCNT').textContent=tempsMortCNT}if(d.tempsMortRival!==undefined){tempsMortRival=d.tempsMortRival;document.getElementById('tempsMortRival').textContent=tempsMortRival}if(d.rivalTeam){rivalTeam=d.rivalTeam;document.getElementById('rivalTeamInput').value=rivalTeam;document.getElementById('rivalTeamLabel').textContent=rivalTeam}if(d.rivalStats)rivalStats=d.rivalStats;if(d.observacions)document.getElementById('observacions').value=d.observacions;if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;else chronologicalActions=[];if(d.playersInWater)playersInWater=new Set(d.playersInWater);else playersInWater=new Set();if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;else quarterStartTimes={q1:null,q2:null,q3:null,q4:null};if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;else playerWaterChanges=[];if(d.jugadors){d.jugadors.forEach(j=>{const p=players.find(p=>p.num===j.numero);if(p)p.name=j.nom;stats[j.numero]=j.estadistiques;if(stats[j.numero].penaltyMissed===undefined)stats[j.numero].penaltyMissed=0})}renderPlayers();renderCompactView();renderLineups();renderPeriodScores();updateScores();alert('Datos importados correctamente')}catch(err){alert('Error al importar el archivo')}};r.readAsText(f)}}
-function resetAll(){
-    if(confirm('¿Seguro que quieres resetear todas las estadísticas?')){
-        players.forEach((p,i)=>{
-            p.name=['DAVID CASADO','SAMUEL DIAZ','MAX CEREZO','POL RICO','OLIVER HERRERA','NIL CARDENAS','LLATZER PEREZ','JORDI FARRE','IVAN GALLEGO','ADAY ACUÑA','HECTOR DIOS','BIEL COBACHO','GUILLEM POLEY','JOSE MANUEL LLENIN'][i];
- javascriptstats[p.num] = {
-    exclusions: 0,
-    gols: 0,
-    penaltyMissed: 0,
-    goalTypes: {
-        normal: 0,
-        'h+': 0,
-        penalty: 0,
-        contra: 0,
-        boya: 0
-    },
-    exclusionTypes: {
-        normal: 0,
-        penalty: 0
-    },
-    parades: 0,
-    paradeTypes: {
-        corner: 0,
-        rebuig: 0,
-        atrapa: 0
-    },
-    assistencies: 0,
-    robatoris: 0,
-    perdues: 0,
-	xutsFallats: 0
-};
+function resetAll() {
+    if (confirm('¿Seguro que quieres resetear todas las estadísticas?')) {
+        // Resetear jugadores a los predefinidos del CNT
+        players = [
+            { num: 1, name: 'DAVID CASADO' },
+            { num: 2, name: 'SAMUEL DIAZ' },
+            { num: 3, name: 'MAX CEREZO' },
+            { num: 4, name: 'POL RICO' },
+            { num: 5, name: 'OLIVER HERRERA' },
+            { num: 6, name: 'NIL CARDENAS' },
+            { num: 7, name: 'LLATZER PEREZ' },
+            { num: 8, name: 'JORDI FARRE' },
+            { num: 9, name: 'IVAN GALLEGO' },
+            { num: 10, name: 'ADAY ACUÑA' },
+            { num: 11, name: 'HECTOR DIOS' },
+            { num: 12, name: 'BIEL COBACHO' },
+            { num: 13, name: 'GUILLEM POLEY' },
+            { num: 14, name: 'JOSE MANUEL LLENIN' }
+        ];
+
+        // Resetear estadísticas de jugadores
+        stats = {};
+        players.forEach(p => {
+            stats[p.num] = {
+                gols: 0,
+                exclusions: 0,
+                penaltyMissed: 0,
+                goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 },
+                exclusionTypes: { normal: 0, penalty: 0 },
+                parades: 0,
+                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0 },
+                assistencies: 0,
+                robatoris: 0,
+                perdues: 0,
+                xutsFallats: 0,
+                blocatges: 0,
+                faltesRebudes: 0
+            };
         });
-        
-        rivalStats=[];
-        for(let i=1;i<=14;i++){
-            rivalStats.push({num:i,name:'',exclusions:0,gols:0,penaltyMissed:0,goalTypes:{normal:0,'h+':0,penalty:0,contra:0,boya:0},exclusionTypes:{normal:0,penalty:0}})
-        }
-        
-        lineups={q1:[],q2:[],q3:[],q4:[]};
-        periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}};
-        tempsMortCNT=0;
-        tempsMortRival=0;
-        rivalTeam='';
-        matchLocation='home';
-        observacions='';
-        chronologicalActions=[];
-        playersInWater=new Set();
-        
-        // ✅ AFEGIR AQUESTES LÍNIES:
-        quarterStartTimes={q1:null,q2:null,q3:null,q4:null};
-        quarterRealEndTimes={q1:null,q2:null,q3:null,q4:null};
-        playerWaterChanges=[];
-        actionsHistory=[];
-        
-        const rivalInput=document.getElementById('rivalTeamInput');
-        if(rivalInput)rivalInput.value='';
-        const rivalLabel=document.getElementById('rivalTeamLabel');
-        if(rivalLabel)rivalLabel.textContent='RIVAL';
-        const locHome=document.getElementById('locationHome');
-        if(locHome)locHome.classList.add('selected');
-        const locAway=document.getElementById('locationAway');
-        if(locAway)locAway.classList.remove('selected');
-        const obs=document.getElementById('observacions');
-        if(obs)obs.value='';
-        const tmCNT=document.getElementById('tempsMortCNT');
-        if(tmCNT)tmCNT.textContent='0';
-        const tmRival=document.getElementById('tempsMortRival');
-        if(tmRival)tmRival.textContent='0';
+
+        // Resetear rival
+        rivalStats = Array(14).fill(null).map((_, i) => ({
+            num: i + 1,
+            name: '',
+            gols: 0,
+            exclusions: 0,
+            penaltyMissed: 0,
+            goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 },
+            exclusionTypes: { normal: 0, penalty: 0 }
+        }));
+
+        // Resetear altres dades
+        rivalTeam = 'Rival';
+        matchLocation = 'home';
+        lineups = { q1: [], q2: [], q3: [], q4: [] };
+        periodScores = { q1: { cnt: 0, rival: 0 }, q2: { cnt: 0, rival: 0 }, q3: { cnt: 0, rival: 0 }, q4: { cnt: 0, rival: 0 } };
+        tempsMortCNT = 0;
+        tempsMortRival = 0;
+        actionsHistory = [];
+        chronologicalActions = [];
+        playersInWater = new Set();
+        quarterStartTimes = { q1: null, q2: null, q3: null, q4: null };
+        playerWaterChanges = [];
+
+        // Actualitzar interfície
+        document.getElementById('rivalTeamInput').value = 'Rival';
+        document.getElementById('rivalTeamLabel').textContent = 'Rival';
+        document.getElementById('tempsMortCNT').textContent = '0';
+        document.getElementById('tempsMortRival').textContent = '0';
+        document.getElementById('observacions').value = '';
         
         renderPlayers();
         renderCompactView();
         renderLineups();
         renderPeriodScores();
-        updateScores();
-        updatePenaltyMissedSummary();
         renderHistory();
+        updateScores();
+
         saveToLocalStorage();
-        
-        alert('✅ Tot reseteado correctament, inclosos els temps dels quarts!');
+        alert('Estadísticas reseteadas correctamente. Jugadores del CNT restaurados.');
     }
 }
 function addToHistory(action){actionsHistory.unshift(action);if(actionsHistory.length>10)actionsHistory.pop();renderHistory();saveToLocalStorage()}
@@ -1542,13 +1544,13 @@ function updateSave(n, inc) {
 </script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+  /*  document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
