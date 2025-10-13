@@ -209,9 +209,18 @@
     </div>
 
     <div id="goalModal" class="modal"><div class="modal-content"><div class="modal-title">Tipo de Gol</div><div class="modal-buttons"><button class="modal-btn" onclick="selectGoalType('normal')">Normal</button><button class="modal-btn" onclick="selectGoalType('h+')">H+</button><button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button><button class="modal-btn" onclick="selectGoalType('contra')">Contra</button><button class="modal-btn" onclick="selectGoalType('boya')">Boya</button></div><button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button></div></div>
-    <div id="exclusionModal" class="modal">
+<div id="exclusionModal" class="modal">
     <div class="modal-content">
         <div class="modal-title">Tipo de Exclusión</div>
+        
+        <!-- Selector només visible per exclusions rivals -->
+        <div id="cntPlayerSelector" style="margin-bottom: 10px; display: none;">
+            <label style="font-size: 12px; margin-bottom: 5px; display: block;">Falta sobre jugador CNT:</label>
+            <select id="cntPlayerSelect" class="input" style="padding: 8px;">
+                <option value="">Sense especificar</option>
+            </select>
+        </div>
+        
         <div class="modal-buttons">
             <button class="modal-btn" onclick="selectExclusionType('normal')">Exclusión</button>
             <button class="modal-btn" onclick="selectExclusionType('penalty')">Penalty</button>
@@ -238,6 +247,7 @@
             <button class="modal-btn" onclick="selectActionType('robatori')">🛡️ Robatori</button>
             <button class="modal-btn" onclick="selectActionType('perdua')">❌ Pèrdua</button>
 			<button class="modal-btn" onclick="selectActionType('xut')">🚫 Xut Fallat</button>
+			<button class="modal-btn" onclick="selectActionType('block')">🚫 Block</button>
         </div>
         <button class="btn btn-red" style="width: 100%;" onclick="closeActionModal()">Cancelar</button>
     </div>
@@ -484,6 +494,7 @@ function selectActionType(type) {
     } else if (type === 'xut') {
         stats[playerNum].xutsFallats = (stats[playerNum].xutsFallats || 0) + 1;
     }
+	else if(t==='block'){stats[pn].blocks=(stats[pn].blocks||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'action',actionType:'block',team:'cnt',playerNum:pn,playerName:playerName})}
     
     chronologicalActions.push({
         timestamp: timestamp,
@@ -641,8 +652,99 @@ function loadFromLocalStorage(){
 
 function openGoalModal(n,isR,inc){if(inc<0){if(isR){updateRivalStat(n,'gols',inc)}else{updateStat(n,'gols',inc)}return}currentGoalContext={playerNum:n,isRival:isR};document.getElementById('goalModal').classList.add('show')}
 function selectGoalType(t){if(!currentGoalContext)return;const{playerNum,isRival}=currentGoalContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].goalTypes)rivalStats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};rivalStats[playerNum].gols++;rivalStats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-gols-${playerNum}`).textContent=rivalStats[playerNum].gols;if(compactMode)renderCompactView();else renderCompactView()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].goalTypes)stats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};stats[playerNum].gols++;stats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`gols-${playerNum}`).textContent=stats[playerNum].gols;if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'gol',playerNum:playerNum,isRival:isRival,goalType:t,text:`${playerName}: Gol ${t==='h+'?'H+':t==='penalty'?'Penalty':t==='contra'?'Contra':t==='boya'?'Boya':'Normal'}`});updateScores();updateQuarterInfo();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage();closeGoalModal()}
-function openExclusionModal(n,isR,inc){if(inc<0){if(isR){updateRivalExclusion(n,inc)}else{updateExclusion(n,inc)}return}currentExclusionContext={playerNum:n,isRival:isR};document.getElementById('exclusionModal').classList.add('show')}
-function selectExclusionType(t){if(!currentExclusionContext)return;const{playerNum,isRival}=currentExclusionContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].exclusionTypes)rivalStats[playerNum].exclusionTypes={normal:0,penalty:0};rivalStats[playerNum].exclusions++;rivalStats[playerNum].exclusionTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'exclusion',exclusionType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-exc-${playerNum}`).textContent=rivalStats[playerNum].exclusions;updateRivalNameColor(playerNum,rivalStats[playerNum].exclusions);if(compactMode)renderCompactView();else renderCompactView()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].exclusionTypes)stats[playerNum].exclusionTypes={normal:0,penalty:0};stats[playerNum].exclusions++;stats[playerNum].exclusionTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'exclusion',exclusionType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`exc-${playerNum}`).textContent=stats[playerNum].exclusions;updatePlayerNameColor(playerNum,stats[playerNum].exclusions);if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'exclusion',playerNum:playerNum,isRival:isRival,exclusionType:t,text:`${playerName}: ${t==='penalty'?'Exclusión Penalty':'Exclusión'}`});saveToLocalStorage();closeExclusionModal()}
+function openExclusionModal(n,isR,inc){
+    if(inc<0){
+        if(isR){updateRivalExclusion(n,inc)}
+        else{updateExclusion(n,inc)}
+        return
+    }
+    currentExclusionContext={playerNum:n,isRival:isR};
+    
+    // Si és exclusió del RIVAL, mostrar selector de jugadors CNT
+    const selectorDiv = document.getElementById('cntPlayerSelector');
+    const select = document.getElementById('cntPlayerSelect');
+    
+    if(isR){
+        // Omplir el select amb els jugadors del CNT
+        select.innerHTML = '<option value="">Sense especificar</option>' + 
+            players.map(p => `<option value="${p.num}">${p.num}. ${p.name}</option>`).join('');
+        selectorDiv.style.display = 'block';
+    } else {
+        selectorDiv.style.display = 'none';
+    }
+    
+    document.getElementById('exclusionModal').classList.add('show');
+}
+function selectExclusionType(t){
+    if(!currentExclusionContext)return;
+    const{playerNum,isRival}=currentExclusionContext;
+    
+    // Obtenir el jugador del CNT al que li han fet la falta (només si és exclusió rival)
+    const faltaSobreJugador = isRival ? (document.getElementById('cntPlayerSelect')?.value || null) : null;
+    
+    let playerName='';
+    const currentQuarter=getCurrentQuarter();
+    const timestamp=Date.now();
+    
+    if(isRival){
+        playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;
+        if(!rivalStats[playerNum].exclusionTypes)rivalStats[playerNum].exclusionTypes={normal:0,penalty:0};
+        rivalStats[playerNum].exclusions++;
+        rivalStats[playerNum].exclusionTypes[t]++;
+        
+        // Guardar falta rebuda pel jugador CNT
+        if(faltaSobreJugador){
+            if(!stats[faltaSobreJugador].faltesRebudes) stats[faltaSobreJugador].faltesRebudes = 0;
+            stats[faltaSobreJugador].faltesRebudes++;
+        }
+        
+        chronologicalActions.push({
+            timestamp:timestamp,
+            quarter:currentQuarter,
+            type:'exclusion',
+            exclusionType:t,
+            team:'rival',
+            playerNum:playerNum,
+            playerName:playerName,
+            faltaSobreJugador: faltaSobreJugador  // Jugador del CNT que ha rebut la falta
+        });
+        document.getElementById(`rival-exc-${playerNum}`).textContent=rivalStats[playerNum].exclusions;
+        updateRivalNameColor(playerNum,rivalStats[playerNum].exclusions);
+        if(compactMode)renderCompactView();
+        else renderCompactView()
+    }else{
+        const player=players.find(p=>p.num===playerNum);
+        playerName=player?player.name:`Jugador ${playerNum}`;
+        if(!stats[playerNum].exclusionTypes)stats[playerNum].exclusionTypes={normal:0,penalty:0};
+        stats[playerNum].exclusions++;
+        stats[playerNum].exclusionTypes[t]++;
+        chronologicalActions.push({
+            timestamp:timestamp,
+            quarter:currentQuarter,
+            type:'exclusion',
+            exclusionType:t,
+            team:'cnt',
+            playerNum:playerNum,
+            playerName:playerName
+        });
+        document.getElementById(`exc-${playerNum}`).textContent=stats[playerNum].exclusions;
+        updatePlayerNameColor(playerNum,stats[playerNum].exclusions);
+        if(compactMode)renderCompactView();
+        else renderPlayers()
+    }
+    
+    addToHistory({
+        type:'exclusion',
+        playerNum:playerNum,
+        isRival:isRival,
+        exclusionType:t,
+        text:`${playerName}: ${t==='penalty'?'Exclusió Penalty':'Exclusió'}`
+    });
+    
+    updateScores();
+    saveToLocalStorage();
+    closeExclusionModal();
+}
 function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderPlayers()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
 function updateRivalExclusion(i,inc){rivalStats[i].exclusions=Math.max(0,rivalStats[i].exclusions+inc);if(inc<0){const e=rivalStats[i].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`rival-exc-${i}`).textContent=rivalStats[i].exclusions;updateRivalNameColor(i,rivalStats[i].exclusions);saveToLocalStorage()}
 function closeExclusionModal(){document.getElementById('exclusionModal').classList.remove('show');currentExclusionContext=null}
