@@ -307,8 +307,10 @@ function endQuarter(quarter) {
     // Buidar playersInWater per aturar immediatament
     playersInWater.clear();
     
-    // Re-renderitzar per mostrar els canvis
-    renderCompactView()
+    // ❌ ELIMINAR AQUESTA LÍNIA:
+    // renderCompactView()
+    
+    // ✅ MANTENIR NOMÉS AQUESTES:
     if(compactMode) renderCompactView();
     renderLineups();
     saveToLocalStorage();
@@ -614,35 +616,12 @@ function loadFromLocalStorage(){
                 });
             }
             
-            // ✅ AFEGIR AQUÍ - Validar que tots els camps existeixen
-            Object.keys(stats).forEach(num => {
-                if(stats[num].penaltyMissed===undefined)stats[num].penaltyMissed=0;
-                if(stats[num].assistencies===undefined)stats[num].assistencies=0;
-                if(stats[num].robatoris===undefined)stats[num].robatoris=0;
-                if(stats[num].perdues===undefined)stats[num].perdues=0;
-                if(stats[num].xutsFallats===undefined)stats[num].xutsFallats=0;
-                if(!stats[num].paradeTypes)stats[num].paradeTypes={corner:0,rebuig:0,atrapa:0};
-                if(stats[num].parades===undefined)stats[num].parades=0;
-            });
-            
-            rivalStats.forEach(p=>{
-                if(p.penaltyMissed===undefined)p.penaltyMissed=0;
-            });
-            
-            const t1=document.getElementById('tempsMortCNT');
-            if(t1)t1.textContent=tempsMortCNT;
-            const t2=document.getElementById('tempsMortRival');
-            if(t2)t2.textContent=tempsMortRival;
-            const r1=document.getElementById('rivalTeamInput');
-            if(r1)r1.value=rivalTeam||'Rival';
-            const r2=document.getElementById('rivalTeamLabel');
-            if(r2)r2.textContent=rivalTeam||'RIVAL';
-            const o=document.getElementById('observacions');
+            // ✅ AFEGIR AQUESTES LÍNIES:
             if(d.actionsHistory)actionsHistory=d.actionsHistory;
             if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;
             if(d.playersInWater)playersInWater=new Set(d.playersInWater);
             if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;
-            if(d.quarterRealEndTimes)quarterRealEndTimes=d.quarterRealEndTimes;
+            if(d.quarterRealEndTimes)quarterRealEndTimes=d.quarterRealEndTimes;  // ⭐ AQUESTA ÉS LA CLAU!
             if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;
             if(o)o.value=observacions;
             if(matchLocation==='home'){
@@ -796,11 +775,18 @@ function renderCompactView(){const c=document.getElementById('rivalPlayersList')
 <div class="stats-row"><div class="stat-box"><div class="stat-header"><div class="stat-label">Gols</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openGoalModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value gols" id="rival-gols-${i}">${p.gols||0}</span><button class="btn btn-green btn-small" onclick="openGoalModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${gtD?`<div style="margin-top:3px">${gtD}</div>`:''}</div><div class="stat-box"><div class="stat-header"><div class="stat-label">Exclusions</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openExclusionModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value" id="rival-exc-${i}">${exc}</span><button class="btn btn-green btn-small" onclick="openExclusionModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${etD?`<div style="margin-top:3px">${etD}</div>`:''}</div></div></div>`}).join('')}
 function renderLineups(){
     const c=document.getElementById('lineupsContainer');
+	
+	console.log('=== renderLineups DEBUG ===');
+    console.log('quarterStartTimes:', quarterStartTimes);
+    console.log('quarterRealEndTimes:', quarterRealEndTimes);
+	
     c.innerHTML=['q1','q2','q3','q4'].map((q,i)=>{
         const isComplete = lineups[q].length === 7;
         const isStarted = quarterStartTimes[q] !== null;
         const isEnded = quarterRealEndTimes[q] !== null;
-        
+        console.log(`${q}: isComplete=${isComplete}, isStarted=${isStarted}, isEnded=${isEnded}`);
+        console.log(`  quarterStartTimes[${q}] =`, quarterStartTimes[q]);
+        console.log(`  quarterRealEndTimes[${q}] =`, quarterRealEndTimes[q]);
         return `<div class="card">
             <h2>${i+1}º Cuarto - 7 Titulares</h2>
             
@@ -909,9 +895,8 @@ function toggleLineup(q, n) {
             captureLineupScore(pq);
         }
         
-        // ❌ ELIMINAR AQUESTA LÍNIA:
-        // processQuarterStart(q);
-    }
+        
+         }
     
     renderLineups();
     saveToLocalStorage();
@@ -1009,6 +994,12 @@ function resetAll() {
         playersInWater = new Set();
         quarterStartTimes = { q1: null, q2: null, q3: null, q4: null };
         playerWaterChanges = [];
+		
+		// ⭐ AFEGIR AQUESTES LÍNIES PER NETEJAR ELS TEMPS:
+        quarterStartTimes={q1:null,q2:null,q3:null,q4:null};
+        quarterRealEndTimes={q1:null,q2:null,q3:null,q4:null};
+        playerWaterChanges=[];
+        playersInWater.clear();
 
         // Actualitzar interfície
         document.getElementById('rivalTeamInput').value = 'Rival';
@@ -1367,12 +1358,15 @@ function startQuarter(quarter) {
         });
     });
     
-    renderCompactView()
+    // ❌ ELIMINAR AQUESTA LÍNIA:
+    // renderCompactView()
+    
+    // ✅ MANTENIR NOMÉS AQUESTA:
     if (compactMode) renderCompactView();
     renderLineups();
     saveToLocalStorage();
     
-    alert(`✅ ${quarter.toUpperCase()} començat! Els titulars estan dins de l'aigua.`);
+    alert(`✅ ${quarter.toUpperCase()} començat!`);
 }
 function calculatePlayingTimeForMatch(){const result={};const quarterDuration=480;players.forEach(p=>{const times={q1:0,q2:0,q3:0,q4:0,total:0};const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);['q1','q2','q3','q4'].forEach(quarter=>{const qChanges=playerChanges.filter(c=>c.quarter===quarter);if(qChanges.length===0){times[quarter]=0;return}qChanges.sort((a,b)=>a.timestamp-b.timestamp);let timeInWater=0;let lastInTime=null;const quarterStartTime=quarterStartTimes[quarter];if(!quarterStartTime){times[quarter]=0;return}qChanges.forEach(change=>{if(change.action==='in'){lastInTime=change.timestamp}else if(change.action==='out'&&lastInTime!==null){timeInWater+=(change.timestamp-lastInTime)/1000;lastInTime=null}});if(lastInTime!==null){const quarterEndTime=quarterStartTime+quarterDuration*1000;timeInWater+=(quarterEndTime-lastInTime)/1000}times[quarter]=Math.round(timeInWater)});times.total=times.q1+times.q2+times.q3+times.q4;result[p.num]={name:p.name,times:times}});return result}
 function formatTime(seconds){const mins=Math.floor(seconds/60);const secs=seconds%60;return `${mins}:${secs.toString().padStart(2,'0')}`}
