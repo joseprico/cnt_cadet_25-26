@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CN Terrassa - Estadísticas</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: hidden; width: 100%; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0891b2 100%); color: white; min-height: 100vh; overflow-x: hidden; width: 100%; max-width: 100vw; position: relative; }
+
+.container { max-width: 1024px; margin: 0 auto; padding: 8px; padding-top: 85px; padding-bottom: 80px; box-sizing: border-box; width: 100%; }
+.header-fixed { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #1e3a8a 0%, #0891b2 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 4px solid #22d3ee; z-index: 1000; padding: 6px 0; }
+.scoreboard { max-width: 1024px; margin: 0 auto; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.team-score { flex: 1; text-align: center; }
+.team-label { font-size: 9px; font-weight: bold; color: #67e8f9; margin-bottom: 1px; }
+.score-display { font-size: 28px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+.score-separator { font-size: 18px; font-weight: bold; color: #67e8f9; }
+.temps-mort-compact { font-size: 8px; color: #bae6fd; margin-top: 1px; display: flex; align-items: center; justify-content: center; gap: 3px; }
+.card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 8px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; max-width: 100%; box-sizing: border-box; }
+.btn { padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; touch-action: manipulation; }
+.btn:active { transform: scale(0.95); }
+.btn-red { background: #ef4444; color: white; }
+.btn-green { background: #22c55e; color: white; }
+.btn-blue { background: #3b82f6; color: white; }
+.btn-yellow { background: #fbbf24; color: #000; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px; }
+.tab { padding: 10px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; }
+.tab.active { background: #06b6d4; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+/* VISTA COMPACTA - GRID PRINCIPAL */
+.players-grid.compact-grid,
+#playersList.compact-grid, 
+#rivalPlayersList.compact-grid { 
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 6px !important; 
+    width: 100% !important;
+}
+
+/* COMPACT PLAYER - JUGADORS */
+.compact-player { 
+    background: rgba(255,255,255,0.1); 
+    border-radius: 6px; 
+    padding: 4px;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* BOTONS DINS DEL COMPACT PLAYER */
+.compact-player > div:last-child {
+    display: flex !important;
+    gap: 2px !important;
+    width: 100% !important;
+}
+
+.compact-player > div:last-child button {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 4px 1px !important;
+}
+
+.player-number { background: #06b6d4; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 9px; flex-shrink: 0; }
+.player-number.rival { background: #ef4444; }
+.player-number.active-player { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); } 50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9); } }
+.player-name-input { flex: 1; padding: 2px; font-size: 7px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; min-width: 0; max-width: 100%; }
+.player-name-input:focus { outline: none; border-color: #22d3ee; }
+.player-name-input.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+.player-name-input.exc-2 { background: #f97316; color: white; font-weight: bold; }
+.player-name-input.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+.compact-name.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+.compact-name.exc-2 { background: #f97316; color: white; font-weight: bold; }
+.compact-name.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+
+.input { width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-size: 14px; }
+.input:focus { outline: none; border-color: #22d3ee; }
+textarea.input { min-height: 80px; font-family: inherit; resize: vertical; }
+.actions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.lineup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+.lineup-btn { padding: 10px; font-size: 13px; background: rgba(255,255,255,0.2); color: white; }
+.lineup-btn.selected { background: #22c55e; box-shadow: 0 2px 8px rgba(34,197,94,0.4); }
+.lineup-counter { text-align: center; font-size: 12px; color: #bae6fd; margin-bottom: 8px; }
+.period-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 6px; }
+.period-label { font-weight: bold; font-size: 14px; }
+.period-score { font-size: 20px; font-weight: bold; color: #fde047; }
+h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+.hidden { display: none; }
+label { display: block; font-size: 10px; font-weight: 600; margin-bottom: 4px; }
+svg { display: inline-block; vertical-align: middle; }
+.btn-small { padding: 1px; min-width: 18px; }
+.icon-sm { width: 8px; height: 8px; }
+.modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+.modal.show { display: flex; }
+.modal-content { background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%); border-radius: 12px; padding: 20px; max-width: 300px; width: 100%; }
+.modal-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; }
+.modal-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+.modal-btn { padding: 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+.modal-btn:hover { background: rgba(255,255,255,0.3); }
+.goal-zone-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.goal-zone {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.goal-zone:hover {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: #22c55e;
+}
+
+.goal-zone.selected {
+    background: #22c55e;
+    border-color: #16a34a;
+    color: white;
+}
+.github-status { padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; text-align: center; }
+.github-status.success { background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; }
+.github-status.error { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
+.github-status.warning { background: rgba(251, 191, 36, 0.3); border: 1px solid #fbbf24; color: #000; }
+.undo-section { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30, 58, 138, 0.95); backdrop-filter: blur(10px); border-top: 2px solid #22d3ee; padding: 8px 12px; z-index: 999; box-shadow: 0 -4px 12px rgba(0,0,0,0.3); }
+.undo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.undo-title { font-size: 10px; font-weight: bold; color: #67e8f9; }
+.undo-clear { font-size: 9px; color: #fca5a5; background: none; border: none; padding: 2px 6px; cursor: pointer; }
+.actions-list { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.action-item { background: rgba(255,255,255,0.15); padding: 6px 10px; border-radius: 6px; font-size: 9px; white-space: nowrap; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); }
+.action-icon { font-size: 12px; }
+.undo-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 8px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+.quarter-info { background: rgba(34, 211, 238, 0.2); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #67e8f9; font-weight: bold; border: 1px solid #22d3ee; }
+.water-warning { display: none; position: fixed; top: 110px; left: 50%; transform: translateX(-50%); background: rgba(239, 68, 68, 0.95); color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: bold; z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.4); animation: slideDown 0.3s ease-out; max-width: 90%; text-align: center; }
+@keyframes slideDown { from { top: 60px; opacity: 0; } to { top: 110px; opacity: 1; } }
+
+@media (max-width: 480px) {
+    .container { padding: 6px !important; padding-top: 85px !important; padding-bottom: 80px !important; }
+}
+@media (min-width: 768px) { 
+    #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } 
+}
+@media (min-width: 1024px) { 
+    #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } 
+}
+</style>
+</head>
+<body>
+    <div class="header-fixed">
+        <div style="position: absolute; top: 5px; right: 15px; font-size: 9px; color: rgba(255,255,255,0.5); font-style: italic;">by Josep Rico</div>
+        <div class="scoreboard">
+            <div class="team-score">
+                <div class="team-label">CNT</div>
+                <div class="score-display" id="scoreCNT">0</div>
+                <div class="temps-mort-compact">TM: <span id="tempsMortCNT">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(1)">+</button></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                <div class="score-separator">-</div>
+                <div class="quarter-info" id="quarterInfo">Q1: 0-0</div>
+            </div>
+            <div class="team-score">
+                <div class="team-label" id="rivalTeamLabel">RIVAL</div>
+                <div class="score-display" id="scoreRival">0</div>
+                <div class="temps-mort-compact">TM: <span id="tempsMortRival">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(1)">+</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="goalModal" class="modal">
+    <div class="modal-content">
+        <!-- PASO 1: Seleccionar tipo de gol -->
+        <div id="goalTypeStep">
+            <div class="modal-title">Tipo de Gol</div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="showGoalZoneStep('normal')">Normal</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('h+')">H+</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('penalty')">Penalty</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('contra')">Contra</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('boya')">Boya</button>
+            </div>
+        </div>
+        
+        <!-- PASO 2: Seleccionar zona (oculto inicialmente) -->
+        <div id="goalZoneStep" style="display: none;">
+            <div class="modal-title">¿Dónde entró el gol?</div>
+            <div class="goal-zone-grid">
+                <div class="goal-zone" onclick="selectGoalZone('top-left')">⬆️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('top-center')">⬆️ Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('top-right')">⬆️ Der.</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-left')">➡️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-center')">🎯 Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-right')">⬅️ Der.</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-left')">⬇️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-center')">⬇️ Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-right')">⬇️ Der.</div>
+            </div>
+        </div>
+        
+        <button class="btn btn-red" style="width: 100%; margin-top: 12px;" onclick="closeGoalModal()">Cancelar</button>
+    </div>
+</div>
+<div id="exclusionModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-title">Tipo de Exclusión</div>
+        
+        <!-- Selector només visible per exclusions rivals -->
+        <div id="cntPlayerSelector" style="margin-bottom: 10px; display: none;">
+            <label style="font-size: 12px; margin-bottom: 5px; display: block;">Falta sobre jugador CNT:</label>
+            <select id="cntPlayerSelect" class="input" style="padding: 8px;">
+                <option value="">Sense especificar</option>
+            </select>
+        </div>
+        
+        <div class="modal-buttons">
+            <button class="modal-btn" onclick="selectExclusionType('normal')">Exclusión</button>
+            <button class="modal-btn" onclick="selectExclusionType('penalty')">Penalty</button>
+        </div>
+        <button class="btn btn-red" style="width: 100%;" onclick="closeExclusionModal()">Cancelar</button>
+    </div>
+</div>
+	<div id="saveModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-title">Tipus de Parada</div>
+        <div class="modal-buttons">
+            <button class="modal-btn" onclick="selectSaveType('corner')">Corner</button>
+            <button class="modal-btn" onclick="selectSaveType('rebuig')">Rebuig</button>
+            <button class="modal-btn" onclick="selectSaveType('atrapa')">Atrapa</button>
+			<button class="modal-btn" onclick="selectSaveType('penal')">Penal</button>
+        </div>
+        <button class="btn btn-red" style="width: 100%;" onclick="closeSaveModal()">Cancelar</button>
+    </div>
+</div>
+<div id="actionModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-title">Tipus d'Acció</div>
+        <div class="modal-buttons">
+            <button class="modal-btn" onclick="selectActionType('assistencia')">🎯 Assistència</button>
+            <button class="modal-btn" onclick="selectActionType('robatori')">🛡️ Robatori</button>
+            <button class="modal-btn" onclick="selectActionType('perdua')">❌ Pèrdua</button>
+			<button class="modal-btn" onclick="selectActionType('xut')">🚫 Xut Fallat</button>
+			<button class="modal-btn" onclick="selectActionType('block')">🚫 Block</button>
+        </div>
+        <button class="btn btn-red" style="width: 100%;" onclick="closeActionModal()">Cancelar</button>
+    </div>
+</div>
+	    <div id="penaltyMissedModal" class="modal"><div class="modal-content" style="max-width: 400px;" id="penaltyModalContent"></div></div>
+    
+    <div id="waterWarning" class="water-warning">⚠️ Has de tenir exactament 7 jugadors DINS!</div>
+<div id="superioritatIndicator" style="display: none; position: fixed; top: 150px; left: 50%; transform: translateX(-50%); z-index: 1001; animation: slideDown 0.3s ease-out;"></div>
+
+    <div class="container">
+               <div class="card tabs">
+            <button class="btn tab active" onclick="showView('stats')">CNT</button>
+            <button class="btn tab" onclick="showView('rival')">Rival</button>
+            <button class="btn tab" onclick="showView('lineups')">Alineaciones</button>
+        </div>
+        <div id="statsView"><div class="card"><h2>CN TERRASSA</h2><div class="players-grid" id="playersList"></div></div></div>
+        <div id="rivalView" class="hidden"><div class="card"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;"><h2 style="margin: 0; flex: 1;"><input type="text" class="input" id="rivalTeamInput" placeholder="Nombre del rival" onchange="updateRivalTeam()" style="font-size: 18px; font-weight: bold; padding: 4px 8px;"></h2></div><div class="players-grid" id="rivalPlayersList"></div><div style="margin-top: 16px; padding-top: 16px; border-top: 2px solid rgba(255,255,255,0.2);"><label>Ubicación del partido</label><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><button class="btn lineup-btn" id="locationHome" onclick="setLocation('home')">🏠 Casa</button><button class="btn lineup-btn" id="locationAway" onclick="setLocation('away')">✈️ Fuera</button></div></div></div></div>
+        <div id="lineupsView" class="hidden"><div id="lineupsContainer"></div></div>
+        
+        <div id="configView" class="hidden"><div class="card"><h2>Configuración GitHub</h2><div id="githubStatus"></div><div style="margin-bottom: 12px;"><label>Token de GitHub</label><input type="password" class="input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" onchange="saveGithubConfig()"><p style="font-size: 10px; color: #bae6fd; margin-top: 4px;">Crea un token en: Settings → Developer settings → Personal access tokens</p></div><div style="margin-bottom: 12px;"><label>Usuario/Repositorio</label><input type="text" class="input" id="githubRepo" value="joseprico/cnt_cadet_25-26" onchange="saveGithubConfig()"></div><div style="margin-bottom: 12px;"><label>Rama</label><input type="text" class="input" id="githubBranch" value="main" onchange="saveGithubConfig()"></div><button class="btn btn-blue" onclick="testGithubConnection()">Probar conexión</button></div></div>
+        
+        <div class="card"><h2>Observacions / Penaltis Fallados</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><textarea class="input" id="observacions" placeholder="Anotaciones..." style="min-height: 100px;"></textarea><div><button class="btn btn-red" style="width: 100%; margin-bottom: 8px;" onclick="openPenaltyMissedModal()">❌ Penalty Fallado</button><button class="btn btn-blue" style="width: 100%; margin-bottom: 8px;" onclick="showPlayingTimes()">⏱️ Temps de Joc</button><div style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 8px; max-height: 84px; overflow-y: auto;"><div style="font-size: 10px; color: #bae6fd; margin-bottom: 4px;">Resumen:</div><div id="penaltyMissedSummary" style="font-size: 9px;"></div></div></div></div></div>
+        <div class="card"><h2>Marcadores por Periodo</h2><div id="periodScores"></div></div>
+       <div class="actions-grid">
+    <button class="btn btn-green" onclick="uploadToGithub()"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>GitHub</button>
+    <button class="btn btn-yellow" onclick="exportData()">💾 Guardar</button>
+    <label class="btn btn-blue" style="cursor: pointer;"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Importar<input type="file" accept=".json" onchange="importData(event)" style="display: none;"></label>
+    <button class="btn btn-blue" onclick="showView('config')">⚙️ Config</button>
+    <button class="btn btn-red" onclick="resetAll()"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Reset</button>
+</div>
+        <div class="undo-section"><div class="undo-header"><div class="undo-title">↩️ ÚLTIMAS ACCIONES</div><button class="undo-clear" onclick="clearHistory()">Limpiar</button></div><div class="actions-list" id="actionsList"><div style="font-size: 9px; color: rgba(255,255,255,0.5); padding: 6px;">No hay acciones recientes</div></div></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+let players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'JORDI FARRE'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'JOSE MANUEL LLENIN'}];
+let stats={},rivalStats=[],lineups={q1:[],q2:[],q3:[],q4:[]},periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}},tempsMortCNT=0,tempsMortRival=0,rivalTeam='',matchLocation='home',observacions='',currentGoalContext=null,currentExclusionContext=null,currentSaveContext=null,currentActionContext=null,actionsHistory=[],compactMode=true,chronologicalActions=[];
+let githubConfig={token:'',repo:'joseprico/cnt_cadet_25-26',branch:'main'};
+let playersInWater=new Set();
+let quarterStartTimes={q1:null,q2:null,q3:null,q4:null};
+let quarterRealEndTimes={q1:null,q2:null,q3:null,q4:null};
+let playerWaterChanges=[];
+
+function endQuarter(quarter) {
+    const timestamp = Date.now();
+    quarterRealEndTimes[quarter] = timestamp;
+    
+    // Tancar tots els jugadors que estiguin dins
+    playersInWater.forEach(num => {
+        playerWaterChanges.push({
+            playerNum: num,
+            quarter: quarter,
+            action: 'out',
+            timestamp: timestamp
+        });
+    });
+    
+    // Buidar playersInWater per aturar immediatament
+    playersInWater.clear();
+    
+    // ❌ ELIMINAR AQUESTA LÍNIA:
+    // renderCompactView()
+    
+    // ✅ MANTENIR NOMÉS AQUESTES:
+    if(compactMode) renderCompactView();
+    renderLineups();
+    saveToLocalStorage();
+    
+    alert(`✅ ${quarter.toUpperCase()} finalitzat correctament!`);
+}
+
+function calculatePlayingTimeForMatch(){
+    const result={};
+    const quarterDuration=480;
+    
+    players.forEach(p=>{
+        const times={q1:0,q2:0,q3:0,q4:0,total:0};
+        const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);
+        
+        ['q1','q2','q3','q4'].forEach(quarter=>{
+            const qChanges=playerChanges.filter(c=>c.quarter===quarter);
+            if(qChanges.length===0){
+                times[quarter]=0;
+                return;
+            }
+            
+            qChanges.sort((a,b)=>a.timestamp-b.timestamp);
+            
+            let timeInWater=0;
+            let lastInTime=null;
+            const quarterStartTime=quarterStartTimes[quarter];
+            
+            if(!quarterStartTime){
+                times[quarter]=0;
+                return;
+            }
+            
+            // ✅ Processar els canvis dins del forEach
+            qChanges.forEach(change=>{
+                if(change.action==='in'){
+                    lastInTime=change.timestamp;
+                } else if(change.action==='out'&&lastInTime!==null){
+                    timeInWater+=(change.timestamp-lastInTime)/1000;
+                    lastInTime=null;
+                }
+            });
+            
+            // ✅ Usar el temps real de finalització si existeix
+            if(lastInTime!==null){
+                const quarterEndTime = quarterRealEndTimes[quarter] || 
+                                      (quarterStartTime + quarterDuration * 1000);
+                timeInWater+=(quarterEndTime-lastInTime)/1000;
+            }
+            
+            times[quarter]=Math.round(timeInWater);
+        });
+        
+        times.total=times.q1+times.q2+times.q3+times.q4;
+        result[p.num]={name:p.name,times:times};
+    });
+    
+    return result;
+}
+function init() {
+    loadFromLocalStorage();
+    loadGithubConfig();
+    
+    if(Object.keys(stats).length === 0) {
+        players.forEach(p => {
+            stats[p.num] = {
+                exclusions: 0,
+                gols: 0,
+                penaltyMissed: 0,
+                goalTypes: {
+                    normal: 0,
+                    'h+': 0,
+                    penalty: 0,
+                    contra: 0,
+                    boya: 0
+                },
+                exclusionTypes: {
+                    normal: 0,
+                    penalty: 0
+                },
+                parades: 0,
+                paradeTypes: {
+                    corner: 0,
+                    rebuig: 0,
+                    atrapa: 0
+                },
+                assistencies: 0,
+                robatoris: 0,
+                perdues: 0,
+                xutsFallats: 0
+            };
+        });
+    }
+    
+    if(rivalStats.length === 0) {
+        for(let i = 1; i <= 14; i++) {
+            rivalStats.push({
+                num: i,
+                name: '',
+                exclusions: 0,
+                gols: 0,
+                penaltyMissed: 0,
+                goalTypes: {
+                    normal: 0,
+                    'h+': 0,
+                    penalty: 0,
+                    contra: 0,
+                    boya: 0
+                },
+                exclusionTypes: {
+                    normal: 0,
+                    penalty: 0
+                }
+            });
+        }
+    }
+    
+    compactMode = true; // ✅ SEMPRE COMPACTA
+    renderCompactView(); // ✅ RENDERITZAR COMPACTA
+    //renderCompactView();
+    renderLineups();
+    renderPeriodScores();
+    updateScores();
+    updatePenaltyMissedSummary();
+    renderHistory();
+    updateQuarterInfo();
+}
+function openPenaltyMissedModal(){const c=document.getElementById('penaltyModalContent');if(!c)return;c.innerHTML=`<div class="modal-title">❌ Penalty Fallado - ¿Quién?</div><div style="max-height:400px;overflow-y:auto;margin-bottom:15px"><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">${players.map(p=>`<button class="modal-btn" onclick="selectPenaltyMissedPlayer(${p.num},false)">${p.num}. ${p.name.split(' ')[0]}</button>`).join('')}</div><div style="margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,255,255,0.2)"><div style="font-size:12px;margin-bottom:8px;color:#fca5a5">Rival:</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">${rivalStats.map((r,i)=>`<button class="modal-btn" onclick="selectPenaltyMissedPlayer(${i},true)">${r.name||'Rival '+(i+1)}</button>`).join('')}</div></div></div><button class="btn btn-red" style="width:100%" onclick="closePenaltyMissedModal()">Cancelar</button>`;document.getElementById('penaltyMissedModal').classList.add('show')}
+function closePenaltyMissedModal(){document.getElementById('penaltyMissedModal').classList.remove('show')}
+function selectPenaltyMissedPlayer(n,isR){const currentQuarter=getCurrentQuarter();const timestamp=Date.now();let playerName='';if(isR){playerName=rivalStats[n].name||`Rival ${n+1}`;rivalStats[n].penaltyMissed=(rivalStats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'rival',playerNum:n,playerName:playerName})}else{const player=players.find(p=>p.num===n);playerName=player?player.name:`Jugador ${n}`;stats[n].penaltyMissed=(stats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'cnt',playerNum:n,playerName:playerName})}updatePenaltyMissedSummary();saveToLocalStorage();closePenaltyMissedModal()}
+function updatePenaltyMissedSummary(){const c=document.getElementById('penaltyMissedSummary');if(!c)return;const s=[];players.forEach(p=>{const m=stats[p.num]?.penaltyMissed||0;if(m>0)s.push(`${p.num}. ${p.name.split(' ')[0]}: ${m}`)});rivalStats.forEach((r,i)=>{const m=r.penaltyMissed||0;if(m>0){const n=r.name||`Rival ${i+1}`;s.push(`<span style="color:#fca5a5">${n}: ${m}</span>`)}});c.innerHTML=s.length===0?'<span style="color:rgba(255,255,255,0.3)">No hay penaltis fallados</span>':s.join('<br>')}
+function saveToLocalStorage(){
+    localStorage.setItem('cntWaterpoloData',JSON.stringify({
+        stats,
+        rivalStats,
+        lineups,
+        periodScores,
+        tempsMortCNT,
+        tempsMortRival,
+        rivalTeam,
+        matchLocation,
+        observacions:document.getElementById('observacions')?.value||'',
+        players:players.map(p=>({num:p.num,name:p.name})),
+        actionsHistory:actionsHistory,
+        chronologicalActions:chronologicalActions,
+        playersInWater:Array.from(playersInWater),
+        quarterStartTimes:quarterStartTimes,
+        quarterRealEndTimes:quarterRealEndTimes,  // ✅ AFEGIR AIXÒ
+        playerWaterChanges:playerWaterChanges
+    }));
+}
+function openActionModal(n, inc) {
+    if (inc < 0) {
+        // Si és decrementar, triem automàticament l'últim tipus registrat
+        decrementLastAction(n);
+        return;
+    }
+    currentActionContext = { playerNum: n };
+    document.getElementById('actionModal').classList.add('show');
+}
+
+function closeActionModal() {
+    document.getElementById('actionModal').classList.remove('show');
+    currentActionContext = null;
+}
+
+function selectActionType(type) {
+    if (!currentActionContext) return;
+    const { playerNum } = currentActionContext;
+    
+    const player = players.find(p => p.num === playerNum);
+    const playerName = player ? player.name : `Jugador ${playerNum}`;
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    
+    // Incrementar el comptador corresponent
+    if (type === 'assistencia') {
+        stats[playerNum].assistencies = (stats[playerNum].assistencies || 0) + 1;
+    } else if (type === 'robatori') {
+        stats[playerNum].robatoris = (stats[playerNum].robatoris || 0) + 1;
+    } else if (type === 'perdua') {
+        stats[playerNum].perdues = (stats[playerNum].perdues || 0) + 1;
+    } else if (type === 'xut') {
+        stats[playerNum].xutsFallats = (stats[playerNum].xutsFallats || 0) + 1;
+    } else if (type === 'block') {
+        stats[playerNum].blocks = (stats[playerNum].blocks || 0) + 1;
+    }
+    
+    chronologicalActions.push({
+        timestamp: timestamp,
+        quarter: currentQuarter,
+        type: 'action',
+        actionType: type,
+        team: 'cnt',
+        playerNum: playerNum,
+        playerName: playerName
+    });
+    
+    const actionTypeText = type === 'assistencia' ? '🎯 Assistència' : 
+                           type === 'robatori' ? '🛡️ Robatori' : 
+                           type === 'perdua' ? '❌ Pèrdua' :
+                           type === 'xut' ? '🚫 Xut Fallat' :
+                           type === 'block' ? '🚫 Block' : '';
+    
+    addToHistory({
+        type: 'action',
+        playerNum: playerNum,
+        isRival: false,
+        actionType: type,
+        text: `${playerName}: ${actionTypeText}`
+    });
+    
+    // ✅ ACTUALITZACIÓ IMMEDIATA ABANS DE RENDERITZAR
+    const totalActions = getTotalActions(playerNum);
+    const actionsElement = document.getElementById(`actions-${playerNum}`);
+    if (actionsElement) {
+        actionsElement.textContent = totalActions;
+    }
+    
+    // Renderitzar després
+    renderCompactView();
+    
+    saveToLocalStorage();
+    closeActionModal();
+}
+function decrementLastAction(n) {
+    const lastAction = [...chronologicalActions]
+        .reverse()
+        .find(a => a.type === 'action' && a.playerNum === n);
+    
+    if (lastAction) {
+        const type = lastAction.actionType;
+        if (type === 'assistencia' && stats[n].assistencies > 0) {
+            stats[n].assistencies--;
+        } else if (type === 'robatori' && stats[n].robatoris > 0) {
+            stats[n].robatoris--;
+        } else if (type === 'perdua' && stats[n].perdues > 0) {
+            stats[n].perdues--;
+        } else if (type === 'xut' && stats[n].xutsFallats > 0) {
+            stats[n].xutsFallats--;
+        } else if (type === 'block' && stats[n].blocks > 0) {
+            stats[n].blocks--;
+        }
+    } else {
+        // Si no trobem cap, decrementem en ordre
+        if (stats[n].assistencies > 0) {
+            stats[n].assistencies--;
+        } else if (stats[n].robatoris > 0) {undoAction
+            stats[n].robatoris--;
+        } else if (stats[n].perdues > 0) {
+            stats[n].perdues--;
+        } else if (stats[n].xutsFallats > 0) {
+            stats[n].xutsFallats--;
+        } else if (stats[n].blocks > 0) {
+            stats[n].blocks--;
+        }
+    }
+    
+    if (compactMode) {
+        renderCompactView();
+    } else {
+        renderCompactView();
+    }
+    
+    updateScores();
+    saveToLocalStorage();
+}
+function getTotalActions(playerNum) {
+    const total = (stats[playerNum]?.assistencies || 0) + 
+                  (stats[playerNum]?.robatoris || 0) + 
+                  (stats[playerNum]?.perdues || 0) +
+                  (stats[playerNum]?.xutsFallats || 0);
+    
+    console.log(`📊 getTotalActions(${playerNum}):`, total, {
+        assistencies: stats[playerNum]?.assistencies,
+        robatoris: stats[playerNum]?.robatoris,
+        perdues: stats[playerNum]?.perdues,
+        xutsFallats: stats[playerNum]?.xutsFallats
+    });
+    
+    return total;
+}
+
+
+function loadFromLocalStorage(){
+    try{
+        const s=localStorage.getItem('cntWaterpoloData');
+        if(s){
+            const d=JSON.parse(s);
+            if(d.stats)stats=d.stats;
+            if(d.rivalStats)rivalStats=d.rivalStats;
+            if(d.lineups)lineups=d.lineups;
+            if(d.periodScores)periodScores=d.periodScores;
+            if(d.tempsMortCNT!==undefined)tempsMortCNT=d.tempsMortCNT;
+            if(d.tempsMortRival!==undefined)tempsMortRival=d.tempsMortRival;
+            if(d.rivalTeam)rivalTeam=d.rivalTeam;
+            if(d.matchLocation)matchLocation=d.matchLocation;
+            if(d.observacions)observacions=d.observacions;
+            if(d.players){
+                d.players.forEach(p=>{
+                    const pl=players.find(pl=>pl.num===p.num);
+                    if(pl)pl.name=p.name;
+                });
+            }
+            
+            // ✅ AFEGIR AQUESTES LÍNIES:
+            if(d.actionsHistory)actionsHistory=d.actionsHistory;
+            if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;
+            if(d.playersInWater)playersInWater=new Set(d.playersInWater);
+            if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;
+            if(d.quarterRealEndTimes)quarterRealEndTimes=d.quarterRealEndTimes;  // ⭐ AQUESTA ÉS LA CLAU!
+            if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;
+            if(o)o.value=observacions;
+            if(matchLocation==='home'){
+                document.getElementById('locationHome')?.classList.add('selected');
+            }else{
+                document.getElementById('locationAway')?.classList.add('selected');
+            }
+        }
+    }catch(e){
+        console.error('Error:',e);
+    }
+}
+// ============================================
+// DETECCIÓ DE SUPERIORITAT
+// ============================================
+function checkSuperioritat() {
+    const now = Date.now();
+    const last60s = chronologicalActions.filter(a => now - a.timestamp < 60000); // Últims 60s
+    
+    // Comptar exclusions actives (últims 20 segons)
+    const last20s = chronologicalActions.filter(a => now - a.timestamp < 20000);
+    
+    const cntExclusions = last20s.filter(a => 
+        a.type === 'exclusion' && a.team === 'cnt'
+    ).length;
+    
+    const rivalExclusions = last20s.filter(a => 
+        a.type === 'exclusion' && a.team === 'rival'
+    ).length;
+    
+    return {
+        cntSuperior: rivalExclusions > cntExclusions,
+        rivalSuperior: cntExclusions > rivalExclusions,
+        cntExclusions: cntExclusions,
+        rivalExclusions: rivalExclusions
+    };
+}
+
+function showSuperioritatIndicator() {
+    const superiority = checkSuperioritat();
+    const indicator = document.getElementById('superioritatIndicator');
+    
+    if (!indicator) return;
+    
+    if (superiority.cntSuperior) {
+        indicator.innerHTML = `
+            <div style="background: rgba(34, 197, 94, 0.9); padding: 8px 16px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);">
+                <span style="font-size: 18px;">💪</span>
+                <span>SUPERIORITAT CNT!</span>
+                <span style="font-size: 12px; opacity: 0.9;">(Rival amb ${superiority.rivalExclusions} exclusió${superiority.rivalExclusions > 1 ? 'ns' : ''})</span>
+            </div>
+        `;
+        indicator.style.display = 'block';
+    } else if (superiority.rivalSuperior) {
+        indicator.innerHTML = `
+            <div style="background: rgba(239, 68, 68, 0.9); padding: 8px 16px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);">
+                <span style="font-size: 18px;">⚠️</span>
+                <span>INFERIORITAT!</span>
+                <span style="font-size: 12px; opacity: 0.9;">(CNT amb ${superiority.cntExclusions} exclusió${superiority.cntExclusions > 1 ? 'ns' : ''})</span>
+            </div>
+        `;
+        indicator.style.display = 'block';
+    } else {
+        indicator.style.display = 'none';
+    }
+    
+    // Amagar després de 5 segons
+    if (superiority.cntSuperior || superiority.rivalSuperior) {
+        setTimeout(() => {
+            if (indicator) indicator.style.display = 'none';
+        }, 5000);
+    }
+}
+
+
+let selectedGoalZone = null; // Afegir aquesta variable
+let selectedGoalType = null; // Afegir aquesta variable
+
+function openGoalModal(n, isR, inc) {
+    if (inc < 0) {
+        if (isR) {
+            updateRivalStat(n, 'gols', inc);
+        } else {
+            updateStat(n, 'gols', inc);
+        }
+        return;
+    }
+    
+    currentGoalContext = {playerNum: n, isRival: isR};
+    selectedGoalType = null;
+    selectedGoalZone = null;
+    
+    // Mostrar paso 1, ocultar paso 2
+    document.getElementById('goalTypeStep').style.display = 'block';
+    document.getElementById('goalZoneStep').style.display = 'none';
+    
+    document.getElementById('goalModal').classList.add('show');
+}
+
+function closeGoalModal() {
+    document.getElementById('goalModal').classList.remove('show');
+    // Reset
+    document.getElementById('goalTypeStep').style.display = 'block';
+    document.getElementById('goalZoneStep').style.display = 'none';
+    currentGoalContext = null;
+    selectedGoalType = null;
+    selectedGoalZone = null;
+}
+
+// NUEVA: Mostrar el paso 2 (zones) o registrar directamente si es rival
+function showGoalZoneStep(goalType) {
+    selectedGoalType = goalType;
+    
+    // Si es rival, registrar directamente sin mostrar zonas
+    if (currentGoalContext.isRival) {
+        selectGoalType(goalType);
+        return;
+    }
+    
+    // Si es CNT, mostrar el paso de zonas
+    document.getElementById('goalTypeStep').style.display = 'none';
+    document.getElementById('goalZoneStep').style.display = 'block';
+    
+    // Resetear selección visual
+    document.querySelectorAll('.goal-zone').forEach(z => z.classList.remove('selected'));
+}
+
+function selectGoalZone(zone) {
+console.log('=== selectGoalZone ===');
+    console.log('Zona clicada:', zone);
+    console.log('selectedGoalType actual:', selectedGoalType);
+    console.log('currentGoalContext:', currentGoalContext);
+    selectedGoalZone = zone;
+	// Actualitzar visual
+    document.querySelectorAll('.goal-zone').forEach(z => z.classList.remove('selected'));
+    event.target.classList.add('selected');
+    console.log('selectedGoalZone després d\'assignar:', selectedGoalZone);
+    console.log('Ara cridaré selectGoalType amb:', selectedGoalType);
+    // Al seleccionar zona, registrar el gol y cerrar
+    selectGoalType(selectedGoalType);
+}
+
+function selectGoalType(t) {
+    console.log('=== DINS selectGoalType ===');
+    console.log('Paràmetre t rebut:', t);
+    console.log('selectedGoalZone global:', selectedGoalZone);
+    
+    if (!currentGoalContext) {
+        console.log('❌ currentGoalContext és null/undefined!');
+        return;
+    }
+    
+    console.log('✅ currentGoalContext vàlid:', currentGoalContext);
+    
+    const {playerNum, isRival} = currentGoalContext;
+    console.log('playerNum:', playerNum, 'isRival:', isRival);
+    
+    let playerName = '';
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    
+    // Zona: 'unknown' para rivals o si no se ha seleccionado
+    const goalZone = (isRival || !selectedGoalZone) ? 'unknown' : selectedGoalZone;
+    
+    console.log('🎯 goalZone FINAL calculada:', goalZone);
+    console.log('   - isRival:', isRival);
+    console.log('   - selectedGoalZone:', selectedGoalZone);
+    console.log('   - !selectedGoalZone:', !selectedGoalZone);
+    
+    if (isRival) {
+        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+        
+        if (!rivalStats[playerNum].goalTypes) {
+            rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        
+        rivalStats[playerNum].gols++;
+        rivalStats[playerNum].goalTypes[t]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'goal',
+            goalType: t,
+            team: 'rival',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`rival-gols-${playerNum}`).textContent = rivalStats[playerNum].gols;
+        renderCompactView();
+    } else {
+	console.log('📝 Entrant al bloc CNT (no rival)');
+        const player = players.find(p => p.num === playerNum);
+        playerName = player ? player.name : `Jugador ${playerNum}`;
+        console.log('Jugador trobat:', playerName);
+        if (!stats[playerNum].goalTypes) {
+            stats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        if (!stats[playerNum].goalZones) {
+            stats[playerNum].goalZones = {};
+			console.log('✨ Creat goalZones buit per jugador', playerNum);
+        }
+        
+        stats[playerNum].gols++;
+        stats[playerNum].goalTypes[t]++;
+        stats[playerNum].goalZones[goalZone] = (stats[playerNum].goalZones[goalZone] || 0) + 1;
+		console.log('📊 DESPRÉS D\'ACTUALITZAR:');
+        console.log('   stats[' + playerNum + '].goalZones:', JSON.stringify(stats[playerNum].goalZones));
+        console.log('   goalZone afegida:', goalZone);
+        console.log('=== ABANS DE PUSH ===');
+    console.log('stats[playerNum].goalZones:', stats[playerNum].goalZones);
+    console.log('goalZone que s\'afegirà:', goalZone);
+        
+		console.log('=== ABANS DE PUSH ===');
+console.log('goalZone que s\'afegirà:', goalZone);
+console.log('stats[playerNum].goalZones:', stats[playerNum].goalZones);
+
+const actionToPush = {
+    timestamp: timestamp,
+    quarter: currentQuarter,
+    type: 'goal',
+    goalType: t,
+    goalZone: goalZone,  // ← Verifica que això no sigui undefined
+    team: 'cnt',
+    playerNum: playerNum,
+    playerName: playerName
+};
+
+console.log('Acció completa a afegir:', actionToPush);
+
+chronologicalActions.push(actionToPush);
+
+console.log('chronologicalActions després del push:', chronologicalActions[chronologicalActions.length - 1]);
+        
+        document.getElementById(`gols-${playerNum}`).textContent = stats[playerNum].gols;
+        renderCompactView();
+    }
+    
+    // Text de la zona només si no és rival
+    const zoneText = (!isRival && goalZone !== 'unknown') ? ` (${getZoneText(goalZone)})` : '';
+    
+    addToHistory({
+        type: 'gol',
+        playerNum: playerNum,
+        isRival: isRival,
+        goalType: t,
+        goalZone: isRival ? null : goalZone,
+        text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}`
+    });
+    
+    closeGoalModal();
+    saveToLocalStorage();
+}
+
+function getZoneText(zone) {
+    const zones = {
+        'top-left': '⬆️ Esq.',
+        'top-center': '⬆️ Centre',
+        'top-right': '⬆️ Dret',
+        'mid-left': '➡️ Esq.',
+        'mid-center': '🎯 Centre',
+        'mid-right': '⬅️ Dret',
+        'bottom-left': '⬇️ Esq.',
+        'bottom-center': '⬇️ Baix',
+        'bottom-right': '⬇️ Dret',
+        'unknown': '❓'
+    };
+    return zones[zone] || '❓';
+}
+
+let exclusionLongPressTimer;
+let isExclusionLongPress = false;
+
+function handleExclusionPress(playerNum, isRival) {
+    // Si és rival, SEMPRE obrir modal (no fer long press)
+    if (isRival) {
+        return; // No fer res amb long press per rivals
+    }
+    
+    // Per jugadors CNT, mantenir el long press
+    isExclusionLongPress = false;
+    exclusionLongPressTimer = setTimeout(() => {
+        isExclusionLongPress = true;
+        if (navigator.vibrate) navigator.vibrate(50);
+        quickExclusion(playerNum, isRival, 'penalty');
+    }, 500);
+}
+
+function handleExclusionRelease(playerNum, isRival) {
+    // Si és rival, obrir modal sempre
+    if (isRival) {
+        openExclusionModal(playerNum, isRival, 1);
+        return;
+    }
+    
+    // Per jugadors CNT, mantenir el comportament actual
+    clearTimeout(exclusionLongPressTimer);
+    if (!isExclusionLongPress) {
+        quickExclusion(playerNum, isRival, 'normal');
+    }
+}
+
+function quickExclusion(playerNum, isRival, type) {
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    let playerName = '';
+    
+    if (isRival) {
+        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+        if (!rivalStats[playerNum].exclusionTypes) rivalStats[playerNum].exclusionTypes = {normal: 0, penalty: 0};
+        rivalStats[playerNum].exclusions++;
+        rivalStats[playerNum].exclusionTypes[type]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'exclusion',
+            exclusionType: type,
+            team: 'rival',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`rival-exc-${playerNum}`).textContent = rivalStats[playerNum].exclusions;
+        updateRivalNameColor(playerNum, rivalStats[playerNum].exclusions);
+    } else {
+        const player = players.find(p => p.num === playerNum);
+        playerName = player ? player.name : `Jugador ${playerNum}`;
+        if (!stats[playerNum].exclusionTypes) stats[playerNum].exclusionTypes = {normal: 0, penalty: 0};
+        stats[playerNum].exclusions++;
+        stats[playerNum].exclusionTypes[type]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'exclusion',
+            exclusionType: type,
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`exc-${playerNum}`).textContent = stats[playerNum].exclusions;
+        updatePlayerNameColor(playerNum, stats[playerNum].exclusions);
+    }
+    
+    addToHistory({
+        type: 'exclusion',
+        playerNum: playerNum,
+        isRival: isRival,
+        exclusionType: type,
+        text: `${playerName}: ${type === 'penalty' ? 'Exclusió Penalty' : 'Exclusió'}`
+    });
+    
+    renderCompactView();
+    updateScores();
+	showSuperioritatIndicator();
+    saveToLocalStorage();
+}
+function openExclusionModal(n,isR,inc){
+    if(inc<0){
+        if(isR){updateRivalExclusion(n,inc)}
+        else{updateExclusion(n,inc)}
+        return
+    }
+    currentExclusionContext={playerNum:n,isRival:isR};
+    
+    // Si és exclusió del RIVAL, mostrar selector de jugadors CNT
+    const selectorDiv = document.getElementById('cntPlayerSelector');
+    const select = document.getElementById('cntPlayerSelect');
+    
+    if(isR){
+        // Omplir el select amb els jugadors del CNT
+        select.innerHTML = '<option value="">Sense especificar</option>' + 
+            players.map(p => `<option value="${p.num}">${p.num}. ${p.name}</option>`).join('');
+        selectorDiv.style.display = 'block';
+    } else {
+        selectorDiv.style.display = 'none';
+    }
+    
+    document.getElementById('exclusionModal').classList.add('show');
+}
+function selectExclusionType(t){
+    if(!currentExclusionContext)return;
+    const{playerNum,isRival}=currentExclusionContext;
+    
+    // Obtenir el jugador del CNT al que li han fet la falta (només si és exclusió rival)
+    const faltaSobreJugador = isRival ? (document.getElementById('cntPlayerSelect')?.value || null) : null;
+    
+    let playerName='';
+    const currentQuarter=getCurrentQuarter();
+    const timestamp=Date.now();
+    
+    if(isRival){
+        playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;
+        if(!rivalStats[playerNum].exclusionTypes)rivalStats[playerNum].exclusionTypes={normal:0,penalty:0};
+        rivalStats[playerNum].exclusions++;
+        rivalStats[playerNum].exclusionTypes[t]++;
+        
+        // Guardar falta rebuda pel jugador CNT
+        if(faltaSobreJugador){
+            if(!stats[faltaSobreJugador].faltesRebudes) stats[faltaSobreJugador].faltesRebudes = 0;
+            stats[faltaSobreJugador].faltesRebudes++;
+        }
+        
+        chronologicalActions.push({
+            timestamp:timestamp,
+            quarter:currentQuarter,
+            type:'exclusion',
+            exclusionType:t,
+            team:'rival',
+            playerNum:playerNum,
+            playerName:playerName,
+            faltaSobreJugador: faltaSobreJugador  // Jugador del CNT que ha rebut la falta
+        });
+        document.getElementById(`rival-exc-${playerNum}`).textContent=rivalStats[playerNum].exclusions;
+        updateRivalNameColor(playerNum,rivalStats[playerNum].exclusions);
+        if(compactMode)renderCompactView();
+        else renderCompactView()
+    }else{
+        const player=players.find(p=>p.num===playerNum);
+        playerName=player?player.name:`Jugador ${playerNum}`;
+        if(!stats[playerNum].exclusionTypes)stats[playerNum].exclusionTypes={normal:0,penalty:0};
+        stats[playerNum].exclusions++;
+        stats[playerNum].exclusionTypes[t]++;
+        chronologicalActions.push({
+            timestamp:timestamp,
+            quarter:currentQuarter,
+            type:'exclusion',
+            exclusionType:t,
+            team:'cnt',
+            playerNum:playerNum,
+            playerName:playerName
+        });
+        document.getElementById(`exc-${playerNum}`).textContent=stats[playerNum].exclusions;
+        updatePlayerNameColor(playerNum,stats[playerNum].exclusions);
+        if(compactMode)renderCompactView();
+        else renderCompactView()
+    }
+    
+    // Construir el text amb info de la falta
+let historyText = `${playerName}: ${t==='penalty'?'Exclusió Penalty':'Exclusió'}`;
+if(isRival && faltaSobreJugador){
+    const cntPlayer = players.find(p => p.num == faltaSobreJugador);
+    if(cntPlayer){
+        historyText += ` (sobre ${cntPlayer.name.split(' ')[0]})`;
+    }
+}
+
+addToHistory({
+    type:'exclusion',
+    playerNum:playerNum,
+    isRival:isRival,
+    exclusionType:t,
+    faltaSobreJugador: faltaSobreJugador,
+    text: historyText
+});
+    updateScores();
+	showSuperioritatIndicator();
+    saveToLocalStorage();
+    closeExclusionModal();
+}
+function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
+function updateRivalExclusion(i,inc){rivalStats[i].exclusions=Math.max(0,rivalStats[i].exclusions+inc);if(inc<0){const e=rivalStats[i].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`rival-exc-${i}`).textContent=rivalStats[i].exclusions;updateRivalNameColor(i,rivalStats[i].exclusions);saveToLocalStorage()}
+function closeExclusionModal(){document.getElementById('exclusionModal').classList.remove('show');currentExclusionContext=null}
+function renderCompactView(){
+    console.log('🔄 RENDERITZANT VISTA NORMAL');
+    console.log('Parades jugador 1:', stats[1]?.parades);
+    
+    const c=document.getElementById('playersList');
+    c.className='players-grid';
+    c.innerHTML=players.map(p=>{
+        const exc=stats[p.num]?.exclusions||0;
+        const gols=stats[p.num]?.gols||0;
+        const parades=stats[p.num]?.parades||0;
+        const totalActions=getTotalActions(p.num);
+        
+        let excC='';
+        if(exc===1)excC='exc-1';
+        else if(exc===2)excC='exc-2';
+        else if(exc>=3)excC='exc-3';
+        const isInWater=playersInWater.has(p.num);
+        const isGoalkeeper = p.num === 1 || p.num === 13;
+        
+        return `<div class="player-card" style="padding:2px;">
+            <div style="display:flex;align-items:center;gap:1px;margin-bottom:2px;">
+                <div class="player-number ${isInWater?'active-player':''}" style="width:14px;height:14px;font-size:7px;">${p.num}</div>
+                <input type="text" class="player-name-input ${excC}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" style="flex:1;font-size:5px;padding:1px;">
+            </div>
+            <div style="display:flex;gap:0px;width:100%;">
+                ${isGoalkeeper ? `
+                    <button onclick="openSaveModal(${p.num}, 1)" style="flex:1;padding:3px 0;background:#8b5cf6;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="parades-${p.num}">${parades}</span><br>🧤</button>
+                ` : `
+                    <button onclick="openGoalModal(${p.num},false,1)" style="flex:1;padding:3px 0;background:#22c55e;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="gols-${p.num}">${gols}</span><br>⚽</button>
+                `}
+                <button onclick="openExclusionModal(${p.num},false,1)" style="flex:1;padding:3px 0;background:#ef4444;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="exc-${p.num}">${exc}</span><br>🟥</button>
+                <button onclick="openActionModal(${p.num},1)" style="flex:1;padding:3px 0;background:#3b82f6;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="actions-${p.num}">${totalActions}</span><br>📊</button>
+                <button onclick="togglePlayerWaterStatus(${p.num})" style="flex:1;padding:3px 0;background:${isInWater?'#22c55e':'#3b82f6'};color:white;border:none;border-radius:2px;font-size:5px;font-weight:bold;min-width:0;line-height:1.2;">${isInWater?'DINS':'FORA'}<br>💧</button>
+            </div>
+        </div>`;
+    }).join('');
+    setTimeout(checkPlayersInWater,100);
+}
+
+function renderLineups(){
+    const c=document.getElementById('lineupsContainer');
+	
+	console.log('=== renderLineups DEBUG ===');
+    console.log('quarterStartTimes:', quarterStartTimes);
+    console.log('quarterRealEndTimes:', quarterRealEndTimes);
+	
+    c.innerHTML=['q1','q2','q3','q4'].map((q,i)=>{
+        const isComplete = lineups[q].length === 7;
+        const isStarted = quarterStartTimes[q] !== null;
+        const isEnded = quarterRealEndTimes[q] !== null;
+        console.log(`${q}: isComplete=${isComplete}, isStarted=${isStarted}, isEnded=${isEnded}`);
+        console.log(`  quarterStartTimes[${q}] =`, quarterStartTimes[q]);
+        console.log(`  quarterRealEndTimes[${q}] =`, quarterRealEndTimes[q]);
+        return `<div class="card">
+            <h2>${i+1}º Cuarto - 7 Titulares</h2>
+            
+            ${!isStarted && isComplete ? `
+                <div style="margin-bottom: 12px;">
+                    <button class="btn btn-green" onclick="startQuarter('${q}')" style="width: 100%; padding: 12px; font-size: 14px;">
+                        ▶️ Començar ${i+1}º Cuarto
+                    </button>
+                    <p style="font-size: 10px; color: #bae6fd; margin-top: 8px; text-align: center;">
+                        Prem aquest botó ABANS de començar el quart
+                    </p>
+                </div>
+            ` : ''}
+            
+            ${isStarted && !isEnded ? `
+                <div style="background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; padding: 8px; border-radius: 8px; margin-bottom: 12px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: bold; color: #22c55e;">⏱️ Cuarto en curso</div>
+                    <div style="font-size: 10px; color: #bae6fd; margin-top: 4px;">
+                        Començat a ${new Date(quarterStartTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    </div>
+                </div>
+            ` : ''}
+            
+            <div class="lineup-counter">${lineups[q].length}/7 seleccionados</div>
+            <div class="lineup-grid">
+                ${players.map(p=>`<button class="btn lineup-btn ${lineups[q].includes(p.num)?'selected':''}" onclick="toggleLineup('${q}',${p.num})" ${isStarted ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>${p.num}. ${p.name.split(' ')[0]}</button>`).join('')}
+            </div>
+            
+            ${isStarted && !isEnded ? `
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 2px solid rgba(255,255,255,0.2);">
+                    <button class="btn btn-red" onclick="endQuarter('${q}')" style="width: 100%; padding: 12px; font-size: 14px;">
+                        ⏹️ Finalitzar ${i+1}º Cuarto
+                    </button>
+                    <p style="font-size: 10px; color: #bae6fd; margin-top: 8px; text-align: center;">
+                        Prem aquest botó quan acabi el quart
+                    </p>
+                </div>
+            ` : ''}
+            
+            ${isStarted && isEnded ? `
+                <div style="background: rgba(34, 211, 238, 0.3); border: 1px solid #22d3ee; padding: 10px; border-radius: 8px; margin-top: 12px; text-align: center;">
+                    <div style="font-size: 14px; font-weight: bold; color: #22d3ee;">✅ Cuarto Finalitzat</div>
+                    <div style="font-size: 10px; color: #bae6fd; margin-top: 4px;">
+                        ${new Date(quarterStartTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })} - ${new Date(quarterRealEndTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}
+                    </div>
+                </div>
+            ` : ''}
+        </div>`;
+    }).join('');
+}
+function renderPeriodScores(){const c=document.getElementById('periodScores');let h='';['q1','q2','q3','q4'].forEach((q,i)=>{h+=`<div class="period-row"><div class="period-label">${i+1}º Cuarto</div><div class="period-score">${periodScores[q].cnt} - ${periodScores[q].rival}</div></div>`});c.innerHTML=h}
+function updatePlayerName(n,name){const p=players.find(p=>p.num===n);if(p){p.name=name;renderLineups();saveToLocalStorage()}}
+function closeGoalModal(){document.getElementById('goalModal').classList.remove('show');currentGoalContext=null}
+function updateStat(n,stat,inc){stats[n][stat]=Math.max(0,stats[n][stat]+inc);document.getElementById(`${stat==='exclusions'?'exc':'gols'}-${n}`).textContent=stats[n][stat];if(stat==='exclusions')updatePlayerNameColor(n,stats[n][stat]);if(stat==='gols'&&inc<0){const gt=stats[n].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderCompactView();}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
+function updateRivalStat(i,stat,inc){rivalStats[i][stat]=Math.max(0,rivalStats[i][stat]+inc);document.getElementById(`rival-${stat==='exclusions'?'exc':'gols'}-${i}`).textContent=rivalStats[i][stat];if(stat==='exclusions')updateRivalNameColor(i,rivalStats[i][stat]);if(stat==='gols'&&inc<0){const gt=rivalStats[i].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderCompactView()}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
+function updatePlayerNameColor(n,exc){
+    const p=players.find(p=>p.num===n);
+    if(!p)return;
+    
+    // Actualitzar vista normal
+    const inputs=document.querySelectorAll(`input.player-name-input[value="${p.name}"]`);
+    inputs.forEach(input=>{
+        input.classList.remove('exc-1','exc-2','exc-3');
+        if(exc===1)input.classList.add('exc-1');
+        else if(exc===2)input.classList.add('exc-2');
+        else if(exc>=3)input.classList.add('exc-3');
+    });
+    
+    // Actualitzar vista compacta amb ID específic
+    const compactInput=document.getElementById(`compact-name-${n}`);
+    if(compactInput){
+        compactInput.classList.remove('exc-1','exc-2','exc-3');
+        if(exc===1)compactInput.classList.add('exc-1');
+        else if(exc===2)compactInput.classList.add('exc-2');
+        else if(exc>=3)compactInput.classList.add('exc-3');
+    }
+}
+function updateRivalNameColor(i,exc){const cards=document.querySelectorAll('#rivalPlayersList .player-card');const input=cards[i]?.querySelector('.player-name-input');if(!input)return;input.classList.remove('exc-1','exc-2','exc-3');if(exc===1)input.classList.add('exc-1');else if(exc===2)input.classList.add('exc-2');else if(exc>=3)input.classList.add('exc-3')}
+function updateRivalName(i,name){rivalStats[i].name=name;saveToLocalStorage()}
+function updateTempsMortCNT(inc){tempsMortCNT=Math.max(0,tempsMortCNT+inc);document.getElementById('tempsMortCNT').textContent=tempsMortCNT;saveToLocalStorage()}
+function updateTempsMortRival(inc){tempsMortRival=Math.max(0,tempsMortRival+inc);document.getElementById('tempsMortRival').textContent=tempsMortRival;saveToLocalStorage()}
+function updateRivalTeam(){rivalTeam=document.getElementById('rivalTeamInput').value||'Rival';document.getElementById('rivalTeamLabel').textContent=rivalTeam;saveToLocalStorage()}
+function setLocation(loc){matchLocation=loc;document.getElementById('locationHome').classList.remove('selected');document.getElementById('locationAway').classList.remove('selected');document.getElementById('location'+(loc==='home'?'Home':'Away')).classList.add('selected');saveToLocalStorage()}
+function updateScores(){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);document.getElementById('scoreCNT').textContent=cs;document.getElementById('scoreRival').textContent=rs}
+function toggleLineup(q, n) {
+    // No permetre canvis si el quart ja ha començat
+    if (quarterStartTimes[q] !== null) {
+        alert('❌ No pots canviar l\'alineació després de començar el quart!');
+        return;
+    }
+    
+    const l = lineups[q];
+    const i = l.indexOf(n);
+    
+    if (i > -1) {
+        l.splice(i, 1);
+    } else if (l.length < 7) {
+        l.push(n);
+    }
+    
+    if (l.length === 7) {
+        const qs = ['q1', 'q2', 'q3', 'q4'];
+        const ci = qs.indexOf(q);
+        if (ci > 0) {
+            const pq = qs[ci - 1];
+            captureLineupScore(pq);
+        }
+        
+        
+         }
+    
+    renderLineups();
+    saveToLocalStorage();
+}
+function resetQuarterTimes(quarter) {
+    if (confirm(`Vols esborrar els temps registrats del ${quarter.toUpperCase()}? Això et permetrà tornar a començar el quart.`)) {
+        quarterStartTimes[quarter] = null;
+        quarterRealEndTimes[quarter] = null;
+        
+        // Esborrar els canvis d'aigua d'aquest quart
+        playerWaterChanges = playerWaterChanges.filter(c => c.quarter !== quarter);
+        
+        // Esborrar les accions cronològiques d'aquest quart
+        chronologicalActions = chronologicalActions.filter(a => a.quarter !== quarter);
+        
+        // Treure tots els jugadors de l'aigua si estem resetejant el quart actual
+        const currentQuarter = getCurrentQuarter();
+        if (quarter === currentQuarter) {
+            playersInWater.clear();
+            renderCompactView();
+            if (compactMode) renderCompactView();
+        }
+        
+        renderLineups();
+        saveToLocalStorage();
+        alert(`✅ Temps del ${quarter.toUpperCase()} esborrats. Ara pots tornar a començar el quart.`);
+    }
+}
+function captureLineupScore(q){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);const qs=['q1','q2','q3','q4'];const qi=qs.indexOf(q);const pq=qs.slice(0,qi);const pcs=pq.reduce((s,q)=>s+periodScores[q].cnt,0);const prs=pq.reduce((s,q)=>s+periodScores[q].rival,0);periodScores[q].cnt=cs-pcs;periodScores[q].rival=rs-prs;renderPeriodScores()}
+function calculateFinalQuarter(){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);const pcs=periodScores.q1.cnt+periodScores.q2.cnt+periodScores.q3.cnt;const prs=periodScores.q1.rival+periodScores.q2.rival+periodScores.q3.rival;periodScores.q4.cnt=cs-pcs;periodScores.q4.rival=rs-prs;renderPeriodScores()}
+function showView(v){const views=['statsView','rivalView','lineupsView','configView'];views.forEach(view=>{const element=document.getElementById(view);if(element)element.classList.add('hidden')});const targetView=document.getElementById(v+'View');if(targetView)targetView.classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(event&&event.target)event.target.classList.add('active')}
+function generateMatchData(){observacions=document.getElementById('observacions')?.value||'';return {temporada:'25/26 CADET',equip:'CN TERRASSA',data:new Date().toISOString(),scoreCNT:Object.values(stats).reduce((sum,s)=>sum+s.gols,0),scoreRival:rivalStats.reduce((sum,p)=>sum+p.gols,0),lineups,periodScores,tempsMortCNT,tempsMortRival,rivalTeam,matchLocation,rivalStats,jugadors:players.map(p=>({numero:p.num,nom:p.name,estadistiques:stats[p.num]})),observacions,chronologicalActions:chronologicalActions||[],quarterStartTimes:quarterStartTimes,playerWaterChanges:playerWaterChanges||[]}}
+function exportData(){const d=generateMatchData();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';a.download=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;a.click();URL.revokeObjectURL(u)}
+function importData(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.lineups)lineups=d.lineups;if(d.periodScores)periodScores=d.periodScores;if(d.tempsMortCNT!==undefined){tempsMortCNT=d.tempsMortCNT;document.getElementById('tempsMortCNT').textContent=tempsMortCNT}if(d.tempsMortRival!==undefined){tempsMortRival=d.tempsMortRival;document.getElementById('tempsMortRival').textContent=tempsMortRival}if(d.rivalTeam){rivalTeam=d.rivalTeam;document.getElementById('rivalTeamInput').value=rivalTeam;document.getElementById('rivalTeamLabel').textContent=rivalTeam}if(d.rivalStats)rivalStats=d.rivalStats;if(d.observacions)document.getElementById('observacions').value=d.observacions;if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;else chronologicalActions=[];if(d.playersInWater)playersInWater=new Set(d.playersInWater);else playersInWater=new Set();if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;else quarterStartTimes={q1:null,q2:null,q3:null,q4:null};if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;else playerWaterChanges=[];if(d.jugadors){d.jugadors.forEach(j=>{const p=players.find(p=>p.num===j.numero);if(p)p.name=j.nom;stats[j.numero]=j.estadistiques;if(stats[j.numero].penaltyMissed===undefined)stats[j.numero].penaltyMissed=0})}renderCompactView();renderCompactView();renderLineups();renderPeriodScores();updateScores();alert('Datos importados correctamente')}catch(err){alert('Error al importar el archivo')}};r.readAsText(f)}}
+function resetAll() {
+    if (confirm('¿Seguro que quieres resetear todas las estadísticas?')) {
+        // Resetear jugadores a los predefinidos del CNT
+        players = [
+            { num: 1, name: 'DAVID CASADO' },
+            { num: 2, name: 'SAMUEL DIAZ' },
+            { num: 3, name: 'MAX CEREZO' },
+            { num: 4, name: 'POL RICO' },
+            { num: 5, name: 'OLIVER HERRERA' },
+            { num: 6, name: 'NIL CARDENAS' },
+            { num: 7, name: 'LLATZER PEREZ' },
+            { num: 8, name: 'JORDI FARRE' },
+            { num: 9, name: 'IVAN GALLEGO' },
+            { num: 10, name: 'ADAY ACUÑA' },
+            { num: 11, name: 'HECTOR DIOS' },
+            { num: 12, name: 'BIEL COBACHO' },
+            { num: 13, name: 'GUILLEM POLEY' },
+            { num: 14, name: 'JOSE MANUEL LLENIN' }
+        ];
+
+        // Resetear estadísticas de jugadores
+        stats = {};
+        players.forEach(p => {
+            stats[p.num] = {
+                gols: 0,
+                exclusions: 0,
+                penaltyMissed: 0,
+                goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 },
+                exclusionTypes: { normal: 0, penalty: 0 },
+                parades: 0,
+                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0, penal: 0 },
+                assistencies: 0,
+                robatoris: 0,
+                perdues: 0,
+                xutsFallats: 0,
+                blocatges: 0,
+                faltesRebudes: 0
+            };
+        });
+
+        // Resetear rival
+        rivalStats = Array(14).fill(null).map((_, i) => ({
+            num: i + 1,
+            name: '',
+            gols: 0,
+            exclusions: 0,
+            penaltyMissed: 0,
+            goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 },
+            exclusionTypes: { normal: 0, penalty: 0 }
+        }));
+
+        // Resetear altres dades
+        rivalTeam = 'Rival';
+        matchLocation = 'home';
+        lineups = { q1: [], q2: [], q3: [], q4: [] };
+        periodScores = { q1: { cnt: 0, rival: 0 }, q2: { cnt: 0, rival: 0 }, q3: { cnt: 0, rival: 0 }, q4: { cnt: 0, rival: 0 } };
+        tempsMortCNT = 0;
+        tempsMortRival = 0;
+        actionsHistory = [];
+        chronologicalActions = [];
+        playersInWater = new Set();
+        quarterStartTimes = { q1: null, q2: null, q3: null, q4: null };
+        playerWaterChanges = [];
+		
+		// ⭐ AFEGIR AQUESTES LÍNIES PER NETEJAR ELS TEMPS:
+        quarterStartTimes={q1:null,q2:null,q3:null,q4:null};
+        quarterRealEndTimes={q1:null,q2:null,q3:null,q4:null};
+        playerWaterChanges=[];
+        playersInWater.clear();
+
+        // Actualitzar interfície
+        document.getElementById('rivalTeamInput').value = 'Rival';
+        document.getElementById('rivalTeamLabel').textContent = 'Rival';
+        document.getElementById('tempsMortCNT').textContent = '0';
+        document.getElementById('tempsMortRival').textContent = '0';
+        document.getElementById('observacions').value = '';
+        
+        compactMode = true;
+        renderCompactView();
+        renderLineups();
+        renderPeriodScores();
+        renderHistory();
+        updateScores();
+
+        saveToLocalStorage();
+        alert('Estadísticas reseteadas correctamente. Jugadores del CNT restaurados.');
+    }
+}
+function addToHistory(action){actionsHistory.unshift(action);if(actionsHistory.length>10)actionsHistory.pop();renderHistory();saveToLocalStorage()}
+function renderHistory(){
+    const container=document.getElementById('actionsList');
+    if(!container)return;
+    if(actionsHistory.length===0){
+        container.innerHTML='<div style="font-size: 9px; color: rgba(255,255,255,0.5); padding: 6px;">No hay acciones recientes</div>';
+        return;
+    }
+    container.innerHTML=actionsHistory.map((action,index)=>{
+        let icon = '⚽';
+        if (action.type === 'gol') icon = '⚽';
+        else if (action.type === 'exclusion') icon = '🟥';
+        else if (action.type === 'water-change') {
+            icon = action.action === 'in' ? '🌊➡️' : '🌊⬅️';
+        } else if (action.type === 'save') {
+            icon = '🧤';
+        } else if (action.type === 'action') {
+            icon = '📊';
+        } else {
+            icon = '⏱️';
+        }
+        
+        return `<div class="action-item"><span class="action-icon">${icon}</span><span>${action.text}</span><button class="undo-btn" onclick="undoAction(${index})">↩️ Deshacer</button></div>`;
+    }).join('');
+}
+function undoAction(index){
+    const action=actionsHistory[index];
+    if(!action)return;
+    
+    if (action.type === 'gol') {
+    if (action.isRival) {
+        rivalStats[action.playerNum].gols--;
+        if (rivalStats[action.playerNum].goalTypes && rivalStats[action.playerNum].goalTypes[action.goalType]) {
+            rivalStats[action.playerNum].goalTypes[action.goalType]--;
+        }
+        // NO fem res amb goalZones perquè els rivals no en tenen
+        renderCompactView();
+    } else {
+        stats[action.playerNum].gols--;
+        if (stats[action.playerNum].goalTypes && stats[action.playerNum].goalTypes[action.goalType]) {
+            stats[action.playerNum].goalTypes[action.goalType]--;
+        }
+        // Només restem zona si existeix
+        if (action.goalZone && stats[action.playerNum].goalZones) {
+            stats[action.playerNum].goalZones[action.goalZone]--;
+        }
+        renderCompactView();
+    }
+
+    } else if(action.type==='exclusion'){
+        if(action.isRival){
+            rivalStats[action.playerNum].exclusions--;
+            if(rivalStats[action.playerNum].exclusionTypes&&rivalStats[action.playerNum].exclusionTypes[action.exclusionType]){
+                rivalStats[action.playerNum].exclusionTypes[action.exclusionType]--;
+            }
+            updateRivalNameColor(action.playerNum,rivalStats[action.playerNum].exclusions);
+            renderCompactView();
+        }else{
+            stats[action.playerNum].exclusions--;
+            if(stats[action.playerNum].exclusionTypes&&stats[action.playerNum].exclusionTypes[action.exclusionType]){
+                stats[action.playerNum].exclusionTypes[action.exclusionType]--;
+            }
+            updatePlayerNameColor(action.playerNum,stats[action.playerNum].exclusions);
+            renderCompactView();
+        }
+    } else if(action.type === 'water-change'){
+        // Desfer canvi d'aigua
+        if(action.action === 'in'){
+            playersInWater.delete(action.playerNum);
+        } else {
+            playersInWater.add(action.playerNum);
+        }
+        
+        // Eliminar l'últim canvi de playerWaterChanges
+        const lastChangeIndex = playerWaterChanges.map((c, i) => ({...c, index: i}))
+            .reverse()
+            .find(c => c.playerNum === action.playerNum && c.action === action.action);
+        
+        if(lastChangeIndex){
+            playerWaterChanges.splice(lastChangeIndex.index, 1);
+        }
+        
+        // Eliminar de chronologicalActions
+        const lastChronIndex = chronologicalActions.map((a, i) => ({...a, index: i}))
+            .reverse()
+            .find(a => a.type === 'water-change' && 
+                      a.playerNum === action.playerNum && 
+                      a.action === action.action);
+        
+        if(lastChronIndex){
+            chronologicalActions.splice(lastChronIndex.index, 1);
+        }
+        
+        renderCompactView();
+        if(compactMode) renderCompactView();
+    } else if(action.type === 'save'){
+        stats[action.playerNum].parades--;
+        if(stats[action.playerNum].paradeTypes && stats[action.playerNum].paradeTypes[action.saveType]){
+            stats[action.playerNum].paradeTypes[action.saveType]--;
+        }
+        renderCompactView();
+        if(compactMode) renderCompactView();
+    } else if(action.type === 'action'){
+        const type = action.actionType;
+        if (type === 'assistencia' && stats[action.playerNum].assistencies > 0) {
+            stats[action.playerNum].assistencies--;
+        } else if (type === 'robatori' && stats[action.playerNum].robatoris > 0) {
+            stats[action.playerNum].robatoris--;
+        } else if (type === 'perdua' && stats[action.playerNum].perdues > 0) {
+            stats[action.playerNum].perdues--;
+        } else if (type === 'xut' && stats[action.playerNum].xutsFallats > 0) {
+            stats[action.playerNum].xutsFallats--;
+        } else if (type === 'block' && stats[action.playerNum].blocks > 0) {
+            stats[action.playerNum].blocks--;
+        }
+        renderCompactView();
+        if(compactMode) renderCompactView();
+    }
+    
+    actionsHistory.splice(index,1);
+    updateScores();
+    updateQuarterInfo();
+    renderHistory();
+    
+    if(action.type==='gol'){
+        const lastGoalIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='goal'&&a.team===(action.isRival?'rival':'cnt')&&a.playerNum===action.playerNum&&a.goalType===action.goalType);
+        if(lastGoalIndex){
+            chronologicalActions.splice(lastGoalIndex.index,1);
+        }
+    } else if(action.type==='exclusion'){
+        const lastExcIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='exclusion'&&a.team===(action.isRival?'rival':'cnt')&&a.playerNum===action.playerNum&&a.exclusionType===action.exclusionType);
+        if(lastExcIndex){
+            chronologicalActions.splice(lastExcIndex.index,1);
+        }
+    } else if(action.type==='save'){
+        const lastSaveIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='save'&&a.playerNum===action.playerNum&&a.saveType===action.saveType);
+        if(lastSaveIndex){
+            chronologicalActions.splice(lastSaveIndex.index,1);
+        }
+    } else if(action.type==='action'){
+        const lastActionIndex=chronologicalActions.map((a,i)=>({...a,index:i})).reverse().find(a=>a.type==='action'&&a.playerNum===action.playerNum&&a.actionType===action.actionType);
+        if(lastActionIndex){
+            chronologicalActions.splice(lastActionIndex.index,1);
+        }
+    }
+    
+    saveToLocalStorage();
+}
+function clearHistory(){if(confirm('¿Limpiar el historial de acciones?')){actionsHistory=[];renderHistory();saveToLocalStorage()}}
+function updateQuarterInfo(){const container=document.getElementById('quarterInfo');if(!container)return;const currentQuarter=getCurrentQuarter();const qNum=currentQuarter==='q1'?'1':currentQuarter==='q2'?'2':currentQuarter==='q3'?'3':'4';const totalCNT=Object.values(stats).reduce((s,st)=>s+st.gols,0);const totalRival=rivalStats.reduce((s,p)=>s+p.gols,0);const quarters=['q1','q2','q3','q4'];const currentIndex=quarters.indexOf(currentQuarter);let previousCNT=0;let previousRival=0;for(let i=0;i<currentIndex;i++){previousCNT+=periodScores[quarters[i]].cnt;previousRival+=periodScores[quarters[i]].rival}const qScoreCNT=totalCNT-previousCNT;const qScoreRival=totalRival-previousRival;container.textContent=`Q${qNum}: ${qScoreCNT}-${qScoreRival}`}
+function getCurrentQuarter(){if(lineups.q4.length===7)return 'q4';if(lineups.q3.length===7)return 'q3';if(lineups.q2.length===7)return 'q2';return 'q1'}
+function renderCompactView(){
+    console.log('🔄 RENDERITZANT VISTA COMPACTA');
+    console.log('Parades jugador 1:', stats[1]?.parades);
+    
+    const cntContainer=document.getElementById('playersList');
+    const rivalContainer=document.getElementById('rivalPlayersList');
+    cntContainer.className='compact-grid';
+    rivalContainer.className='compact-grid';
+    
+    // ✅ JUGADORS CNT AMB LONG-PRESS PER EXCLUSIONS
+    cntContainer.innerHTML=players.map(p=>{
+        const gols=stats[p.num]?.gols||0;
+        const parades=stats[p.num]?.parades||0;
+        const exc=stats[p.num]?.exclusions||0;
+        const totalActions=getTotalActions(p.num);
+        const isInWater=playersInWater.has(p.num);
+        const isGoalkeeper = p.num === 1 || p.num === 13;
+        
+        let excClass='';
+        if(exc===1)excClass='exc-1';
+        else if(exc===2)excClass='exc-2';
+        else if(exc>=3)excClass='exc-3';
+        
+        return `<div class="compact-player" style="padding:2px;width:100%;box-sizing:border-box;">
+            <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px;">
+                <div class="player-number ${isInWater?'active-player':''} ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;">${p.num}</div>
+                <input type="text" class="compact-name player-name-input ${excClass}" id="compact-name-${p.num}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;width:100%;box-sizing:border-box;">
+                ${isGoalkeeper ? `
+                    <button onclick="openSaveModal(${p.num},1)" style="padding:4px 1px;background:#8b5cf6;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                        <span id="parades-${p.num}" style="font-size:11px;line-height:1;">${parades}</span>
+                        <span style="font-size:9px;">🧤</span>
+                    </button>
+                ` : `
+                    <button onclick="openGoalModal(${p.num},false,1)" style="padding:4px 1px;background:#22c55e;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                        <span id="gols-${p.num}" style="font-size:11px;line-height:1;">${gols}</span>
+                        <span style="font-size:9px;">⚽</span>
+                    </button>
+                `}
+                <button 
+                    ontouchstart="handleExclusionPress(${p.num}, false); return false;" 
+                    ontouchend="handleExclusionRelease(${p.num}, false); return false;"
+                    onmousedown="handleExclusionPress(${p.num}, false); return false;"
+                    onmouseup="handleExclusionRelease(${p.num}, false); return false;"
+                    style="padding:4px 1px;background:#ef4444;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                    <span id="exc-${p.num}" style="font-size:11px;line-height:1;">${exc}</span>
+                    <span style="font-size:9px;">🟥</span>
+                </button>
+                <button onclick="openActionModal(${p.num},1)" style="padding:4px 1px;background:#3b82f6;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                    <span id="actions-${p.num}" style="font-size:11px;line-height:1;">${totalActions}</span>
+                    <span style="font-size:9px;">📊</span>
+                </button>
+                <button onclick="togglePlayerWaterStatus(${p.num})" style="padding:4px 1px;background:${isInWater?'#22c55e':'#3b82f6'};color:white;border:none;border-radius:4px;font-size:6px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                    <span style="font-size:7px;line-height:1;">${isInWater?'DINS':'FORA'}</span>
+                    <span style="font-size:9px;">💧</span>
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+    
+    // ✅ JUGADORS RIVAL AMB LONG-PRESS PER EXCLUSIONS
+   rivalContainer.innerHTML=rivalStats.map((p,i)=>{
+    const gols=p.gols||0;
+    const exc=p.exclusions||0;
+    let excClass='';
+    if(exc===1)excClass='exc-1';
+    else if(exc===2)excClass='exc-2';
+    else if(exc>=3)excClass='exc-3';
+    
+    return `<div class="compact-player" style="padding:2px;display:flex;flex-direction:column;width:100%;box-sizing:border-box;">
+    <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px;">
+        <div class="player-number rival ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;flex-shrink:0;">${p.num}</div>
+        <input type="text" class="compact-name player-name-input ${excClass}" id="compact-rival-name-${i}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Rival ${p.num}" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
+    </div>
+    <div style="display:flex;gap:2px;width:100%;">
+        <button onclick="openGoalModal(${i},true,1)" style="flex:1;padding:4px 1px;background:#22c55e;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+            <span id="rival-gols-${i}" style="font-size:11px;line-height:1;">${gols}</span>
+            <span style="font-size:9px;">⚽</span>
+        </button>
+        <button 
+            ontouchstart="handleExclusionPress(${i}, true); return false;" 
+            ontouchend="handleExclusionRelease(${i}, true); return false;"
+            onmousedown="handleExclusionPress(${i}, true); return false;"
+            onmouseup="handleExclusionRelease(${i}, true); return false;"
+            style="flex:1;padding:4px 1px;background:#ef4444;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+            <span id="rival-exc-${i}" style="font-size:11px;line-height:1;">${exc}</span>
+            <span style="font-size:9px;">🟥</span>
+        </button>
+    </div>
+</div>`;
+}).join('');
+    
+    setTimeout(checkPlayersInWater,100);
+}
+function saveGithubConfig(){githubConfig.token=document.getElementById('githubToken').value;githubConfig.repo=document.getElementById('githubRepo').value;githubConfig.branch=document.getElementById('githubBranch').value;localStorage.setItem('githubConfig',JSON.stringify(githubConfig));updateGithubStatus()}
+function loadGithubConfig(){const saved=localStorage.getItem('githubConfig');if(saved){githubConfig=JSON.parse(saved);if(document.getElementById('githubToken')){document.getElementById('githubToken').value=githubConfig.token;document.getElementById('githubRepo').value=githubConfig.repo;document.getElementById('githubBranch').value=githubConfig.branch}}}
+function updateGithubStatus(){const statusDiv=document.getElementById('githubStatus');if(!statusDiv)return;if(!githubConfig.token){statusDiv.innerHTML='<div class="github-status warning">⚠️ Token de GitHub no configurado</div>'}else{statusDiv.innerHTML='<div class="github-status success">✓ Configuración guardada</div>'}}
+async function testGithubConnection(){const statusDiv=document.getElementById('githubStatus');if(!githubConfig.token){statusDiv.innerHTML='<div class="github-status error">❌ Configura primero el token</div>';return}statusDiv.innerHTML='<div class="github-status">🔄 Probando conexión...</div>';try{const[owner,repo]=githubConfig.repo.split('/');const response=await fetch(`https://api.github.com/repos/${owner}/${repo}`,{headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json'}});if(response.ok){statusDiv.innerHTML='<div class="github-status success">✓ Conexión exitosa</div>'}else{statusDiv.innerHTML='<div class="github-status error">❌ Error: Verifica token y repositorio</div>'}}catch(error){statusDiv.innerHTML='<div class="github-status error">❌ Error de conexión</div>'}}
+async function uploadToGithub(){if(!githubConfig.token){alert('Configura primero el token de GitHub en la pestaña Config');return}const data=generateMatchData();const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';const fileName=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;const[owner,repo]=githubConfig.repo.split('/');try{let sha=null;try{const checkResponse=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${fileName}?ref=${githubConfig.branch}`,{headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json'}});if(checkResponse.ok){const fileData=await checkResponse.json();sha=fileData.sha}}catch(e){}const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));const uploadData={message:`Actualizar estadísticas - ${new Date().toLocaleDateString('es-ES')}`,content:content,branch:githubConfig.branch};if(sha){uploadData.sha=sha}const response=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`,{method:'PUT',headers:{'Authorization':`token ${githubConfig.token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(uploadData)});if(response.ok){alert('✅ Archivo subido exitosamente a GitHub')}else{const error=await response.json();alert('Error al subir: '+(error.message||'Error desconocido'))}}catch(error){alert('Error de conexión: '+error.message)}}
+function togglePlayerWaterStatus(playerNum){
+    const timestamp=Date.now();
+    const currentQuarter=getCurrentQuarter();
+    const player = players.find(p => p.num === playerNum);
+    const playerName = player ? player.name : `Jugador ${playerNum}`;
+    
+    if(playersInWater.has(playerNum)){
+        playersInWater.delete(playerNum);
+        playerWaterChanges.push({
+            playerNum:playerNum,
+            quarter:currentQuarter,
+            action:'out',
+            timestamp:timestamp
+        });
+        
+        // ✅ AFEGIR A L'HISTORIAL
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'out',
+            text: `${playerName}: Surt de l'aigua`
+        });
+        
+        // ✅ AFEGIR A CHRONOLOGICAL ACTIONS
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'out',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    } else {
+        playersInWater.add(playerNum);
+        playerWaterChanges.push({
+            playerNum:playerNum,
+            quarter:currentQuarter,
+            action:'in',
+            timestamp:timestamp
+        });
+        
+        // ✅ AFEGIR A L'HISTORIAL
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'in',
+            text: `${playerName}: Entra a l'aigua`
+        });
+        
+        // ✅ AFEGIR A CHRONOLOGICAL ACTIONS
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'in',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    }
+    
+    renderCompactView()
+    if(compactMode)renderCompactView();
+    saveToLocalStorage();
+    checkPlayersInWater();
+}
+function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
+function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderCompactView();if(compactMode)renderCompactView();saveToLocalStorage()}
+function startQuarter(quarter) {
+    const timestamp = Date.now();
+    quarterStartTimes[quarter] = timestamp;
+    
+    const newLineup = lineups[quarter];
+    
+    // Treure tots els jugadors que no estan a la nova alineació
+    playersInWater.forEach(num => {
+        if (!newLineup.includes(num)) {
+            playerWaterChanges.push({
+                playerNum: num,
+                quarter: quarter,
+                action: 'out',
+                timestamp: timestamp
+            });
+        }
+    });
+    
+    playersInWater.clear();
+    
+    // Afegir els titulars del nou quart
+    newLineup.forEach(num => {
+        playersInWater.add(num);
+        playerWaterChanges.push({
+            playerNum: num,
+            quarter: quarter,
+            action: 'in',
+            timestamp: timestamp
+        });
+    });
+    
+    // ❌ ELIMINAR AQUESTA LÍNIA:
+    // renderCompactView()
+    
+    // ✅ MANTENIR NOMÉS AQUESTA:
+    if (compactMode) renderCompactView();
+    renderLineups();
+    saveToLocalStorage();
+    
+    alert(`✅ ${quarter.toUpperCase()} començat!`);
+}
+function calculatePlayingTimeForMatch(){const result={};const quarterDuration=480;players.forEach(p=>{const times={q1:0,q2:0,q3:0,q4:0,total:0};const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);['q1','q2','q3','q4'].forEach(quarter=>{const qChanges=playerChanges.filter(c=>c.quarter===quarter);if(qChanges.length===0){times[quarter]=0;return}qChanges.sort((a,b)=>a.timestamp-b.timestamp);let timeInWater=0;let lastInTime=null;const quarterStartTime=quarterStartTimes[quarter];if(!quarterStartTime){times[quarter]=0;return}qChanges.forEach(change=>{if(change.action==='in'){lastInTime=change.timestamp}else if(change.action==='out'&&lastInTime!==null){timeInWater+=(change.timestamp-lastInTime)/1000;lastInTime=null}});if(lastInTime!==null){const quarterEndTime=quarterStartTime+quarterDuration*1000;timeInWater+=(quarterEndTime-lastInTime)/1000}times[quarter]=Math.round(timeInWater)});times.total=times.q1+times.q2+times.q3+times.q4;result[p.num]={name:p.name,times:times}});return result}
+function formatTime(seconds){const mins=Math.floor(seconds/60);const secs=seconds%60;return `${mins}:${secs.toString().padStart(2,'0')}`}
+function showPlayingTimes(){const times=calculatePlayingTimeForMatch();let report='⏱️ TEMPS DE JOC PER JUGADOR\n\n';players.forEach(p=>{const t=times[p.num].times;report+=`${p.num}. ${p.name}\n`;report+=`  Q1: ${formatTime(t.q1)} | Q2: ${formatTime(t.q2)} | Q3: ${formatTime(t.q3)} | Q4: ${formatTime(t.q4)}\n`;report+=`  TOTAL: ${formatTime(t.total)} (${Math.round((t.total/1920)*100)}%)\n\n`});alert(report)}
+function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
+document.addEventListener('DOMContentLoaded',function(){const o=document.getElementById('observacions');if(o){o.addEventListener('input',function(){saveToLocalStorage()})}init()});
+// ============================================
+// GESTOS TOUCH ULTRA-SENSIBLES (VISTA COMPACTA)
+// ============================================
+
+let startX = 0;
+let startY = 0;
+let isDragging = false;
+
+document.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+}, { passive: true });
+
+document.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    
+    const currentX = e.touches[0].clientX;
+    const moveX = currentX - startX;
+    
+    // Si es mou més de 20px horitzontalment, prevenir scroll
+    if (Math.abs(moveX) > 20) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+document.addEventListener('touchend', function(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    
+    // ✅ MILLORA: Detectar si és més vertical que horitzontal
+    const absX = Math.abs(diffX);
+    const absY = Math.abs(diffY);
+    
+    // Si el moviment vertical és més gran que l'horitzontal, és un scroll, no un swipe
+    if (absY > absX) return;
+    
+    // Si el moviment horitzontal és massa petit, ignorar
+    if (absX < 50) return; // ✅ Augmentat de 30 a 50px per més seguretat
+    
+    // ✅ MILLORA ADDICIONAL: Només canviar si el moviment horitzontal és almenys el doble del vertical
+    if (absX < absY * 1.5) return;
+    
+    // Vista actual
+    const onStats = !document.getElementById('statsView').classList.contains('hidden');
+    const onRival = !document.getElementById('rivalView').classList.contains('hidden');
+    const onLineups = !document.getElementById('lineupsView').classList.contains('hidden');
+    
+    // SWIPE ESQUERRA (següent)
+    if (diffX < 0) {
+        if (onStats) {
+            quickChangeTab('rival', 1);
+        } else if (onRival) {
+            quickChangeTab('lineups', 2);
+        }
+    }
+    
+    // SWIPE DRETA (anterior)
+    if (diffX > 0) {
+        if (onRival) {
+            quickChangeTab('stats', 0);
+        } else if (onLineups) {
+            quickChangeTab('rival', 1);
+        }
+    }
+}, { passive: true });
+
+function quickChangeTab(viewName, tabIndex) {
+    // Canviar vista
+    const views = ['statsView', 'rivalView', 'lineupsView'];
+    views.forEach(v => {
+        const el = document.getElementById(v);
+        if (el) el.classList.add('hidden');
+    });
+    
+    const target = document.getElementById(viewName + 'View');
+    if (target) target.classList.remove('hidden');
+    
+    // Actualitzar tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    if (tabs[tabIndex]) tabs[tabIndex].classList.add('active');
+    
+    // Vibració (si el dispositiu ho suporta)
+    if (navigator.vibrate) {
+        navigator.vibrate(10);
+    }
+}
+
+
+function openSaveModal(n, inc) {
+    if (inc < 0) {
+        updateSave(n, inc);
+        return;
+    }
+    currentSaveContext = { playerNum: n };
+    document.getElementById('saveModal').classList.add('show');
+}
+
+function closeSaveModal() {
+    document.getElementById('saveModal').classList.remove('show');
+    currentSaveContext = null;
+}
+
+function selectSaveType(type) {
+    if (!currentSaveContext) return;
+    const { playerNum } = currentSaveContext;
+    
+    const player = players.find(p => p.num === playerNum);
+    const playerName = player ? player.name : `Jugador ${playerNum}`;
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    
+    if (!stats[playerNum].paradeTypes) {
+        stats[playerNum].paradeTypes = { corner: 0, rebuig: 0, atrapa: 0 };
+    }
+    
+    stats[playerNum].parades++;
+    stats[playerNum].paradeTypes[type]++;
+    
+    chronologicalActions.push({
+        timestamp: timestamp,
+        quarter: currentQuarter,
+        type: 'save',
+        saveType: type,
+        team: 'cnt',
+        playerNum: playerNum,
+        playerName: playerName
+    });
+    
+    const saveTypeText = type === 'corner' ? 'Corner' : 
+                     type === 'rebuig' ? 'Rebuig' : 
+                     type === 'atrapa' ? 'Atrapa' :
+                     type === 'penal' ? 'Penal' : '';
+    
+    addToHistory({
+        type: 'save',
+        playerNum: playerNum,
+        isRival: false,
+        saveType: type,
+        text: `${playerName}: Parada (${saveTypeText})`
+    });
+    
+    // ✅ RENDERITZAR SEGONS EL MODE
+    if (compactMode) {
+        renderCompactView();
+    } else {
+        renderCompactView();  // ✅ AFEGIR AQUESTA LÍNIA
+    }
+    
+    saveToLocalStorage();
+    closeSaveModal();
+}
+
+function updateSave(n, inc) {
+    stats[n].parades = Math.max(0, stats[n].parades + inc);
+    if (inc < 0) {
+        const st = stats[n].paradeTypes;
+        const types = ['penal','atrapa', 'rebuig', 'corner'];
+        for (let t of types) {
+            if (st[t] > 0) {
+                st[t]--;
+                break;
+            }
+        }
+        renderCompactView()
+    }
+    saveToLocalStorage();
+}
+</script>
+<script>
+    // 🔒 Bloqueo de clic derecho y atajos
+    document.addEventListener("contextmenu", event => event.preventDefault());
+    document.addEventListener("keydown", event => {
+      if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
+          event.key === "F12") {
+        event.preventDefault();
+      }
+    });
+    </script>
+</body>
+</html>
