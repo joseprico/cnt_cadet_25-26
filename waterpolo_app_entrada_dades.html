@@ -255,6 +255,7 @@
 	    <div id="penaltyMissedModal" class="modal"><div class="modal-content" style="max-width: 400px;" id="penaltyModalContent"></div></div>
     
     <div id="waterWarning" class="water-warning">⚠️ Has de tenir exactament 7 jugadors DINS!</div>
+<div id="superioritatIndicator" style="display: none; position: fixed; top: 150px; left: 50%; transform: translateX(-50%); z-index: 1001; animation: slideDown 0.3s ease-out;"></div>
 
     <div class="container">
                <div class="card tabs">
@@ -634,9 +635,222 @@ function loadFromLocalStorage(){
         console.error('Error:',e);
     }
 }
+// ============================================
+// DETECCIÓ DE SUPERIORITAT
+// ============================================
+function checkSuperioritat() {
+    const now = Date.now();
+    const last60s = chronologicalActions.filter(a => now - a.timestamp < 60000); // Últims 60s
+    
+    // Comptar exclusions actives (últims 20 segons)
+    const last20s = chronologicalActions.filter(a => now - a.timestamp < 20000);
+    
+    const cntExclusions = last20s.filter(a => 
+        a.type === 'exclusion' && a.team === 'cnt'
+    ).length;
+    
+    const rivalExclusions = last20s.filter(a => 
+        a.type === 'exclusion' && a.team === 'rival'
+    ).length;
+    
+    return {
+        cntSuperior: rivalExclusions > cntExclusions,
+        rivalSuperior: cntExclusions > rivalExclusions,
+        cntExclusions: cntExclusions,
+        rivalExclusions: rivalExclusions
+    };
+}
 
-function openGoalModal(n,isR,inc){if(inc<0){if(isR){updateRivalStat(n,'gols',inc)}else{updateStat(n,'gols',inc)}return}currentGoalContext={playerNum:n,isRival:isR};document.getElementById('goalModal').classList.add('show')}
+function showSuperioritatIndicator() {
+    const superiority = checkSuperioritat();
+    const indicator = document.getElementById('superioritatIndicator');
+    
+    if (!indicator) return;
+    
+    if (superiority.cntSuperior) {
+        indicator.innerHTML = `
+            <div style="background: rgba(34, 197, 94, 0.9); padding: 8px 16px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);">
+                <span style="font-size: 18px;">💪</span>
+                <span>SUPERIORITAT CNT!</span>
+                <span style="font-size: 12px; opacity: 0.9;">(Rival amb ${superiority.rivalExclusions} exclusió${superiority.rivalExclusions > 1 ? 'ns' : ''})</span>
+            </div>
+        `;
+        indicator.style.display = 'block';
+    } else if (superiority.rivalSuperior) {
+        indicator.innerHTML = `
+            <div style="background: rgba(239, 68, 68, 0.9); padding: 8px 16px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);">
+                <span style="font-size: 18px;">⚠️</span>
+                <span>INFERIORITAT!</span>
+                <span style="font-size: 12px; opacity: 0.9;">(CNT amb ${superiority.cntExclusions} exclusió${superiority.cntExclusions > 1 ? 'ns' : ''})</span>
+            </div>
+        `;
+        indicator.style.display = 'block';
+    } else {
+        indicator.style.display = 'none';
+    }
+    
+    // Amagar després de 5 segons
+    if (superiority.cntSuperior || superiority.rivalSuperior) {
+        setTimeout(() => {
+            if (indicator) indicator.style.display = 'none';
+        }, 5000);
+    }
+}
+function openGoalModal(n, isR, inc) {
+    if (inc < 0) {
+        if (isR) {
+            updateRivalStat(n, 'gols', inc);
+        } else {
+            updateStat(n, 'gols', inc);
+        }
+        return;
+    }
+    
+    currentGoalContext = {playerNum: n, isRival: isR};
+    
+    // ✅ DETECTAR SUPERIORITAT
+    const superiority = checkSuperioritat();
+    const modal = document.getElementById('goalModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    // Si tenim superioritat, destacar H+
+    if (!isR && superiority.cntSuperior) {
+        modalContent.innerHTML = `
+            <div class="modal-title">Tipo de Gol</div>
+            <div style="background: rgba(34, 197, 94, 0.2); padding: 8px; border-radius: 6px; margin-bottom: 10px; border: 2px solid #22c55e;">
+                <div style="font-size: 12px; color: #22c55e; font-weight: bold; text-align: center;">
+                    💪 SUPERIORITAT! Gol recomanat:
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="selectGoalType('h+')" style="background: #22c55e; border: 3px solid #16a34a; transform: scale(1.05); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);">
+                    <div style="font-size: 18px;">⭐ H+</div>
+                    <div style="font-size: 10px;">Recomanat</div>
+                </button>
+                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
+                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
+                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
+                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
+            </div>
+            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
+        `;
+    } else if (isR && superiority.rivalSuperior) {
+        modalContent.innerHTML = `
+            <div class="modal-title">Tipo de Gol - Rival</div>
+            <div style="background: rgba(239, 68, 68, 0.2); padding: 8px; border-radius: 6px; margin-bottom: 10px; border: 2px solid #ef4444;">
+                <div style="font-size: 12px; color: #ef4444; font-weight: bold; text-align: center;">
+                    ⚠️ RIVAL EN SUPERIORITAT!
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="selectGoalType('h+')" style="background: #ef4444; border: 3px solid #dc2626; transform: scale(1.05); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);">
+                    <div style="font-size: 18px;">⭐ H+</div>
+                    <div style="font-size: 10px;">Probable</div>
+                </button>
+                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
+                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
+                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
+                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
+            </div>
+            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
+        `;
+    } else {
+        // Modal normal
+        modalContent.innerHTML = `
+            <div class="modal-title">Tipo de Gol</div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
+                <button class="modal-btn" onclick="selectGoalType('h+')">H+</button>
+                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
+                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
+                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
+            </div>
+            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
+        `;
+    }
+    
+    modal.classList.add('show');
+}
 function selectGoalType(t){if(!currentGoalContext)return;const{playerNum,isRival}=currentGoalContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].goalTypes)rivalStats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};rivalStats[playerNum].gols++;rivalStats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-gols-${playerNum}`).textContent=rivalStats[playerNum].gols;if(compactMode)renderCompactView();else renderCompactView()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].goalTypes)stats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};stats[playerNum].gols++;stats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`gols-${playerNum}`).textContent=stats[playerNum].gols;if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'gol',playerNum:playerNum,isRival:isRival,goalType:t,text:`${playerName}: Gol ${t==='h+'?'H+':t==='penalty'?'Penalty':t==='contra'?'Contra':t==='boya'?'Boya':'Normal'}`});updateScores();updateQuarterInfo();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage();closeGoalModal()}
+let exclusionLongPressTimer;
+let isExclusionLongPress = false;
+
+function handleExclusionPress(playerNum, isRival) {
+    isExclusionLongPress = false;
+    exclusionLongPressTimer = setTimeout(() => {
+        isExclusionLongPress = true;
+        // Vibració per confirmar long press
+        if (navigator.vibrate) navigator.vibrate(50);
+        // Directament exclusió penalty
+        quickExclusion(playerNum, isRival, 'penalty');
+    }, 500); // 500ms per activar el long press
+}
+
+function handleExclusionRelease(playerNum, isRival) {
+    clearTimeout(exclusionLongPressTimer);
+    if (!isExclusionLongPress) {
+        // Clic curt = Exclusió normal directe
+        quickExclusion(playerNum, isRival, 'normal');
+    }
+}
+
+function quickExclusion(playerNum, isRival, type) {
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    let playerName = '';
+    
+    if (isRival) {
+        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+        if (!rivalStats[playerNum].exclusionTypes) rivalStats[playerNum].exclusionTypes = {normal: 0, penalty: 0};
+        rivalStats[playerNum].exclusions++;
+        rivalStats[playerNum].exclusionTypes[type]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'exclusion',
+            exclusionType: type,
+            team: 'rival',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`rival-exc-${playerNum}`).textContent = rivalStats[playerNum].exclusions;
+        updateRivalNameColor(playerNum, rivalStats[playerNum].exclusions);
+    } else {
+        const player = players.find(p => p.num === playerNum);
+        playerName = player ? player.name : `Jugador ${playerNum}`;
+        if (!stats[playerNum].exclusionTypes) stats[playerNum].exclusionTypes = {normal: 0, penalty: 0};
+        stats[playerNum].exclusions++;
+        stats[playerNum].exclusionTypes[type]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'exclusion',
+            exclusionType: type,
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`exc-${playerNum}`).textContent = stats[playerNum].exclusions;
+        updatePlayerNameColor(playerNum, stats[playerNum].exclusions);
+    }
+    
+    addToHistory({
+        type: 'exclusion',
+        playerNum: playerNum,
+        isRival: isRival,
+        exclusionType: type,
+        text: `${playerName}: ${type === 'penalty' ? 'Exclusió Penalty' : 'Exclusió'}`
+    });
+    
+    renderCompactView();
+    updateScores();
+	showSuperioritatIndicator();
+    saveToLocalStorage();
+}
 function openExclusionModal(n,isR,inc){
     if(inc<0){
         if(isR){updateRivalExclusion(n,inc)}
@@ -727,6 +941,7 @@ function selectExclusionType(t){
     });
     
     updateScores();
+	showSuperioritatIndicator();
     saveToLocalStorage();
     closeExclusionModal();
 }
@@ -771,8 +986,7 @@ function renderPlayers(){
     }).join('');
     setTimeout(checkPlayersInWater,100);
 }
-function renderCompactView(){const c=document.getElementById('rivalPlayersList');c.className='players-grid';c.innerHTML=rivalStats.map((p,i)=>{const exc=p.exclusions||0;let excC='';if(exc===1)excC='exc-1';else if(exc===2)excC='exc-2';else if(exc>=3)excC='exc-3';const gt=p.goalTypes||{normal:0,'h+':0,penalty:0,contra:0,boya:0};let gtD='';if(gt['h+']>0)gtD+=`<span class="goal-type-badge">H+:${gt['h+']}</span>`;if(gt.penalty>0)gtD+=`<span class="goal-type-badge">P:${gt.penalty}</span>`;if(gt.contra>0)gtD+=`<span class="goal-type-badge">C:${gt.contra}</span>`;if(gt.boya>0)gtD+=`<span class="goal-type-badge">B:${gt.boya}</span>`;if(gt.normal>0)gtD+=`<span class="goal-type-badge">N:${gt.normal}</span>`;const et=p.exclusionTypes||{normal:0,penalty:0};let etD='';if(et.normal>0)etD+=`<span class="goal-type-badge">EX:${et.normal}</span>`;if(et.penalty>0)etD+=`<span class="goal-type-badge">P:${et.penalty}</span>`;return `<div class="player-card"><div class="player-header"><div class="player-number rival">${p.num}</div><input type="text" class="player-name-input ${excC}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Nombre"></div>
-<div class="stats-row"><div class="stat-box"><div class="stat-header"><div class="stat-label">Gols</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openGoalModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value gols" id="rival-gols-${i}">${p.gols||0}</span><button class="btn btn-green btn-small" onclick="openGoalModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${gtD?`<div style="margin-top:3px">${gtD}</div>`:''}</div><div class="stat-box"><div class="stat-header"><div class="stat-label">Exclusions</div><div class="stat-controls"><button class="btn btn-red btn-small" onclick="openExclusionModal(${i},true,-1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button><span class="stat-value" id="rival-exc-${i}">${exc}</span><button class="btn btn-green btn-small" onclick="openExclusionModal(${i},true,1)"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div>${etD?`<div style="margin-top:3px">${etD}</div>`:''}</div></div></div>`}).join('')}
+
 function renderLineups(){
     const c=document.getElementById('lineupsContainer');
 	
@@ -840,7 +1054,7 @@ function renderLineups(){
 function renderPeriodScores(){const c=document.getElementById('periodScores');let h='';['q1','q2','q3','q4'].forEach((q,i)=>{h+=`<div class="period-row"><div class="period-label">${i+1}º Cuarto</div><div class="period-score">${periodScores[q].cnt} - ${periodScores[q].rival}</div></div>`});c.innerHTML=h}
 function updatePlayerName(n,name){const p=players.find(p=>p.num===n);if(p){p.name=name;renderLineups();saveToLocalStorage()}}
 function closeGoalModal(){document.getElementById('goalModal').classList.remove('show');currentGoalContext=null}
-function updateStat(n,stat,inc){stats[n][stat]=Math.max(0,stats[n][stat]+inc);document.getElementById(`${stat==='exclusions'?'exc':'gols'}-${n}`).textContent=stats[n][stat];if(stat==='exclusions')updatePlayerNameColor(n,stats[n][stat]);if(stat==='gols'&&inc<0){const gt=stats[n].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderPlayers()}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
+function updateStat(n,stat,inc){stats[n][stat]=Math.max(0,stats[n][stat]+inc);document.getElementById(`${stat==='exclusions'?'exc':'gols'}-${n}`).textContent=stats[n][stat];if(stat==='exclusions')updatePlayerNameColor(n,stats[n][stat]);if(stat==='gols'&&inc<0){const gt=stats[n].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderCompactView();}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
 function updateRivalStat(i,stat,inc){rivalStats[i][stat]=Math.max(0,rivalStats[i][stat]+inc);document.getElementById(`rival-${stat==='exclusions'?'exc':'gols'}-${i}`).textContent=rivalStats[i][stat];if(stat==='exclusions')updateRivalNameColor(i,rivalStats[i][stat]);if(stat==='gols'&&inc<0){const gt=rivalStats[i].goalTypes;const ts=['boya','contra','penalty','h+','normal'];for(let t of ts){if(gt[t]>0){gt[t]--;break}}renderCompactView()}updateScores();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage()}
 function updatePlayerNameColor(n,exc){
     const p=players.find(p=>p.num===n);
@@ -916,7 +1130,7 @@ function resetQuarterTimes(quarter) {
         const currentQuarter = getCurrentQuarter();
         if (quarter === currentQuarter) {
             playersInWater.clear();
-            renderPlayers();
+            renderCompactView();
             if (compactMode) renderCompactView();
         }
         
@@ -1008,7 +1222,7 @@ function resetAll() {
         document.getElementById('tempsMortRival').textContent = '0';
         document.getElementById('observacions').value = '';
         
-        renderPlayers();
+        compactMode = true;
         renderCompactView();
         renderLineups();
         renderPeriodScores();
@@ -1060,7 +1274,7 @@ function undoAction(index){
             if(stats[action.playerNum].goalTypes&&stats[action.playerNum].goalTypes[action.goalType]){
                 stats[action.playerNum].goalTypes[action.goalType]--;
             }
-            renderPlayers();
+            renderCompactView();
         }
     } else if(action.type==='exclusion'){
         if(action.isRival){
@@ -1076,7 +1290,7 @@ function undoAction(index){
                 stats[action.playerNum].exclusionTypes[action.exclusionType]--;
             }
             updatePlayerNameColor(action.playerNum,stats[action.playerNum].exclusions);
-            renderPlayers();
+            renderCompactView();
         }
     } else if(action.type === 'water-change'){
         // Desfer canvi d'aigua
@@ -1106,7 +1320,7 @@ function undoAction(index){
             chronologicalActions.splice(lastChronIndex.index, 1);
         }
         
-        renderPlayers();
+        renderCompactView();
         if(compactMode) renderCompactView();
     } else if(action.type === 'save'){
         stats[action.playerNum].parades--;
@@ -1128,7 +1342,7 @@ function undoAction(index){
         } else if (type === 'block' && stats[action.playerNum].blocks > 0) {
             stats[action.playerNum].blocks--;
         }
-        renderPlayers();
+        renderCompactView();
         if(compactMode) renderCompactView();
     }
     
@@ -1173,6 +1387,7 @@ function renderCompactView(){
     cntContainer.className='compact-grid';
     rivalContainer.className='compact-grid';
     
+    // ✅ JUGADORS CNT AMB LONG-PRESS PER EXCLUSIONS
     cntContainer.innerHTML=players.map(p=>{
         const gols=stats[p.num]?.gols||0;
         const parades=stats[p.num]?.parades||0;
@@ -1191,7 +1406,7 @@ function renderCompactView(){
                 <div class="player-number ${isInWater?'active-player':''} ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;">${p.num}</div>
                 <input type="text" class="compact-name player-name-input ${excClass}" id="compact-name-${p.num}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
             </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;width:100%;">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;width:100%;">
                 ${isGoalkeeper ? `
                     <button onclick="openSaveModal(${p.num},1)" style="padding:4px 1px;background:#8b5cf6;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
                         <span id="parades-${p.num}" style="font-size:11px;line-height:1;">${parades}</span>
@@ -1203,7 +1418,12 @@ function renderCompactView(){
                         <span style="font-size:9px;">⚽</span>
                     </button>
                 `}
-                <button onclick="openExclusionModal(${p.num},false,1)" style="padding:4px 1px;background:#ef4444;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                <button 
+                    ontouchstart="handleExclusionPress(${p.num}, false); return false;" 
+                    ontouchend="handleExclusionRelease(${p.num}, false); return false;"
+                    onmousedown="handleExclusionPress(${p.num}, false); return false;"
+                    onmouseup="handleExclusionRelease(${p.num}, false); return false;"
+                    style="padding:4px 1px;background:#ef4444;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
                     <span id="exc-${p.num}" style="font-size:11px;line-height:1;">${exc}</span>
                     <span style="font-size:9px;">🟥</span>
                 </button>
@@ -1219,9 +1439,8 @@ function renderCompactView(){
         </div>`;
     }).join('');
     
-        
-   
-rivalContainer.innerHTML=rivalStats.map((p,i)=>{
+    // ✅ JUGADORS RIVAL AMB LONG-PRESS PER EXCLUSIONS
+   rivalContainer.innerHTML=rivalStats.map((p,i)=>{
     const gols=p.gols||0;
     const exc=p.exclusions||0;
     let excClass='';
@@ -1229,25 +1448,28 @@ rivalContainer.innerHTML=rivalStats.map((p,i)=>{
     else if(exc===2)excClass='exc-2';
     else if(exc>=3)excClass='exc-3';
     
-    return `<div class="compact-player" style="padding:3px;">
-        <div style="display:flex;align-items:center;gap:2px;margin-bottom:3px;">
-            <div class="player-number rival ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:18px;height:18px;font-size:9px;flex-shrink:0;">${p.num}</div>
-            <input type="text" class="compact-name player-name-input ${excClass}" id="compact-rival-name-${i}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Rival ${p.num}" style="flex:1;font-size:8px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
-        </div>
-        <div style="display:grid;grid-template-columns:18px 1fr 1fr;gap:3px;align-items:center;">
-            <div style="width:18px;"></div>
-            <button onclick="openGoalModal(${i},true,1)" style="padding:6px 12px;background:#22c55e;color:white;border:none;border-radius:5px;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:6px;min-height:32px;">
-                <span id="rival-gols-${i}" style="font-size:17px;line-height:1;font-weight:900;">${gols}</span>
-                <span style="font-size:15px;">⚽</span>
-            </button>
-            <button onclick="openExclusionModal(${i},true,1)" style="padding:6px 12px;background:#ef4444;color:white;border:none;border-radius:5px;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:6px;min-height:32px;">
-                <span id="rival-exc-${i}" style="font-size:17px;line-height:1;font-weight:900;">${exc}</span>
-                <span style="font-size:15px;">🟥</span>
-            </button>
-        </div>
-    </div>`;
+    return `<div class="compact-player" style="padding:2px;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px;">
+        <div class="player-number rival ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;flex-shrink:0;">${p.num}</div>
+        <input type="text" class="compact-name player-name-input ${excClass}" id="compact-rival-name-${i}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Rival ${p.num}" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
+    </div>
+    <div style="display:flex;gap:2px;width:100%;">
+        <button onclick="openGoalModal(${i},true,1)" style="flex:1;padding:4px 1px;background:#22c55e;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+            <span id="rival-gols-${i}" style="font-size:11px;line-height:1;">${gols}</span>
+            <span style="font-size:9px;">⚽</span>
+        </button>
+        <button 
+            ontouchstart="handleExclusionPress(${i}, true); return false;" 
+            ontouchend="handleExclusionRelease(${i}, true); return false;"
+            onmousedown="handleExclusionPress(${i}, true); return false;"
+            onmouseup="handleExclusionRelease(${i}, true); return false;"
+            style="flex:1;padding:4px 1px;background:#ef4444;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+            <span id="rival-exc-${i}" style="font-size:11px;line-height:1;">${exc}</span>
+            <span style="font-size:9px;">🟥</span>
+        </button>
+    </div>
+</div>`;
 }).join('');
-
     
     setTimeout(checkPlayersInWater,100);
 }
@@ -1409,8 +1631,18 @@ document.addEventListener('touchend', function(e) {
     const diffX = endX - startX;
     const diffY = endY - startY;
     
-    // ✅ NOMÉS 30px mínim (molt sensible!)
-    if (Math.abs(diffX) < 30) return;
+    // ✅ MILLORA: Detectar si és més vertical que horitzontal
+    const absX = Math.abs(diffX);
+    const absY = Math.abs(diffY);
+    
+    // Si el moviment vertical és més gran que l'horitzontal, és un scroll, no un swipe
+    if (absY > absX) return;
+    
+    // Si el moviment horitzontal és massa petit, ignorar
+    if (absX < 50) return; // ✅ Augmentat de 30 a 50px per més seguretat
+    
+    // ✅ MILLORA ADDICIONAL: Només canviar si el moviment horitzontal és almenys el doble del vertical
+    if (absX < absY * 1.5) return;
     
     // Vista actual
     const onStats = !document.getElementById('statsView').classList.contains('hidden');
