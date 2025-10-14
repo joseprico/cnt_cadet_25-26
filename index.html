@@ -1062,6 +1062,16 @@
                 throw new Error(`Error cargando ${file.name}: ${res.status}`);
             }
             const matchData = await res.json();
+			normalizeAllPlayers(matchData);
+
+			// Normalitza estadístiques de tots els jugadors perquè no peti si falten camps
+(matchData.data?.players || []).forEach(p => {
+  p.estadistiques = p.estadistiques || {};
+  p.estadistiques.paradeTypes = {
+    corner: 0, rebuig: 0, atrapa: 0, penal: 0,
+    ...(p.estadistiques.paradeTypes || {})
+  };
+});
             
             // Verificar que tiene la estructura correcta
             if (!matchData.data || !matchData.rivalTeam) {
@@ -2427,33 +2437,23 @@ playerStats[playerName].faltesRebudes += (j.estadistiques.faltesRebudes || 0);
         playerStats[name].partidos = playerMatchAppearances[name].size;
     });
 
-    const players = Object.values(playerStats).sort((a, b) => {
-    const valorA = calculatePlayerValue({
-        goalTypes: a.goalTypes,
-        assistencies: a.assistencies,
-        robatoris: a.robatoris,
-        blocatges: a.blocatges || 0,
-        parades: a.parades,
-        faltesRebudes: a.faltesRebudes || 0,
-        exclusionTypes: a.exclusionTypes || { normal: 0, penalty: 0 },
-        penaltyMissed: a.penaltyMissed,
-        perdues: a.perdues,
-        xutsFallats: a.xutsFallats
+    const players = Object.values(playerStats).map(p => {
+    const valor = calculatePlayerValue({
+        gols: p.gols,
+        goalTypes: p.goalTypes,
+        assistencies: p.assistencies,
+        robatoris: p.robatoris,
+        blocatges: p.blocks || 0,
+        parades: p.parades,
+        faltesRebudes: p.faltesRebudes || 0,
+        exclusions: p.exclusions,
+        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
+        penaltyMissed: p.penaltyMissed,
+        perdues: p.perdues,
+        xutsFallats: p.xutsFallats
     });
-    const valorB = calculatePlayerValue({
-        goalTypes: b.goalTypes,
-        assistencies: b.assistencies,
-        robatoris: b.robatoris,
-        blocatges: b.blocatges || 0,
-        parades: b.parades,
-        faltesRebudes: b.faltesRebudes || 0,
-        exclusionTypes: b.exclusionTypes || { normal: 0, penalty: 0 },
-        penaltyMissed: b.penaltyMissed,
-        perdues: b.perdues,
-        xutsFallats: b.xutsFallats
-    });
-    return valorB - valorA;
-});
+    return { ...p, valor };
+}).sort((a, b) => b.valor - a.valor);
 
 // ✅ Guardar dades per ordenació
 cachedPlayersData = players;
@@ -5096,34 +5096,57 @@ function renderEfficiencyPerMinuteChart() {
 }
 // Función para calcular valoración de jugador
 function calculatePlayerValue(stats) {
-    let value = 0;
+    // Assegurar que stats existeix
+    if (!stats) return 0;
     
-    // Acciones positivas
-    if (stats.goalTypes) {
-        value += (stats.goalTypes.normal || 0) * 2;      // Gol normal: +2
-        value += (stats.goalTypes.contra || 0) * 2;      // Gol contraatac: +2
-        value += (stats.goalTypes['h+'] || 0) * 2;       // Gol H+: +2
-        value += (stats.goalTypes.penalty || 0) * 1;     // Gol penalty: +1
-        value += (stats.goalTypes.boya || 0) * 2;        // Gol boya: +2
-    }
-    value += (stats.assistencies || 0) * 1;              // Assistència: +1
-    value += (stats.robatoris || 0) * 1;                 // Robatori: +1
-    value += (stats.blocatges || 0) * 1;                 // Blocatge: +1
-    value += (stats.parades || 0) * 2;                   // Parada: +2
-	value += stats.paradeTypes.penal * 1;  				// Parada penal: +3
-
-    value += (stats.faltesRebudes || 0) * 1;             // Falta rebuda: +1
+    // Obtenir estadístiques amb valors per defecte
+    const gols = stats.gols ?? 0;
+    const goalTypes = stats.goalTypes || {};
+    const exclusionTypes = stats.exclusionTypes || {};
+    const paradeTypes = stats.paradeTypes || {};
     
-    // Acciones negativas
-    if (stats.exclusionTypes) {
-        value -= (stats.exclusionTypes.normal || 0) * 1;     // Exclusió normal: -1
-        value -= (stats.exclusionTypes.penalty || 0) * 1;    // Exclusió penalty: -3
-    }
-    value -= (stats.penaltyMissed || 0) * 2;             // Penalty fallat: -2
-    value -= (stats.perdues || 0) * 0.5;                 // Pèrdua: -0.5
-    value -= (stats.xutsFallats || 0) * 0.5;             // Tir fallat: -0.5
+    // Accions positives
+    const normalGoals = (goalTypes.normal || 0) + (goalTypes['h+'] || 0) + 
+                       (goalTypes.contra || 0) + (goalTypes.boya || 0);
+    const penaltyGoals = goalTypes.penalty || 0;
     
-    return value;
+    // Altres accions positives
+    const assists = stats.assistencies || stats.assists || 0;
+    const steals = stats.robatoris || stats.steals || 0;
+    const blocks = stats.blocks || stats.blocatges || 0;
+    const foulsReceived = stats.faltesRebudes || stats.foulReceived || 0;
+    
+    // Parades
+    const saves = (paradeTypes.corner || 0) + (paradeTypes.rebuig || 0) + 
+                 (paradeTypes.atrapa || 0);
+    const penaltySaves = paradeTypes.penal || 0;
+    
+    // Accions negatives
+    const exclusions = stats.exclusions || 0;
+    const penaltyMissed = stats.penaltyMissed || 0;
+    const turnovers = stats.perdues || stats.turnovers || 0;
+    const shotsMissed = stats.xutsFallats || stats.shotsMissed || 0;
+    
+    // CÀLCUL DEL VALOR
+    let valor = 0;
+    
+    // Positives
+    valor += normalGoals * 2;      // Gols normals: +2
+    valor += penaltyGoals * 1;     // Gols penalty: +1
+    valor += assists * 1;          // Assistències: +1
+    valor += steals * 1;           // Robatoris: +1
+    valor += blocks * 1;           // Blocks: +1
+    valor += saves * 2;            // Parades: +2
+    valor += penaltySaves * 3;     // Parades penalty: +3
+    valor += foulsReceived * 1;    // Faltes rebudes: +1
+    
+    // Negatives
+    valor += exclusions * (-1);    // Exclusions: -1
+    valor += penaltyMissed * (-2); // Penalty fallat: -2
+    valor += turnovers * (-0.5);   // Pèrdues: -0.5
+    valor += shotsMissed * (-0.5); // Xuts fallats: -0.5
+    
+    return valor;
 }
 function renderMinutesDistributionChart() {
     const ctx = document.getElementById('minutesDistributionChart');
@@ -6033,22 +6056,27 @@ function renderGoalkeeperSavesChart() {
         data: {
             labels: labels,
             datasets: [
-                {
-                    label: 'Corner',
-                    data: goalkeepers.map(gk => gk.paradeTypes.corner),
-                    backgroundColor: '#fbbf24'
-                },
-                {
-                    label: 'Rebuig',
-                    data: goalkeepers.map(gk => gk.paradeTypes.rebuig),
-                    backgroundColor: '#f97316'
-                },
-                {
-                    label: 'Atrapa',
-                    data: goalkeepers.map(gk => gk.paradeTypes.atrapa),
-                    backgroundColor: '#8b5cf6'
-                }
-            ]
+  {
+    label: 'Corner',
+    data: goalkeepers.map(gk => (gk.paradeTypes?.corner ?? 0)),
+    backgroundColor: '#3b82f6'
+  },
+  {
+    label: 'Rebuig',
+    data: goalkeepers.map(gk => (gk.paradeTypes?.rebuig ?? 0)),
+    backgroundColor: '#f97316'
+  },
+  {
+    label: 'Atrapa',
+    data: goalkeepers.map(gk => (gk.paradeTypes?.atrapa ?? 0)),
+    backgroundColor: '#22c55e'
+  },
+  {
+    label: 'Penal',
+    data: goalkeepers.map(gk => (gk.paradeTypes?.penal ?? 0)),
+    backgroundColor: '#eab308'
+  }
+]
         },
         options: {
             responsive: true,
@@ -6257,12 +6285,14 @@ function renderComparisonTable(players) {
         <tbody>
             ${players.map(p => {
                 const valor = calculatePlayerValue({
+                    gols: p.gols,
                     goalTypes: p.goalTypes,
                     assistencies: p.assistencies,
                     robatoris: p.robatoris,
-                    blocatges: p.blocatges || 0,
+                    blocatges: p.blocks || 0,
                     parades: p.parades,
                     faltesRebudes: p.faltesRebudes || 0,
+                    exclusions: p.exclusions,
                     exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
                     penaltyMissed: p.penaltyMissed,
                     perdues: p.perdues,
@@ -7376,16 +7406,33 @@ function generateMatchPDF(match) {
     
     alert('✅ PDF del partit generat amb TOTES les estadístiques!');
 }
+function normalizeAllPlayers(matchData) {
+  const norm = (p) => {
+    p.estadistiques = p.estadistiques || {};
+    p.estadistiques.goalTypes = { normal:0, 'h+':0, penalty:0, contra:0, boya:0, ...(p.estadistiques.goalTypes||{}) };
+    p.estadistiques.exclusionTypes = { normal:0, penalty:0, ...(p.estadistiques.exclusionTypes||{}) };
+    p.estadistiques.paradeTypes = { corner:0, rebuig:0, atrapa:0, penal:0, ...(p.estadistiques.paradeTypes||{}) };
+    p.estadistiques.gols = p.estadistiques.gols ?? (
+      (p.estadistiques.goalTypes.normal||0) + (p.estadistiques.goalTypes['h+']||0) +
+      (p.estadistiques.goalTypes.penalty||0) + (p.estadistiques.goalTypes.contra||0) +
+      (p.estadistiques.goalTypes.boya||0)
+    );
+    return p;
+  };
+  if (matchData?.data?.players) matchData.data.players = matchData.data.players.map(norm);
+  if (matchData?.data?.rivalPlayers) matchData.data.rivalPlayers = matchData.data.rivalPlayers.map(norm);
+}
+
    </script>
    <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+   /* document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
