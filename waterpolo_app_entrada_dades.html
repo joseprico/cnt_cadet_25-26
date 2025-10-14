@@ -4,188 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CN Terrassa - Estadísticas</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { overflow-x: hidden; width: 100%; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0891b2 100%); color: white; min-height: 100vh; overflow-x: hidden; width: 100%; max-width: 100vw; position: relative; }
-        .players-grid .player-card {
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: hidden; width: 100%; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0891b2 100%); color: white; min-height: 100vh; overflow-x: hidden; width: 100%; max-width: 100vw; position: relative; }
+
+.container { max-width: 1024px; margin: 0 auto; padding: 8px; padding-top: 85px; padding-bottom: 80px; box-sizing: border-box; width: 100%; }
+.header-fixed { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #1e3a8a 0%, #0891b2 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 4px solid #22d3ee; z-index: 1000; padding: 6px 0; }
+.scoreboard { max-width: 1024px; margin: 0 auto; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.team-score { flex: 1; text-align: center; }
+.team-label { font-size: 9px; font-weight: bold; color: #67e8f9; margin-bottom: 1px; }
+.score-display { font-size: 28px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+.score-separator { font-size: 18px; font-weight: bold; color: #67e8f9; }
+.temps-mort-compact { font-size: 8px; color: #bae6fd; margin-top: 1px; display: flex; align-items: center; justify-content: center; gap: 3px; }
+.card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 8px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; max-width: 100%; box-sizing: border-box; }
+.btn { padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; touch-action: manipulation; }
+.btn:active { transform: scale(0.95); }
+.btn-red { background: #ef4444; color: white; }
+.btn-green { background: #22c55e; color: white; }
+.btn-blue { background: #3b82f6; color: white; }
+.btn-yellow { background: #fbbf24; color: #000; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px; }
+.tab { padding: 10px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; }
+.tab.active { background: #06b6d4; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+/* VISTA COMPACTA - GRID PRINCIPAL */
+.players-grid.compact-grid,
+#playersList.compact-grid, 
+#rivalPlayersList.compact-grid { 
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 6px !important; 
+    width: 100% !important;
+}
+
+/* COMPACT PLAYER - JUGADORS */
+.compact-player { 
+    background: rgba(255,255,255,0.1); 
+    border-radius: 6px; 
+    padding: 4px;
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
-		.container { max-width: 1024px; margin: 0 auto; padding: 8px; padding-top: 85px; padding-bottom: 80px; box-sizing: border-box; width: 100%; }
-        .header-fixed { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #1e3a8a 0%, #0891b2 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 4px solid #22d3ee; z-index: 1000; padding: 6px 0; }
-        .scoreboard { max-width: 1024px; margin: 0 auto; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
-        .team-score { flex: 1; text-align: center; }
-        .team-label { font-size: 9px; font-weight: bold; color: #67e8f9; margin-bottom: 1px; }
-        .score-display { font-size: 28px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .score-separator { font-size: 18px; font-weight: bold; color: #67e8f9; }
-        .temps-mort-compact { font-size: 8px; color: #bae6fd; margin-top: 1px; display: flex; align-items: center; justify-content: center; gap: 3px; }
-        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 8px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; max-width: 100%; box-sizing: border-box; }
-        .btn { padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; touch-action: manipulation; }
-        .btn:active { transform: scale(0.95); }
-        .btn-red { background: #ef4444; color: white; }
-        .btn-green { background: #22c55e; color: white; }
-        .btn-blue { background: #3b82f6; color: white; }
-        .btn-yellow { background: #fbbf24; color: #000; }
-        .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px; }
-        .tab { padding: 10px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; }
-        .tab.active { background: #06b6d4; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-   .players-grid { display: grid; grid-template-columns: 1fr; gap: 6px; width: 100%; max-width: 100%; }        .player-number { background: #06b6d4; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 9px; flex-shrink: 0; }
-        .player-number.rival { background: #ef4444; }
-		.player-card > div:last-child button {
-    font-size: 9px !important;
-    padding: 6px 1px !important;
-}
-        .player-number.active-player { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); } 50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9); } }
-        .player-name-input { flex: 1; padding: 2px; font-size: 7px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; min-width: 0; max-width: 100%; }
-        .player-name-input:focus { outline: none; border-color: #22d3ee; }
-        .player-name-input.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
-        .player-name-input.exc-2 { background: #f97316; color: white; font-weight: bold; }
-        .player-name-input.exc-3 { background: #ef4444; color: white; font-weight: bold; }
-        .status-btn { padding: 2px 3px; font-size: 6px; font-weight: bold; border: none; border-radius: 3px; cursor: pointer; min-width: 28px; max-width: 28px; flex-shrink: 0; white-space: nowrap; overflow: hidden; }
-        .status-btn.in-water { background: #22c55e; color: white; }
-        .status-btn.out-water { background: #6b7280; color: white; }
-        .stats-row { display: flex; gap: 3px; flex-direction: row; }
-        .stat-value { font-size: 16px; font-weight: 900; min-width: 16px; text-align: center; line-height: 1; }
-        .stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .stat-label { font-size: 6px; color: #bae6fd; }
-        .stat-controls { display: flex; align-items: center; gap: 2px; }
-        .stat-value { font-size: 12px; font-weight: bold; min-width: 16px; text-align: center; }
-        .stat-value.gols { color: #fde047; }
-        .goal-type-badge { display: inline-block; padding: 1px 2px; font-size: 6px; background: #fbbf24; color: #000; border-radius: 2px; margin-right: 1px; font-weight: bold; }
-        .input { width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-size: 14px; }
-        .input:focus { outline: none; border-color: #22d3ee; }
-        textarea.input { min-height: 80px; font-family: inherit; resize: vertical; }
-        .actions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-        .lineup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
-        .lineup-btn { padding: 10px; font-size: 13px; background: rgba(255,255,255,0.2); color: white; }
-        .lineup-btn.selected { background: #22c55e; box-shadow: 0 2px 8px rgba(34,197,94,0.4); }
-        .lineup-counter { text-align: center; font-size: 12px; color: #bae6fd; margin-bottom: 8px; }
-        .period-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 6px; }
-        .period-label { font-weight: bold; font-size: 14px; }
-        .period-score { font-size: 20px; font-weight: bold; color: #fde047; }
-        h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
-        .hidden { display: none; }
-        label { display: block; font-size: 10px; font-weight: 600; margin-bottom: 4px; }
-        svg { display: inline-block; vertical-align: middle; }
-        .btn-small { padding: 1px; min-width: 18px; }
-        .icon-sm { width: 8px; height: 8px; }
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal.show { display: flex; }
-        .modal-content { background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%); border-radius: 12px; padding: 20px; max-width: 300px; width: 100%; }
-        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; }
-        .modal-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
-        .modal-btn { padding: 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; }
-        .modal-btn:hover { background: rgba(255,255,255,0.3); }
-        .github-status { padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; text-align: center; }
-        .github-status.success { background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; }
-        .github-status.error { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
-        .github-status.warning { background: rgba(251, 191, 36, 0.3); border: 1px solid #fbbf24; color: #000; }
-        .undo-section { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30, 58, 138, 0.95); backdrop-filter: blur(10px); border-top: 2px solid #22d3ee; padding: 8px 12px; z-index: 999; box-shadow: 0 -4px 12px rgba(0,0,0,0.3); }
-        .undo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .undo-title { font-size: 10px; font-weight: bold; color: #67e8f9; }
-        .undo-clear { font-size: 9px; color: #fca5a5; background: none; border: none; padding: 2px 6px; cursor: pointer; }
-        .actions-list { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
-        .action-item { background: rgba(255,255,255,0.15); padding: 6px 10px; border-radius: 6px; font-size: 9px; white-space: nowrap; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); }
-        .action-icon { font-size: 12px; }
-        .undo-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 8px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
-        .quarter-info { background: rgba(34, 211, 238, 0.2); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #67e8f9; font-weight: bold; border: 1px solid #22d3ee; }
-        .compact-name.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
-        .compact-name.exc-2 { background: #f97316; color: white; font-weight: bold; }
-        .compact-name.exc-3 { background: #ef4444; color: white; font-weight: bold; }
-        .compact-view-toggle { position: fixed; top: 72px; right: 6px; z-index: 1001; background: rgba(6, 182, 212, 0.9); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 9px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .water-warning { display: none; position: fixed; top: 110px; left: 50%; transform: translateX(-50%); background: rgba(239, 68, 68, 0.95); color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: bold; z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.4); animation: slideDown 0.3s ease-out; max-width: 90%; text-align: center; }
-        @keyframes slideDown { from { top: 60px; opacity: 0; } to { top: 110px; opacity: 1; } }
-        #playersList.compact-grid, #rivalPlayersList.compact-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
-        @media (min-width: 768px) { #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } }
-        @media (min-width: 1024px) { #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } }
-        .players-grid.compact-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        .compact-player { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 4px; }
-        .compact-header { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 10px; font-weight: bold; }
-        .compact-actions { display: flex; gap: 4px; }
-        .compact-btn { flex: 1; padding: 4px 2px; font-size: 9px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-        .compact-btn-gol { background: #22c55e; color: white; }
-        .compact-btn-exc { background: #ef4444; color: white; }
-        .compact-value { font-size: 16px; font-weight: 900; line-height: 1; }
-		.player-card .btn-row {
+
+/* BOTONS DINS DEL COMPACT PLAYER */
+.compact-player > div:last-child {
     display: flex !important;
     gap: 2px !important;
-    margin-top: 4px !important;
     width: 100% !important;
-    flex-wrap: nowrap !important;
-}
-
-.player-card .btn-row button {
-    flex: 1 1 25% !important;
-    max-width: 25% !important;
-    min-width: 0 !important;
-    padding: 6px 2px !important;
-    font-size: 7px !important;
-    box-sizing: border-box !important;
-}
-        @media (max-width: 480px) {
-    .container { padding: 6px !important; padding-top: 85px !important; padding-bottom: 80px !important; }
-}
-		.player-buttons-row {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 2px !important;
-    margin-top: 4px !important;
-    width: 100% !important;
-}
-
-.player-buttons-row button {
-    padding: 6px 1px !important;
-    font-size: 7px !important;
-    min-width: 0 !important;
-    max-width: none !important;
-}
-.player-card { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 3px; min-width: 0; }
-
-
-.player-card > div:last-child {
-    display: grid !important;
-    grid-template-columns: 25% 25% 25% 25% !important;
-    gap: 2px !important;
-    width: 100% !important;
-}
-
-.player-card > div:last-child > button {
-    padding: 6px 0px !important;
-    font-size: 7px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-}.player-card {
-    overflow: visible !important;
-}
-
-.player-card > div:last-child {
-    display: grid !important;
-    grid-template-columns: 25% 25% 25% 25% !important;
-    gap: 2px !important;
-    width: 100% !important;
-}
-.compact-player > div:last-child {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1px !important;
 }
 
 .compact-player > div:last-child button {
+    flex: 1 !important;
     min-width: 0 !important;
     padding: 4px 1px !important;
 }
-.player-card > div:last-child > button {
-    padding: 6px 0px !important;
-    font-size: 7px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+
+.player-number { background: #06b6d4; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 9px; flex-shrink: 0; }
+.player-number.rival { background: #ef4444; }
+.player-number.active-player { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); } 50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9); } }
+.player-name-input { flex: 1; padding: 2px; font-size: 7px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; min-width: 0; max-width: 100%; }
+.player-name-input:focus { outline: none; border-color: #22d3ee; }
+.player-name-input.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+.player-name-input.exc-2 { background: #f97316; color: white; font-weight: bold; }
+.player-name-input.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+.compact-name.exc-1 { background: #fbbf24; color: #000; font-weight: bold; }
+.compact-name.exc-2 { background: #f97316; color: white; font-weight: bold; }
+.compact-name.exc-3 { background: #ef4444; color: white; font-weight: bold; }
+
+.input { width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-size: 14px; }
+.input:focus { outline: none; border-color: #22d3ee; }
+textarea.input { min-height: 80px; font-family: inherit; resize: vertical; }
+.actions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.lineup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+.lineup-btn { padding: 10px; font-size: 13px; background: rgba(255,255,255,0.2); color: white; }
+.lineup-btn.selected { background: #22c55e; box-shadow: 0 2px 8px rgba(34,197,94,0.4); }
+.lineup-counter { text-align: center; font-size: 12px; color: #bae6fd; margin-bottom: 8px; }
+.period-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 6px; }
+.period-label { font-weight: bold; font-size: 14px; }
+.period-score { font-size: 20px; font-weight: bold; color: #fde047; }
+h2 { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+.hidden { display: none; }
+label { display: block; font-size: 10px; font-weight: 600; margin-bottom: 4px; }
+svg { display: inline-block; vertical-align: middle; }
+.btn-small { padding: 1px; min-width: 18px; }
+.icon-sm { width: 8px; height: 8px; }
+.modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+.modal.show { display: flex; }
+.modal-content { background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%); border-radius: 12px; padding: 20px; max-width: 300px; width: 100%; }
+.modal-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; }
+.modal-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+.modal-btn { padding: 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+.modal-btn:hover { background: rgba(255,255,255,0.3); }
+.github-status { padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; text-align: center; }
+.github-status.success { background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; }
+.github-status.error { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
+.github-status.warning { background: rgba(251, 191, 36, 0.3); border: 1px solid #fbbf24; color: #000; }
+.undo-section { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30, 58, 138, 0.95); backdrop-filter: blur(10px); border-top: 2px solid #22d3ee; padding: 8px 12px; z-index: 999; box-shadow: 0 -4px 12px rgba(0,0,0,0.3); }
+.undo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.undo-title { font-size: 10px; font-weight: bold; color: #67e8f9; }
+.undo-clear { font-size: 9px; color: #fca5a5; background: none; border: none; padding: 2px 6px; cursor: pointer; }
+.actions-list { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.action-item { background: rgba(255,255,255,0.15); padding: 6px 10px; border-radius: 6px; font-size: 9px; white-space: nowrap; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); }
+.action-icon { font-size: 12px; }
+.undo-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 8px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+.quarter-info { background: rgba(34, 211, 238, 0.2); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #67e8f9; font-weight: bold; border: 1px solid #22d3ee; }
+.water-warning { display: none; position: fixed; top: 110px; left: 50%; transform: translateX(-50%); background: rgba(239, 68, 68, 0.95); color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: bold; z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.4); animation: slideDown 0.3s ease-out; max-width: 90%; text-align: center; }
+@keyframes slideDown { from { top: 60px; opacity: 0; } to { top: 110px; opacity: 1; } }
+
+@media (max-width: 480px) {
+    .container { padding: 6px !important; padding-top: 85px !important; padding-bottom: 80px !important; }
 }
-    </style>
+@media (min-width: 768px) { 
+    #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } 
+}
+@media (min-width: 1024px) { 
+    #playersList.compact-grid, #rivalPlayersList.compact-grid { grid-template-columns: repeat(4, 1fr) !important; } 
+}
+</style>
 </head>
 <body>
     <div class="header-fixed">
@@ -235,6 +176,7 @@
             <button class="modal-btn" onclick="selectSaveType('corner')">Corner</button>
             <button class="modal-btn" onclick="selectSaveType('rebuig')">Rebuig</button>
             <button class="modal-btn" onclick="selectSaveType('atrapa')">Atrapa</button>
+			<button class="modal-btn" onclick="selectSaveType('penal')">Penal</button>
         </div>
         <button class="btn btn-red" style="width: 100%;" onclick="closeSaveModal()">Cancelar</button>
     </div>
@@ -776,20 +718,30 @@ let exclusionLongPressTimer;
 let isExclusionLongPress = false;
 
 function handleExclusionPress(playerNum, isRival) {
+    // Si és rival, SEMPRE obrir modal (no fer long press)
+    if (isRival) {
+        return; // No fer res amb long press per rivals
+    }
+    
+    // Per jugadors CNT, mantenir el long press
     isExclusionLongPress = false;
     exclusionLongPressTimer = setTimeout(() => {
         isExclusionLongPress = true;
-        // Vibració per confirmar long press
         if (navigator.vibrate) navigator.vibrate(50);
-        // Directament exclusió penalty
         quickExclusion(playerNum, isRival, 'penalty');
-    }, 500); // 500ms per activar el long press
+    }, 500);
 }
 
 function handleExclusionRelease(playerNum, isRival) {
+    // Si és rival, obrir modal sempre
+    if (isRival) {
+        openExclusionModal(playerNum, isRival, 1);
+        return;
+    }
+    
+    // Per jugadors CNT, mantenir el comportament actual
     clearTimeout(exclusionLongPressTimer);
     if (!isExclusionLongPress) {
-        // Clic curt = Exclusió normal directe
         quickExclusion(playerNum, isRival, 'normal');
     }
 }
@@ -932,14 +884,23 @@ function selectExclusionType(t){
         else renderPlayers()
     }
     
-    addToHistory({
-        type:'exclusion',
-        playerNum:playerNum,
-        isRival:isRival,
-        exclusionType:t,
-        text:`${playerName}: ${t==='penalty'?'Exclusió Penalty':'Exclusió'}`
-    });
-    
+    // Construir el text amb info de la falta
+let historyText = `${playerName}: ${t==='penalty'?'Exclusió Penalty':'Exclusió'}`;
+if(isRival && faltaSobreJugador){
+    const cntPlayer = players.find(p => p.num == faltaSobreJugador);
+    if(cntPlayer){
+        historyText += ` (sobre ${cntPlayer.name.split(' ')[0]})`;
+    }
+}
+
+addToHistory({
+    type:'exclusion',
+    playerNum:playerNum,
+    isRival:isRival,
+    exclusionType:t,
+    faltaSobreJugador: faltaSobreJugador,
+    text: historyText
+});
     updateScores();
 	showSuperioritatIndicator();
     saveToLocalStorage();
@@ -1175,7 +1136,7 @@ function resetAll() {
                 goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 },
                 exclusionTypes: { normal: 0, penalty: 0 },
                 parades: 0,
-                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0 },
+                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0, penal: 0 },
                 assistencies: 0,
                 robatoris: 0,
                 perdues: 0,
@@ -1401,12 +1362,12 @@ function renderCompactView(){
         else if(exc===2)excClass='exc-2';
         else if(exc>=3)excClass='exc-3';
         
-        return `<div class="compact-player" style="padding:2px;">
+        return `<div class="compact-player" style="padding:2px;width:100%;box-sizing:border-box;">
             <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px;">
                 <div class="player-number ${isInWater?'active-player':''} ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;">${p.num}</div>
                 <input type="text" class="compact-name player-name-input ${excClass}" id="compact-name-${p.num}" value="${p.name}" onchange="updatePlayerName(${p.num},this.value)" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
             </div>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;width:100%;">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;width:100%;box-sizing:border-box;">
                 ${isGoalkeeper ? `
                     <button onclick="openSaveModal(${p.num},1)" style="padding:4px 1px;background:#8b5cf6;color:white;border:none;border-radius:4px;font-size:8px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
                         <span id="parades-${p.num}" style="font-size:11px;line-height:1;">${parades}</span>
@@ -1448,7 +1409,7 @@ function renderCompactView(){
     else if(exc===2)excClass='exc-2';
     else if(exc>=3)excClass='exc-3';
     
-    return `<div class="compact-player" style="padding:2px;display:flex;flex-direction:column;">
+    return `<div class="compact-player" style="padding:2px;display:flex;flex-direction:column;width:100%;box-sizing:border-box;">
     <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px;">
         <div class="player-number rival ${exc===1?'exc-1':exc===2?'exc-2':exc>=3?'exc-3':''}" style="width:16px;height:16px;font-size:8px;flex-shrink:0;">${p.num}</div>
         <input type="text" class="compact-name player-name-input ${excClass}" id="compact-rival-name-${i}" value="${p.name}" onchange="updateRivalName(${i},this.value)" placeholder="Rival ${p.num}" style="flex:1;font-size:7px;padding:2px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);">
@@ -1731,7 +1692,10 @@ function selectSaveType(type) {
         playerName: playerName
     });
     
-    const saveTypeText = type === 'corner' ? 'Corner' : type === 'rebuig' ? 'Rebuig' : 'Atrapa';
+    const saveTypeText = type === 'corner' ? 'Corner' : 
+                     type === 'rebuig' ? 'Rebuig' : 
+                     type === 'atrapa' ? 'Atrapa' :
+                     type === 'penal' ? 'Penal' : '';
     
     addToHistory({
         type: 'save',
@@ -1756,7 +1720,7 @@ function updateSave(n, inc) {
     stats[n].parades = Math.max(0, stats[n].parades + inc);
     if (inc < 0) {
         const st = stats[n].paradeTypes;
-        const types = ['atrapa', 'rebuig', 'corner'];
+        const types = ['penal','atrapa', 'rebuig', 'corner'];
         for (let t of types) {
             if (st[t] > 0) {
                 st[t]--;
