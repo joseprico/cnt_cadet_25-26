@@ -101,6 +101,35 @@ svg { display: inline-block; vertical-align: middle; }
 .modal-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
 .modal-btn { padding: 12px; font-size: 14px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; }
 .modal-btn:hover { background: rgba(255,255,255,0.3); }
+.goal-zone-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.goal-zone {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.goal-zone:hover {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: #22c55e;
+}
+
+.goal-zone.selected {
+    background: #22c55e;
+    border-color: #16a34a;
+    color: white;
+}
 .github-status { padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; text-align: center; }
 .github-status.success { background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; }
 .github-status.error { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
@@ -149,7 +178,39 @@ svg { display: inline-block; vertical-align: middle; }
         </div>
     </div>
 
-    <div id="goalModal" class="modal"><div class="modal-content"><div class="modal-title">Tipo de Gol</div><div class="modal-buttons"><button class="modal-btn" onclick="selectGoalType('normal')">Normal</button><button class="modal-btn" onclick="selectGoalType('h+')">H+</button><button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button><button class="modal-btn" onclick="selectGoalType('contra')">Contra</button><button class="modal-btn" onclick="selectGoalType('boya')">Boya</button></div><button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button></div></div>
+    <div id="goalModal" class="modal">
+    <div class="modal-content">
+        <!-- PASO 1: Seleccionar tipo de gol -->
+        <div id="goalTypeStep">
+            <div class="modal-title">Tipo de Gol</div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="showGoalZoneStep('normal')">Normal</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('h+')">H+</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('penalty')">Penalty</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('contra')">Contra</button>
+                <button class="modal-btn" onclick="showGoalZoneStep('boya')">Boya</button>
+            </div>
+        </div>
+        
+        <!-- PASO 2: Seleccionar zona (oculto inicialmente) -->
+        <div id="goalZoneStep" style="display: none;">
+            <div class="modal-title">¿Dónde entró el gol?</div>
+            <div class="goal-zone-grid">
+                <div class="goal-zone" onclick="selectGoalZone('top-left')">⬆️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('top-center')">⬆️ Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('top-right')">⬆️ Der.</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-left')">➡️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-center')">🎯 Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('mid-right')">⬅️ Der.</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-left')">⬇️ Izq.</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-center')">⬇️ Centro</div>
+                <div class="goal-zone" onclick="selectGoalZone('bottom-right')">⬇️ Der.</div>
+            </div>
+        </div>
+        
+        <button class="btn btn-red" style="width: 100%; margin-top: 12px;" onclick="closeGoalModal()">Cancelar</button>
+    </div>
+</div>
 <div id="exclusionModal" class="modal">
     <div class="modal-content">
         <div class="modal-title">Tipo de Exclusión</div>
@@ -515,7 +576,7 @@ function decrementLastAction(n) {
     if (compactMode) {
         renderCompactView();
     } else {
-        renderPlayers();
+        renderCompactView();
     }
     
     updateScores();
@@ -638,6 +699,11 @@ function showSuperioritatIndicator() {
         }, 5000);
     }
 }
+
+
+let selectedGoalZone = null; // Afegir aquesta variable
+let selectedGoalType = null; // Afegir aquesta variable
+
 function openGoalModal(n, isR, inc) {
     if (inc < 0) {
         if (isR) {
@@ -649,71 +715,146 @@ function openGoalModal(n, isR, inc) {
     }
     
     currentGoalContext = {playerNum: n, isRival: isR};
+    selectedGoalType = null;
+    selectedGoalZone = null;
     
-    // ✅ DETECTAR SUPERIORITAT
-    const superiority = checkSuperioritat();
-    const modal = document.getElementById('goalModal');
-    const modalContent = modal.querySelector('.modal-content');
+    // Mostrar paso 1, ocultar paso 2
+    document.getElementById('goalTypeStep').style.display = 'block';
+    document.getElementById('goalZoneStep').style.display = 'none';
     
-    // Si tenim superioritat, destacar H+
-    if (!isR && superiority.cntSuperior) {
-        modalContent.innerHTML = `
-            <div class="modal-title">Tipo de Gol</div>
-            <div style="background: rgba(34, 197, 94, 0.2); padding: 8px; border-radius: 6px; margin-bottom: 10px; border: 2px solid #22c55e;">
-                <div style="font-size: 12px; color: #22c55e; font-weight: bold; text-align: center;">
-                    💪 SUPERIORITAT! Gol recomanat:
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn" onclick="selectGoalType('h+')" style="background: #22c55e; border: 3px solid #16a34a; transform: scale(1.05); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);">
-                    <div style="font-size: 18px;">⭐ H+</div>
-                    <div style="font-size: 10px;">Recomanat</div>
-                </button>
-                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
-                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
-                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
-                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
-            </div>
-            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
-        `;
-    } else if (isR && superiority.rivalSuperior) {
-        modalContent.innerHTML = `
-            <div class="modal-title">Tipo de Gol - Rival</div>
-            <div style="background: rgba(239, 68, 68, 0.2); padding: 8px; border-radius: 6px; margin-bottom: 10px; border: 2px solid #ef4444;">
-                <div style="font-size: 12px; color: #ef4444; font-weight: bold; text-align: center;">
-                    ⚠️ RIVAL EN SUPERIORITAT!
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn" onclick="selectGoalType('h+')" style="background: #ef4444; border: 3px solid #dc2626; transform: scale(1.05); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);">
-                    <div style="font-size: 18px;">⭐ H+</div>
-                    <div style="font-size: 10px;">Probable</div>
-                </button>
-                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
-                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
-                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
-                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
-            </div>
-            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
-        `;
-    } else {
-        // Modal normal
-        modalContent.innerHTML = `
-            <div class="modal-title">Tipo de Gol</div>
-            <div class="modal-buttons">
-                <button class="modal-btn" onclick="selectGoalType('normal')">Normal</button>
-                <button class="modal-btn" onclick="selectGoalType('h+')">H+</button>
-                <button class="modal-btn" onclick="selectGoalType('penalty')">Penalty</button>
-                <button class="modal-btn" onclick="selectGoalType('contra')">Contra</button>
-                <button class="modal-btn" onclick="selectGoalType('boya')">Boya</button>
-            </div>
-            <button class="btn btn-red" style="width: 100%;" onclick="closeGoalModal()">Cancelar</button>
-        `;
+    document.getElementById('goalModal').classList.add('show');
+}
+
+function closeGoalModal() {
+    document.getElementById('goalModal').classList.remove('show');
+    // Reset
+    document.getElementById('goalTypeStep').style.display = 'block';
+    document.getElementById('goalZoneStep').style.display = 'none';
+    currentGoalContext = null;
+    selectedGoalType = null;
+    selectedGoalZone = null;
+}
+
+// NUEVA: Mostrar el paso 2 (zones) o registrar directamente si es rival
+function showGoalZoneStep(goalType) {
+    selectedGoalType = goalType;
+    
+    // Si es rival, registrar directamente sin mostrar zonas
+    if (currentGoalContext.isRival) {
+        selectGoalType(goalType);
+        return;
     }
     
-    modal.classList.add('show');
+    // Si es CNT, mostrar el paso de zonas
+    document.getElementById('goalTypeStep').style.display = 'none';
+    document.getElementById('goalZoneStep').style.display = 'block';
+    
+    // Resetear selección visual
+    document.querySelectorAll('.goal-zone').forEach(z => z.classList.remove('selected'));
 }
-function selectGoalType(t){if(!currentGoalContext)return;const{playerNum,isRival}=currentGoalContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].goalTypes)rivalStats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};rivalStats[playerNum].gols++;rivalStats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-gols-${playerNum}`).textContent=rivalStats[playerNum].gols;if(compactMode)renderCompactView();else renderCompactView()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].goalTypes)stats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};stats[playerNum].gols++;stats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`gols-${playerNum}`).textContent=stats[playerNum].gols;if(compactMode)renderCompactView();else renderPlayers()}addToHistory({type:'gol',playerNum:playerNum,isRival:isRival,goalType:t,text:`${playerName}: Gol ${t==='h+'?'H+':t==='penalty'?'Penalty':t==='contra'?'Contra':t==='boya'?'Boya':'Normal'}`});updateScores();updateQuarterInfo();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage();closeGoalModal()}
+
+function selectGoalZone(zone) {
+    selectedGoalZone = zone;
+    
+    // Al seleccionar zona, registrar el gol y cerrar
+    selectGoalType(selectedGoalType);
+}
+
+function selectGoalType(t) {
+    if (!currentGoalContext) return;
+    
+    const {playerNum, isRival} = currentGoalContext;
+    let playerName = '';
+    const currentQuarter = getCurrentQuarter();
+    const timestamp = Date.now();
+    
+    // Zona: 'unknown' para rivals o si no se ha seleccionado
+    const goalZone = (isRival || !selectedGoalZone) ? 'unknown' : selectedGoalZone;
+    
+    if (isRival) {
+        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+        
+        if (!rivalStats[playerNum].goalTypes) {
+            rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        
+        rivalStats[playerNum].gols++;
+        rivalStats[playerNum].goalTypes[t]++;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'goal',
+            goalType: t,
+            team: 'rival',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`rival-gols-${playerNum}`).textContent = rivalStats[playerNum].gols;
+        renderCompactView();
+    } else {
+        const player = players.find(p => p.num === playerNum);
+        playerName = player ? player.name : `Jugador ${playerNum}`;
+        
+        if (!stats[playerNum].goalTypes) {
+            stats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        if (!stats[playerNum].goalZones) {
+            stats[playerNum].goalZones = {};
+        }
+        
+        stats[playerNum].gols++;
+        stats[playerNum].goalTypes[t]++;
+        stats[playerNum].goalZones[goalZone] = (stats[playerNum].goalZones[goalZone] || 0) + 1;
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'goal',
+            goalType: t,
+            goalZone: goalZone,
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+        
+        document.getElementById(`gols-${playerNum}`).textContent = stats[playerNum].gols;
+        renderPlayers();
+    }
+    
+    // Text de la zona només si no és rival
+    const zoneText = (!isRival && goalZone !== 'unknown') ? ` (${getZoneText(goalZone)})` : '';
+    
+    addToHistory({
+        type: 'gol',
+        playerNum: playerNum,
+        isRival: isRival,
+        goalType: t,
+        goalZone: isRival ? null : goalZone,
+        text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}`
+    });
+    
+    closeGoalModal();
+    saveToLocalStorage();
+}
+
+function getZoneText(zone) {
+    const zones = {
+        'top-left': '⬆️ Esq.',
+        'top-center': '⬆️ Centre',
+        'top-right': '⬆️ Dret',
+        'mid-left': '➡️ Esq.',
+        'mid-center': '🎯 Centre',
+        'mid-right': '⬅️ Dret',
+        'bottom-left': '⬇️ Esq.',
+        'bottom-center': '⬇️ Baix',
+        'bottom-right': '⬇️ Dret',
+        'unknown': '❓'
+    };
+    return zones[zone] || '❓';
+}
+function selectGoalType(t){if(!currentGoalContext)return;const{playerNum,isRival}=currentGoalContext;let playerName='';const currentQuarter=getCurrentQuarter();const timestamp=Date.now();if(isRival){playerName=rivalStats[playerNum].name||`Rival ${playerNum+1}`;if(!rivalStats[playerNum].goalTypes)rivalStats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};rivalStats[playerNum].gols++;rivalStats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'rival',playerNum:playerNum,playerName:playerName});document.getElementById(`rival-gols-${playerNum}`).textContent=rivalStats[playerNum].gols;if(compactMode)renderCompactView();else renderCompactView()}else{const player=players.find(p=>p.num===playerNum);playerName=player?player.name:`Jugador ${playerNum}`;if(!stats[playerNum].goalTypes)stats[playerNum].goalTypes={normal:0,'h+':0,penalty:0,contra:0,boya:0};stats[playerNum].gols++;stats[playerNum].goalTypes[t]++;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'goal',goalType:t,team:'cnt',playerNum:playerNum,playerName:playerName});document.getElementById(`gols-${playerNum}`).textContent=stats[playerNum].gols;if(compactMode)renderCompactView();else renderCompactView()}addToHistory({type:'gol',playerNum:playerNum,isRival:isRival,goalType:t,text:`${playerName}: Gol ${t==='h+'?'H+':t==='penalty'?'Penalty':t==='contra'?'Contra':t==='boya'?'Boya':'Normal'}`});updateScores();updateQuarterInfo();if(lineups.q4.length===7)calculateFinalQuarter();saveToLocalStorage();closeGoalModal()}
 let exclusionLongPressTimer;
 let isExclusionLongPress = false;
 
@@ -881,7 +1022,7 @@ function selectExclusionType(t){
         document.getElementById(`exc-${playerNum}`).textContent=stats[playerNum].exclusions;
         updatePlayerNameColor(playerNum,stats[playerNum].exclusions);
         if(compactMode)renderCompactView();
-        else renderPlayers()
+        else renderCompactView()
     }
     
     // Construir el text amb info de la falta
@@ -906,10 +1047,10 @@ addToHistory({
     saveToLocalStorage();
     closeExclusionModal();
 }
-function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderPlayers()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
+function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
 function updateRivalExclusion(i,inc){rivalStats[i].exclusions=Math.max(0,rivalStats[i].exclusions+inc);if(inc<0){const e=rivalStats[i].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`rival-exc-${i}`).textContent=rivalStats[i].exclusions;updateRivalNameColor(i,rivalStats[i].exclusions);saveToLocalStorage()}
 function closeExclusionModal(){document.getElementById('exclusionModal').classList.remove('show');currentExclusionContext=null}
-function renderPlayers(){
+function renderCompactView(){
     console.log('🔄 RENDERITZANT VISTA NORMAL');
     console.log('Parades jugador 1:', stats[1]?.parades);
     
@@ -1105,7 +1246,7 @@ function calculateFinalQuarter(){const cs=Object.values(stats).reduce((s,st)=>s+
 function showView(v){const views=['statsView','rivalView','lineupsView','configView'];views.forEach(view=>{const element=document.getElementById(view);if(element)element.classList.add('hidden')});const targetView=document.getElementById(v+'View');if(targetView)targetView.classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(event&&event.target)event.target.classList.add('active')}
 function generateMatchData(){observacions=document.getElementById('observacions')?.value||'';return {temporada:'25/26 CADET',equip:'CN TERRASSA',data:new Date().toISOString(),scoreCNT:Object.values(stats).reduce((sum,s)=>sum+s.gols,0),scoreRival:rivalStats.reduce((sum,p)=>sum+p.gols,0),lineups,periodScores,tempsMortCNT,tempsMortRival,rivalTeam,matchLocation,rivalStats,jugadors:players.map(p=>({numero:p.num,nom:p.name,estadistiques:stats[p.num]})),observacions,chronologicalActions:chronologicalActions||[],quarterStartTimes:quarterStartTimes,playerWaterChanges:playerWaterChanges||[]}}
 function exportData(){const d=generateMatchData();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;const rivalName=rivalTeam?rivalTeam.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''):'rival';a.download=`cnt_stats_${new Date().toISOString().split('T')[0]}_${rivalName}.json`;a.click();URL.revokeObjectURL(u)}
-function importData(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.lineups)lineups=d.lineups;if(d.periodScores)periodScores=d.periodScores;if(d.tempsMortCNT!==undefined){tempsMortCNT=d.tempsMortCNT;document.getElementById('tempsMortCNT').textContent=tempsMortCNT}if(d.tempsMortRival!==undefined){tempsMortRival=d.tempsMortRival;document.getElementById('tempsMortRival').textContent=tempsMortRival}if(d.rivalTeam){rivalTeam=d.rivalTeam;document.getElementById('rivalTeamInput').value=rivalTeam;document.getElementById('rivalTeamLabel').textContent=rivalTeam}if(d.rivalStats)rivalStats=d.rivalStats;if(d.observacions)document.getElementById('observacions').value=d.observacions;if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;else chronologicalActions=[];if(d.playersInWater)playersInWater=new Set(d.playersInWater);else playersInWater=new Set();if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;else quarterStartTimes={q1:null,q2:null,q3:null,q4:null};if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;else playerWaterChanges=[];if(d.jugadors){d.jugadors.forEach(j=>{const p=players.find(p=>p.num===j.numero);if(p)p.name=j.nom;stats[j.numero]=j.estadistiques;if(stats[j.numero].penaltyMissed===undefined)stats[j.numero].penaltyMissed=0})}renderPlayers();renderCompactView();renderLineups();renderPeriodScores();updateScores();alert('Datos importados correctamente')}catch(err){alert('Error al importar el archivo')}};r.readAsText(f)}}
+function importData(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.lineups)lineups=d.lineups;if(d.periodScores)periodScores=d.periodScores;if(d.tempsMortCNT!==undefined){tempsMortCNT=d.tempsMortCNT;document.getElementById('tempsMortCNT').textContent=tempsMortCNT}if(d.tempsMortRival!==undefined){tempsMortRival=d.tempsMortRival;document.getElementById('tempsMortRival').textContent=tempsMortRival}if(d.rivalTeam){rivalTeam=d.rivalTeam;document.getElementById('rivalTeamInput').value=rivalTeam;document.getElementById('rivalTeamLabel').textContent=rivalTeam}if(d.rivalStats)rivalStats=d.rivalStats;if(d.observacions)document.getElementById('observacions').value=d.observacions;if(d.chronologicalActions)chronologicalActions=d.chronologicalActions;else chronologicalActions=[];if(d.playersInWater)playersInWater=new Set(d.playersInWater);else playersInWater=new Set();if(d.quarterStartTimes)quarterStartTimes=d.quarterStartTimes;else quarterStartTimes={q1:null,q2:null,q3:null,q4:null};if(d.playerWaterChanges)playerWaterChanges=d.playerWaterChanges;else playerWaterChanges=[];if(d.jugadors){d.jugadors.forEach(j=>{const p=players.find(p=>p.num===j.numero);if(p)p.name=j.nom;stats[j.numero]=j.estadistiques;if(stats[j.numero].penaltyMissed===undefined)stats[j.numero].penaltyMissed=0})}renderCompactView();renderCompactView();renderLineups();renderPeriodScores();updateScores();alert('Datos importados correctamente')}catch(err){alert('Error al importar el archivo')}};r.readAsText(f)}}
 function resetAll() {
     if (confirm('¿Seguro que quieres resetear todas las estadísticas?')) {
         // Resetear jugadores a los predefinidos del CNT
@@ -1223,20 +1364,26 @@ function undoAction(index){
     const action=actionsHistory[index];
     if(!action)return;
     
-    if(action.type==='gol'){
-        if(action.isRival){
-            rivalStats[action.playerNum].gols--;
-            if(rivalStats[action.playerNum].goalTypes&&rivalStats[action.playerNum].goalTypes[action.goalType]){
-                rivalStats[action.playerNum].goalTypes[action.goalType]--;
-            }
-            renderCompactView();
-        }else{
-            stats[action.playerNum].gols--;
-            if(stats[action.playerNum].goalTypes&&stats[action.playerNum].goalTypes[action.goalType]){
-                stats[action.playerNum].goalTypes[action.goalType]--;
-            }
-            renderCompactView();
+    if (action.type === 'gol') {
+    if (action.isRival) {
+        rivalStats[action.playerNum].gols--;
+        if (rivalStats[action.playerNum].goalTypes && rivalStats[action.playerNum].goalTypes[action.goalType]) {
+            rivalStats[action.playerNum].goalTypes[action.goalType]--;
         }
+        // NO fem res amb goalZones perquè els rivals no en tenen
+        renderCompactView();
+    } else {
+        stats[action.playerNum].gols--;
+        if (stats[action.playerNum].goalTypes && stats[action.playerNum].goalTypes[action.goalType]) {
+            stats[action.playerNum].goalTypes[action.goalType]--;
+        }
+        // Només restem zona si existeix
+        if (action.goalZone && stats[action.playerNum].goalZones) {
+            stats[action.playerNum].goalZones[action.goalZone]--;
+        }
+        renderCompactView();
+    }
+
     } else if(action.type==='exclusion'){
         if(action.isRival){
             rivalStats[action.playerNum].exclusions--;
@@ -1288,7 +1435,7 @@ function undoAction(index){
         if(stats[action.playerNum].paradeTypes && stats[action.playerNum].paradeTypes[action.saveType]){
             stats[action.playerNum].paradeTypes[action.saveType]--;
         }
-        renderPlayers();
+        renderCompactView();
         if(compactMode) renderCompactView();
     } else if(action.type === 'action'){
         const type = action.actionType;
@@ -1509,7 +1656,7 @@ function togglePlayerWaterStatus(playerNum){
     checkPlayersInWater();
 }
 function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
-function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderPlayers();if(compactMode)renderCompactView();saveToLocalStorage()}
+function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderCompactView();if(compactMode)renderCompactView();saveToLocalStorage()}
 function startQuarter(quarter) {
     const timestamp = Date.now();
     quarterStartTimes[quarter] = timestamp;
@@ -1709,7 +1856,7 @@ function selectSaveType(type) {
     if (compactMode) {
         renderCompactView();
     } else {
-        renderPlayers();  // ✅ AFEGIR AQUESTA LÍNIA
+        renderCompactView();  // ✅ AFEGIR AQUESTA LÍNIA
     }
     
     saveToLocalStorage();
@@ -1734,13 +1881,13 @@ function updateSave(n, inc) {
 </script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+   /* document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
