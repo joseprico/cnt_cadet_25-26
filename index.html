@@ -904,10 +904,6 @@
     <div id="matchGoalZonesContainer"></div>
 </div>  
 <div class="card">
-    <h2 class="section-title">🎯 Zones de Porteria CN Terrassa</h2>
-    <div id="matchGoalZonesContainer"></div>
-</div>
-				<div class="card">
     <h2 class="section-title">📋 Cronología del Partido</h2>
     <div id="matchTimeline"></div>
 </div>
@@ -1849,18 +1845,162 @@ if (document.getElementById('scoreboardCNT')) {
     document.getElementById('observations').textContent = currentMatch.observacions || 'No hay observaciones';
 
              // Generar gráficas
-            renderScoreEvolutionChart();
-            renderOffenseDefenseChart();
-            renderPlayerEfficiencyChart();
-			renderMatchTimeline();
-			renderSingleMatchStatsTable();
-			renderPlayingTimes();
-			renderMatchGoalZones();
-       const pdfButton = document.getElementById('pdfMatchButton');
-if (pdfButton) {
-    pdfButton.style.display = 'inline-block';
-}
-}  // ← Aquest és el tancament de la funció displayMatchData()
+    renderScoreEvolutionChart();
+    renderOffenseDefenseChart();
+    renderPlayerEfficiencyChart();
+    renderMatchTimeline();
+    renderSingleMatchStatsTable();
+    renderPlayingTimes();
+    renderMatchGoalZones();
+    
+    // ✅ AFEGIR AQUÍ les zones de gols rebuts pels porters
+    
+    // Zones de Porteria dels Porters (només per aquest partit)
+    const matchGoalkeeperZones = {
+        1: { num: 1, name: 'DAVID CASADO', totalGolsRebuts: 0, zones: {} },
+        13: { num: 13, name: 'GUILLEM POLEY', totalGolsRebuts: 0, zones: {} }
+    };
+    
+    // Inicialitzar zones
+    [1, 13].forEach(gkNum => {
+        matchGoalkeeperZones[gkNum].zones = {
+            'top-left': 0, 'top-center': 0, 'top-right': 0,
+            'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+            'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+            'unknown': 0
+        };
+    });
+    
+    // Calcular zones dels gols rebuts en aquest partit
+    currentMatch.jugadors.forEach(j => {
+        if ((j.numero === 1 || j.numero === 13) && j.estadistiques.golsRebutsZones) {
+            Object.keys(j.estadistiques.golsRebutsZones).forEach(zone => {
+                const count = j.estadistiques.golsRebutsZones[zone] || 0;
+                matchGoalkeeperZones[j.numero].zones[zone] += count;
+                matchGoalkeeperZones[j.numero].totalGolsRebuts += count;
+            });
+        }
+    });
+    
+    // Només mostrar si hi ha dades
+    const hasGoalkeeperData = matchGoalkeeperZones[1].totalGolsRebuts > 0 || 
+                              matchGoalkeeperZones[13].totalGolsRebuts > 0;
+    
+    if (hasGoalkeeperData) {
+        const matchGkZonesHTML = `
+            <div class="card" id="goalkeeperZonesCard">
+                <h2 class="section-title">🧤 Zones de Gols Rebuts pels Porters</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    ${[1, 13].map(gkNum => {
+                        const gk = matchGoalkeeperZones[gkNum];
+                        if (gk.totalGolsRebuts === 0) return '';
+                        
+                        const zoneOrder = [
+                            'top-left', 'top-center', 'top-right',
+                            'mid-left', 'mid-center', 'mid-right',
+                            'bottom-left', 'bottom-center', 'bottom-right'
+                        ];
+                        
+                        const zoneLabels = {
+                            'top-left': '⬆️E',
+                            'top-center': '⬆️C',
+                            'top-right': '⬆️D',
+                            'mid-left': '➡️E',
+                            'mid-center': '🎯',
+                            'mid-right': '⬅️D',
+                            'bottom-left': '⬇️E',
+                            'bottom-center': '⬇️B',
+                            'bottom-right': '⬇️D'
+                        };
+                        
+                        const maxCount = Math.max(...zoneOrder.map(z => gk.zones[z] || 0));
+                        
+                        // Trobar zona més feble
+                        const weakestZone = zoneOrder.reduce((max, zone) => 
+                            (gk.zones[zone] || 0) > (gk.zones[max] || 0) ? zone : max
+                        , zoneOrder[0]);
+                        
+                        const weakestZoneLabel = {
+                            'top-left': 'Dalt Esquerra',
+                            'top-center': 'Dalt Centre',
+                            'top-right': 'Dalt Dreta',
+                            'mid-left': 'Centre Esquerra',
+                            'mid-center': 'Centre',
+                            'mid-right': 'Centre Dreta',
+                            'bottom-left': 'Baix Esquerra',
+                            'bottom-center': 'Baix Centre',
+                            'bottom-right': 'Baix Dreta'
+                        }[weakestZone];
+                        
+                        return `
+                            <div style="background: rgba(0, 0, 0, 0.2); padding: 12px; border-radius: 8px;">
+                                <div style="text-align: center; margin-bottom: 10px;">
+                                    <div style="font-size: 12px; font-weight: bold; color: #22d3ee;">
+                                        ${gk.num}. ${gk.name.split(' ')[0]}
+                                    </div>
+                                    <div style="font-size: 10px; color: #bae6fd; margin-top: 2px;">
+                                        ${gk.totalGolsRebuts} gols rebuts
+                                    </div>
+                                </div>
+                                
+                                <div class="goal-zone-heatmap" style="max-width: 200px; margin: 0 auto;">
+                                    ${zoneOrder.map(zone => {
+                                        const count = gk.zones[zone] || 0;
+                                        const percentage = gk.totalGolsRebuts > 0 ? 
+                                            ((count / gk.totalGolsRebuts) * 100).toFixed(1) : 0;
+                                        const intensity = maxCount > 0 ? count / maxCount : 0;
+                                        const bgColor = getHeatmapColor(intensity);
+                                        
+                                        return `
+                                            <div class="goal-zone-cell" style="background: ${bgColor};">
+                                                <div class="zone-label">${zoneLabels[zone]}</div>
+                                                <div class="zone-count">${count}</div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                                
+                                ${gk.zones[weakestZone] > 0 ? `
+                                    <div style="text-align: center; margin-top: 10px; font-size: 10px; color: #fca5a5;">
+                                        ⚠️ Zona més vulnerable: ${weakestZoneLabel} (${gk.zones[weakestZone]})
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+        
+        // ✅ Inserir DESPRÉS del segon card de zones (el que té id matchGoalZonesContainer)
+        // Buscar tots els cards amb zones
+        const allCards = document.querySelectorAll('.card');
+        let matchZonesCard = null;
+        
+        allCards.forEach(card => {
+            if (card.querySelector('#matchGoalZonesContainer')) {
+                matchZonesCard = card;
+            }
+        });
+        
+        if (matchZonesCard) {
+            // Esborrar si ja existeix
+            const existingGKCard = document.getElementById('goalkeeperZonesCard');
+            if (existingGKCard) {
+                existingGKCard.remove();
+            }
+            
+            matchZonesCard.insertAdjacentHTML('afterend', matchGkZonesHTML);
+        }
+    }
+    
+    const pdfButton = document.getElementById('pdfMatchButton');
+    if (pdfButton) {
+        pdfButton.style.display = 'inline-block';
+    }
+}  // ← Tancament de displayMatchData()
+       
 
  function renderSingleMatchStatsTable() {
     const table = document.getElementById('singleMatchStatsTable');
@@ -2185,7 +2325,7 @@ if (pdfButton) {
             });
         }
 
-       function displayComparison() {
+function displayComparison() {
     if (allMatches.length === 0) return;
     populatePlayerFilter();
     
@@ -2572,14 +2712,103 @@ renderComparisonTable(players);
         `;
     }).join('');
     
+
+
+
     renderResultsEvolution();
     renderQuarterDifference();
     renderBestWorstMatches();
     renderRivalsHistory();
     renderGoalsDistributionChart(playerStats);
-	renderGoalZoneStats();
+// Zones de Porteria dels Porters
+    const goalkeeperZones = renderGoalkeeperZoneStats();
+    
+    const goalkeeperZonesHTML = `
+        <div class="card">
+            <h2 class="section-title">🧤 Anàlisi de Gols Rebuts pels Porters</h2>
+            <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
+                On reben més gols els nostres porters
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                ${[1, 13].map(gkNum => {
+                    const gk = goalkeeperZones[gkNum];
+                    if (gk.totalGolsRebuts === 0) return '';
+                    
+                    const zoneOrder = [
+                        'top-left', 'top-center', 'top-right',
+                        'mid-left', 'mid-center', 'mid-right',
+                        'bottom-left', 'bottom-center', 'bottom-right'
+                    ];
+                    
+                    const zoneLabels = {
+                        'top-left': '⬆️ Esq',
+                        'top-center': '⬆️ Centre',
+                        'top-right': '⬆️ Dret',
+                        'mid-left': '➡️ Esq',
+                        'mid-center': '🎯 Centre',
+                        'mid-right': '⬅️ Dret',
+                        'bottom-left': '⬇️ Esq',
+                        'bottom-center': '⬇️ Baix',
+                        'bottom-right': '⬇️ Dret'
+                    };
+                    
+                    const maxCount = Math.max(...zoneOrder.map(z => gk.zones[z] || 0));
+                    
+                    return `
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px;">
+                            <div style="text-align: center; margin-bottom: 12px;">
+                                <div style="font-size: 14px; font-weight: bold; color: #22d3ee;">
+                                    ${gk.num}. ${gk.name.split(' ')[0]}
+                                </div>
+                                <div style="font-size: 12px; color: #bae6fd; margin-top: 4px;">
+                                    Total gols rebuts: ${gk.totalGolsRebuts}
+                                </div>
+                            </div>
+                            
+                            <div class="goal-zone-heatmap">
+                                ${zoneOrder.map(zone => {
+                                    const count = gk.zones[zone] || 0;
+                                    const percentage = gk.totalGolsRebuts > 0 ? 
+                                        ((count / gk.totalGolsRebuts) * 100).toFixed(1) : 0;
+                                    const intensity = maxCount > 0 ? count / maxCount : 0;
+                                    const bgColor = getHeatmapColor(intensity);
+                                    
+                                    return `
+                                        <div class="goal-zone-cell" style="background: ${bgColor};">
+                                            <div class="zone-label">${zoneLabels[zone]}</div>
+                                            <div class="zone-count">${count}</div>
+                                            <div style="font-size: 9px; color: rgba(255,255,255,0.7);">
+                                                ${percentage}%
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                            
+                            ${gk.zones.unknown > 0 ? `
+                                <div style="text-align: center; margin-top: 10px; font-size: 11px; color: #bae6fd;">
+                                    ❓ Gols sense zona: ${gk.zones.unknown}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+    `;
+    
+    // Inserir abans de renderGoalZoneStats
+    const comparisonContainer = document.getElementById('comparisonView');
+    const goalZonesCard = comparisonContainer.querySelector('.card:has(#globalGoalZoneHeatmap)');
+    if (goalZonesCard) {
+        goalZonesCard.insertAdjacentHTML('beforebegin', goalkeeperZonesHTML);
+    }
+    
+    renderGoalZoneStats();
 	renderGoalkeeperSavesChart();
 }
+	
 
         function renderGoalsDistributionChart(playerStats) {
             const ctx = document.getElementById('goalsDistributionChart');
@@ -7565,7 +7794,49 @@ function renderGoalZoneStats() {
     
     renderIndividualZoneMaps(topScorers);
 }
-
+function renderGoalkeeperZoneStats() {
+    // Aquesta funció es cridarà al displayMatchData() i displayComparison()
+    
+    const goalkeeperZones = {
+        1: {  // David Casado
+            num: 1,
+            name: 'DAVID CASADO',
+            totalGolsRebuts: 0,
+            zones: {
+                'top-left': 0, 'top-center': 0, 'top-right': 0,
+                'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+                'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+                'unknown': 0
+            }
+        },
+        13: {  // Guillem Poley
+            num: 13,
+            name: 'GUILLEM POLEY',
+            totalGolsRebuts: 0,
+            zones: {
+                'top-left': 0, 'top-center': 0, 'top-right': 0,
+                'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+                'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+                'unknown': 0
+            }
+        }
+    };
+    
+    // Acumular dades de tots els partits
+    allMatches.forEach(match => {
+        match.jugadors.forEach(j => {
+            if ((j.numero === 1 || j.numero === 13) && j.estadistiques.golsRebutsZones) {
+                Object.keys(j.estadistiques.golsRebutsZones).forEach(zone => {
+                    const count = j.estadistiques.golsRebutsZones[zone] || 0;
+                    goalkeeperZones[j.numero].zones[zone] += count;
+                    goalkeeperZones[j.numero].totalGolsRebuts += count;
+                });
+            }
+        });
+    });
+    
+    return goalkeeperZones;
+}
 function renderGlobalZoneHeatmap(zones) {
     const container = document.getElementById('globalGoalZoneHeatmap');
     if (!container) return;
