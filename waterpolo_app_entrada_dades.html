@@ -399,12 +399,17 @@ function init() {
                 paradeTypes: {
                     corner: 0,
                     rebuig: 0,
-                    atrapa: 0
+                    atrapa: 0,
+                    penal: 0
                 },
                 assistencies: 0,
                 robatoris: 0,
                 perdues: 0,
-                xutsFallats: 0
+                xutsFallats: 0,
+                blocks: 0,
+                faltesRebudes: 0,
+                golsRebuts: 0,  // ✅ NOU
+                golsRebutsZones: {}  // ✅ NOU
             };
         });
     }
@@ -773,113 +778,129 @@ function selectGoalType(t) {
         return;
     }
     
-    console.log('✅ currentGoalContext vàlid:', currentGoalContext);
-    
     const {playerNum, isRival} = currentGoalContext;
-    console.log('playerNum:', playerNum, 'isRival:', isRival);
-    
     let playerName = '';
     const currentQuarter = getCurrentQuarter();
     const timestamp = Date.now();
     
-    // Zona: 'unknown' para rivals o si no se ha seleccionado
     const goalZone = !selectedGoalZone ? 'unknown' : selectedGoalZone;
     
-    console.log('🎯 goalZone FINAL calculada:', goalZone);
-    console.log('   - isRival:', isRival);
-    console.log('   - selectedGoalZone:', selectedGoalZone);
-    console.log('   - !selectedGoalZone:', !selectedGoalZone);
+    // ✅ NOU: Detectar automàticament quin porter està a l'aigua
+    let goalkeeperNum = null;
+    if (isRival) {
+        // Buscar quin porter (1 o 13) està dins de l'aigua
+        if (playersInWater.has(1)) {
+            goalkeeperNum = 1;
+        } else if (playersInWater.has(13)) {
+            goalkeeperNum = 13;
+        }
+        // Si cap dels dos està dins, buscar a la lineup del quarter actual
+        if (!goalkeeperNum) {
+            const currentLineup = lineups[currentQuarter] || [];
+            if (currentLineup.includes(1)) {
+                goalkeeperNum = 1;
+            } else if (currentLineup.includes(13)) {
+                goalkeeperNum = 13;
+            }
+        }
+    }
     
     if (isRival) {
-    playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
-    
-    if (!rivalStats[playerNum].goalTypes) {
-        rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
-    }
-    // NUEVO: Afegir goalZones pels rivals també
-    if (!rivalStats[playerNum].goalZones) {
-        rivalStats[playerNum].goalZones = {};
-    }
-    
-    rivalStats[playerNum].gols++;
-    rivalStats[playerNum].goalTypes[t]++;
-    rivalStats[playerNum].goalZones[goalZone] = (rivalStats[playerNum].goalZones[goalZone] || 0) + 1;
+        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+        
+        if (!rivalStats[playerNum].goalTypes) {
+            rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        if (!rivalStats[playerNum].goalZones) {
+            rivalStats[playerNum].goalZones = {};
+        }
+        
+        rivalStats[playerNum].gols++;
+        rivalStats[playerNum].goalTypes[t]++;
+        rivalStats[playerNum].goalZones[goalZone] = (rivalStats[playerNum].goalZones[goalZone] || 0) + 1;
+        
+        // ✅ Guardar a quin porter li han fet gol
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'goal',
+            goalType: t,
+            goalZone: goalZone,
+            team: 'rival',
+            playerNum: playerNum,
+            playerName: playerName,
+            goalkeeperNum: goalkeeperNum  // ✅ Detectat automàticament
+        });
+        
+        // ✅ Incrementar gols rebuts del porter
+        if (goalkeeperNum && stats[goalkeeperNum]) {
+            if (!stats[goalkeeperNum].golsRebuts) {
+                stats[goalkeeperNum].golsRebuts = 0;
+            }
+            stats[goalkeeperNum].golsRebuts++;
+            
+            // ✅ Guardar zones dels gols rebuts
+            if (!stats[goalkeeperNum].golsRebutsZones) {
+                stats[goalkeeperNum].golsRebutsZones = {};
+            }
+            stats[goalkeeperNum].golsRebutsZones[goalZone] = 
+                (stats[goalkeeperNum].golsRebutsZones[goalZone] || 0) + 1;
+            
+            console.log(`✅ Gol assignat al porter ${goalkeeperNum} - Zona: ${goalZone}`);
+        } else {
+            console.warn('⚠️ No s\'ha pogut detectar quin porter estava a l\'aigua!');
+        }
+        
+        document.getElementById(`rival-gols-${playerNum}`).textContent = rivalStats[playerNum].gols;
+        renderCompactView();
+    } else {
+        const player = players.find(p => p.num === playerNum);
+        playerName = player ? player.name : `Jugador ${playerNum}`;
+        
+        if (!stats[playerNum].goalTypes) {
+            stats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+        }
+        if (!stats[playerNum].goalZones) {
+            stats[playerNum].goalZones = {};
+        }
+        
+        stats[playerNum].gols++;
+        stats[playerNum].goalTypes[t]++;
+        stats[playerNum].goalZones[goalZone] = (stats[playerNum].goalZones[goalZone] || 0) + 1;
         
         chronologicalActions.push({
             timestamp: timestamp,
             quarter: currentQuarter,
             type: 'goal',
             goalType: t,
-            team: 'rival',
+            goalZone: goalZone,
+            team: 'cnt',
             playerNum: playerNum,
             playerName: playerName
         });
-        
-        document.getElementById(`rival-gols-${playerNum}`).textContent = rivalStats[playerNum].gols;
-        renderCompactView();
-    } else {
-	console.log('📝 Entrant al bloc CNT (no rival)');
-        const player = players.find(p => p.num === playerNum);
-        playerName = player ? player.name : `Jugador ${playerNum}`;
-        console.log('Jugador trobat:', playerName);
-        if (!stats[playerNum].goalTypes) {
-            stats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
-        }
-        if (!stats[playerNum].goalZones) {
-            stats[playerNum].goalZones = {};
-			console.log('✨ Creat goalZones buit per jugador', playerNum);
-        }
-        
-        stats[playerNum].gols++;
-        stats[playerNum].goalTypes[t]++;
-        stats[playerNum].goalZones[goalZone] = (stats[playerNum].goalZones[goalZone] || 0) + 1;
-		console.log('📊 DESPRÉS D\'ACTUALITZAR:');
-        console.log('   stats[' + playerNum + '].goalZones:', JSON.stringify(stats[playerNum].goalZones));
-        console.log('   goalZone afegida:', goalZone);
-        console.log('=== ABANS DE PUSH ===');
-    console.log('stats[playerNum].goalZones:', stats[playerNum].goalZones);
-    console.log('goalZone que s\'afegirà:', goalZone);
-        
-		console.log('=== ABANS DE PUSH ===');
-console.log('goalZone que s\'afegirà:', goalZone);
-console.log('stats[playerNum].goalZones:', stats[playerNum].goalZones);
-
-const actionToPush = {
-    timestamp: timestamp,
-    quarter: currentQuarter,
-    type: 'goal',
-    goalType: t,
-    goalZone: goalZone,  // ← Verifica que això no sigui undefined
-    team: 'cnt',
-    playerNum: playerNum,
-    playerName: playerName
-};
-
-console.log('Acció completa a afegir:', actionToPush);
-
-chronologicalActions.push(actionToPush);
-
-console.log('chronologicalActions després del push:', chronologicalActions[chronologicalActions.length - 1]);
         
         document.getElementById(`gols-${playerNum}`).textContent = stats[playerNum].gols;
         renderCompactView();
     }
     
-        
     const zoneText = (goalZone !== 'unknown') ? ` (${getZoneText(goalZone)})` : '';
+    const goalkeeperText = (isRival && goalkeeperNum) ? 
+        ` → Porter: ${goalkeeperNum}. ${players.find(p => p.num === goalkeeperNum)?.name.split(' ')[0]}` : '';
 
-addToHistory({
-    type: 'gol',
-    playerNum: playerNum,
-    isRival: isRival,
-    goalType: t,
-    goalZone: goalZone,  // Ara sempre es guarda
-    text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}`
-});
+    addToHistory({
+        type: 'gol',
+        playerNum: playerNum,
+        isRival: isRival,
+        goalType: t,
+        goalZone: goalZone,
+        goalkeeperNum: goalkeeperNum,
+        text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}${goalkeeperText}`
+    });
     
     closeGoalModal();
     saveToLocalStorage();
 }
+
 
 function getZoneText(zone) {
     const zones = {
@@ -1963,13 +1984,13 @@ function updateSave(n, inc) {
 </script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
-   /* document.addEventListener("contextmenu", event => event.preventDefault());
+    document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });*/
+    });
     </script>
 </body>
 </html>
