@@ -739,13 +739,8 @@ function closeGoalModal() {
 function showGoalZoneStep(goalType) {
     selectedGoalType = goalType;
     
-    // Si es rival, registrar directamente sin mostrar zonas
-    if (currentGoalContext.isRival) {
-        selectGoalType(goalType);
-        return;
-    }
-    
-    // Si es CNT, mostrar el paso de zonas
+    // Ara TOTS poden seleccionar zones (rivals també)
+    // Mostrar el paso de zonas
     document.getElementById('goalTypeStep').style.display = 'none';
     document.getElementById('goalZoneStep').style.display = 'block';
     
@@ -788,7 +783,7 @@ function selectGoalType(t) {
     const timestamp = Date.now();
     
     // Zona: 'unknown' para rivals o si no se ha seleccionado
-    const goalZone = (isRival || !selectedGoalZone) ? 'unknown' : selectedGoalZone;
+    const goalZone = !selectedGoalZone ? 'unknown' : selectedGoalZone;
     
     console.log('🎯 goalZone FINAL calculada:', goalZone);
     console.log('   - isRival:', isRival);
@@ -796,14 +791,19 @@ function selectGoalType(t) {
     console.log('   - !selectedGoalZone:', !selectedGoalZone);
     
     if (isRival) {
-        playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
-        
-        if (!rivalStats[playerNum].goalTypes) {
-            rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
-        }
-        
-        rivalStats[playerNum].gols++;
-        rivalStats[playerNum].goalTypes[t]++;
+    playerName = rivalStats[playerNum].name || `Rival ${playerNum + 1}`;
+    
+    if (!rivalStats[playerNum].goalTypes) {
+        rivalStats[playerNum].goalTypes = {normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0};
+    }
+    // NUEVO: Afegir goalZones pels rivals també
+    if (!rivalStats[playerNum].goalZones) {
+        rivalStats[playerNum].goalZones = {};
+    }
+    
+    rivalStats[playerNum].gols++;
+    rivalStats[playerNum].goalTypes[t]++;
+    rivalStats[playerNum].goalZones[goalZone] = (rivalStats[playerNum].goalZones[goalZone] || 0) + 1;
         
         chronologicalActions.push({
             timestamp: timestamp,
@@ -865,17 +865,17 @@ console.log('chronologicalActions després del push:', chronologicalActions[chro
         renderCompactView();
     }
     
-    // Text de la zona només si no és rival
-    const zoneText = (!isRival && goalZone !== 'unknown') ? ` (${getZoneText(goalZone)})` : '';
-    
-    addToHistory({
-        type: 'gol',
-        playerNum: playerNum,
-        isRival: isRival,
-        goalType: t,
-        goalZone: isRival ? null : goalZone,
-        text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}`
-    });
+        
+    const zoneText = (goalZone !== 'unknown') ? ` (${getZoneText(goalZone)})` : '';
+
+addToHistory({
+    type: 'gol',
+    playerNum: playerNum,
+    isRival: isRival,
+    goalType: t,
+    goalZone: goalZone,  // Ara sempre es guarda
+    text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}`
+});
     
     closeGoalModal();
     saveToLocalStorage();
@@ -930,6 +930,11 @@ function handleExclusionRelease(playerNum, isRival) {
 }
 
 function quickExclusion(playerNum, isRival, type) {
+    // ✅ No marcar exclusió si s'està fent swipe
+    if(window.isCurrentlyDragging) {
+        return;
+    }
+    
     const currentQuarter = getCurrentQuarter();
     const timestamp = Date.now();
     let playerName = '';
@@ -983,10 +988,15 @@ function quickExclusion(playerNum, isRival, type) {
     
     renderCompactView();
     updateScores();
-	showSuperioritatIndicator();
+    showSuperioritatIndicator();
     saveToLocalStorage();
 }
 function openExclusionModal(n,isR,inc){
+    // ✅ No obrir modal si s'està fent swipe
+    if(window.isCurrentlyDragging){
+        return;
+    }
+    
     if(inc<0){
         if(isR){updateRivalExclusion(n,inc)}
         else{updateExclusion(n,inc)}
@@ -994,12 +1004,10 @@ function openExclusionModal(n,isR,inc){
     }
     currentExclusionContext={playerNum:n,isRival:isR};
     
-    // Si és exclusió del RIVAL, mostrar selector de jugadors CNT
     const selectorDiv = document.getElementById('cntPlayerSelector');
     const select = document.getElementById('cntPlayerSelect');
     
     if(isR){
-        // Omplir el select amb els jugadors del CNT
         select.innerHTML = '<option value="">Sense especificar</option>' + 
             players.map(p => `<option value="${p.num}">${p.num}. ${p.name}</option>`).join('');
         selectorDiv.style.display = 'block';
@@ -1089,7 +1097,28 @@ addToHistory({
     saveToLocalStorage();
     closeExclusionModal();
 }
-function updateExclusion(n,inc){stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);if(inc<0){const e=stats[n].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;updatePlayerNameColor(n,stats[n].exclusions);saveToLocalStorage()}
+function updateExclusion(n,inc){
+    // ✅ No fer res si s'està fent swipe
+    if(window.isCurrentlyDragging){
+        return;
+    }
+    
+    stats[n].exclusions=Math.max(0,stats[n].exclusions+inc);
+    if(inc<0){
+        const e=stats[n].exclusionTypes;
+        const ts=['penalty','normal'];
+        for(let t of ts){
+            if(e[t]>0){
+                e[t]--;
+                break
+            }
+        }
+        renderCompactView()
+    }
+    document.getElementById(`exc-${n}`).textContent=stats[n].exclusions;
+    updatePlayerNameColor(n,stats[n].exclusions);
+    saveToLocalStorage()
+}
 function updateRivalExclusion(i,inc){rivalStats[i].exclusions=Math.max(0,rivalStats[i].exclusions+inc);if(inc<0){const e=rivalStats[i].exclusionTypes;const ts=['penalty','normal'];for(let t of ts){if(e[t]>0){e[t]--;break}}renderCompactView()}document.getElementById(`rival-exc-${i}`).textContent=rivalStats[i].exclusions;updateRivalNameColor(i,rivalStats[i].exclusions);saveToLocalStorage()}
 function closeExclusionModal(){document.getElementById('exclusionModal').classList.remove('show');currentExclusionContext=null}
 function renderCompactView(){
@@ -1412,7 +1441,10 @@ function undoAction(index){
         if (rivalStats[action.playerNum].goalTypes && rivalStats[action.playerNum].goalTypes[action.goalType]) {
             rivalStats[action.playerNum].goalTypes[action.goalType]--;
         }
-        // NO fem res amb goalZones perquè els rivals no en tenen
+        // NUEVO: Restar zona també pels rivals
+        if (action.goalZone && rivalStats[action.playerNum].goalZones) {
+            rivalStats[action.playerNum].goalZones[action.goalZone]--;
+        }
         renderCompactView();
     } else {
         stats[action.playerNum].gols--;
@@ -1752,11 +1784,13 @@ document.addEventListener('DOMContentLoaded',function(){const o=document.getElem
 let startX = 0;
 let startY = 0;
 let isDragging = false;
+window.isCurrentlyDragging = false; // ✅ Variable global
 
 document.addEventListener('touchstart', function(e) {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     isDragging = true;
+    window.isCurrentlyDragging = false;
 }, { passive: true });
 
 document.addEventListener('touchmove', function(e) {
@@ -1765,15 +1799,15 @@ document.addEventListener('touchmove', function(e) {
     const currentX = e.touches[0].clientX;
     const moveX = currentX - startX;
     
-    // Si es mou més de 20px horitzontalment, prevenir scroll
+    // ✅ Marcar que s'està fent swipe
     if (Math.abs(moveX) > 20) {
+        window.isCurrentlyDragging = true;
         e.preventDefault();
     }
 }, { passive: false });
 
 document.addEventListener('touchend', function(e) {
     if (!isDragging) return;
-    isDragging = false;
     
     const endX = e.changedTouches[0].clientX;
     const endY = e.changedTouches[0].clientY;
@@ -1781,18 +1815,12 @@ document.addEventListener('touchend', function(e) {
     const diffX = endX - startX;
     const diffY = endY - startY;
     
-    // ✅ MILLORA: Detectar si és més vertical que horitzontal
-    const absX = Math.abs(diffX);
-    const absY = Math.abs(diffY);
-    
-    // Si el moviment vertical és més gran que l'horitzontal, és un scroll, no un swipe
-    if (absY > absX) return;
-    
-    // Si el moviment horitzontal és massa petit, ignorar
-    if (absX < 50) return; // ✅ Augmentat de 30 a 50px per més seguretat
-    
-    // ✅ MILLORA ADDICIONAL: Només canviar si el moviment horitzontal és almenys el doble del vertical
-    if (absX < absY * 1.5) return;
+    if (Math.abs(diffX) < 30) {
+        isDragging = false;
+        // ✅ Reset després d'un moment
+        setTimeout(() => { window.isCurrentlyDragging = false; }, 100);
+        return;
+    }
     
     // Vista actual
     const onStats = !document.getElementById('statsView').classList.contains('hidden');
@@ -1816,8 +1844,20 @@ document.addEventListener('touchend', function(e) {
             quickChangeTab('rival', 1);
         }
     }
+    
+    isDragging = false;
+    // ✅ Reset després del swipe
+    setTimeout(() => { window.isCurrentlyDragging = false; }, 100);
 }, { passive: true });
-
+// ✅ BLOQUEJAR CLICS durant swipe
+document.addEventListener('click', function(e) {
+    if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        hasMoved = false;
+        return false;
+    }
+}, true); // ✅ true = captura l'event ABANS que arribi als botons
 function quickChangeTab(viewName, tabIndex) {
     // Canviar vista
     const views = ['statsView', 'rivalView', 'lineupsView'];
@@ -1923,13 +1963,13 @@ function updateSave(n, inc) {
 </script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+   /* document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
