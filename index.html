@@ -845,15 +845,15 @@
         <table class="comparison-table" id="singleMatchStatsTable"></table>
     </div>
     <div style="margin-top: 20px; padding: 15px; background: rgba(34, 211, 238, 0.1); border-radius: 8px; border-left: 4px solid #22d3ee;">
-        <h3 style="color: #22d3ee; margin-bottom: 10px; font-size: 14px;">⭐ Criteris de Valoració MVP</h3>
-        <div style="font-size: 12px; color: #bae6fd; line-height: 1.8;">
-            <strong style="color: #22c55e;">Accions Positives:</strong><br>
-            • Gol normal/contraatac/H+/boya: +2 | Gol penalty: +1<br>
-            • Assistència: +1 | Robatori: +1 | Blocatge: +1 | Parada: +2 | Parada penal:  +3| Falta rebuda: +1<br><br>
-            <strong style="color: #ef4444;">Accions Negatives:</strong><br>
-            • Exclusió (normal o penalty): -1 | Penalty fallat: -2 | Pèrdua: -0.5 | Tir fallat: -0.5
-        </div>
+    <h3 style="color: #22d3ee; margin-bottom: 10px; font-size: 14px;">⭐ Criteris de Valoració MVP</h3>
+    <div style="font-size: 12px; color: #bae6fd; line-height: 1.8;">
+        <strong style="color: #22c55e;">Accions Positives:</strong><br>
+        • Gol normal/contraatac/H+/boya: +2 | Gol penalty: +1<br>
+        • Assistència: +1 | Robatori: +1 | Blocatge: +1 | Parada: +1 | Parada penal: +2 | Falta rebuda: +1<br><br>
+        <strong style="color: #ef4444;">Accions Negatives:</strong><br>
+        • Exclusió (normal o penalty): -1 | Penalty fallat: -2 | Pèrdua: -0.5 | Tir fallat: -0.5 | Gol rebut (porters): -0.5
     </div>
+</div>
 </div>
 
                 
@@ -1030,15 +1030,15 @@
         <table class="comparison-table" id="comparisonTable"></table>
     </div>
     <div style="margin-top: 20px; padding: 15px; background: rgba(34, 211, 238, 0.1); border-radius: 8px; border-left: 4px solid #22d3ee;">
-        <h3 style="color: #22d3ee; margin-bottom: 10px; font-size: 14px;">⭐ Criteris de Valoració MVP</h3>
-        <div style="font-size: 12px; color: #bae6fd; line-height: 1.8;">
-            <strong style="color: #22c55e;">Accions Positives:</strong><br>
-            • Gol normal/contraatac/H+/boya: +2 | Gol penalty: +1<br>
-            • Assistència: +1 | Robatori: +1 | Blocatge: +1 | Parada: +2 | Falta rebuda: +1<br><br>
-            <strong style="color: #ef4444;">Accions Negatives:</strong><br>
-            • Exclusió (normal o penalty): -1 | Penalty fallat: -2 | Pèrdua: -0.5 | Tir fallat: -0.5
-        </div>
+    <h3 style="color: #22d3ee; margin-bottom: 10px; font-size: 14px;">⭐ Criteris de Valoració MVP</h3>
+    <div style="font-size: 12px; color: #bae6fd; line-height: 1.8;">
+        <strong style="color: #22c55e;">Accions Positives:</strong><br>
+        • Gol normal/contraatac/H+/boya: +2 | Gol penalty: +1<br>
+        • Assistència: +1 | Robatori: +1 | Blocatge: +1 | Parada: +1 | Parada penal: +2 | Falta rebuda: +1<br><br>
+        <strong style="color: #ef4444;">Accions Negatives:</strong><br>
+        • Exclusió (normal o penalty): -1 | Penalty fallat: -2 | Pèrdua: -0.5 | Tir fallat: -0.5 | Gol rebut (porters): -0.5
     </div>
+</div>
 </div>
 
         <div class="card">
@@ -1844,7 +1844,98 @@ if (document.getElementById('scoreboardCNT')) {
 
     document.getElementById('observations').textContent = currentMatch.observacions || 'No hay observaciones';
 
-             // Generar gráficas
+    
+// ============ MVP DEL PARTIT ============
+const playersWithValue = currentMatch.jugadors.map(j => {
+    const valor = calculatePlayerValue({
+        gols: j.estadistiques.gols,
+        goalTypes: j.estadistiques.goalTypes,
+        assistencies: j.estadistiques.assistencies,
+        robatoris: j.estadistiques.robatoris,
+        blocatges: j.estadistiques.blocks || 0,
+        parades: j.estadistiques.parades,
+        faltesRebudes: j.estadistiques.faltesRebudes || 0,
+        exclusions: j.estadistiques.exclusions,
+        exclusionTypes: j.estadistiques.exclusionTypes || { normal: 0, penalty: 0 },
+        penaltyMissed: j.estadistiques.penaltyMissed,
+        perdues: j.estadistiques.perdues,
+        xutsFallats: j.estadistiques.xutsFallats,
+        golsRebuts: 0 // Es pot afegir si tenim aquestes dades
+    });
+    return { ...j, valor };
+}).sort((a, b) => b.valor - a.valor);
+
+const mvp = playersWithValue[0];
+const top3 = playersWithValue.slice(0, 3);
+
+document.getElementById('matchInfo').insertAdjacentHTML('afterend', `
+    <div class="card" style="margin-top: 20px;">
+        <h2 class="section-title">🏆 MVP del Partit</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            ${top3.map((player, index) => {
+                const medals = ['🥇', '🥈', '🥉'];
+                const colors = ['#fbbf24', '#d1d5db', '#d97706'];
+                const borderColors = ['#f59e0b', '#9ca3af', '#ea580c'];
+                
+                return `
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 3px solid ${borderColors[index]}; position: relative;">
+                        <div style="position: absolute; top: 10px; right: 10px; font-size: 32px;">
+                            ${medals[index]}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <div class="player-num" style="width: 40px; height: 40px; font-size: 16px; background: ${colors[index]}; color: #000;">
+                                ${player.numero}
+                            </div>
+                            <div>
+                                <div style="font-size: 18px; font-weight: bold; color: white;">
+                                    ${player.nom}
+                                </div>
+                                <div style="font-size: 14px; color: #bae6fd; margin-top: 4px;">
+                                    Valoració: <span style="color: ${colors[index]}; font-weight: bold; font-size: 16px;">${player.valor.toFixed(1)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">
+                            ${player.estadistiques.gols > 0 ? `
+                                <div style="background: rgba(34, 197, 94, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Gols</div>
+                                    <div style="color: #22c55e; font-weight: bold; font-size: 16px;">${player.estadistiques.gols}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.estadistiques.assistencies || 0) > 0 ? `
+                                <div style="background: rgba(6, 182, 212, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Assists</div>
+                                    <div style="color: #06b6d4; font-weight: bold; font-size: 16px;">${player.estadistiques.assistencies}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.estadistiques.parades || 0) > 0 ? `
+                                <div style="background: rgba(139, 92, 246, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Parades</div>
+                                    <div style="color: #8b5cf6; font-weight: bold; font-size: 16px;">${player.estadistiques.parades}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.estadistiques.robatoris || 0) > 0 ? `
+                                <div style="background: rgba(34, 211, 238, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Robatoris</div>
+                                    <div style="color: #22d3ee; font-weight: bold; font-size: 16px;">${player.estadistiques.robatoris}</div>
+                                </div>
+                            ` : ''}
+                            ${player.estadistiques.exclusions > 0 ? `
+                                <div style="background: rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Exclusions</div>
+                                    <div style="color: #ef4444; font-weight: bold; font-size: 16px;">${player.estadistiques.exclusions}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    </div>
+`);
+
+
+	// Generar gráficas
     renderScoreEvolutionChart();
     renderOffenseDefenseChart();
     renderPlayerEfficiencyChart();
@@ -2425,7 +2516,8 @@ const numMatchesWithShotData = matchesWithShotData.length;
     const awayGoalsAgainst = awayMatches.reduce((sum, m) => sum + m.scoreRival, 0);
 
     document.getElementById('summaryGrid').innerHTML = `
-        <div class="info-item">
+  
+	  <div class="info-item">
             <div class="info-label">Partidos Jugados</div>
             <div class="info-value">${allMatches.length}</div>
         </div>
@@ -2719,7 +2811,110 @@ renderComparisonTable(players);
     renderQuarterDifference();
     renderBestWorstMatches();
     renderRivalsHistory();
-    renderGoalsDistributionChart(playerStats);
+    // ============ RÀNQUING MVP GLOBAL ============
+const playersWithAvgValue = Object.values(playerStats).map(p => {
+    const valor = calculatePlayerValue({
+        gols: p.gols,
+        goalTypes: p.goalTypes,
+        assistencies: p.assistencies,
+        robatoris: p.robatoris,
+        blocatges: p.blocks || 0,
+        parades: p.parades,
+        faltesRebudes: p.faltesRebudes || 0,
+        exclusions: p.exclusions,
+        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
+        penaltyMissed: p.penaltyMissed,
+        perdues: p.perdues,
+        xutsFallats: p.xutsFallats
+    });
+    const avgValor = p.partidos > 0 ? valor / p.partidos : 0;
+    return { ...p, valorTotal: valor, valorMitja: avgValor };
+}).sort((a, b) => b.valorMitja - a.valorMitja);
+
+const mvpContainer = document.createElement('div');
+mvpContainer.className = 'card';
+mvpContainer.innerHTML = `
+    <h2 class="section-title">🏆 Rànquing MVP de la Temporada</h2>
+    <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
+        Top 10 jugadors amb millor valoració mitjana per partit
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+        ${playersWithAvgValue.slice(0, 10).map((player, index) => {
+            const medals = ['🥇', '🥈', '🥉'];
+            const colors = ['#fbbf24', '#d1d5db', '#d97706'];
+            const borderColors = ['#f59e0b', '#9ca3af', '#ea580c'];
+            const bgColors = [
+                'linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.1))',
+                'linear-gradient(135deg, rgba(209, 213, 219, 0.3), rgba(156, 163, 175, 0.1))',
+                'linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(234, 88, 12, 0.1))'
+            ];
+            
+            return `
+                <div style="background: ${index < 3 ? bgColors[index] : 'rgba(0,0,0,0.2)'}; 
+                            padding: 15px; border-radius: 8px; 
+                            border: ${index < 3 ? '3px' : '2px'} solid ${index < 3 ? borderColors[index] : 'rgba(255,255,255,0.2)'}; 
+                            position: relative;">
+                    <div style="position: absolute; top: 10px; right: 10px; font-size: ${index < 3 ? '36px' : '24px'};">
+                        ${index < 3 ? medals[index] : '#' + (index + 1)}
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div class="player-num" style="width: 40px; height: 40px; font-size: 16px; ${index < 3 ? 'background: ' + colors[index] + '; color: #000;' : ''}">
+                            ${player.num}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 16px; font-weight: bold; color: white;">
+                                ${player.name}
+                            </div>
+                            <div style="font-size: 12px; color: #bae6fd; margin-top: 4px;">
+                                ${player.partidos} partits jugats
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="color: #bae6fd; font-size: 12px;">Valoració Total:</span>
+                            <span style="color: #fde047; font-weight: bold; font-size: 14px;">${player.valorTotal.toFixed(1)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #bae6fd; font-size: 12px;">Mitjana per Partit:</span>
+                            <span style="color: ${index < 3 ? colors[index] : '#22d3ee'}; font-weight: bold; font-size: 16px;">${player.valorMitja.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 11px;">
+                        <div style="background: rgba(34, 197, 94, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                            <div style="color: #bae6fd;">Gols</div>
+                            <div style="color: #22c55e; font-weight: bold;">${player.gols}</div>
+                        </div>
+                        ${(player.assistencies || 0) > 0 ? `
+                            <div style="background: rgba(6, 182, 212, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd;">Assists</div>
+                                <div style="color: #06b6d4; font-weight: bold;">${player.assistencies}</div>
+                            </div>
+                        ` : ''}
+                        ${(player.parades || 0) > 0 ? `
+                            <div style="background: rgba(139, 92, 246, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd;">Parades</div>
+                                <div style="color: #8b5cf6; font-weight: bold;">${player.parades}</div>
+                            </div>
+                        ` : ''}
+                        <div style="background: rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                            <div style="color: #bae6fd;">Exc</div>
+                            <div style="color: #ef4444; font-weight: bold;">${player.exclusions}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('')}
+    </div>
+`;
+
+// Inserir el container MVP abans de la taula de comparació
+const comparisonTable = document.querySelector('#comparisonView');
+const tableCard = comparisonTable.querySelector('.card:has(#comparisonTable)');
+if (tableCard) {
+    tableCard.parentNode.insertBefore(mvpContainer, tableCard);
+}
+	renderGoalsDistributionChart(playerStats);
 // Zones de Porteria dels Porters
     const goalkeeperZones = renderGoalkeeperZoneStats();
     
@@ -5434,7 +5629,7 @@ function calculatePlayerValue(stats) {
     const blocks = stats.blocks || stats.blocatges || 0;
     const foulsReceived = stats.faltesRebudes || stats.foulReceived || 0;
     
-    // Parades
+    // ⚠️ CANVI: Parades ara sumen +1 (abans +2)
     const saves = (paradeTypes.corner || 0) + (paradeTypes.rebuig || 0) + 
                  (paradeTypes.atrapa || 0);
     const penaltySaves = paradeTypes.penal || 0;
@@ -5445,6 +5640,9 @@ function calculatePlayerValue(stats) {
     const turnovers = stats.perdues || stats.turnovers || 0;
     const shotsMissed = stats.xutsFallats || stats.shotsMissed || 0;
     
+    // ⚠️ NOU: Gols rebuts pel porter
+    const golsRebuts = stats.golsRebuts || 0;
+    
     // CÀLCUL DEL VALOR
     let valor = 0;
     
@@ -5454,8 +5652,8 @@ function calculatePlayerValue(stats) {
     valor += assists * 1;          // Assistències: +1
     valor += steals * 1;           // Robatoris: +1
     valor += blocks * 1;           // Blocks: +1
-    valor += saves * 2;            // Parades: +2
-    valor += penaltySaves * 3;     // Parades penalty: +3
+    valor += saves * 1;            // ⚠️ CANVI: Parades: +1 (abans +2)
+    valor += penaltySaves * 2;     // ⚠️ CANVI: Parades penalty: +2 (abans +3)
     valor += foulsReceived * 1;    // Faltes rebudes: +1
     
     // Negatives
@@ -5463,6 +5661,7 @@ function calculatePlayerValue(stats) {
     valor += penaltyMissed * (-2); // Penalty fallat: -2
     valor += turnovers * (-0.5);   // Pèrdues: -0.5
     valor += shotsMissed * (-0.5); // Xuts fallats: -0.5
+    valor += golsRebuts * (-0.5);    // ⚠️ NOU: Gols rebuts: -0.5
     
     return valor;
 }
@@ -6872,7 +7071,7 @@ function generateGeneralPDF() {
     yPos += 3;
     doc.text('Rob=Robatoris, Pèr=Pèrdues, FR=Faltes Rebudes, Xuts=Xuts Fallats, PenF=Penalties Fallats, Efic%=Eficiència Tir, G/P=Gols/Partit, Valor=Valoració Global', leftMargin, yPos);
     yPos += 3;
-    doc.text('Valoració = Gols×3 + Assist×2 + Rob×1 + Parades×2 - Pèrdues×1 - Exclusions×2', leftMargin, yPos);
+    doc.text('Valoració = Gols×3 + Assist×2 + Rob×1 + Parades×1 - Pèrdues×1 - Exclusions×2 - Gols rebuts×1', leftMargin, yPos);
     yPos += 10;
     
     addSeparator();
@@ -6895,7 +7094,92 @@ function generateGeneralPDF() {
     let col1Y = yPos, col2Y = yPos, col3Y = yPos, col4Y = yPos;
     
     doc.setFontSize(9);
+    // ============ RÀNQUING MVP GLOBAL ============
+yPos += 5;
+addSeparator();
+
+doc.setFontSize(14);
+doc.setFont(undefined, 'bold');
+doc.text('🏆 RÀNQUING MVP DE LA TEMPORADA', leftMargin, yPos);
+yPos += 12;
+
+doc.setFontSize(9);
+doc.setFont(undefined, 'normal');
+doc.text('Top 10 jugadors amb millor valoració mitjana per partit', leftMargin, yPos);
+yPos += 10;
+
+// Calcular valoració mitjana per partit per cada jugador
+const playersWithAvgValue = Object.values(playerStats).map(p => {
+    const valor = calculatePlayerValue({
+        gols: p.gols,
+        goalTypes: p.goalTypes,
+        assistencies: p.assistencies,
+        robatoris: p.robatoris,
+        blocatges: p.blocks || 0,
+        parades: p.parades,
+        faltesRebudes: p.faltesRebudes || 0,
+        exclusions: p.exclusions,
+        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
+        penaltyMissed: p.penaltyMissed,
+        perdues: p.perdues,
+        xutsFallats: p.xutsFallats
+    });
+    const avgValor = p.partidos > 0 ? valor / p.partidos : 0;
+    return { ...p, valorTotal: valor, valorMitja: avgValor };
+}).sort((a, b) => b.valorMitja - a.valorMitja).slice(0, 10);
+
+doc.setFontSize(8);
+
+// Capçalera
+doc.setFont(undefined, 'bold');
+doc.setFillColor(6, 182, 212);
+doc.rect(leftMargin, yPos - 3, rightMargin - leftMargin, 5, 'F');
+doc.setTextColor(255, 255, 255);
+
+doc.text('#', leftMargin + 2, yPos);
+doc.text('Núm', leftMargin + 10, yPos);
+doc.text('Jugador', leftMargin + 22, yPos);
+doc.text('Partits', leftMargin + 80, yPos);
+doc.text('Valor Total', leftMargin + 105, yPos);
+doc.text('Valor/Partit', leftMargin + 135, yPos);
+doc.text('Gols', leftMargin + 170, yPos);
+doc.text('Assists', leftMargin + 190, yPos);
+doc.text('Parades', leftMargin + 215, yPos);
+doc.text('Exc', leftMargin + 240, yPos);
+yPos += 5;
+
+doc.setTextColor(0, 0, 0);
+doc.setFont(undefined, 'normal');
+
+playersWithAvgValue.forEach((player, index) => {
+    checkPageBreak(6);
     
+    const medals = ['🥇', '🥈', '🥉'];
+    const medal = index < 3 ? medals[index] : (index + 1).toString();
+    
+    if (index % 2 === 0) {
+        doc.setFillColor(240, 240, 240);
+        doc.rect(leftMargin, yPos - 3, rightMargin - leftMargin, 5, 'F');
+    }
+    
+    if (index < 3) doc.setFont(undefined, 'bold');
+    
+    doc.text(medal, leftMargin + 2, yPos);
+    doc.text(player.num.toString(), leftMargin + 10, yPos);
+    doc.text(player.name.substring(0, 28), leftMargin + 22, yPos);
+    doc.text(player.partidos.toString(), leftMargin + 80, yPos);
+    doc.text(player.valorTotal.toFixed(1), leftMargin + 105, yPos);
+    doc.text(player.valorMitja.toFixed(2), leftMargin + 135, yPos);
+    doc.text(player.gols.toString(), leftMargin + 170, yPos);
+    doc.text((player.assistencies || 0).toString(), leftMargin + 190, yPos);
+    doc.text((player.parades || 0).toString(), leftMargin + 215, yPos);
+    doc.text(player.exclusions.toString(), leftMargin + 240, yPos);
+    
+    if (index < 3) doc.setFont(undefined, 'normal');
+    
+    yPos += 5;
+});
+	
     // Col 1: Top Golejadors
     doc.setFont(undefined, 'bold');
     doc.text('🥇 Top 10 Golejadors', col1X, col1Y);
@@ -8177,13 +8461,13 @@ function renderMatchGoalZones() {
    </script>
    <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+   /* document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
