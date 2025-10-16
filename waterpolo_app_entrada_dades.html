@@ -298,6 +298,9 @@ function endQuarter(quarter) {
     const timestamp = Date.now();
     quarterRealEndTimes[quarter] = timestamp;
     
+    // ✅ CAPTURAR EL MARCADOR DEL QUART ABANS DE TANCAR-LO
+    captureLineupScore(quarter);
+    
     // Tancar tots els jugadors que estiguin dins
     playersInWater.forEach(num => {
         playerWaterChanges.push({
@@ -311,12 +314,9 @@ function endQuarter(quarter) {
     // Buidar playersInWater per aturar immediatament
     playersInWater.clear();
     
-    // ❌ ELIMINAR AQUESTA LÍNIA:
-    // renderCompactView()
-    
-    // ✅ MANTENIR NOMÉS AQUESTES:
     if(compactMode) renderCompactView();
     renderLineups();
+    renderPeriodScores(); // ✅ Actualitzar també els marcadors visuals
     saveToLocalStorage();
     
     alert(`✅ ${quarter.toUpperCase()} finalitzat correctament!`);
@@ -896,7 +896,8 @@ function selectGoalType(t) {
         goalkeeperNum: goalkeeperNum,
         text: `${playerName}: Gol ${t === 'h+' ? 'H+' : t === 'penalty' ? 'Penalty' : t === 'contra' ? 'Contra' : t === 'boya' ? 'Boya' : 'Normal'}${zoneText}${goalkeeperText}`
     });
-    
+    updateScores();
+    updateQuarterInfo();
     closeGoalModal();
     saveToLocalStorage();
 }
@@ -1198,16 +1199,21 @@ function renderLineups(){
         return `<div class="card">
             <h2>${i+1}º Cuarto - 7 Titulares</h2>
             
-            ${!isStarted && isComplete ? `
-                <div style="margin-bottom: 12px;">
-                    <button class="btn btn-green" onclick="startQuarter('${q}')" style="width: 100%; padding: 12px; font-size: 14px;">
-                        ▶️ Començar ${i+1}º Cuarto
-                    </button>
-                    <p style="font-size: 10px; color: #bae6fd; margin-top: 8px; text-align: center;">
-                        Prem aquest botó ABANS de començar el quart
-                    </p>
-                </div>
-            ` : ''}
+           ${!isStarted && isComplete ? `
+    <div style="margin-bottom: 12px;">
+        <h3 style="font-size: 14px; color: #22d3ee; margin-bottom: 8px; text-align: center;">
+            🏊 Qui guanya la primera cursa?
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button class="btn btn-green" onclick="winSwim('${q}', true)" style="padding: 12px;">
+                🟢 CNT guanya
+            </button>
+            <button class="btn btn-red" onclick="winSwim('${q}', false)" style="padding: 12px;">
+                🔴 Rival guanya
+            </button>
+        </div>
+    </div>
+` : ''}
             
             ${isStarted && !isEnded ? `
                 <div style="background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e; padding: 8px; border-radius: 8px; margin-bottom: 12px; text-align: center;">
@@ -1244,6 +1250,79 @@ function renderLineups(){
             ` : ''}
         </div>`;
     }).join('');
+}
+function winSwim(quarter, cntWins) {
+    // Sempre mostrar el modal per seleccionar jugador
+    showSwimWinnerModal(quarter, cntWins);
+}
+
+function showSwimWinnerModal(quarter, cntWins) {
+    const modal = document.getElementById('penaltyMissedModal');
+    const content = document.getElementById('penaltyModalContent');
+    
+    const titulars = lineups[quarter];
+    
+    content.innerHTML = `
+        <div class="modal-title">🏊 Qui ha anat a la cursa?</div>
+        <div style="background: ${cntWins ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'}; padding: 8px; border-radius: 6px; margin-bottom: 12px; text-align: center;">
+            <span style="font-size: 14px; font-weight: bold; color: ${cntWins ? '#22c55e' : '#ef4444'};">
+                ${cntWins ? '✅ CNT guanya la cursa' : '❌ CNT perd la cursa'}
+            </span>
+        </div>
+        <div style="max-height: 400px; overflow-y: auto; margin-bottom: 15px;">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                ${titulars.map(num => {
+                    const player = players.find(p => p.num === num);
+                    return `
+                        <button class="modal-btn" onclick="selectSwimWinner('${quarter}', ${num}, ${cntWins})">
+                            ${num}. ${player ? player.name.split(' ')[0] : 'Jugador'}
+                        </button>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+        <button class="btn btn-red" style="width: 100%;" onclick="closePenaltyMissedModal()">
+            Cancel·lar
+        </button>
+    `;
+    
+    modal.classList.add('show');
+}
+
+function selectSwimWinner(quarter, playerNum, cntWins) {
+    registerSwimResult(quarter, playerNum, cntWins);
+    startQuarter(quarter);
+    closePenaltyMissedModal();
+}
+
+function registerSwimResult(quarter, playerNum, cntWins) {
+    const timestamp = Date.now();
+    const player = players.find(p => p.num === playerNum);
+    const playerName = player ? player.name : `Jugador ${playerNum}`;
+    
+    const text = cntWins ? 
+        `🏊 Cursa guanyada per ${playerName}` : 
+        `🏊 Cursa perduda per ${playerName}`;
+    
+    chronologicalActions.push({
+        timestamp: timestamp,
+        quarter: quarter,
+        type: 'swim-race',
+        result: cntWins ? 'win' : 'loss',
+        playerNum: playerNum,
+        playerName: playerName,
+        team: 'cnt'
+    });
+    
+    addToHistory({
+        type: 'swim-race',
+        playerNum: playerNum,
+        isRival: false,
+        result: cntWins ? 'win' : 'loss',
+        text: text
+    });
+    
+    saveToLocalStorage();
 }
 function renderPeriodScores(){const c=document.getElementById('periodScores');let h='';['q1','q2','q3','q4'].forEach((q,i)=>{h+=`<div class="period-row"><div class="period-label">${i+1}º Cuarto</div><div class="period-score">${periodScores[q].cnt} - ${periodScores[q].rival}</div></div>`});c.innerHTML=h}
 function updatePlayerName(n,name){const p=players.find(p=>p.num===n);if(p){p.name=name;renderLineups();saveToLocalStorage()}}
@@ -1445,6 +1524,9 @@ function renderHistory(){
             icon = '🧤';
         } else if (action.type === 'action') {
             icon = '📊';
+        } else if (action.type === 'swim-race') {
+            // ✅ AFEGIR AQUEST BLOC:
+            icon = action.result === 'win' ? '🏊✅' : '🏊❌';
         } else {
             icon = '⏱️';
         }
@@ -1791,7 +1873,7 @@ function startQuarter(quarter) {
     renderLineups();
     saveToLocalStorage();
     
-    alert(`✅ ${quarter.toUpperCase()} començat!`);
+    //alert(`✅ ${quarter.toUpperCase()} començat!`);
 }
 function calculatePlayingTimeForMatch(){const result={};const quarterDuration=480;players.forEach(p=>{const times={q1:0,q2:0,q3:0,q4:0,total:0};const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);['q1','q2','q3','q4'].forEach(quarter=>{const qChanges=playerChanges.filter(c=>c.quarter===quarter);if(qChanges.length===0){times[quarter]=0;return}qChanges.sort((a,b)=>a.timestamp-b.timestamp);let timeInWater=0;let lastInTime=null;const quarterStartTime=quarterStartTimes[quarter];if(!quarterStartTime){times[quarter]=0;return}qChanges.forEach(change=>{if(change.action==='in'){lastInTime=change.timestamp}else if(change.action==='out'&&lastInTime!==null){timeInWater+=(change.timestamp-lastInTime)/1000;lastInTime=null}});if(lastInTime!==null){const quarterEndTime=quarterStartTime+quarterDuration*1000;timeInWater+=(quarterEndTime-lastInTime)/1000}times[quarter]=Math.round(timeInWater)});times.total=times.q1+times.q2+times.q3+times.q4;result[p.num]={name:p.name,times:times}});return result}
 function formatTime(seconds){const mins=Math.floor(seconds/60);const secs=seconds%60;return `${mins}:${secs.toString().padStart(2,'0')}`}
