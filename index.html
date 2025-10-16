@@ -8001,7 +8001,7 @@ function renderMatchGoalZones() {
     const container = document.getElementById('matchGoalZonesContainer');
     if (!container || !currentMatch) return;
     
-    // Calcular zones del partit
+    // ✅ Calcular zones NOMÉS d'aquest partit (no acumular de tots)
     const matchZones = {
         'top-left': 0, 'top-center': 0, 'top-right': 0,
         'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
@@ -8019,15 +8019,21 @@ function renderMatchGoalZones() {
         playerZones[playerName] = {
             num: j.numero,
             name: playerName,
-            totalGols: j.estadistiques.gols || 0,
-            zones: {...matchZones}
+            totalGols: j.estadistiques.gols || 0,  // ✅ Gols NOMÉS d'aquest partit
+            zones: {
+                'top-left': 0, 'top-center': 0, 'top-right': 0,
+                'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+                'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+                'unknown': 0
+            }
         };
         
+        // ✅ Només les zones d'aquest partit
         if (j.estadistiques.goalZones) {
             Object.keys(j.estadistiques.goalZones).forEach(zone => {
                 const count = j.estadistiques.goalZones[zone] || 0;
                 matchZones[zone] = (matchZones[zone] || 0) + count;
-                playerZones[playerName].zones[zone] = count;
+                playerZones[playerName].zones[zone] = count;  // ✅ Assignar directament, no sumar
             });
         }
     });
