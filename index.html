@@ -939,6 +939,9 @@
             
             <h3 class="section-title" style="margin-top: 20px;">⚽ Desglose de Goles</h3>
             <div class="stats-breakdown" id="playerGoalsBreakdown"></div>
+			
+			<div id="playerGoalZonesContainer"></div>
+<div id="goalkeeperReceivedZonesContainer"></div>
             
             <h3 class="section-title" style="margin-top: 20px;">🟥 Exclusiones por Partido</h3>
             <canvas id="playerExclusionsChart" style="max-height: 250px;"></canvas>
@@ -1005,25 +1008,7 @@
             <h2 class="section-title">🥧 Distribución de Goles por Jugador</h2>
             <canvas id="goalsDistributionChart" style="max-height: 300px;"></canvas>
         </div>
-<!-- NUEVO: Estadísticas de Zones de Porteria -->
-<div class="card">
-    <h2 class="section-title">🎯 Anàlisi de Zones de Porteria</h2>
-    <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
-        On marquen més gols els jugadors del CN Terrassa
-    </p>
-    
-    <!-- Heatmap Global -->
-    <div style="margin-bottom: 30px;">
-        <h3 style="color: #22d3ee; font-size: 14px; margin-bottom: 10px;">📊 Mapa Global d'Equip</h3>
-        <div id="globalGoalZoneHeatmap"></div>
-    </div>
-    
-    <!-- Heatmaps Individuals -->
-    <div style="margin-top: 20px;">
-        <h3 style="color: #22d3ee; font-size: 14px; margin-bottom: 10px;">👤 Mapes Individuals (Top 6 Golejadors)</h3>
-        <div id="individualGoalZoneMaps" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
-    </div>
-</div>
+
         <div class="card">
     <h2 class="section-title">📊 Comparación de Estadísticas</h2>
     <div style="overflow-x: auto;">
@@ -1045,7 +1030,10 @@
             <h2 class="section-title">Top Goleadores (Todos los Partidos)</h2>
             <div class="top-scorers" id="allTimeScorers"></div>
         </div>
+		<div id="swimRacesStatsContainer"></div>
     </div>
+    </div>
+	
 </div>
 
         <!-- TAB: TITULARIDAD -->
@@ -2418,20 +2406,22 @@ function displayComparison() {
     const totalGoalsAgainst = allMatches.reduce((sum, m) => sum + m.scoreRival, 0);
     const avgGoals = (totalGoals / allMatches.length).toFixed(1);
     const avgGoalsAgainst = (totalGoalsAgainst / allMatches.length).toFixed(1);
-// ✅ Filtrar només partits amb dades de xuts fallats
-const matchesWithShotData = allMatches.filter(m => {
-    const hasXutsFallats = m.jugadors.some(j => (j.estadistiques.xutsFallats || 0) > 0);
-    return hasXutsFallats;
-});
 
-const totalXutsFallats = matchesWithShotData.reduce((sum, m) => {
-    return sum + m.jugadors.reduce((s, j) => s + (j.estadistiques.xutsFallats || 0), 0);
-}, 0);
+    // Filtrar només partits amb dades de xuts fallats
+    const matchesWithShotData = allMatches.filter(m => {
+        const hasXutsFallats = m.jugadors.some(j => (j.estadistiques.xutsFallats || 0) > 0);
+        return hasXutsFallats;
+    });
 
-const totalGoalsWithShotData = matchesWithShotData.reduce((sum, m) => sum + m.scoreCNT, 0);
-const totalXutsGlobal = totalGoalsWithShotData + totalXutsFallats;
-const eficienciaGlobal = totalXutsGlobal > 0 ? ((totalGoalsWithShotData / totalXutsGlobal) * 100).toFixed(1) : '0.0';
-const numMatchesWithShotData = matchesWithShotData.length;
+    const totalXutsFallats = matchesWithShotData.reduce((sum, m) => {
+        return sum + m.jugadors.reduce((s, j) => s + (j.estadistiques.xutsFallats || 0), 0);
+    }, 0);
+
+    const totalGoalsWithShotData = matchesWithShotData.reduce((sum, m) => sum + m.scoreCNT, 0);
+    const totalXutsGlobal = totalGoalsWithShotData + totalXutsFallats;
+    const eficienciaGlobal = totalXutsGlobal > 0 ? ((totalGoalsWithShotData / totalXutsGlobal) * 100).toFixed(1) : '0.0';
+    const numMatchesWithShotData = matchesWithShotData.length;
+    
     let totalPenMissedCNT = 0;
     let totalPenMissedRival = 0;
     let totalHPlusCNT = 0;
@@ -2507,8 +2497,7 @@ const numMatchesWithShotData = matchesWithShotData.length;
     const awayGoalsAgainst = awayMatches.reduce((sum, m) => sum + m.scoreRival, 0);
 
     document.getElementById('summaryGrid').innerHTML = `
-  
-	  <div class="info-item">
+        <div class="info-item">
             <div class="info-label">Partidos Jugados</div>
             <div class="info-value">${allMatches.length}</div>
         </div>
@@ -2555,13 +2544,13 @@ const numMatchesWithShotData = matchesWithShotData.length;
                 ${homeWins}V - ${homeLosses}D - ${homeDraws}E
             </div>
         </div>
-		<div class="info-item">
-    <div class="info-label">🎯 Eficiència Global de Tir</div>
-    <div class="info-value" style="color: ${totalXutsGlobal > 0 ? (eficienciaGlobal >= 50 ? '#22c55e' : eficienciaGlobal >= 30 ? '#fbbf24' : '#ef4444') : '#bae6fd'};">
-        ${totalXutsGlobal > 0 ? `${totalGoals}/${totalXutsGlobal}` : 'No hi ha dades'}<br>
-        ${totalXutsGlobal > 0 ? `<span style="font-size: 14px;">(${eficienciaGlobal}%)</span>` : ''}
-    </div>
-</div>
+        <div class="info-item">
+            <div class="info-label">🎯 Eficiència Global de Tir</div>
+            <div class="info-value" style="color: ${totalXutsGlobal > 0 ? (eficienciaGlobal >= 50 ? '#22c55e' : eficienciaGlobal >= 30 ? '#fbbf24' : '#ef4444') : '#bae6fd'};">
+                ${totalXutsGlobal > 0 ? `${totalGoals}/${totalXutsGlobal}` : 'No hi ha dades'}<br>
+                ${totalXutsGlobal > 0 ? `<span style="font-size: 14px;">(${eficienciaGlobal}%)</span>` : ''}
+            </div>
+        </div>
         <div class="info-item">
             <div class="info-label">✈️ Partidos Fuera</div>
             <div class="info-value">${awayMatches.length}</div>
@@ -2676,103 +2665,99 @@ const numMatchesWithShotData = matchesWithShotData.length;
     const playerMatchAppearances = {};
     
     allMatches.forEach((match, matchIndex) => {
-    match.jugadors.forEach(j => {
-        const playerName = j.nom.trim();
-        
-        if (!playerStats[playerName]) {
-            playerStats[playerName] = { 
-                num: j.numero,
-                name: playerName, 
-                gols: 0, 
-                exclusions: 0,
-                penaltyMissed: 0,
-                partidos: 0,
-                goalTypes: { 'h+': 0, penalty: 0, contra: 0, boya: 0, normal: 0 },
-                // ✅ NUEVO:
-                parades: 0,
-                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0, penal: 0 },
-                assistencies: 0,
-                robatoris: 0,
-                perdues: 0,
-                xutsFallats: 0,
-				blocks: 0,
-                faltesRebudes: 0,
-                goalTypes: { 'h+': 0, penalty: 0, contra: 0, boya: 0, normal: 0 },
-                paradeTypes: { corner: 0, rebuig: 0, atrapa: 0 }
-            };
-            playerMatchAppearances[playerName] = new Set();
-        }
-        
-        playerStats[playerName].num = j.numero;
-        playerMatchAppearances[playerName].add(matchIndex);
-        
-        playerStats[playerName].gols += j.estadistiques.gols;
-        playerStats[playerName].exclusions += j.estadistiques.exclusions;
-        playerStats[playerName].penaltyMissed += (j.estadistiques.penaltyMissed || 0);
-        playerStats[playerName].parades += (j.estadistiques.parades || 0);
-        playerStats[playerName].assistencies += (j.estadistiques.assistencies || 0);
-        playerStats[playerName].robatoris += (j.estadistiques.robatoris || 0);
-        playerStats[playerName].perdues += (j.estadistiques.perdues || 0);
-        playerStats[playerName].xutsFallats += (j.estadistiques.xutsFallats || 0);
-        playerStats[playerName].blocks += (j.estadistiques.blocks || 0);
-        playerStats[playerName].faltesRebudes += (j.estadistiques.faltesRebudes || 0);
-        playerStats[playerName].blocatges += (j.estadistiques.blocatges || 0);
-playerStats[playerName].faltesRebudes += (j.estadistiques.faltesRebudes || 0);
-        if (j.estadistiques.goalTypes) {
-            Object.keys(playerStats[playerName].goalTypes).forEach(type => {
-                playerStats[playerName].goalTypes[type] += j.estadistiques.goalTypes[type] || 0;
-            });
-        }
-		
-     if (j.estadistiques.exclusionTypes) {
-    if (playerStats[playerName].exclusionTypes) {
-        Object.keys(playerStats[playerName].exclusionTypes).forEach(type => {
-            playerStats[playerName].exclusionTypes[type] += (j.estadistiques.exclusionTypes[type] || 0);
+        match.jugadors.forEach(j => {
+            const playerName = j.nom.trim();
+            
+            if (!playerStats[playerName]) {
+                playerStats[playerName] = { 
+                    num: j.numero,
+                    name: playerName, 
+                    gols: 0, 
+                    exclusions: 0,
+                    penaltyMissed: 0,
+                    partidos: 0,
+                    goalTypes: { 'h+': 0, penalty: 0, contra: 0, boya: 0, normal: 0 },
+                    parades: 0,
+                    paradeTypes: { corner: 0, rebuig: 0, atrapa: 0, penal: 0 },
+                    assistencies: 0,
+                    robatoris: 0,
+                    perdues: 0,
+                    xutsFallats: 0,
+                    blocks: 0,
+                    faltesRebudes: 0,
+                    exclusionTypes: { normal: 0, penalty: 0 }
+                };
+                playerMatchAppearances[playerName] = new Set();
+            }
+            
+            playerStats[playerName].num = j.numero;
+            playerMatchAppearances[playerName].add(matchIndex);
+            
+            playerStats[playerName].gols += j.estadistiques.gols;
+            playerStats[playerName].exclusions += j.estadistiques.exclusions;
+            playerStats[playerName].penaltyMissed += (j.estadistiques.penaltyMissed || 0);
+            playerStats[playerName].parades += (j.estadistiques.parades || 0);
+            playerStats[playerName].assistencies += (j.estadistiques.assistencies || 0);
+            playerStats[playerName].robatoris += (j.estadistiques.robatoris || 0);
+            playerStats[playerName].perdues += (j.estadistiques.perdues || 0);
+            playerStats[playerName].xutsFallats += (j.estadistiques.xutsFallats || 0);
+            playerStats[playerName].blocks += (j.estadistiques.blocks || 0);
+            playerStats[playerName].faltesRebudes += (j.estadistiques.faltesRebudes || 0);
+            playerStats[playerName].blocatges += (j.estadistiques.blocatges || 0);
+            
+            if (j.estadistiques.goalTypes) {
+                Object.keys(playerStats[playerName].goalTypes).forEach(type => {
+                    playerStats[playerName].goalTypes[type] += j.estadistiques.goalTypes[type] || 0;
+                });
+            }
+            
+            if (j.estadistiques.exclusionTypes) {
+                if (playerStats[playerName].exclusionTypes) {
+                    Object.keys(playerStats[playerName].exclusionTypes).forEach(type => {
+                        playerStats[playerName].exclusionTypes[type] += (j.estadistiques.exclusionTypes[type] || 0);
+                    });
+                }
+            } else {
+                if (!playerStats[playerName].exclusionTypes) {
+                    playerStats[playerName].exclusionTypes = { normal: 0, penalty: 0 };
+                }
+            }
+            
+            if (j.estadistiques.paradeTypes) {
+                Object.keys(playerStats[playerName].paradeTypes).forEach(type => {
+                    playerStats[playerName].paradeTypes[type] += j.estadistiques.paradeTypes[type] || 0;
+                });
+            }
         });
-    }
-} else {
-    // Si no té exclusionTypes, assegurem que sigui un objecte buit
-    if (!playerStats[playerName].exclusionTypes) {
-        playerStats[playerName].exclusionTypes = { normal: 0, penalty: 0 };
-    }
-}
-        if (j.estadistiques.paradeTypes) {
-            Object.keys(playerStats[playerName].paradeTypes).forEach(type => {
-                playerStats[playerName].paradeTypes[type] += j.estadistiques.paradeTypes[type] || 0;
-            });
-        }
     });
-});
     
     Object.keys(playerStats).forEach(name => {
         playerStats[name].partidos = playerMatchAppearances[name].size;
     });
 
     const players = Object.values(playerStats).map(p => {
-    const valor = calculatePlayerValue({
-        gols: p.gols,
-        goalTypes: p.goalTypes,
-        assistencies: p.assistencies,
-        robatoris: p.robatoris,
-        blocatges: p.blocks || 0,
-        parades: p.parades,
-        faltesRebudes: p.faltesRebudes || 0,
-        exclusions: p.exclusions,
-        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
-        penaltyMissed: p.penaltyMissed,
-        perdues: p.perdues,
-        xutsFallats: p.xutsFallats
-    });
-    return { ...p, valor };
-}).sort((a, b) => b.valor - a.valor);
+        const valor = calculatePlayerValue({
+            gols: p.gols,
+            goalTypes: p.goalTypes,
+            assistencies: p.assistencies,
+            robatoris: p.robatoris,
+            blocatges: p.blocks || 0,
+            parades: p.parades,
+            faltesRebudes: p.faltesRebudes || 0,
+            exclusions: p.exclusions,
+            exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
+            penaltyMissed: p.penaltyMissed,
+            perdues: p.perdues,
+            xutsFallats: p.xutsFallats
+        });
+        return { ...p, valor };
+    }).sort((a, b) => b.valor - a.valor);
 
-// ✅ Guardar dades per ordenació
-cachedPlayersData = players;
-currentSortColumn = 'valor';
-currentSortOrder = 'desc';
+    cachedPlayersData = players;
+    currentSortColumn = 'valor';
+    currentSortOrder = 'desc';
 
-// ✅ Usar la nova funció de renderització
-renderComparisonTable(players);
+    renderComparisonTable(players);
 
     const topScorers = Object.values(playerStats)
         .filter(p => p.gols > 0)
@@ -2794,128 +2779,130 @@ renderComparisonTable(players);
             </div>
         `;
     }).join('');
-    
-
-
 
     renderResultsEvolution();
     renderQuarterDifference();
     renderBestWorstMatches();
     renderRivalsHistory();
- // ============ RÀNQUING MVP GLOBAL ============
-const playersWithAvgValue = Object.values(playerStats).map(p => {
-    const valor = calculatePlayerValue({
-        gols: p.gols,
-        goalTypes: p.goalTypes,
-        assistencies: p.assistencies,
-        robatoris: p.robatoris,
-        blocatges: p.blocks || 0,
-        parades: p.parades,
-        faltesRebudes: p.faltesRebudes || 0,
-        exclusions: p.exclusions,
-        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
-        penaltyMissed: p.penaltyMissed,
-        perdues: p.perdues,
-        xutsFallats: p.xutsFallats
-    });
-    const avgValor = p.partidos > 0 ? valor / p.partidos : 0;
-    return { ...p, valorTotal: valor, valorMitja: avgValor };
-}).sort((a, b) => b.valorMitja - a.valorMitja);
 
-const mvpContainer = document.createElement('div');
-mvpContainer.className = 'card';
-mvpContainer.innerHTML = `
-    <h2 class="section-title">🏆 Rànquing MVP de la Temporada</h2>
-    <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
-        Top 10 jugadors amb millor valoració mitjana per partit
-    </p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
-        ${playersWithAvgValue.slice(0, 10).map((player, index) => {
-            const medals = ['🥇', '🥈', '🥉'];
-            const colors = ['#fbbf24', '#d1d5db', '#d97706'];
-            const borderColors = ['#f59e0b', '#9ca3af', '#ea580c'];
-            const bgColors = [
-                'linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.1))',
-                'linear-gradient(135deg, rgba(209, 213, 219, 0.3), rgba(156, 163, 175, 0.1))',
-                'linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(234, 88, 12, 0.1))'
-            ];
-            
-            return `
-                <div style="background: ${index < 3 ? bgColors[index] : 'rgba(0,0,0,0.2)'}; 
-                            padding: 15px; border-radius: 8px; 
-                            border: ${index < 3 ? '3px' : '2px'} solid ${index < 3 ? borderColors[index] : 'rgba(255,255,255,0.2)'}; 
-                            position: relative;">
-                    <div style="position: absolute; top: 10px; right: 10px; font-size: ${index < 3 ? '36px' : '24px'};">
-                        ${index < 3 ? medals[index] : `#${index + 1}`}
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                        <div class="player-num" style="width: ${index < 3 ? '45px' : '40px'}; height: ${index < 3 ? '45px' : '40px'}; font-size: ${index < 3 ? '20px' : '16px'};">${player.num}</div>
-                        <div>
-                            <div style="font-weight: bold; font-size: ${index < 3 ? '18px' : '16px'}; color: ${index < 3 ? colors[index] : '#fff'};">${player.name}</div>
-                            <div style="font-size: 11px; color: #bae6fd;">
-                                Valor/Partit: <strong style="color: ${index < 3 ? colors[index] : '#22d3ee'};">${player.valorMitja.toFixed(1)}</strong>
-                            </div>
-                            <div style="font-size: 10px; color: #94a3b8;">
-                                ${player.partidos} partits • Total: ${player.valorTotal.toFixed(0)}
+    // ============ RANKING MVP GLOBAL ============
+    const playersWithAvgValue = Object.values(playerStats).map(p => {
+        const valor = calculatePlayerValue({
+            gols: p.gols,
+            goalTypes: p.goalTypes,
+            assistencies: p.assistencies,
+            robatoris: p.robatoris,
+            blocatges: p.blocks || 0,
+            parades: p.parades,
+            faltesRebudes: p.faltesRebudes || 0,
+            exclusions: p.exclusions,
+            exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
+            penaltyMissed: p.penaltyMissed,
+            perdues: p.perdues,
+            xutsFallats: p.xutsFallats
+        });
+        const avgValor = p.partidos > 0 ? valor / p.partidos : 0;
+        return { ...p, valorTotal: valor, valorMitja: avgValor };
+    }).sort((a, b) => b.valorMitja - a.valorMitja);
+
+    const mvpContainer = document.createElement('div');
+    mvpContainer.className = 'card';
+    mvpContainer.innerHTML = `
+        <h2 class="section-title">🏆 Ràn­­quing MVP de la Temporada</h2>
+        <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
+            Top 10 jugadors amb millor valoració mitjana per partit
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+            ${playersWithAvgValue.slice(0, 10).map((player, index) => {
+                const medals = ['🥇', '🥈', '🥉'];
+                const colors = ['#fbbf24', '#d1d5db', '#d97706'];
+                const borderColors = ['#f59e0b', '#9ca3af', '#ea580c'];
+                const bgColors = [
+                    'linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.1))',
+                    'linear-gradient(135deg, rgba(209, 213, 219, 0.3), rgba(156, 163, 175, 0.1))',
+                    'linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(234, 88, 12, 0.1))'
+                ];
+                
+                return `
+                    <div style="background: ${index < 3 ? bgColors[index] : 'rgba(0,0,0,0.2)'}; 
+                                padding: 15px; border-radius: 8px; 
+                                border: ${index < 3 ? '3px' : '2px'} solid ${index < 3 ? borderColors[index] : 'rgba(255,255,255,0.2)'}; 
+                                position: relative;">
+                        <div style="position: absolute; top: 10px; right: 10px; font-size: ${index < 3 ? '36px' : '24px'};">
+                            ${index < 3 ? medals[index] : `#${index + 1}`}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <div class="player-num" style="width: ${index < 3 ? '45px' : '40px'}; height: ${index < 3 ? '45px' : '40px'}; font-size: ${index < 3 ? '20px' : '16px'};">${player.num}</div>
+                            <div>
+                                <div style="font-weight: bold; font-size: ${index < 3 ? '18px' : '16px'}; color: ${index < 3 ? colors[index] : '#fff'};">${player.name}</div>
+                                <div style="font-size: 11px; color: #bae6fd;">
+                                    Valor/Partit: <strong style="color: ${index < 3 ? colors[index] : '#22d3ee'};">${player.valorMitja.toFixed(1)}</strong>
+                                </div>
+                                <div style="font-size: 10px; color: #94a3b8;">
+                                    ${player.partidos} partits • Total: ${player.valorTotal.toFixed(0)}
+                                </div>
                             </div>
                         </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px;">
+                            ${player.gols > 0 ? `
+                                <div style="background: rgba(253, 224, 71, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">Gols</div>
+                                    <div style="color: #fde047; font-weight: bold; font-size: 13px;">${player.gols}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.assistencies || 0) > 0 ? `
+                                <div style="background: rgba(6, 182, 212, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">Assists</div>
+                                    <div style="color: #06b6d4; font-weight: bold; font-size: 13px;">${player.assistencies}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.robatoris || 0) > 0 ? `
+                                <div style="background: rgba(59, 130, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">Rob</div>
+                                    <div style="color: #3b82f6; font-weight: bold; font-size: 13px;">${player.robatoris}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.parades || 0) > 0 ? `
+                                <div style="background: rgba(139, 92, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">Parades</div>
+                                    <div style="color: #8b5cf6; font-weight: bold; font-size: 13px;">${player.parades}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.faltesRebudes || 0) > 0 ? `
+                                <div style="background: rgba(251, 191, 36, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">FR</div>
+                                    <div style="color: #fbbf24; font-weight: bold; font-size: 13px;">${player.faltesRebudes}</div>
+                                </div>
+                            ` : ''}
+                            ${player.exclusions > 0 ? `
+                                <div style="background: rgba(239, 68, 68, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd; font-size: 9px;">Exc</div>
+                                    <div style="color: #ef4444; font-weight: bold; font-size: 13px;">${player.exclusions}</div>
+                                </div>
+                            ` : ''}
+                        </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px;">
-                        ${player.gols > 0 ? `
-                            <div style="background: rgba(253, 224, 71, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">Gols</div>
-                                <div style="color: #fde047; font-weight: bold; font-size: 13px;">${player.gols}</div>
-                            </div>
-                        ` : ''}
-                        ${(player.assistencies || 0) > 0 ? `
-                            <div style="background: rgba(6, 182, 212, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">Assists</div>
-                                <div style="color: #06b6d4; font-weight: bold; font-size: 13px;">${player.assistencies}</div>
-                            </div>
-                        ` : ''}
-                        ${(player.robatoris || 0) > 0 ? `
-                            <div style="background: rgba(59, 130, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">Rob</div>
-                                <div style="color: #3b82f6; font-weight: bold; font-size: 13px;">${player.robatoris}</div>
-                            </div>
-                        ` : ''}
-                        ${(player.parades || 0) > 0 ? `
-                            <div style="background: rgba(139, 92, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">Parades</div>
-                                <div style="color: #8b5cf6; font-weight: bold; font-size: 13px;">${player.parades}</div>
-                            </div>
-                        ` : ''}
-                        ${(player.faltesRebudes || 0) > 0 ? `
-                            <div style="background: rgba(251, 191, 36, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">FR</div>
-                                <div style="color: #fbbf24; font-weight: bold; font-size: 13px;">${player.faltesRebudes}</div>
-                            </div>
-                        ` : ''}
-                        ${player.exclusions > 0 ? `
-                            <div style="background: rgba(239, 68, 68, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd; font-size: 9px;">Exc</div>
-                                <div style="color: #ef4444; font-weight: bold; font-size: 13px;">${player.exclusions}</div>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }).join('')}
-    </div>
-`;
+                `;
+            }).join('')}
+        </div>
+    `;
 
-// Inserir el container MVP abans de la taula de comparació
-const comparisonTable = document.querySelector('#comparisonView');
-const tableCard = comparisonTable.querySelector('.card:has(#comparisonTable)');
-if (tableCard) {
-    tableCard.parentNode.insertBefore(mvpContainer, tableCard);
-}
-	renderGoalsDistributionChart(playerStats);
-// Zones de Porteria dels Porters
+    const comparisonTable = document.querySelector('#comparisonView');
+    const tableCard = comparisonTable.querySelector('.card:has(#comparisonTable)');
+    if (tableCard) {
+        tableCard.parentNode.insertBefore(mvpContainer, tableCard);
+    }
+
+    renderGoalsDistributionChart(playerStats);
+
+    // ✅ ZONES DE GOL DELS JUGADORS
+    renderGoalZoneStats();
+
+    // ✅ ZONES DE GOLS REBUTS PELS PORTERS
     const goalkeeperZones = renderGoalkeeperZoneStats();
-    
+
     const goalkeeperZonesHTML = `
-        <div class="card">
+        <div class="card" id="goalkeeperZonesCard">
             <h2 class="section-title">🧤 Anàlisi de Gols Rebuts pels Porters</h2>
             <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
                 On reben més gols els nostres porters
@@ -2988,22 +2975,27 @@ if (tableCard) {
             </div>
         </div>
     `;
-    
-    // Inserir abans de renderGoalZoneStats
-    const comparisonContainer = document.getElementById('comparisonView');
-    const goalZonesCard = comparisonContainer.querySelector('.card:has(#globalGoalZoneHeatmap)');
-    if (goalZonesCard) {
-        goalZonesCard.insertAdjacentHTML('beforebegin', goalkeeperZonesHTML);
+
+    // Inserir el HTML dels porters ABANS de la taula de comparació
+    const comparisonTableCard = document.querySelector('#comparisonView .card:has(#comparisonTable)');
+    if (comparisonTableCard) {
+        const existingGKCard = document.getElementById('goalkeeperZonesCard');
+        if (existingGKCard) {
+            existingGKCard.remove();
+        }
+        comparisonTableCard.insertAdjacentHTML('beforebegin', goalkeeperZonesHTML);
     }
-    
-    renderGoalZoneStats();
-	renderGoalkeeperSavesChart();
+
+    // ✅ SWIM RACES I GOALKEEPER SAVES AL FINAL
+    document.getElementById('swimRacesStatsContainer').innerHTML = renderSwimRacesStats();
+    renderGoalkeeperSavesChart();
 }
 	
 
         function renderGoalsDistributionChart(playerStats) {
             const ctx = document.getElementById('goalsDistributionChart');
-            if (!ctx) return;
+            
+			if (!ctx) return;
             
             if (window.goalsDistributionChartInstance) {
                 window.goalsDistributionChartInstance.destroy();
@@ -3980,13 +3972,16 @@ function filterByPlayer() {
         titular: { q1: 0, q2: 0, q3: 0, q4: 0 },
         totalParades: 0,
         bestParades: 0,
-        paradeTypes: { corner: 0, rebuig: 0, atrapa: 0 },
+        paradeTypes: { corner: 0, rebuig: 0, atrapa: 0, penal: 0 },
         totalAssistencies: 0,
         totalRobatoris: 0,
         totalPerdues: 0,
         totalXutsFallats: 0,
         totalBlocks: 0,
-        totalFaltesRebudes: 0
+        totalFaltesRebudes: 0,
+        swimRacesWon: 0,
+        swimRacesLost: 0,
+        swimRacesTotal: 0
     };
     
     allMatches.forEach(match => {
@@ -4031,107 +4026,227 @@ function filterByPlayer() {
                 }
             });
         }
+        
+        // ✅ Comptar curses guanyades/perdudes (FORA del if player)
+        if (match.chronologicalActions && playerData.num) {
+            match.chronologicalActions.forEach(action => {
+                if (action.type === 'swim-race' && action.playerNum === playerData.num) {
+                    playerData.swimRacesTotal++;
+                    if (action.result === 'win') {
+                        playerData.swimRacesWon++;
+                    } else {
+                        playerData.swimRacesLost++;
+                    }
+                }
+            });
+        }
     });
     
-    document.getElementById('playerStatsCard').classList.remove('hidden');
-    document.getElementById('selectedPlayerName').textContent = `${playerData.num}. ${playerName}`;
-    
-    // Calcular eficiència de tir
-    const totalXuts = playerData.totalGols + playerData.totalXutsFallats;
-    const eficienciaTir = totalXuts > 0 ? ((playerData.totalGols / totalXuts) * 100).toFixed(1) : '0.0';
-    const eficColor = eficienciaTir >= 50 ? '#22c55e' : eficienciaTir >= 30 ? '#fbbf24' : '#ef4444';
-    
-    // Calcular promitjos
-    const goalsPerMatch = playerData.partidos > 0 ? (playerData.totalGols / playerData.partidos).toFixed(1) : '0.0';
-    const exclusionsPerMatch = playerData.partidos > 0 ? (playerData.totalExclusions / playerData.partidos).toFixed(1) : '0.0';
-    
-    document.getElementById('playerSummaryGrid').innerHTML = `
-        <div class="info-item">
-            <div class="info-label">Partidos Jugados</div>
-            <div class="info-value">${playerData.partidos}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Total Goles</div>
-            <div class="info-value" style="color: #fde047;">${playerData.totalGols}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Goles/Partido</div>
-            <div class="info-value" style="color: #fde047;">${goalsPerMatch}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Total Exclusiones</div>
-            <div class="info-value" style="color: #fca5a5;">${playerData.totalExclusions}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Exc/Partido</div>
-            <div class="info-value" style="color: #fca5a5;">${exclusionsPerMatch}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Eficiencia Tiro</div>
-            <div class="info-value" style="color: ${eficColor}; font-weight: bold;">${eficienciaTir}%</div>
-        </div>
-        ${playerData.totalAssistencies > 0 ? `
-        <div class="info-item">
-            <div class="info-label">🎯 Assistències</div>
-            <div class="info-value" style="color: #86efac;">${playerData.totalAssistencies}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalRobatoris > 0 ? `
-        <div class="info-item">
-            <div class="info-label">🛡️ Robatoris</div>
-            <div class="info-value" style="color: #7dd3fc;">${playerData.totalRobatoris}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalPerdues > 0 ? `
-        <div class="info-item">
-            <div class="info-label">❌ Pèrdues</div>
-            <div class="info-value" style="color: #fca5a5;">${playerData.totalPerdues}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalXutsFallats > 0 ? `
-        <div class="info-item">
-            <div class="info-label">🎯❌ Xuts Fallats</div>
-            <div class="info-value" style="color: #fb923c;">${playerData.totalXutsFallats}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalBlocks > 0 ? `
-        <div class="info-item">
-            <div class="info-label">✋ Blocks</div>
-            <div class="info-value" style="color: #a78bfa;">${playerData.totalBlocks}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalParades > 0 ? `
-        <div class="info-item">
-            <div class="info-label">🧤 Parades</div>
-            <div class="info-value" style="color: #c084fc;">${playerData.totalParades}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Millor Partit (Parades)</div>
-            <div class="info-value" style="color: #c084fc;">${playerData.bestParades}</div>
-        </div>
-        ` : ''}
-        ${playerData.totalFaltesRebudes > 0 ? `
-        <div class="info-item">
-            <div class="info-label">⚠️ Faltes Rebudes</div>
-            <div class="info-value" style="color: #fbbf24;">${playerData.totalFaltesRebudes}</div>
-        </div>
-        ` : ''}
-        ${playerData.penaltyMissed > 0 ? `
-        <div class="info-item">
-            <div class="info-label">Penalties Fallados</div>
-            <div class="info-value" style="color: #ef4444;">${playerData.penaltyMissed}</div>
-        </div>
-        ` : ''}
-    `;
-    
-    // Resta del codi per gràfics...
-    renderPlayerEvolutionChart(playerData);
-    renderPlayerExclusionsChart(playerData);
+    // ✅ Cridar displayPlayerStats amb les dades
+    displayPlayerStats(playerData);
 }
+function renderPlayerGoalZones(data) {
+     console.log('🥅 renderGoalkeeperReceivedZones CRIDAT amb:', data.name);   
+    const goalsBreakdown = document.getElementById('playerGoalsBreakdown');
+    
+    if (!goalsBreakdown) return;
+    
+    let zonesContainer = document.getElementById('playerGoalZonesContainer');
+    if (!zonesContainer) {
+        zonesContainer = document.createElement('div');
+        zonesContainer.id = 'playerGoalZonesContainer';
+        zonesContainer.style.marginTop = '30px';
+        goalsBreakdown.parentNode.insertBefore(zonesContainer, goalsBreakdown.nextSibling);
+    }
+    
+    // Calcular zones totals del jugador
+    const zones = {
+        'top-left': 0, 'top-center': 0, 'top-right': 0,
+        'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+        'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+        'unknown': 0
+    };
+    
+    allMatches.forEach(match => {
+        const player = match.jugadors.find(j => j.nom.trim() === data.name);
+        if (player && player.estadistiques.goalZones) {
+            Object.keys(player.estadistiques.goalZones).forEach(zone => {
+                zones[zone] = (zones[zone] || 0) + (player.estadistiques.goalZones[zone] || 0);
+            });
+        }
+    });
+    
+    const totalGols = Object.values(zones).reduce((sum, count) => sum + count, 0) - zones.unknown;
+    
+    if (totalGols === 0) {
+        zonesContainer.innerHTML = `
+            <h3 class="section-title">🎯 Zones de Porteria</h3>
+            <div class="no-data">No hi ha dades de zones disponibles</div>
+        `;
+        return;
+    }
+    
+    const zoneOrder = [
+        'top-left', 'top-center', 'top-right',
+        'mid-left', 'mid-center', 'mid-right',
+        'bottom-left', 'bottom-center', 'bottom-right'
+    ];
+    
+    const zoneLabels = {
+        'top-left': '⬆️ Esq', 'top-center': '⬆️ Centre', 'top-right': '⬆️ Dret',
+        'mid-left': '➡️ Esq', 'mid-center': '🎯 Centre', 'mid-right': '⬅️ Dret',
+        'bottom-left': '⬇️ Esq', 'bottom-center': '⬇️ Baix', 'bottom-right': '⬇️ Dret'
+    };
+    
+    const maxCount = Math.max(...zoneOrder.map(z => zones[z] || 0));
+    const preferredZone = zoneOrder.reduce((max, zone) => 
+        (zones[zone] || 0) > (zones[max] || 0) ? zone : max, zoneOrder[0]);
+    
+    const preferredZoneNames = {
+        'top-left': 'Dalt Esquerra', 'top-center': 'Dalt Centre', 'top-right': 'Dalt Dreta',
+        'mid-left': 'Centre Esquerra', 'mid-center': 'Centre', 'mid-right': 'Centre Dreta',
+        'bottom-left': 'Baix Esquerra', 'bottom-center': 'Baix Centre', 'bottom-right': 'Baix Dreta'
+    };
+    
+    zonesContainer.innerHTML = `
+        <h3 class="section-title">🎯 Zones de Porteria</h3>
+        <div style="background: rgba(34, 211, 238, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+            <div style="font-size: 12px; color: #bae6fd;">Zona preferida</div>
+            <div style="font-size: 18px; color: #22d3ee; font-weight: bold; margin-top: 4px;">
+                ${preferredZoneNames[preferredZone]} (${zones[preferredZone]} gols)
+            </div>
+        </div>
+        <div class="goal-zone-heatmap">
+            ${zoneOrder.map(zone => {
+                const count = zones[zone] || 0;
+                const percentage = totalGols > 0 ? ((count / totalGols) * 100).toFixed(1) : 0;
+                const intensity = maxCount > 0 ? count / maxCount : 0;
+                const bgColor = getHeatmapColor(intensity);
+                
+                return `
+                    <div class="goal-zone-cell" style="background: ${bgColor};">
+                        <div class="zone-label">${zoneLabels[zone]}</div>
+                        <div class="zone-count">${count}</div>
+                        <div style="font-size: 9px; color: rgba(255,255,255,0.7);">${percentage}%</div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        ${zones.unknown > 0 ? `
+            <div style="text-align: center; margin-top: 10px; font-size: 11px; color: #bae6fd;">
+                ❓ Gols sense zona: ${zones.unknown}
+            </div>
+        ` : ''}
+        <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #fde047;">
+            Total amb zona: ${totalGols} de ${data.totalGols} gols
+        </div>
+    `;
+}
+function renderGoalkeeperReceivedZones(data) {
+console.log('🎯 renderPlayerGoalZones CRIDAT amb:', data.name);    
+    
+    const goalsBreakdown = document.getElementById('playerGoalsBreakdown');
 
+    if (!goalsBreakdown) return;
+    
+    let zonesContainer = document.getElementById('goalkeeperReceivedZonesContainer');
+    if (!zonesContainer) {
+        zonesContainer = document.createElement('div');
+        zonesContainer.id = 'goalkeeperReceivedZonesContainer';
+        zonesContainer.style.marginTop = '30px';
+        goalsBreakdown.parentNode.insertBefore(zonesContainer, goalsBreakdown.nextSibling);
+    }
+    
+    // Calcular zones de gols rebuts
+    const zones = {
+        'top-left': 0, 'top-center': 0, 'top-right': 0,
+        'mid-left': 0, 'mid-center': 0, 'mid-right': 0,
+        'bottom-left': 0, 'bottom-center': 0, 'bottom-right': 0,
+        'unknown': 0
+    };
+    
+    let totalGolsRebuts = 0;
+    
+    allMatches.forEach(match => {
+        const player = match.jugadors.find(j => j.numero === data.num);
+        if (player && player.estadistiques.golsRebutsZones) {
+            Object.keys(player.estadistiques.golsRebutsZones).forEach(zone => {
+                const count = player.estadistiques.golsRebutsZones[zone] || 0;
+                zones[zone] = (zones[zone] || 0) + count;
+                totalGolsRebuts += count;
+            });
+        }
+    });
+    
+    if (totalGolsRebuts === 0) {
+        zonesContainer.innerHTML = `
+            <h3 class="section-title">🥅 Zones de Gols Rebuts</h3>
+            <div class="no-data">No hi ha dades de zones de gols rebuts</div>
+        `;
+        return;
+    }
+    
+    const zoneOrder = [
+        'top-left', 'top-center', 'top-right',
+        'mid-left', 'mid-center', 'mid-right',
+        'bottom-left', 'bottom-center', 'bottom-right'
+    ];
+    
+    const zoneLabels = {
+        'top-left': '⬆️E', 'top-center': '⬆️C', 'top-right': '⬆️D',
+        'mid-left': '➡️E', 'mid-center': '🎯', 'mid-right': '⬅️D',
+        'bottom-left': '⬇️E', 'bottom-center': '⬇️B', 'bottom-right': '⬇️D'
+    };
+    
+    const maxCount = Math.max(...zoneOrder.map(z => zones[z] || 0));
+    const weakestZone = zoneOrder.reduce((max, zone) => 
+        (zones[zone] || 0) > (zones[max] || 0) ? zone : max, zoneOrder[0]);
+    
+    const weakestZoneNames = {
+        'top-left': 'Dalt Esquerra', 'top-center': 'Dalt Centre', 'top-right': 'Dalt Dreta',
+        'mid-left': 'Centre Esquerra', 'mid-center': 'Centre', 'mid-right': 'Centre Dreta',
+        'bottom-left': 'Baix Esquerra', 'bottom-center': 'Baix Centre', 'bottom-right': 'Baix Dreta'
+    };
+    
+    zonesContainer.innerHTML = `
+        <h3 class="section-title">🥅 Zones de Gols Rebuts</h3>
+        <div style="background: rgba(239, 68, 68, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+            <div style="font-size: 12px; color: #fca5a5;">Zona més feble</div>
+            <div style="font-size: 18px; color: #ef4444; font-weight: bold; margin-top: 4px;">
+                ${weakestZoneNames[weakestZone]} (${zones[weakestZone]} gols)
+            </div>
+        </div>
+        <div class="goal-zone-heatmap">
+            ${zoneOrder.map(zone => {
+                const count = zones[zone] || 0;
+                const percentage = totalGolsRebuts > 0 ? ((count / totalGolsRebuts) * 100).toFixed(1) : 0;
+                const intensity = maxCount > 0 ? count / maxCount : 0;
+                const bgColor = getHeatmapColor(intensity);
+                
+                return `
+                    <div class="goal-zone-cell" style="background: ${bgColor};">
+                        <div class="zone-label">${zoneLabels[zone]}</div>
+                        <div class="zone-count">${count}</div>
+                        <div style="font-size: 9px; color: rgba(255,255,255,0.7);">${percentage}%</div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #fca5a5;">
+            Total de gols rebuts amb zona: ${totalGolsRebuts}
+        </div>
+    `;
+}
 function displayPlayerStats(data) {
-    document.getElementById('playerStatsCard').classList.remove('hidden');
+
+	document.getElementById('playerStatsCard').classList.remove('hidden');
     document.getElementById('selectedPlayerName').textContent = `${data.num}. ${data.name}`;
+    // ✅ NETEJA els contenidors de zones anteriors
+    const oldGoalZones = document.getElementById('playerGoalZonesContainer');
+    if (oldGoalZones) oldGoalZones.remove();
+    
+    const oldGkZones = document.getElementById('goalkeeperReceivedZonesContainer');
+    if (oldGkZones) oldGkZones.remove();
     
     const avgGols = data.partidos > 0 ? (data.totalGols / data.partidos).toFixed(2) : 0;
     const avgExc = data.partidos > 0 ? (data.totalExclusions / data.partidos).toFixed(2) : 0;
@@ -4168,22 +4283,22 @@ document.getElementById('playerSummaryGrid').innerHTML = `
         <div class="info-value">${avgGols}</div>
     </div>
     `}
-	${!isGoalkeeper ? `
-<div class="info-item">
-    <div class="info-label">🎯 Eficiència de Tir</div>
-    <div class="info-value" style="color: ${(() => {
-        const totalXuts = data.totalGols + (data.totalXutsFallats || 0);
-        const efic = totalXuts > 0 ? (data.totalGols / totalXuts * 100) : 0;
-        return efic >= 50 ? '#22c55e' : efic >= 30 ? '#fbbf24' : '#ef4444';
-    })()};">
-        ${(() => {
+    ${!isGoalkeeper ? `
+    <div class="info-item">
+        <div class="info-label">🎯 Eficiència de Tir</div>
+        <div class="info-value" style="color: ${(() => {
             const totalXuts = data.totalGols + (data.totalXutsFallats || 0);
-            const efic = totalXuts > 0 ? (data.totalGols / totalXuts * 100).toFixed(1) : '0.0';
-            return totalXuts > 0 ? `${data.totalGols}/${totalXuts} (${efic}%)` : '-';
-        })()}
+            const efic = totalXuts > 0 ? (data.totalGols / totalXuts * 100) : 0;
+            return efic >= 50 ? '#22c55e' : efic >= 30 ? '#fbbf24' : '#ef4444';
+        })()};">
+            ${(() => {
+                const totalXuts = data.totalGols + (data.totalXutsFallats || 0);
+                const efic = totalXuts > 0 ? (data.totalGols / totalXuts * 100).toFixed(1) : '0.0';
+                return totalXuts > 0 ? `${data.totalGols}/${totalXuts} (${efic}%)` : '-';
+            })()}
+        </div>
     </div>
-</div>
-` : ''}
+    ` : ''}
     <div class="info-item">
         <div class="info-label">Mejor Partido</div>
         <div class="info-value" style="color: #22c55e;">${isGoalkeeper ? (data.bestParades || 0) + ' parades' : bestMatch + ' goles'}</div>
@@ -4220,63 +4335,161 @@ document.getElementById('playerSummaryGrid').innerHTML = `
         <div class="info-label">Titularidad</div>
         <div class="info-value">${totalTitular}/${maxPossibleTitular} <span style="font-size: 14px;">(${titularPercentage}%)</span></div>
     </div>
+    ${data.swimRacesTotal > 0 ? `
+    <div class="info-item">
+        <div class="info-label">🏊 Curses Guanyades</div>
+        <div class="info-value" style="color: #22c55e;">${data.swimRacesWon}/${data.swimRacesTotal}</div>
+    </div>
+    <div class="info-item">
+        <div class="info-label">% Curses</div>
+        <div class="info-value" style="color: ${data.swimRacesTotal > 0 && (data.swimRacesWon / data.swimRacesTotal * 100) >= 50 ? '#22c55e' : '#ef4444'};">
+            ${data.swimRacesTotal > 0 ? ((data.swimRacesWon / data.swimRacesTotal) * 100).toFixed(1) : '0'}%
+        </div>
+    </div>
+    ` : ''}
 `;
+
+// Desglossament de gols o parades segons tipus de jugador
+const goalLabels = {
+    'h+': 'Superioridad (H+)',
+    'penalty': 'Penaltis',
+    'contra': 'Contraataques',
+    'boya': 'Boya',
+    'normal': 'Normales'
+};
+
+const paradeLabels = {
+    'corner': 'Corner',
+    'rebuig': 'Rebuig',
+    'atrapa': 'Atrapa',
+    'penal': 'Penal'
+};
     
-    const goalLabels = {
-        'h+': 'Superioridad (H+)',
-        'penalty': 'Penaltis',
-        'contra': 'Contraataques',
-        'boya': 'Boya',
-        'normal': 'Normales'
-    };
-    
-    document.getElementById('playerGoalsBreakdown').innerHTML = Object.keys(data.goalTypes)
-        .filter(type => data.goalTypes[type] > 0)
-        .map(type => `
-            <div class="breakdown-item">
-                <div class="breakdown-label">${goalLabels[type]}</div>
-                <div class="breakdown-value">${data.goalTypes[type]}</div>
-                <div style="font-size: 11px; color: #bae6fd; margin-top: 4px;">
-                    ${data.totalGols > 0 ? ((data.goalTypes[type] / data.totalGols) * 100).toFixed(1) : 0}%
+    if (isGoalkeeper) {
+        // Per porters: mostrar parades
+        document.getElementById('playerGoalsBreakdown').innerHTML = Object.keys(data.paradeTypes)
+            .filter(type => data.paradeTypes[type] > 0)
+            .map(type => `
+                <div class="breakdown-item">
+                    <div class="breakdown-label">${paradeLabels[type]}</div>
+                    <div class="breakdown-value">${data.paradeTypes[type]}</div>
+                    <div style="font-size: 11px; color: #bae6fd; margin-top: 4px;">
+                        ${data.totalParades > 0 ? ((data.paradeTypes[type] / data.totalParades) * 100).toFixed(1) : 0}%
+                    </div>
                 </div>
-            </div>
-        `).join('') || '<p class="no-data" style="padding: 20px;">No hay datos de tipos de goles</p>';
-    // ✅ NUEVO: Desglossament de parades (només porters)
-if (data.num === 1 || data.num === 13) {
-    const paradeLabels = {
-        'corner': 'Corner',
-        'rebuig': 'Rebuig',
-        'atrapa': 'Atrapa',
-		'penal': 'Penal'
-    };
-    
-    const paradesBreakdownHTML = Object.keys(data.paradeTypes)
-        .filter(type => data.paradeTypes[type] > 0)
-        .map(type => `
-            <div class="breakdown-item">
-                <div class="breakdown-label">${paradeLabels[type]}</div>
-                <div class="breakdown-value">${data.paradeTypes[type]}</div>
-                <div style="font-size: 11px; color: #bae6fd; margin-top: 4px;">
-                    ${data.totalParades > 0 ? ((data.paradeTypes[type] / data.totalParades) * 100).toFixed(1) : 0}%
+            `).join('') || '<p class="no-data" style="padding: 20px;">No hay datos de tipos de parades</p>';
+        
+        // Canviar el títol
+        const titleElement = document.querySelector('#playerStatsCard h3');
+        if (titleElement && titleElement.textContent.includes('Desglose de Goles')) {
+            titleElement.textContent = '🧤 Desglose de Parades';
+        }
+        
+        // Zones de gols rebuts pels porters
+        renderGoalkeeperReceivedZones(data);
+        
+    } else {
+        // Per jugadors de camp: mostrar gols
+        document.getElementById('playerGoalsBreakdown').innerHTML = Object.keys(data.goalTypes)
+            .filter(type => data.goalTypes[type] > 0)
+            .map(type => `
+                <div class="breakdown-item">
+                    <div class="breakdown-label">${goalLabels[type]}</div>
+                    <div class="breakdown-value">${data.goalTypes[type]}</div>
+                    <div style="font-size: 11px; color: #bae6fd; margin-top: 4px;">
+                        ${data.totalGols > 0 ? ((data.goalTypes[type] / data.totalGols) * 100).toFixed(1) : 0}%
+                    </div>
                 </div>
-            </div>
-        `).join('') || '<p class="no-data" style="padding: 20px;">No hay datos de tipos de parades</p>';
-    
-    // Substituir el contingut de playerGoalsBreakdown per parades si és porter
-    document.getElementById('playerGoalsBreakdown').innerHTML = paradesBreakdownHTML;
-    
-    // Canviar el títol de la secció
-    const titleElement = document.querySelector('#playerStatsCard h3');
-    if (titleElement && titleElement.textContent.includes('Desglose de Goles')) {
-        titleElement.innerHTML = '<span class="section-title" style="margin-top: 20px;">🧤 Desglose de Parades</span>';
+            `).join('') || '<p class="no-data" style="padding: 20px;">No hay datos de tipos de goles</p>';
+        
+        // Zones de gols per jugadors de camp
+        renderPlayerGoalZones(data);
     }
-}
+    
     renderPlayerEvolutionChart(data);
     renderPlayerExclusionsChart(data);
     
     document.getElementById('playerStatsCard').scrollIntoView({ behavior: 'smooth' });
 }
 
+function renderSwimRacesStats() {
+    if (allMatches.length === 0) return;
+    
+    const swimStats = {};
+    
+    // Inicialitzar
+    players.forEach(p => {
+        swimStats[p.name] = { won: 0, lost: 0, total: 0 };
+    });
+    
+    // Comptar curses
+    allMatches.forEach(match => {
+        if (match.chronologicalActions) {
+            match.chronologicalActions.forEach(action => {
+                if (action.type === 'swim-race' && action.team === 'cnt') {
+                    const playerName = action.playerName;
+                    if (swimStats[playerName]) {
+                        swimStats[playerName].total++;
+                        if (action.result === 'win') {
+                            swimStats[playerName].won++;
+                        } else {
+                            swimStats[playerName].lost++;
+                        }
+                    }
+                }
+            });
+        }
+    });
+    
+    // Filtrar jugadors amb curses
+    const playersWithSwims = Object.entries(swimStats)
+        .filter(([name, data]) => data.total > 0)
+        .sort((a, b) => b[1].won - a[1].won);
+    
+    if (playersWithSwims.length === 0) {
+        return '<div class="no-data">No hi ha dades de curses</div>';
+    }
+    
+    return `
+        <div class="card">
+            <h2 class="section-title">🏊 Estadístiques de Curses Inicials</h2>
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Jugador</th>
+                            <th>🏆 Guanyades</th>
+                            <th>❌ Perdudes</th>
+                            <th>Total</th>
+                            <th>% Èxit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${playersWithSwims.map(([name, data]) => {
+                            const percentage = ((data.won / data.total) * 100).toFixed(1);
+                            const colorClass = percentage >= 50 ? '#22c55e' : '#ef4444';
+                            return `
+                                <tr>
+                                    <td style="font-weight: bold;">${name.split(' ')[0]}</td>
+                                    <td style="color: #22c55e; font-weight: bold;">${data.won}</td>
+                                    <td style="color: #ef4444;">${data.lost}</td>
+                                    <td>${data.total}</td>
+                                    <td style="color: ${colorClass}; font-weight: bold;">${percentage}%</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 15px; padding: 12px; background: rgba(34, 211, 238, 0.1); border-radius: 8px; text-align: center;">
+                <div style="font-size: 12px; color: #bae6fd;">Millor cursador</div>
+                <div style="font-size: 18px; color: #22d3ee; font-weight: bold; margin-top: 4px;">
+                    ${playersWithSwims[0][0].split(' ')[0]} (${playersWithSwims[0][1].won}/${playersWithSwims[0][1].total})
+                </div>
+            </div>
+        </div>
+    `;
+}
 function renderPlayerEvolutionChart(data) {
     const ctx = document.getElementById('playerEvolutionChart');
     if (!ctx) return;
@@ -4382,7 +4595,34 @@ function renderMatchTimeline() {
         container.innerHTML = '<div class="no-timeline">⚠️ Este partido no tiene registro cronológico de acciones.<br><small style="margin-top: 8px; display: block;">Los partidos nuevos registrados con la app actualizada mostrarán las acciones en orden.</small></div>';
         return;
     }
+   const swimRaces = currentMatch.chronologicalActions?.filter(a => a.type === 'swim-race') || [];
+
+if (swimRaces.length > 0) {
+    const swimHTML = `
+        <div style="margin-top: 15px; padding: 12px; background: rgba(6, 182, 212, 0.1); border-radius: 8px;">
+            <h4 style="color: #22d3ee; font-size: 14px; margin-bottom: 8px;">🏊 Curses Inicials</h4>
+            ${swimRaces.map(race => {
+                const icon = race.result === 'win' ? '✅' : '❌';
+                const color = race.result === 'win' ? '#22c55e' : '#ef4444';
+                const quarter = race.quarter.toUpperCase();
+                return `
+                    <div style="display: flex; justify-content: space-between; padding: 6px; margin-bottom: 4px; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                        <span style="color: #bae6fd;">${quarter}</span>
+                        <span style="color: white;">${race.playerName.split(' ')[0]}</span>
+                        <span style="color: ${color}; font-weight: bold;">${icon} ${race.result === 'win' ? 'Guanyada' : 'Perduda'}</span>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
     
+    // Inserir després del timeline o on vulguis
+	const timelineContainer = document.getElementById('matchTimeline');
+    if (timelineContainer) {
+        timelineContainer.insertAdjacentHTML('afterend', swimHTML);
+    }
+}
+ 
     // Ordenar por timestamp
     const sortedActions = [...currentMatch.chronologicalActions].sort((a, b) => a.timestamp - b.timestamp);
     
@@ -8031,6 +8271,8 @@ function normalizeAllPlayers(matchData) {
 function renderGoalZoneStats() {
     if (allMatches.length === 0) return;
     
+    console.log('🎯 renderGoalZoneStats INICIADA');
+    
     // Calcular zones globals
     const globalZones = {
         'top-left': 0, 'top-center': 0, 'top-right': 0,
@@ -8056,8 +8298,9 @@ function renderGoalZoneStats() {
             
             playerZones[playerName].totalGols += j.estadistiques.gols || 0;
             
-            // Sumar zones si existeixen
+            // Debug: Comprovar si hi ha dades de zones
             if (j.estadistiques.goalZones) {
+                console.log(`Jugador ${playerName} té zones:`, j.estadistiques.goalZones);
                 Object.keys(j.estadistiques.goalZones).forEach(zone => {
                     const count = j.estadistiques.goalZones[zone] || 0;
                     globalZones[zone] = (globalZones[zone] || 0) + count;
@@ -8067,16 +8310,284 @@ function renderGoalZoneStats() {
         });
     });
     
-    // Renderitzar mapa global
-    renderGlobalZoneHeatmap(globalZones);
+    const totalGols = Object.values(globalZones).reduce((sum, count) => sum + count, 0) - globalZones.unknown;
     
-    // Renderitzar mapes individuals (top 6 golejadors)
+    console.log('📊 Total gols amb zona:', totalGols);
+    console.log('📊 Zones globals:', globalZones);
+    
+    // Si no hi ha dades de zones, mostrar missatge informatiu
+    if (totalGols === 0) {
+        console.warn('⚠️ No hi ha dades de zones de porteria');
+        
+        const noDataHTML = `
+            <div class="card" id="goalZonesAnalysisCard">
+                <h2 class="section-title">🎯 Anàlisi de Zones de Porteria</h2>
+                <div class="no-data" style="padding: 40px; text-align: center;">
+                    <p style="font-size: 16px; color: #fbbf24; margin-bottom: 10px;">⚠️ No hi ha dades de zones de porteria</p>
+                    <p style="font-size: 14px; color: #bae6fd;">
+                        Els partits nous registrats amb l'app actualitzada mostraran les zones on es marquen els gols.
+                    </p>
+                    <p style="font-size: 12px; color: #bae6fd; margin-top: 10px;">
+                        Partits analitzats: ${allMatches.length}
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        const comparisonTable = document.querySelector('#comparisonView .card:has(#comparisonTable)');
+        
+        if (comparisonTable) {
+            const existingCard = document.getElementById('goalZonesAnalysisCard');
+            if (existingCard) existingCard.remove();
+            
+            comparisonTable.insertAdjacentHTML('beforebegin', noDataHTML);
+            console.log('✅ Card "no data" inserit');
+        }
+        
+        return;
+    }
+    
+    // Top 6 golejadors
     const topScorers = Object.values(playerZones)
         .filter(p => p.totalGols > 0)
         .sort((a, b) => b.totalGols - a.totalGols)
         .slice(0, 6);
     
-    renderIndividualZoneMaps(topScorers);
+    console.log('👤 Top scorers:', topScorers.length);
+    
+    const zoneOrder = [
+        'top-left', 'top-center', 'top-right',
+        'mid-left', 'mid-center', 'mid-right',
+        'bottom-left', 'bottom-center', 'bottom-right'
+    ];
+    
+    const zoneLabels = {
+        'top-left': '⬆️ Esq',
+        'top-center': '⬆️ Centre',
+        'top-right': '⬆️ Dret',
+        'mid-left': '➡️ Esq',
+        'mid-center': '🎯 Centre',
+        'mid-right': '⬅️ Dret',
+        'bottom-left': '⬇️ Esq',
+        'bottom-center': '⬇️ Baix',
+        'bottom-right': '⬇️ Dret'
+    };
+    
+    const zoneLabelsShort = {
+        'top-left': '⬆️E',
+        'top-center': '⬆️C',
+        'top-right': '⬆️D',
+        'mid-left': '➡️E',
+        'mid-center': '🎯',
+        'mid-right': '⬅️D',
+        'bottom-left': '⬇️E',
+        'bottom-center': '⬇️B',
+        'bottom-right': '⬇️D'
+    };
+    
+    const maxCountGlobal = Math.max(...zoneOrder.map(z => globalZones[z] || 0));
+    
+    // Crear el HTML complet del card
+    const goalZonesHTML = `
+        <div class="card" id="goalZonesAnalysisCard">
+            <h2 class="section-title">🎯 Anàlisi de Zones de Porteria</h2>
+            <p style="font-size: 12px; color: #bae6fd; margin-bottom: 15px;">
+                On marquen més gols els jugadors del CN Terrassa
+            </p>
+            
+            <!-- Heatmap Global -->
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #22d3ee; font-size: 14px; margin-bottom: 10px;">📊 Mapa Global d'Equip</h3>
+                <div class="goal-zone-heatmap">
+                    ${zoneOrder.map(zone => {
+                        const count = globalZones[zone] || 0;
+                        const percentage = totalGols > 0 ? ((count / totalGols) * 100).toFixed(1) : 0;
+                        const intensity = maxCountGlobal > 0 ? count / maxCountGlobal : 0;
+                        const bgColor = getHeatmapColor(intensity);
+                        
+                        return `
+                            <div class="goal-zone-cell" style="background: ${bgColor};">
+                                <div class="zone-label">${zoneLabels[zone]}</div>
+                                <div class="zone-count">${count}</div>
+                                <div style="font-size: 9px; color: rgba(255,255,255,0.7);">${percentage}%</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                ${globalZones.unknown > 0 ? `
+                    <div style="text-align: center; margin-top: 10px; font-size: 11px; color: #bae6fd;">
+                        ❓ Gols sense zona registrada: ${globalZones.unknown}
+                    </div>
+                ` : ''}
+                <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #fde047;">
+                    Total de gols amb zona: ${totalGols}
+                </div>
+            </div>
+            
+            <!-- Heatmaps Individuals -->
+            <div style="margin-top: 20px;">
+                <h3 style="color: #22d3ee; font-size: 14px; margin-bottom: 10px;">👤 Mapes Individuals (Top 6 Golejadors)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    ${topScorers.map(player => {
+                        const totalWithZone = Object.values(player.zones).reduce((sum, count) => sum + count, 0) - (player.zones.unknown || 0);
+                        const maxCount = Math.max(...zoneOrder.map(z => player.zones[z] || 0));
+                        
+                        const preferredZone = zoneOrder.reduce((max, zone) => 
+                            (player.zones[zone] || 0) > (player.zones[max] || 0) ? zone : max
+                        , zoneOrder[0]);
+                        
+                        const preferredZoneLabel = {
+                            'top-left': 'Dalt Esquerra',
+                            'top-center': 'Dalt Centre',
+                            'top-right': 'Dalt Dreta',
+                            'mid-left': 'Centre Esquerra',
+                            'mid-center': 'Centre',
+                            'mid-right': 'Centre Dreta',
+                            'bottom-left': 'Baix Esquerra',
+                            'bottom-center': 'Baix Centre',
+                            'bottom-right': 'Baix Dreta'
+                        }[preferredZone];
+                        
+                        return `
+                            <div style="background: rgba(0, 0, 0, 0.2); padding: 12px; border-radius: 8px;">
+                                <div style="text-align: center; margin-bottom: 8px;">
+                                    <div style="font-size: 12px; font-weight: bold; color: #22d3ee;">
+                                        ${player.num}. ${player.name.split(' ')[0]}
+                                    </div>
+                                    <div style="font-size: 10px; color: #bae6fd; margin-top: 2px;">
+                                        ${player.totalGols} gols (${totalWithZone} amb zona)
+                                    </div>
+                                </div>
+                                
+                                <div class="goal-zone-heatmap" style="max-width: 180px; margin: 0 auto;">
+                                    ${zoneOrder.map(zone => {
+                                        const count = player.zones[zone] || 0;
+                                        const intensity = maxCount > 0 ? count / maxCount : 0;
+                                        const bgColor = getHeatmapColor(intensity);
+                                        
+                                        return `
+                                            <div class="goal-zone-cell" style="background: ${bgColor};">
+                                                <div class="zone-label">${zoneLabelsShort[zone]}</div>
+                                                <div class="zone-count">${count}</div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                                
+                                ${totalWithZone > 0 && player.zones[preferredZone] > 0 ? `
+                                    <div style="font-size: 10px; color: #fde047; text-align: center; margin-top: 8px;">
+                                        ⭐ ${preferredZoneLabel} (${player.zones[preferredZone]})
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Inserir el card abans de la taula de comparació
+    const comparisonTable = document.querySelector('#comparisonView .card:has(#comparisonTable)');
+    
+    if (comparisonTable) {
+        // Eliminar card anterior si existeix
+        const existingCard = document.getElementById('goalZonesAnalysisCard');
+        if (existingCard) {
+            existingCard.remove();
+        }
+        
+        comparisonTable.insertAdjacentHTML('beforebegin', goalZonesHTML);
+        console.log('✅ Card de zones inserit correctament amb dades');
+    } else {
+        console.error('❌ No s\'ha trobat #comparisonTable');
+    }
+}
+function renderSwimRacesStats() {
+    if (allMatches.length === 0) return '';
+    
+    const swimStats = {};
+    
+    // ✅ FIX: Primer obtenim tots els jugadors dels partits
+    const allPlayers = new Set();
+    allMatches.forEach(match => {
+        match.jugadors.forEach(j => {
+            allPlayers.add(j.nom.trim());
+        });
+    });
+    
+    // Inicialitzar tots els jugadors
+    allPlayers.forEach(playerName => {
+        swimStats[playerName] = { won: 0, lost: 0, total: 0 };
+    });
+    
+    // Comptar curses
+    allMatches.forEach(match => {
+        if (match.chronologicalActions) {
+            match.chronologicalActions.forEach(action => {
+                if (action.type === 'swim-race' && action.team === 'cnt') {
+                    const playerName = action.playerName;
+                    if (swimStats[playerName]) {
+                        swimStats[playerName].total++;
+                        if (action.result === 'win') {
+                            swimStats[playerName].won++;
+                        } else {
+                            swimStats[playerName].lost++;
+                        }
+                    }
+                }
+            });
+        }
+    });
+    
+    // Filtrar jugadors amb curses
+    const playersWithSwims = Object.entries(swimStats)
+        .filter(([name, data]) => data.total > 0)
+        .sort((a, b) => b[1].won - a[1].won);
+    
+    if (playersWithSwims.length === 0) {
+        return '';
+    }
+    
+    return `
+        <div class="card">
+            <h2 class="section-title">🏊 Estadístiques de Curses Inicials</h2>
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Jugador</th>
+                            <th>🏆 Guanyades</th>
+                            <th>❌ Perdudes</th>
+                            <th>Total</th>
+                            <th>% Èxit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${playersWithSwims.map(([name, data]) => {
+                            const percentage = ((data.won / data.total) * 100).toFixed(1);
+                            const colorClass = percentage >= 50 ? '#22c55e' : '#ef4444';
+                            return `
+                                <tr>
+                                    <td style="font-weight: bold;">${name.split(' ')[0]}</td>
+                                    <td style="color: #22c55e; font-weight: bold;">${data.won}</td>
+                                    <td style="color: #ef4444;">${data.lost}</td>
+                                    <td>${data.total}</td>
+                                    <td style="color: ${colorClass}; font-weight: bold;">${percentage}%</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 15px; padding: 12px; background: rgba(34, 211, 238, 0.1); border-radius: 8px; text-align: center;">
+                <div style="font-size: 12px; color: #bae6fd;">Millor cursador</div>
+                <div style="font-size: 18px; color: #22d3ee; font-weight: bold; margin-top: 4px;">
+                    ${playersWithSwims[0][0].split(' ')[0]} (${playersWithSwims[0][1].won}/${playersWithSwims[0][1].total})
+                </div>
+            </div>
+        </div>
+    `;
 }
 function renderGoalkeeperZoneStats() {
     // Aquesta funció es cridarà al displayMatchData() i displayComparison()
@@ -8461,13 +8972,13 @@ function renderMatchGoalZones() {
    </script>
    <script>
     // 🔒 Bloqueo de clic derecho y atajos
-    document.addEventListener("contextmenu", event => event.preventDefault());
+   /* document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       if ((event.ctrlKey && ["s", "u"].includes(event.key.toLowerCase())) ||
           event.key === "F12") {
         event.preventDefault();
       }
-    });
+    });*/
     </script>
 </body>
 </html>
