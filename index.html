@@ -1860,7 +1860,7 @@ const playersWithValue = currentMatch.jugadors.map(j => {
         penaltyMissed: j.estadistiques.penaltyMissed,
         perdues: j.estadistiques.perdues,
         xutsFallats: j.estadistiques.xutsFallats,
-        golsRebuts: 0 // Es pot afegir si tenim aquestes dades
+        golsRebuts: 0
     });
     return { ...j, valor };
 }).sort((a, b) => b.valor - a.valor);
@@ -1876,54 +1876,59 @@ document.getElementById('matchInfo').insertAdjacentHTML('afterend', `
                 const medals = ['🥇', '🥈', '🥉'];
                 const colors = ['#fbbf24', '#d1d5db', '#d97706'];
                 const borderColors = ['#f59e0b', '#9ca3af', '#ea580c'];
+                const bgColors = [
+                    'linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.1))',
+                    'linear-gradient(135deg, rgba(209, 213, 219, 0.3), rgba(156, 163, 175, 0.1))',
+                    'linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(234, 88, 12, 0.1))'
+                ];
                 
                 return `
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 3px solid ${borderColors[index]}; position: relative;">
-                        <div style="position: absolute; top: 10px; right: 10px; font-size: 32px;">
+                    <div style="background: ${bgColors[index]}; padding: 15px; border-radius: 8px; border: 3px solid ${borderColors[index]}; position: relative;">
+                        <div style="position: absolute; top: 10px; right: 10px; font-size: 36px;">
                             ${medals[index]}
                         </div>
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                            <div class="player-num" style="width: 40px; height: 40px; font-size: 16px; background: ${colors[index]}; color: #000;">
-                                ${player.numero}
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <div class="player-num" style="width: 40px; height: 40px; font-size: 18px;">${player.numero}</div>
                             <div>
-                                <div style="font-size: 18px; font-weight: bold; color: white;">
-                                    ${player.nom}
-                                </div>
-                                <div style="font-size: 14px; color: #bae6fd; margin-top: 4px;">
-                                    Valoració: <span style="color: ${colors[index]}; font-weight: bold; font-size: 16px;">${player.valor.toFixed(1)}</span>
-                                </div>
+                                <div style="font-weight: bold; font-size: 16px; color: ${colors[index]};">${player.nom}</div>
+                                <div style="font-size: 12px; color: #bae6fd;">Valoració: ${player.valor.toFixed(1)}</div>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px;">
                             ${player.estadistiques.gols > 0 ? `
-                                <div style="background: rgba(34, 197, 94, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                <div style="background: rgba(253, 224, 71, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
                                     <div style="color: #bae6fd;">Gols</div>
-                                    <div style="color: #22c55e; font-weight: bold; font-size: 16px;">${player.estadistiques.gols}</div>
+                                    <div style="color: #fde047; font-weight: bold;">${player.estadistiques.gols}</div>
                                 </div>
                             ` : ''}
                             ${(player.estadistiques.assistencies || 0) > 0 ? `
                                 <div style="background: rgba(6, 182, 212, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
                                     <div style="color: #bae6fd;">Assists</div>
-                                    <div style="color: #06b6d4; font-weight: bold; font-size: 16px;">${player.estadistiques.assistencies}</div>
+                                    <div style="color: #06b6d4; font-weight: bold;">${player.estadistiques.assistencies}</div>
+                                </div>
+                            ` : ''}
+                            ${(player.estadistiques.robatoris || 0) > 0 ? `
+                                <div style="background: rgba(59, 130, 246, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Robatoris</div>
+                                    <div style="color: #3b82f6; font-weight: bold;">${player.estadistiques.robatoris}</div>
                                 </div>
                             ` : ''}
                             ${(player.estadistiques.parades || 0) > 0 ? `
                                 <div style="background: rgba(139, 92, 246, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
                                     <div style="color: #bae6fd;">Parades</div>
-                                    <div style="color: #8b5cf6; font-weight: bold; font-size: 16px;">${player.estadistiques.parades}</div>
+                                    <div style="color: #8b5cf6; font-weight: bold;">${player.estadistiques.parades}</div>
                                 </div>
                             ` : ''}
-                            ${(player.estadistiques.robatoris || 0) > 0 ? `
-                                <div style="background: rgba(34, 211, 238, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                                    <div style="color: #bae6fd;">Robatoris</div>
-                                    <div style="color: #22d3ee; font-weight: bold; font-size: 16px;">${player.estadistiques.robatoris}</div>
+                            ${(player.estadistiques.faltesRebudes || 0) > 0 ? `
+                                <div style="background: rgba(251, 191, 36, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
+                                    <div style="color: #bae6fd;">Faltes R.</div>
+                                    <div style="color: #fbbf24; font-weight: bold;">${player.estadistiques.faltesRebudes}</div>
                                 </div>
                             ` : ''}
                             ${player.estadistiques.exclusions > 0 ? `
                                 <div style="background: rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                                    <div style="color: #bae6fd;">Exclusions</div>
-                                    <div style="color: #ef4444; font-weight: bold; font-size: 16px;">${player.estadistiques.exclusions}</div>
+                                    <div style="color: #bae6fd;">Exc</div>
+                                    <div style="color: #ef4444; font-weight: bold;">${player.estadistiques.exclusions}</div>
                                 </div>
                             ` : ''}
                         </div>
@@ -2101,120 +2106,106 @@ document.getElementById('matchInfo').insertAdjacentHTML('afterend', `
         const stats = j.estadistiques;
         const goles = stats.gols;
         const xutsTotal = goles + (stats.xutsFallats || 0);
-        const eficiencia = xutsTotal > 0 ? ((goles / xutsTotal) * 100).toFixed(1) : 'N/A';
-        const valor = calculatePlayerValue(stats);
+        const eficiencia = xutsTotal > 0 ? ((goles / xutsTotal) * 100).toFixed(1) : '0.0';
         
-        return {
-            nom: j.nom,
-            numero: j.numero,
-            goles: goles,
-            assists: stats.assistencies || 0,
-            robatoris: stats.robatoris || 0,
-            perdues: stats.perdues || 0,
-            xutsFallats: stats.xutsFallats || 0,
-            blocatges: stats.blocatges || 0,
-            parades: stats.parades || 0,
+        // ✅ SUMAR blocks i blocatges
+        const totalBlocks = (stats.blocks || 0) + (stats.blocatges || 0);
+        
+        const valor = calculatePlayerValue({
+            gols: stats.gols,
+            goalTypes: stats.goalTypes,
+            assistencies: stats.assistencies,
+            robatoris: stats.robatoris,
+            blocatges: totalBlocks,  // Usar el total aquí
+            parades: stats.parades,
             faltesRebudes: stats.faltesRebudes || 0,
-            eficiencia: eficiencia,
             exclusions: stats.exclusions,
-            penaltyFallat: stats.penaltyMissed || 0,
-            valor: valor
+            exclusionTypes: stats.exclusionTypes || { normal: 0, penalty: 0 },
+            penaltyMissed: stats.penaltyMissed,
+            perdues: stats.perdues,
+            xutsFallats: stats.xutsFallats
+        });
+
+        return {
+            num: j.numero,
+            nom: j.nom,
+            gols: goles,
+            hPlus: stats.goalTypes?.['h+'] || 0,
+            penalty: stats.goalTypes?.penalty || 0,
+            contra: stats.goalTypes?.contra || 0,
+            boya: stats.goalTypes?.boya || 0,
+            normal: stats.goalTypes?.normal || 0,
+            exclusions: stats.exclusions,
+            parades: stats.parades || 0,
+            assistencies: stats.assistencies || 0,
+            robatoris: stats.robatoris || 0,
+            blocks: totalBlocks,  // ✅ AFEGIR AQUESTA LÍNIA
+            perdues: stats.perdues || 0,
+            faltesRebudes: stats.faltesRebudes || 0,
+            xutsFallats: stats.xutsFallats || 0,
+            penaltyMissed: stats.penaltyMissed || 0,
+            eficiencia: eficiencia,
+            valor: valor.toFixed(1)
         };
-    });
+    }).sort((a, b) => b.valor - a.valor);
 
-    // Ordenar por número de goles (descendente)
-    players.sort((a, b) => b.valor - a.valor);
-
-    let html = `
+    table.innerHTML = `
         <thead>
             <tr>
-                <th style="position: sticky; left: 0; z-index: 2; background: #0a2540;">Nº</th>
-                <th style="position: sticky; left: 50px; z-index: 2; background: #0a2540;">Jugador</th>
+                <th>Nº</th>
+                <th>Jugador</th>
                 <th>Gols</th>
+                <th>H+</th>
+                <th>Pen</th>
+                <th>Con</th>
+                <th>Boy</th>
+                <th>Nor</th>
                 <th>Exc</th>
-                <th>🎯 Asist</th>
-                <th>🛡️ Rob</th>
-                <th>❌ Pèrd</th>
-                <th>🎯❌ X.F</th>
-                <th>✋ Block</th>
                 <th>🧤 Par</th>
-                <th>⚠️ F.Reb</th>
+                <th>🎯 Ast</th>
+                <th>🛡️ Rob</th>
+                <th>🚫 Blk</th>
+                <th>❌ Pèr</th>
+                <th>⚠️ FR</th>
+                <th>Xuts</th>
+                <th>PenF</th>
                 <th>Efic%</th>
                 <th>⭐ Valor</th>
             </tr>
         </thead>
         <tbody>
-    `;
-
-    players.forEach(p => {
-        const eficienciaClass = p.eficiencia !== 'N/A' ? 
-            (parseFloat(p.eficiencia) >= 50 ? 'positive' : 'neutral') : '';
-        const valorClass = p.valor >= 10 ? 'positive' : p.valor >= 5 ? 'neutral' : 'negative';
-        
-        html += `
-            <tr>
-                <td style="position: sticky; left: 0; z-index: 1; background: #0a2540; font-weight: bold;">
-                    ${p.numero}
-                </td>
-                <td style="position: sticky; left: 50px; z-index: 1; background: #0a2540; font-weight: bold;">
-                    ${p.nom}
-                </td>
-                <td><strong>${p.goles}</strong></td>
-                <td class="${p.exclusions > 0 ? 'negative' : ''}">${p.exclusions}</td>
-                <td class="${p.assists > 0 ? 'positive' : ''}">${p.assists}</td>
-                <td class="${p.robatoris > 0 ? 'positive' : ''}">${p.robatoris}</td>
-                <td class="${p.perdues > 0 ? 'negative' : ''}">${p.perdues}</td>
-                <td class="negative">${p.xutsFallats}</td>
-                <td class="${p.blocatges > 0 ? 'positive' : ''}">${p.blocatges}</td>
-                <td class="${p.parades > 0 ? 'positive' : ''}">${p.parades}</td>
-                <td class="${p.faltesRebudes > 0 ? 'positive' : ''}">${p.faltesRebudes}</td>
-                <td class="${eficienciaClass}">${p.eficiencia}${p.eficiencia !== 'N/A' ? '%' : ''}</td>
-                <td class="${valorClass}" style="font-weight: bold;">${p.valor.toFixed(1)}</td>
-            </tr>
-        `;
-    });
-
-    // Calcular totales del equipo
-    const totales = {
-        goles: players.reduce((sum, p) => sum + p.goles, 0),
-        exclusions: players.reduce((sum, p) => sum + p.exclusions, 0),
-        assists: players.reduce((sum, p) => sum + p.assists, 0),
-        robatoris: players.reduce((sum, p) => sum + p.robatoris, 0),
-        perdues: players.reduce((sum, p) => sum + p.perdues, 0),
-        xutsFallats: players.reduce((sum, p) => sum + p.xutsFallats, 0),
-        blocatges: players.reduce((sum, p) => sum + p.blocatges, 0),
-        parades: players.reduce((sum, p) => sum + p.parades, 0),
-        faltesRebudes: players.reduce((sum, p) => sum + p.faltesRebudes, 0),
-        valor: players.reduce((sum, p) => sum + p.valor, 0)
-    };
-    
-    const xutsTotal = totales.goles + totales.xutsFallats;
-    const eficienciaTotal = xutsTotal > 0 ? ((totales.goles / xutsTotal) * 100).toFixed(1) : 'N/A';
-    const valorTotalClass = totales.valor >= 50 ? 'positive' : totales.valor >= 25 ? 'neutral' : 'negative';
-
-    html += `
-            <tr style="border-top: 3px solid #22d3ee; font-weight: bold; background: rgba(34, 211, 238, 0.1);">
-                <td style="position: sticky; left: 0; z-index: 1; background: rgba(34, 211, 238, 0.2);" colspan="2">
-                    TOTALS EQUIP
-                </td>
-                <td><strong>${totales.goles}</strong></td>
-                <td class="${totales.exclusions > 0 ? 'negative' : ''}">${totales.exclusions}</td>
-                <td class="${totales.assists > 0 ? 'positive' : ''}">${totales.assists}</td>
-                <td class="${totales.robatoris > 0 ? 'positive' : ''}">${totales.robatoris}</td>
-                <td class="${totales.perdues > 0 ? 'negative' : ''}">${totales.perdues}</td>
-                <td class="negative">${totales.xutsFallats}</td>
-                <td class="${totales.blocatges > 0 ? 'positive' : ''}">${totales.blocatges}</td>
-                <td class="${totales.parades > 0 ? 'positive' : ''}">${totales.parades}</td>
-                <td class="${totales.faltesRebudes > 0 ? 'positive' : ''}">${totales.faltesRebudes}</td>
-                <td class="${parseFloat(eficienciaTotal) >= 50 ? 'positive' : 'neutral'}">
-                    ${eficienciaTotal}${eficienciaTotal !== 'N/A' ? '%' : ''}
-                </td>
-                <td class="${valorTotalClass}" style="font-weight: bold;">${totales.valor.toFixed(1)}</td>
-            </tr>
+            ${players.map((p, index) => {
+                // Colors per al podi
+                const rankColor = index === 0 ? 'background: rgba(255, 215, 0, 0.2);' :
+                                 index === 1 ? 'background: rgba(192, 192, 192, 0.2);' :
+                                 index === 2 ? 'background: rgba(205, 127, 50, 0.2);' : '';
+                
+                return `
+                    <tr style="${rankColor}">
+                        <td>${p.num}</td>
+                        <td><strong>${p.nom.split(' ')[0]}</strong></td>
+                        <td>${p.gols}</td>
+                        <td>${p.hPlus}</td>
+                        <td>${p.penalty}</td>
+                        <td>${p.contra}</td>
+                        <td>${p.boya}</td>
+                        <td>${p.normal}</td>
+                        <td>${p.exclusions}</td>
+                        <td>${p.parades}</td>
+                        <td>${p.assistencies}</td>
+                        <td>${p.robatoris}</td>
+                        <td>${p.blocks}</td>
+                        <td>${p.perdues}</td>
+                        <td>${p.faltesRebudes}</td>
+                        <td>${p.xutsFallats}</td>
+                        <td>${p.penaltyMissed}</td>
+                        <td>${p.eficiencia}%</td>
+                        <td><strong>${p.valor}</strong></td>
+                    </tr>
+                `;
+            }).join('')}
         </tbody>
     `;
-
-    table.innerHTML = html;
 }
  function renderScoreEvolutionChart() {
             const ctx = document.getElementById('scoreEvolutionChart');
@@ -2811,7 +2802,7 @@ renderComparisonTable(players);
     renderQuarterDifference();
     renderBestWorstMatches();
     renderRivalsHistory();
-    // ============ RÀNQUING MVP GLOBAL ============
+ // ============ RÀNQUING MVP GLOBAL ============
 const playersWithAvgValue = Object.values(playerStats).map(p => {
     const valor = calculatePlayerValue({
         gols: p.gols,
@@ -2855,52 +2846,57 @@ mvpContainer.innerHTML = `
                             border: ${index < 3 ? '3px' : '2px'} solid ${index < 3 ? borderColors[index] : 'rgba(255,255,255,0.2)'}; 
                             position: relative;">
                     <div style="position: absolute; top: 10px; right: 10px; font-size: ${index < 3 ? '36px' : '24px'};">
-                        ${index < 3 ? medals[index] : '#' + (index + 1)}
+                        ${index < 3 ? medals[index] : `#${index + 1}`}
                     </div>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                        <div class="player-num" style="width: 40px; height: 40px; font-size: 16px; ${index < 3 ? 'background: ' + colors[index] + '; color: #000;' : ''}">
-                            ${player.num}
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-size: 16px; font-weight: bold; color: white;">
-                                ${player.name}
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="player-num" style="width: ${index < 3 ? '45px' : '40px'}; height: ${index < 3 ? '45px' : '40px'}; font-size: ${index < 3 ? '20px' : '16px'};">${player.num}</div>
+                        <div>
+                            <div style="font-weight: bold; font-size: ${index < 3 ? '18px' : '16px'}; color: ${index < 3 ? colors[index] : '#fff'};">${player.name}</div>
+                            <div style="font-size: 11px; color: #bae6fd;">
+                                Valor/Partit: <strong style="color: ${index < 3 ? colors[index] : '#22d3ee'};">${player.valorMitja.toFixed(1)}</strong>
                             </div>
-                            <div style="font-size: 12px; color: #bae6fd; margin-top: 4px;">
-                                ${player.partidos} partits jugats
+                            <div style="font-size: 10px; color: #94a3b8;">
+                                ${player.partidos} partits • Total: ${player.valorTotal.toFixed(0)}
                             </div>
                         </div>
                     </div>
-                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                            <span style="color: #bae6fd; font-size: 12px;">Valoració Total:</span>
-                            <span style="color: #fde047; font-weight: bold; font-size: 14px;">${player.valorTotal.toFixed(1)}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="color: #bae6fd; font-size: 12px;">Mitjana per Partit:</span>
-                            <span style="color: ${index < 3 ? colors[index] : '#22d3ee'}; font-weight: bold; font-size: 16px;">${player.valorMitja.toFixed(2)}</span>
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 11px;">
-                        <div style="background: rgba(34, 197, 94, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                            <div style="color: #bae6fd;">Gols</div>
-                            <div style="color: #22c55e; font-weight: bold;">${player.gols}</div>
-                        </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px;">
+                        ${player.gols > 0 ? `
+                            <div style="background: rgba(253, 224, 71, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">Gols</div>
+                                <div style="color: #fde047; font-weight: bold; font-size: 13px;">${player.gols}</div>
+                            </div>
+                        ` : ''}
                         ${(player.assistencies || 0) > 0 ? `
-                            <div style="background: rgba(6, 182, 212, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd;">Assists</div>
-                                <div style="color: #06b6d4; font-weight: bold;">${player.assistencies}</div>
+                            <div style="background: rgba(6, 182, 212, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">Assists</div>
+                                <div style="color: #06b6d4; font-weight: bold; font-size: 13px;">${player.assistencies}</div>
+                            </div>
+                        ` : ''}
+                        ${(player.robatoris || 0) > 0 ? `
+                            <div style="background: rgba(59, 130, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">Rob</div>
+                                <div style="color: #3b82f6; font-weight: bold; font-size: 13px;">${player.robatoris}</div>
                             </div>
                         ` : ''}
                         ${(player.parades || 0) > 0 ? `
-                            <div style="background: rgba(139, 92, 246, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                                <div style="color: #bae6fd;">Parades</div>
-                                <div style="color: #8b5cf6; font-weight: bold;">${player.parades}</div>
+                            <div style="background: rgba(139, 92, 246, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">Parades</div>
+                                <div style="color: #8b5cf6; font-weight: bold; font-size: 13px;">${player.parades}</div>
                             </div>
                         ` : ''}
-                        <div style="background: rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 4px; text-align: center;">
-                            <div style="color: #bae6fd;">Exc</div>
-                            <div style="color: #ef4444; font-weight: bold;">${player.exclusions}</div>
-                        </div>
+                        ${(player.faltesRebudes || 0) > 0 ? `
+                            <div style="background: rgba(251, 191, 36, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">FR</div>
+                                <div style="color: #fbbf24; font-weight: bold; font-size: 13px;">${player.faltesRebudes}</div>
+                            </div>
+                        ` : ''}
+                        ${player.exclusions > 0 ? `
+                            <div style="background: rgba(239, 68, 68, 0.2); padding: 4px; border-radius: 4px; text-align: center;">
+                                <div style="color: #bae6fd; font-size: 9px;">Exc</div>
+                                <div style="color: #ef4444; font-weight: bold; font-size: 13px;">${player.exclusions}</div>
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -6707,6 +6703,10 @@ function sortTable(column) {
                 valA = a.perdues || 0;
                 valB = b.perdues || 0;
                 break;
+			case 'blocks':
+    valA = (a.blocks || 0) + (a.blocatges || 0);
+    valB = (b.blocks || 0) + (b.blocatges || 0);
+    break;	
             case 'xutsFallats':
                 valA = a.xutsFallats || 0;
                 valB = b.xutsFallats || 0;
@@ -6791,65 +6791,45 @@ function renderComparisonTable(players) {
                 <th onclick="sortTable('parades')" style="cursor: pointer;">🧤 Parades${getSortIndicator('parades')}</th>
                 <th onclick="sortTable('assistencies')" style="cursor: pointer;">🎯 Assist${getSortIndicator('assistencies')}</th>
                 <th onclick="sortTable('robatoris')" style="cursor: pointer;">🛡️ Rob${getSortIndicator('robatoris')}</th>
+                <th onclick="sortTable('blocks')" style="cursor: pointer;">🚫 Blocks${getSortIndicator('blocks')}</th> <!-- ✅ NOVA COLUMNA -->
                 <th onclick="sortTable('perdues')" style="cursor: pointer;">❌ Pèrd${getSortIndicator('perdues')}</th>
                 <th onclick="sortTable('xutsFallats')" style="cursor: pointer;">🚫 Xuts${getSortIndicator('xutsFallats')}</th>
                 <th onclick="sortTable('penaltyMissed')" style="cursor: pointer;">Pen. Fallados${getSortIndicator('penaltyMissed')}</th>
-                <th onclick="sortTable('eficienciaTir')" style="cursor: pointer;">🎯 Efic. Tir${getSortIndicator('eficienciaTir')}</th>
-                <th onclick="sortTable('mediaGols')" style="cursor: pointer;">Media Goles/P${getSortIndicator('mediaGols')}</th>
+                <th onclick="sortTable('eficienciaTir')" style="cursor: pointer;">🎯 Efic.%${getSortIndicator('eficienciaTir')}</th>
+                <th onclick="sortTable('mediaGols')" style="cursor: pointer;">📊 Gols/Part${getSortIndicator('mediaGols')}</th>
                 <th onclick="sortTable('valor')" style="cursor: pointer;">⭐ Valor${getSortIndicator('valor')}</th>
             </tr>
         </thead>
         <tbody>
             ${players.map(p => {
-                const valor = calculatePlayerValue({
-                    gols: p.gols,
-                    goalTypes: p.goalTypes,
-                    assistencies: p.assistencies,
-                    robatoris: p.robatoris,
-                    blocatges: p.blocks || 0,
-                    parades: p.parades,
-                    faltesRebudes: p.faltesRebudes || 0,
-                    exclusions: p.exclusions,
-                    exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
-                    penaltyMissed: p.penaltyMissed,
-                    perdues: p.perdues,
-                    xutsFallats: p.xutsFallats
-                });
-                
-                const valorColor = valor >= 10 ? '#22c55e' : valor >= 5 ? '#fbbf24' : '#ef4444';
+                const totalXuts = p.gols + (p.xutsFallats || 0);
+                const efic = totalXuts > 0 ? ((p.gols / totalXuts) * 100).toFixed(1) : '0.0';
+                const mediaGols = p.partidos > 0 ? (p.gols / p.partidos).toFixed(1) : '0.0';
+                const totalBlocks = (p.blocks || 0) + (p.blocatges || 0); // ✅ SUMAR AMBDÓS
                 
                 return `
-                <tr>
-                    <td><div class="player-num" style="width: 30px; height: 30px; font-size: 12px;">${p.num}</div></td>
-                    <td><strong>${p.name}</strong></td>
-                    <td>${p.partidos}</td>
-                    <td><strong style="color: #fde047;">${p.gols}</strong></td>
-                    <td>${p.goalTypes['h+'] || 0}</td>
-                    <td>${p.goalTypes.penalty || 0}</td>
-                    <td>${p.goalTypes.contra || 0}</td>
-                    <td>${p.goalTypes.boya || 0}</td>
-                    <td>${p.goalTypes.normal || 0}</td>
-                    <td>${p.exclusions}</td>
-                    <td style="color: #8b5cf6; font-weight: bold;">${p.parades || 0}</td>
-                    <td style="color: #22c55e; font-weight: bold;">${p.assistencies || 0}</td>
-                    <td style="color: #06b6d4; font-weight: bold;">${p.robatoris || 0}</td>
-                    <td style="color: #ef4444; font-weight: bold;">${p.perdues || 0}</td>
-                    <td style="color: #f97316; font-weight: bold;">${p.xutsFallats || 0}</td>
-                    <td style="color: ${(p.penaltyMissed || 0) > 0 ? '#ef4444' : '#22c55e'}; font-weight: bold;">${p.penaltyMissed || 0}</td>
-                    <td style="color: ${(() => {
-                        const totalXuts = p.gols + (p.xutsFallats || 0);
-                        const efic = totalXuts > 0 ? (p.gols / totalXuts * 100) : 0;
-                        return efic >= 50 ? '#22c55e' : efic >= 30 ? '#fbbf24' : '#ef4444';
-                    })()}; font-weight: bold;">
-                        ${(() => {
-                            const totalXuts = p.gols + (p.xutsFallats || 0);
-                            const efic = totalXuts > 0 ? (p.gols / totalXuts * 100).toFixed(1) : '0.0';
-                            return totalXuts > 0 ? `${p.gols}/${totalXuts} (${efic}%)` : '-';
-                        })()}
-                    </td>
-                    <td>${p.partidos > 0 ? (p.gols / p.partidos).toFixed(1) : '0.0'}</td>
-                    <td style="color: ${valorColor}; font-weight: bold; font-size: 14px;">${valor.toFixed(1)}</td>
-                </tr>
+                    <tr>
+                        <td>${p.num}</td>
+                        <td>${p.name}</td>
+                        <td>${p.partidos}</td>
+                        <td>${p.gols}</td>
+                        <td>${p.goalTypes['h+'] || 0}</td>
+                        <td>${p.goalTypes.penalty || 0}</td>
+                        <td>${p.goalTypes.contra || 0}</td>
+                        <td>${p.goalTypes.boya || 0}</td>
+                        <td>${p.goalTypes.normal || 0}</td>
+                        <td>${p.exclusions}</td>
+                        <td>${p.parades || 0}</td>
+                        <td>${p.assistencies || 0}</td>
+                        <td>${p.robatoris || 0}</td>
+                        <td>${totalBlocks}</td> <!-- ✅ MOSTRAR LA SUMA -->
+                        <td>${p.perdues || 0}</td>
+                        <td>${p.xutsFallats || 0}</td>
+                        <td>${p.penaltyMissed || 0}</td>
+                        <td>${efic}%</td>
+                        <td>${mediaGols}</td>
+                        <td>${p.valor.toFixed(1)}</td>
+                    </tr>
                 `;
             }).join('')}
         </tbody>
