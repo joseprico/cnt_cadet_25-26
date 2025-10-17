@@ -1015,6 +1015,7 @@ function quickExclusion(playerNum, isRival, type) {
 }
 function openExclusionModal(n,isR,inc){
     // ✅ No obrir modal si s'està fent swipe
+	console.log('🔴 openExclusionModal cridat:', {n, isR, inc, playersInWater});
     if(window.isCurrentlyDragging){
         return;
     }
@@ -1030,8 +1031,12 @@ function openExclusionModal(n,isR,inc){
     const select = document.getElementById('cntPlayerSelect');
     
     if(isR){
+        // ✅ Només mostrar jugadors que estan a l'aigua
+        const playersInWaterArray = Array.from(playersInWater);
+        const playersInWaterFiltered = players.filter(p => playersInWaterArray.includes(p.num));
+        
         select.innerHTML = '<option value="">Sense especificar</option>' + 
-            players.map(p => `<option value="${p.num}">${p.num}. ${p.name}</option>`).join('');
+            playersInWaterFiltered.map(p => `<option value="${p.num}">${p.num}. ${p.name}</option>`).join('');
         selectorDiv.style.display = 'block';
     } else {
         selectorDiv.style.display = 'none';
