@@ -7100,450 +7100,357 @@ function renderComparisonTable(players) {
 // ==========================================
 
 function generateGeneralPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('landscape');
-    
-    let yPos = 20;
-    const pageHeight = 190;
-    const leftMargin = 20;
-    const rightMargin = 277;
-    
-    function checkPageBreak(neededSpace = 10) {
-        if (yPos > pageHeight - neededSpace) {
-            doc.addPage();
-            yPos = 20;
-            return true;
+    // Verificació 1: Comprovar que jsPDF està disponible
+    if (typeof window.jspdf === 'undefined') {
+        alert('❌ Error: La llibreria jsPDF no està carregada. Recarrega la pàgina.');
+        return;
+    }
+
+    // Verificació 2: Comprovar que hi ha partits
+    if (!allMatches || allMatches.length === 0) {
+        alert('⚠️ No hi ha partits carregats per generar el PDF');
+        return;
+    }
+
+    try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('landscape');
+        
+        let yPos = 20;
+        const pageHeight = 190;
+        const leftMargin = 20;
+        const rightMargin = 277;
+        
+        function checkPageBreak(neededSpace = 10) {
+            if (yPos > pageHeight - neededSpace) {
+                doc.addPage();
+                yPos = 20;
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
-    
-    function addSeparator() {
-        checkPageBreak(5);
-        doc.setDrawColor(34, 211, 238);
-        doc.setLineWidth(0.5);
-        doc.line(leftMargin, yPos, rightMargin, yPos);
-        yPos += 8;
-    }
-    
-    // ============ PORTADA ============
-    doc.setFontSize(24);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(30, 58, 138);
-    doc.text('CN TERRASSA', 148.5, yPos, { align: 'center' });
-    yPos += 10;
-    
-    doc.setFontSize(18);
-    doc.setTextColor(6, 182, 212);
-    doc.text('CADET 25/26', 148.5, yPos, { align: 'center' });
-    yPos += 8;
-    
-    doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0);
-    doc.text('INFORME GENERAL DE TEMPORADA', 148.5, yPos, { align: 'center' });
-    yPos += 15;
-    
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Data: ${new Date().toLocaleDateString('ca-ES', { year: 'numeric', month: 'long', day: 'numeric' })}`, 148.5, yPos, { align: 'center' });
-    yPos += 20;
-    
-    addSeparator();
-    
-    // ============ RESUM EXECUTIU ============
-    const victories = allMatches.filter(m => m.scoreCNT > m.scoreRival).length;
-    const defeats = allMatches.filter(m => m.scoreCNT < m.scoreRival).length;
-    const draws = allMatches.filter(m => m.scoreCNT === m.scoreRival).length;
-    const totalGolsFavor = allMatches.reduce((sum, m) => sum + m.scoreCNT, 0);
-    const totalGolsContra = allMatches.reduce((sum, m) => sum + m.scoreRival, 0);
-    
-    doc.setFontSize(14);
-    doc.setFont(undefined, 'bold');
-    doc.text('RESUM EXECUTIU', leftMargin, yPos);
-    yPos += 10;
-    
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    
-    const summaryData = [
-        ['Total de partits:', allMatches.length.toString()],
-        ['Victòries:', `${victories} (${((victories/allMatches.length)*100).toFixed(1)}%)`],
-        ['Derrotes:', `${defeats} (${((defeats/allMatches.length)*100).toFixed(1)}%)`],
-        ['Empats:', `${draws} (${((draws/allMatches.length)*100).toFixed(1)}%)`],
-        ['Gols a favor:', `${totalGolsFavor} (${(totalGolsFavor/allMatches.length).toFixed(1)}/partit)`],
-        ['Gols en contra:', `${totalGolsContra} (${(totalGolsContra/allMatches.length).toFixed(1)}/partit)`],
-        ['Diferència de gols:', `${totalGolsFavor > totalGolsContra ? '+' : ''}${totalGolsFavor - totalGolsContra}`]
-    ];
-    
-    summaryData.forEach(([label, value]) => {
+        
+        function addSeparator() {
+            checkPageBreak(5);
+            doc.setDrawColor(34, 211, 238);
+            doc.setLineWidth(0.5);
+            doc.line(leftMargin, yPos, rightMargin, yPos);
+            yPos += 8;
+        }
+        
+        // ============ PORTADA ============
+        doc.setFontSize(24);
         doc.setFont(undefined, 'bold');
-        doc.text(label, leftMargin + 5, yPos);
+        doc.setTextColor(30, 58, 138);
+        doc.text('CN TERRASSA', 148.5, yPos, { align: 'center' });
+        yPos += 10;
+        
+        doc.setFontSize(18);
+        doc.setTextColor(6, 182, 212);
+        doc.text('CADET 25/26', 148.5, yPos, { align: 'center' });
+        yPos += 8;
+        
+        doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
+        doc.text('INFORME GENERAL DE TEMPORADA', 148.5, yPos, { align: 'center' });
+        yPos += 15;
+        
+        doc.setFontSize(10);
         doc.setFont(undefined, 'normal');
-        doc.text(value, leftMargin + 60, yPos);
-        yPos += 6;
-    });
-    
-    yPos += 5;
-    addSeparator();
-    
-    // ============ CALCULAR ESTADÍSTIQUES ============
-    const playerStats = {};
-    
-    allMatches.forEach(match => {
-        match.jugadors.forEach(j => {
-            const name = j.nom.trim();
-            if (!playerStats[name]) {
-                playerStats[name] = {
-                    num: j.numero,
-                    partidos: 0,
-                    gols: 0,
-                    exclusions: 0,
-                    parades: 0,
-                    assistencies: 0,
-                    robatoris: 0,
-                    perdues: 0,
-                    xutsFallats: 0,
-                    penaltyMissed: 0,
-					faltesRebudes: 0,
-                    goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 }
-                };
-            }
-            playerStats[name].partidos++;
-            playerStats[name].gols += j.estadistiques.gols || 0;
-            playerStats[name].exclusions += j.estadistiques.exclusions || 0;
-            playerStats[name].parades += j.estadistiques.parades || 0;
-            playerStats[name].assistencies += j.estadistiques.assistencies || 0;
-            playerStats[name].robatoris += j.estadistiques.robatoris || 0;
-            playerStats[name].perdues += j.estadistiques.perdues || 0;
-            playerStats[name].xutsFallats += j.estadistiques.xutsFallats || 0;
-            playerStats[name].penaltyMissed += j.estadistiques.penaltyMissed || 0;
-			playerStats[name].faltesRebudes += j.estadistiques.faltesRebudes || 0;
-            
-            if (j.estadistiques.goalTypes) {
-                Object.keys(j.estadistiques.goalTypes).forEach(type => {
-                    playerStats[name].goalTypes[type] += j.estadistiques.goalTypes[type] || 0;
-                });
-            }
+        const currentDate = new Date().toLocaleDateString('ca-ES', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
         });
-    });
-    
-    // ============ TAULA COMPLETA AMB LES COLUMNES EXACTES ============
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
-    doc.text('ESTADÍSTIQUES COMPLETES', leftMargin, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(6.5);
-    
-    // Capçalera exacta
-    const headers = ['Nº', 'Jugador', 'PJ', 'Gols', 'H+', 'Pen', 'Con', 'Boy', 'Nor', 'Exc', 'Par', 'Ast', 'Rob', 'Pèr', 'FR', 'Xuts', 'PenF', 'Efic%', 'G/P', 'Valor'];
-    const colWidths = [7, 30, 8, 10, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 11, 9, 11];
-    let xPos = leftMargin;
-    
-    doc.setFont(undefined, 'bold');
-    doc.setFillColor(6, 182, 212);
-    doc.rect(leftMargin, yPos - 3, colWidths.reduce((a,b) => a+b, 0), 5, 'F');
-    doc.setTextColor(255, 255, 255);
-    
-    headers.forEach((header, i) => {
-        doc.text(header, xPos + 0.5, yPos);
-        xPos += colWidths[i];
-    });
-    yPos += 5;
-    
-    // Calcular valoració i ordenar
-    const sortedPlayers = Object.entries(playerStats).map(([name, data]) => {
-        const valor = (data.gols * 3) + (data.assistencies * 2) + (data.robatoris * 1) + 
-                     (data.parades * 2) - (data.perdues * 1) - (data.exclusions * 2);
-        return [name, data, valor];
-    }).sort((a, b) => b[2] - a[2]);
-    
-    doc.setTextColor(0, 0, 0);
-    sortedPlayers.forEach(([name, data, valor], index) => {
-        checkPageBreak(6);
+        doc.text(`Data: ${currentDate}`, 148.5, yPos, { align: 'center' });
+        yPos += 20;
         
-        doc.setFont(undefined, index < 3 ? 'bold' : 'normal');
+        addSeparator();
         
-        if (index % 2 === 0) {
-            doc.setFillColor(240, 240, 240);
-            doc.rect(leftMargin, yPos - 3, colWidths.reduce((a,b) => a+b, 0), 5, 'F');
-        }
+        // ============ RESUM EXECUTIU ============
+        const victories = allMatches.filter(m => m.scoreCNT > m.scoreRival).length;
+        const defeats = allMatches.filter(m => m.scoreCNT < m.scoreRival).length;
+        const draws = allMatches.filter(m => m.scoreCNT === m.scoreRival).length;
+        const totalGols = allMatches.reduce((sum, m) => sum + (m.scoreCNT || 0), 0);
+        const totalGolsRebuts = allMatches.reduce((sum, m) => sum + (m.scoreRival || 0), 0);
         
-        xPos = leftMargin;
-        const avgGols = (data.gols / data.partidos).toFixed(1);
-        const totalXuts = data.gols + data.xutsFallats;
-        const efic = totalXuts > 0 ? ((data.gols / totalXuts) * 100).toFixed(1) : '0';
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('RESUM DE LA TEMPORADA', leftMargin, yPos);
+        yPos += 8;
         
-        const rowData = [
-            data.num.toString(),
-            name.length > 16 ? name.substring(0, 16) : name,
-            data.partidos.toString(),
-            data.gols.toString(),
-            (data.goalTypes['h+'] || 0).toString(),
-            (data.goalTypes.penalty || 0).toString(),
-            (data.goalTypes.contra || 0).toString(),
-            (data.goalTypes.boya || 0).toString(),
-            (data.goalTypes.normal || 0).toString(),
-            data.exclusions.toString(),
-            data.parades.toString(),
-            data.assistencies.toString(),
-            data.robatoris.toString(),
-            data.perdues.toString(),
-			data.faltesRebudes.toString(),
-            data.xutsFallats.toString(),
-            data.penaltyMissed.toString(),
-            efic + '%',
-            avgGols,
-            valor.toString()
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Partits jugats: ${allMatches.length}`, leftMargin, yPos);
+        yPos += 6;
+        doc.text(`Victòries: ${victories} | Derrotes: ${defeats} | Empats: ${draws}`, leftMargin, yPos);
+        yPos += 6;
+        doc.text(`Gols a favor: ${totalGols} | Gols en contra: ${totalGolsRebuts}`, leftMargin, yPos);
+        yPos += 6;
+        doc.text(`Diferència de gols: ${totalGols - totalGolsRebuts}`, leftMargin, yPos);
+        yPos += 10;
+        
+        addSeparator();
+        
+        // ============ ESTADÍSTIQUES TOTALS ============
+        let totalExclusions = 0, totalAssist = 0, totalRob = 0, totalPer = 0;
+        let totalParades = 0, totalXF = 0, totalPM = 0;
+        
+        allMatches.forEach(match => {
+            match.jugadors.forEach(j => {
+                totalExclusions += j.estadistiques.exclusions || 0;
+                totalAssist += j.estadistiques.assistencies || 0;
+                totalRob += j.estadistiques.robatoris || 0;
+                totalPer += j.estadistiques.perdues || 0;
+                totalParades += j.estadistiques.parades || 0;
+                totalXF += j.estadistiques.xutsFallats || 0;
+                totalPM += j.estadistiques.penaltyMissed || 0;
+            });
+        });
+        
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('ESTADÍSTIQUES GENERALS DE L\'EQUIP', leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(9);
+        doc.setFont(undefined, 'normal');
+        
+        const col1Stats = [
+            ['Total Gols:', totalGols],
+            ['Total Exclusions:', totalExclusions],
+            ['Total Assistències:', totalAssist]
         ];
         
-        rowData.forEach((value, i) => {
-            doc.text(value, xPos + 0.5, yPos, { maxWidth: colWidths[i] - 1 });
-            xPos += colWidths[i];
+        const col2Stats = [
+            ['Total Robatoris:', totalRob],
+            ['Total Pèrdues:', totalPer],
+            ['Total Parades:', totalParades]
+        ];
+        
+        const col3Stats = [
+            ['Xuts Fallats:', totalXF],
+            ['Penalties Fallats:', totalPM],
+            ['Gols Rebuts:', totalGolsRebuts]
+        ];
+        
+        const startY = yPos;
+        col1Stats.forEach(([label, value], i) => {
+            doc.text(label, leftMargin + 5, startY + (i * 5));
+            doc.text(value.toString(), leftMargin + 50, startY + (i * 5));
         });
         
-        yPos += 5;
-    });
-    
-    yPos += 3;
-    doc.setFontSize(6);
-    doc.setFont(undefined, 'italic');
-    doc.text('PJ=Partits, H+=Superioritat, Pen=Penalty, Con=Contra, Boy=Boya, Nor=Normal, Exc=Exclusions, Par=Parades, Ast=Assistències,', leftMargin, yPos);
-    yPos += 3;
-    doc.text('Rob=Robatoris, Pèr=Pèrdues, FR=Faltes Rebudes, Xuts=Xuts Fallats, PenF=Penalties Fallats, Efic%=Eficiència Tir, G/P=Gols/Partit, Valor=Valoració Global', leftMargin, yPos);
-    yPos += 3;
-    doc.text('Valoració = Gols×3 + Assist×2 + Rob×1 + Parades×1 - Pèrdues×1 - Exclusions×2 - Gols rebuts×1', leftMargin, yPos);
-    yPos += 10;
-    
-    addSeparator();
-    
-    // ============ TOP PERFORMERS ============
-    doc.addPage();
-    yPos = 20;
-    
-    doc.setFontSize(14);
-    doc.setFont(undefined, 'bold');
-    doc.text('TOP PERFORMERS', leftMargin, yPos);
-    yPos += 12;
-    
-    const colWidth = (rightMargin - leftMargin) / 4 - 5;
-    const col1X = leftMargin;
-    const col2X = leftMargin + colWidth + 10;
-    const col3X = leftMargin + (colWidth + 10) * 2;
-    const col4X = leftMargin + (colWidth + 10) * 3;
-    
-    let col1Y = yPos, col2Y = yPos, col3Y = yPos, col4Y = yPos;
-    
-    doc.setFontSize(9);
-    // ============ RÀNQUING MVP GLOBAL ============
-yPos += 5;
-addSeparator();
-
-doc.setFontSize(14);
-doc.setFont(undefined, 'bold');
-doc.text('🏆 RÀNQUING MVP DE LA TEMPORADA', leftMargin, yPos);
-yPos += 12;
-
-doc.setFontSize(9);
-doc.setFont(undefined, 'normal');
-doc.text('Top 10 jugadors amb millor valoració mitjana per partit', leftMargin, yPos);
-yPos += 10;
-
-// Calcular valoració mitjana per partit per cada jugador
-const playersWithAvgValue = Object.values(playerStats).map(p => {
-    const valor = calculatePlayerValue({
-        gols: p.gols,
-        goalTypes: p.goalTypes,
-        assistencies: p.assistencies,
-        robatoris: p.robatoris,
-        blocatges: p.blocks || 0,
-        parades: p.parades,
-        faltesRebudes: p.faltesRebudes || 0,
-        exclusions: p.exclusions,
-        exclusionTypes: p.exclusionTypes || { normal: 0, penalty: 0 },
-        penaltyMissed: p.penaltyMissed,
-        perdues: p.perdues,
-        xutsFallats: p.xutsFallats
-    });
-    const avgValor = p.partidos > 0 ? valor / p.partidos : 0;
-    return { ...p, valorTotal: valor, valorMitja: avgValor };
-}).sort((a, b) => b.valorMitja - a.valorMitja).slice(0, 10);
-
-doc.setFontSize(8);
-
-// Capçalera
-doc.setFont(undefined, 'bold');
-doc.setFillColor(6, 182, 212);
-doc.rect(leftMargin, yPos - 3, rightMargin - leftMargin, 5, 'F');
-doc.setTextColor(255, 255, 255);
-
-doc.text('#', leftMargin + 2, yPos);
-doc.text('Núm', leftMargin + 10, yPos);
-doc.text('Jugador', leftMargin + 22, yPos);
-doc.text('Partits', leftMargin + 80, yPos);
-doc.text('Valor Total', leftMargin + 105, yPos);
-doc.text('Valor/Partit', leftMargin + 135, yPos);
-doc.text('Gols', leftMargin + 170, yPos);
-doc.text('Assists', leftMargin + 190, yPos);
-doc.text('Parades', leftMargin + 215, yPos);
-doc.text('Exc', leftMargin + 240, yPos);
-yPos += 5;
-
-doc.setTextColor(0, 0, 0);
-doc.setFont(undefined, 'normal');
-
-playersWithAvgValue.forEach((player, index) => {
-    checkPageBreak(6);
-    
-    const medals = ['🥇', '🥈', '🥉'];
-    const medal = index < 3 ? medals[index] : (index + 1).toString();
-    
-    if (index % 2 === 0) {
-        doc.setFillColor(240, 240, 240);
-        doc.rect(leftMargin, yPos - 3, rightMargin - leftMargin, 5, 'F');
-    }
-    
-    if (index < 3) doc.setFont(undefined, 'bold');
-    
-    doc.text(medal, leftMargin + 2, yPos);
-    doc.text(player.num.toString(), leftMargin + 10, yPos);
-    doc.text(player.name.substring(0, 28), leftMargin + 22, yPos);
-    doc.text(player.partidos.toString(), leftMargin + 80, yPos);
-    doc.text(player.valorTotal.toFixed(1), leftMargin + 105, yPos);
-    doc.text(player.valorMitja.toFixed(2), leftMargin + 135, yPos);
-    doc.text(player.gols.toString(), leftMargin + 170, yPos);
-    doc.text((player.assistencies || 0).toString(), leftMargin + 190, yPos);
-    doc.text((player.parades || 0).toString(), leftMargin + 215, yPos);
-    doc.text(player.exclusions.toString(), leftMargin + 240, yPos);
-    
-    if (index < 3) doc.setFont(undefined, 'normal');
-    
-    yPos += 5;
-});
-	
-    // Col 1: Top Golejadors
-    doc.setFont(undefined, 'bold');
-    doc.text('🥇 Top 10 Golejadors', col1X, col1Y);
-    col1Y += 5;
-    doc.setFontSize(7);
-    doc.setFont(undefined, 'normal');
-    
-    Object.entries(playerStats).sort((a, b) => b[1].gols - a[1].gols).slice(0, 10).forEach(([name, data]) => {
-        doc.text(`${data.num}. ${name.substring(0, 14)}: ${data.gols}`, col1X + 2, col1Y);
-        col1Y += 4;
-    });
-    
-    // Col 2: Top Assistents
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
-    doc.text('🎯 Top 10 Assistents', col2X, col2Y);
-    col2Y += 5;
-    doc.setFontSize(7);
-    doc.setFont(undefined, 'normal');
-    
-    Object.entries(playerStats).sort((a, b) => b[1].assistencies - a[1].assistencies).slice(0, 10).forEach(([name, data]) => {
-        doc.text(`${data.num}. ${name.substring(0, 14)}: ${data.assistencies}`, col2X + 2, col2Y);
-        col2Y += 4;
-    });
-    
-    // Col 3: Top Porters
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
-    doc.text('🧤 Top 10 Porters', col3X, col3Y);
-    col3Y += 5;
-    doc.setFontSize(7);
-    doc.setFont(undefined, 'normal');
-    
-    Object.entries(playerStats).filter(([_, d]) => d.parades > 0).sort((a, b) => b[1].parades - a[1].parades).slice(0, 10).forEach(([name, data]) => {
-        doc.text(`${data.num}. ${name.substring(0, 14)}: ${data.parades}`, col3X + 2, col3Y);
-        col3Y += 4;
-    });
-    
-    // Col 4: Top Defensors
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
-    doc.text('🛡️ Top 10 Defensors', col4X, col4Y);
-    col4Y += 5;
-    doc.setFontSize(7);
-    doc.setFont(undefined, 'normal');
-    
-    Object.entries(playerStats).sort((a, b) => b[1].robatoris - a[1].robatoris).slice(0, 10).forEach(([name, data]) => {
-        doc.text(`${data.num}. ${name.substring(0, 14)}: ${data.robatoris}`, col4X + 2, col4Y);
-        col4Y += 4;
-    });
-    
-    // ============ EVOLUCIÓ DE RESULTATS ============
-    doc.addPage();
-    yPos = 20;
-    
-    doc.setFontSize(14);
-    doc.setFont(undefined, 'bold');
-    doc.text('EVOLUCIÓ DE RESULTATS', leftMargin, yPos);
-    yPos += 12;
-    
-    doc.setFontSize(7);
-    doc.setFont(undefined, 'normal');
-    
-    let leftColY = yPos;
-    let rightColY = yPos;
-    const colWidthEvol = (rightMargin - leftMargin) / 2 - 10;
-    
-    allMatches.forEach((match, index) => {
-        const useLeftCol = index % 2 === 0;
-        const currentX = useLeftCol ? leftMargin : leftMargin + colWidthEvol + 20;
-        let currentY = useLeftCol ? leftColY : rightColY;
-        
-        if (currentY > pageHeight - 15) {
-            doc.addPage();
-            leftColY = 20;
-            rightColY = 20;
-            currentY = 20;
-        }
-        
-        const date = new Date(match.data).toLocaleDateString('ca-ES', { 
-            day: '2-digit', 
-            month: '2-digit',
-            year: 'numeric'
+        col2Stats.forEach(([label, value], i) => {
+            doc.text(label, leftMargin + 95, startY + (i * 5));
+            doc.text(value.toString(), leftMargin + 140, startY + (i * 5));
         });
         
-        const location = match.matchLocation === 'home' ? '🏠' : '✈️';
-        const result = match.scoreCNT > match.scoreRival ? 'V' : 
-                      match.scoreCNT < match.scoreRival ? 'D' : 'E';
+        col3Stats.forEach(([label, value], i) => {
+            doc.text(label, leftMargin + 180, startY + (i * 5));
+            doc.text(value.toString(), leftMargin + 225, startY + (i * 5));
+        });
         
-        if (result === 'V') doc.setTextColor(34, 197, 94);
-        else if (result === 'D') doc.setTextColor(239, 68, 68);
-        else doc.setTextColor(251, 191, 36);
+        yPos = startY + 20;
+        addSeparator();
+        
+        // ============ ESTADÍSTIQUES INDIVIDUALS COMPLETES ============
+        const playerStats = {};
+        
+        allMatches.forEach(match => {
+            match.jugadors.forEach(j => {
+                const name = j.nom.trim();
+                if (!playerStats[name]) {
+                    playerStats[name] = {
+                        num: j.numero,
+                        partidos: 0,
+                        gols: 0,
+                        exclusions: 0,
+                        parades: 0,
+                        assistencies: 0,
+                        robatoris: 0,
+                        perdues: 0,
+                        xutsFallats: 0,
+                        penaltyMissed: 0,
+                        faltesRebudes: 0,
+                        goalTypes: { normal: 0, 'h+': 0, penalty: 0, contra: 0, boya: 0 }
+                    };
+                }
+                
+                playerStats[name].partidos++;
+                playerStats[name].gols += j.estadistiques.gols || 0;
+                playerStats[name].exclusions += j.estadistiques.exclusions || 0;
+                playerStats[name].parades += j.estadistiques.parades || 0;
+                playerStats[name].assistencies += j.estadistiques.assistencies || 0;
+                playerStats[name].robatoris += j.estadistiques.robatoris || 0;
+                playerStats[name].perdues += j.estadistiques.perdues || 0;
+                playerStats[name].xutsFallats += j.estadistiques.xutsFallats || 0;
+                playerStats[name].penaltyMissed += j.estadistiques.penaltyMissed || 0;
+                playerStats[name].faltesRebudes += j.estadistiques.faltesRebudes || 0;
+                
+                if (j.estadistiques.goalTypes) {
+                    Object.keys(j.estadistiques.goalTypes).forEach(type => {
+                        playerStats[name].goalTypes[type] += j.estadistiques.goalTypes[type] || 0;
+                    });
+                }
+            });
+        });
+        
+        // ============ TAULA COMPLETA JUGADORS ============
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('ESTADÍSTIQUES COMPLETES DELS JUGADORS', leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(6.5);
+        
+        // Capçalera de la taula
+        const headers = ['Nº', 'Jugador', 'PJ', 'Gols', 'H+', 'Pen', 'Con', 'Boy', 'Nor', 'Exc', 'Par', 'Ast', 'Rob', 'Pèr', 'FR', 'Xuts', 'PenF', 'Efic%', 'G/P', 'Valor'];
+        const colWidths = [7, 30, 8, 10, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 11, 9, 11];
+        let xPos = leftMargin;
         
         doc.setFont(undefined, 'bold');
-        doc.text(`${date} ${location}`, currentX, currentY);
-        doc.setFont(undefined, 'normal');
-        currentY += 3;
+        doc.setFillColor(6, 182, 212);
+        doc.rect(leftMargin, yPos - 3, colWidths.reduce((a,b) => a+b, 0), 5, 'F');
+        doc.setTextColor(255, 255, 255);
+        
+        headers.forEach((header, i) => {
+            doc.text(header, xPos + 0.5, yPos);
+            xPos += colWidths[i];
+        });
+        yPos += 5;
+        
+        // Calcular valoració i ordenar
+        const sortedPlayers = Object.entries(playerStats).map(([name, data]) => {
+            const valor = (data.gols * 3) + (data.assistencies * 2) + (data.robatoris * 1) + 
+                         (data.parades * 2) - (data.perdues * 1) - (data.exclusions * 2);
+            return [name, data, valor];
+        }).sort((a, b) => b[2] - a[2]);
         
         doc.setTextColor(0, 0, 0);
-        const rivalText = match.rivalTeam.length > 22 ? match.rivalTeam.substring(0, 22) : match.rivalTeam;
-        doc.text(`vs ${rivalText}`, currentX + 1, currentY);
-        currentY += 3;
-        doc.text(`${match.scoreCNT}-${match.scoreRival} (${result})`, currentX + 1, currentY);
+        sortedPlayers.forEach(([name, data, valor], index) => {
+            checkPageBreak(6);
+            
+            doc.setFont(undefined, index < 3 ? 'bold' : 'normal');
+            
+            if (index % 2 === 0) {
+                doc.setFillColor(240, 240, 240);
+                doc.rect(leftMargin, yPos - 3, colWidths.reduce((a,b) => a+b, 0), 5, 'F');
+            }
+            
+            xPos = leftMargin;
+            const avgGols = (data.gols / data.partidos).toFixed(1);
+            const totalXuts = data.gols + data.xutsFallats;
+            const efic = totalXuts > 0 ? ((data.gols / totalXuts) * 100).toFixed(1) : '0';
+            
+            const rowData = [
+                data.num.toString(),
+                name.length > 16 ? name.substring(0, 15) + '.' : name,
+                data.partidos.toString(),
+                data.gols.toString(),
+                data.goalTypes['h+'].toString(),
+                data.goalTypes.penalty.toString(),
+                data.goalTypes.contra.toString(),
+                data.goalTypes.boya.toString(),
+                data.goalTypes.normal.toString(),
+                data.exclusions.toString(),
+                data.parades.toString(),
+                data.assistencies.toString(),
+                data.robatoris.toString(),
+                data.perdues.toString(),
+                data.faltesRebudes.toString(),
+                totalXuts.toString(),
+                data.penaltyMissed.toString(),
+                totalXuts > 0 ? `${efic}%` : '-',
+                avgGols,
+                valor.toFixed(1)
+            ];
+            
+            rowData.forEach((cell, i) => {
+                doc.text(cell, xPos + 0.5, yPos);
+                xPos += colWidths[i];
+            });
+            
+            yPos += 5;
+        });
         
-        const q1 = `${match.periodScores?.q1?.cnt || 0}-${match.periodScores?.q1?.rival || 0}`;
-        const q2 = `${match.periodScores?.q2?.cnt || 0}-${match.periodScores?.q2?.rival || 0}`;
-        const q3 = `${match.periodScores?.q3?.cnt || 0}-${match.periodScores?.q3?.rival || 0}`;
-        const q4 = `${match.periodScores?.q4?.cnt || 0}-${match.periodScores?.q4?.rival || 0}`;
+        // Nova pàgina per als partits
+        doc.addPage();
+        yPos = 20;
         
-        currentY += 3;
-        doc.setFontSize(6);
-        doc.text(`${q1}|${q2}|${q3}|${q4}`, currentX + 1, currentY);
+        // ============ LLISTAT DE PARTITS ============
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('HISTORIAL DE PARTITS', leftMargin, yPos);
+        yPos += 8;
+        
         doc.setFontSize(7);
+        doc.setFont(undefined, 'normal');
         
-        currentY += 5;
+        let leftColY = yPos;
+        let rightColY = yPos;
+        const colWidth = (rightMargin - leftMargin) / 2;
         
-        if (useLeftCol) leftColY = currentY;
-        else rightColY = currentY;
-    });
-    
-    const fileName = `CNT_Informe_General_${new Date().toISOString().split('T')[0]}.pdf`;
-    doc.save(fileName);
-    
-    alert('✅ PDF generat correctament!');
+        allMatches.forEach((match, index) => {
+            const useLeftCol = index % 2 === 0;
+            const currentX = useLeftCol ? leftMargin : leftMargin + colWidth + 5;
+            let currentY = useLeftCol ? leftColY : rightColY;
+            
+            if (currentY > pageHeight - 20) {
+                doc.addPage();
+                leftColY = 20;
+                rightColY = 20;
+                currentY = 20;
+            }
+            
+            const date = new Date(match.data).toLocaleDateString('ca-ES', {
+                day: '2-digit',
+                month: '2-digit'
+            });
+            const location = match.matchLocation === 'home' ? '🏠' : '✈️';
+            const result = match.scoreCNT > match.scoreRival ? 'V' : 
+                          match.scoreCNT < match.scoreRival ? 'D' : 'E';
+            
+            if (result === 'V') doc.setTextColor(34, 197, 94);
+            else if (result === 'D') doc.setTextColor(239, 68, 68);
+            else doc.setTextColor(251, 191, 36);
+            
+            doc.setFont(undefined, 'bold');
+            doc.text(`${date} ${location}`, currentX, currentY);
+            doc.setFont(undefined, 'normal');
+            currentY += 3;
+            
+            doc.setTextColor(0, 0, 0);
+            const rivalText = match.rivalTeam.length > 22 ? 
+                match.rivalTeam.substring(0, 22) : match.rivalTeam;
+            doc.text(`vs ${rivalText}`, currentX + 1, currentY);
+            currentY += 3;
+            doc.text(`${match.scoreCNT}-${match.scoreRival} (${result})`, currentX + 1, currentY);
+            
+            const q1 = `${match.periodScores?.q1?.cnt || 0}-${match.periodScores?.q1?.rival || 0}`;
+            const q2 = `${match.periodScores?.q2?.cnt || 0}-${match.periodScores?.q2?.rival || 0}`;
+            const q3 = `${match.periodScores?.q3?.cnt || 0}-${match.periodScores?.q3?.rival || 0}`;
+            const q4 = `${match.periodScores?.q4?.cnt || 0}-${match.periodScores?.q4?.rival || 0}`;
+            
+            currentY += 3;
+            doc.setFontSize(6);
+            doc.text(`${q1}|${q2}|${q3}|${q4}`, currentX + 1, currentY);
+            doc.setFontSize(7);
+            
+            currentY += 5;
+            
+            if (useLeftCol) leftColY = currentY;
+            else rightColY = currentY;
+        });
+        
+        const fileName = `CNT_Informe_General_${new Date().toISOString().split('T')[0]}.pdf`;
+        doc.save(fileName);
+        
+        alert('✅ PDF generat correctament amb totes les estadístiques!');
+        
+    } catch (error) {
+        console.error('Error generant el PDF:', error);
+        alert(`❌ Error generant el PDF: ${error.message}`);
+    }
 }
 
 function generateTimePDF() {
