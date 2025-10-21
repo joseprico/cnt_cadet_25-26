@@ -456,7 +456,7 @@ function closePenaltyMissedModal(){document.getElementById('penaltyMissedModal')
 function selectPenaltyMissedPlayer(n,isR){const currentQuarter=getCurrentQuarter();const timestamp=Date.now();let playerName='';if(isR){playerName=rivalStats[n].name||`Rival ${n+1}`;rivalStats[n].penaltyMissed=(rivalStats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'rival',playerNum:n,playerName:playerName})}else{const player=players.find(p=>p.num===n);playerName=player?player.name:`Jugador ${n}`;stats[n].penaltyMissed=(stats[n].penaltyMissed||0)+1;chronologicalActions.push({timestamp:timestamp,quarter:currentQuarter,type:'penalty-missed',team:'cnt',playerNum:n,playerName:playerName})}updatePenaltyMissedSummary();saveToLocalStorage();closePenaltyMissedModal()}
 function updatePenaltyMissedSummary(){const c=document.getElementById('penaltyMissedSummary');if(!c)return;const s=[];players.forEach(p=>{const m=stats[p.num]?.penaltyMissed||0;if(m>0)s.push(`${p.num}. ${p.name.split(' ')[0]}: ${m}`)});rivalStats.forEach((r,i)=>{const m=r.penaltyMissed||0;if(m>0){const n=r.name||`Rival ${i+1}`;s.push(`<span style="color:#fca5a5">${n}: ${m}</span>`)}});c.innerHTML=s.length===0?'<span style="color:rgba(255,255,255,0.3)">No hay penaltis fallados</span>':s.join('<br>')}
 function saveToLocalStorage(){
-    localStorage.setItem('cntWaterpoloData',JSON.stringify({
+    localStorage.setItem('cntWaterpoloData_cadet',JSON.stringify({
         stats,
         rivalStats,
         lineups,
@@ -610,7 +610,7 @@ function getTotalActions(playerNum) {
 
 function loadFromLocalStorage(){
     try{
-        const s=localStorage.getItem('cntWaterpoloData');
+        const s=localStorage.getItem('cntWaterpoloData_cadet');
         if(s){
             const d=JSON.parse(s);
             if(d.stats)stats=d.stats;
