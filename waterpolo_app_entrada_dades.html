@@ -258,6 +258,10 @@ svg { display: inline-block; vertical-align: middle; }
 	    <div id="penaltyMissedModal" class="modal"><div class="modal-content" style="max-width: 400px;" id="penaltyModalContent"></div></div>
     
     <div id="waterWarning" class="water-warning">⚠️ Has de tenir exactament 7 jugadors DINS!</div>
+	<div id="playersInWaterBar" style="position: fixed; bottom: 80px; left: 0; right: 0; background: rgba(34, 197, 94, 0.9); padding: 4px 8px; text-align: center; z-index: 998; display: none;">
+    <div style="font-size: 8px; color: white; margin-bottom: 2px;">JUGADORS DINS:</div>
+    <div id="playersInWaterList" style="font-size: 12px; font-weight: bold; color: white; line-height: 1;"></div>
+</div>
 <div id="superioritatIndicator" style="display: none; position: fixed; top: 150px; left: 50%; transform: translateX(-50%); z-index: 1001; animation: slideDown 0.3s ease-out;"></div>
 
     <div class="container">
@@ -1837,7 +1841,50 @@ function togglePlayerWaterStatus(playerNum){
     saveToLocalStorage();
     checkPlayersInWater();
 }
-function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
+function checkPlayersInWater(){
+    const warning=document.getElementById('waterWarning');
+    const bar = document.getElementById('playersInWaterBar');
+    const list = document.getElementById('playersInWaterList');
+    
+    if(!warning || !bar || !list){return}
+    
+    const count=playersInWater.size;
+    
+    // ✅ MOSTRAR SEMPRE LA BARRA AMB ELS NÚMEROS
+    if(count > 0) {
+        const playerNumbers = Array.from(playersInWater).sort((a,b) => a-b);
+        list.textContent = playerNumbers.join(' - ');
+        bar.style.display = 'block';
+        
+        if(count === 7) {
+            bar.style.background = 'rgba(34, 197, 94, 0.9)';
+        } else if(count < 7) {
+            bar.style.background = 'rgba(251, 191, 36, 0.9)';
+        } else {
+            bar.style.background = 'rgba(239, 68, 68, 0.9)';
+        }
+    } else {
+        bar.style.display = 'none';
+    }
+    
+    // Avís temporal només si no és 7
+    if(count!==7){
+        warning.style.display='block';
+        if(count<7){
+            warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`
+        }else{
+            warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`
+        }
+        if(window.waterWarningTimer){
+            clearTimeout(window.waterWarningTimer)
+        }
+        window.waterWarningTimer=setTimeout(()=>{
+            if(warning)warning.style.display='none'
+        },3000)
+    }else{
+        warning.style.display='none'
+    }
+}
 function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderCompactView();if(compactMode)renderCompactView();saveToLocalStorage()}
 function startQuarter(quarter) {
     const timestamp = Date.now();
@@ -1883,7 +1930,6 @@ function startQuarter(quarter) {
 function calculatePlayingTimeForMatch(){const result={};const quarterDuration=480;players.forEach(p=>{const times={q1:0,q2:0,q3:0,q4:0,total:0};const playerChanges=playerWaterChanges.filter(c=>c.playerNum===p.num);['q1','q2','q3','q4'].forEach(quarter=>{const qChanges=playerChanges.filter(c=>c.quarter===quarter);if(qChanges.length===0){times[quarter]=0;return}qChanges.sort((a,b)=>a.timestamp-b.timestamp);let timeInWater=0;let lastInTime=null;const quarterStartTime=quarterStartTimes[quarter];if(!quarterStartTime){times[quarter]=0;return}qChanges.forEach(change=>{if(change.action==='in'){lastInTime=change.timestamp}else if(change.action==='out'&&lastInTime!==null){timeInWater+=(change.timestamp-lastInTime)/1000;lastInTime=null}});if(lastInTime!==null){const quarterEndTime=quarterStartTime+quarterDuration*1000;timeInWater+=(quarterEndTime-lastInTime)/1000}times[quarter]=Math.round(timeInWater)});times.total=times.q1+times.q2+times.q3+times.q4;result[p.num]={name:p.name,times:times}});return result}
 function formatTime(seconds){const mins=Math.floor(seconds/60);const secs=seconds%60;return `${mins}:${secs.toString().padStart(2,'0')}`}
 function showPlayingTimes(){const times=calculatePlayingTimeForMatch();let report='⏱️ TEMPS DE JOC PER JUGADOR\n\n';players.forEach(p=>{const t=times[p.num].times;report+=`${p.num}. ${p.name}\n`;report+=`  Q1: ${formatTime(t.q1)} | Q2: ${formatTime(t.q2)} | Q3: ${formatTime(t.q3)} | Q4: ${formatTime(t.q4)}\n`;report+=`  TOTAL: ${formatTime(t.total)} (${Math.round((t.total/1920)*100)}%)\n\n`});alert(report)}
-function checkPlayersInWater(){const warning=document.getElementById('waterWarning');if(!warning){return}const count=playersInWater.size;if(count!==7){warning.style.display='block';if(count<7){warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`}else{warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`}if(window.waterWarningTimer){clearTimeout(window.waterWarningTimer)}window.waterWarningTimer=setTimeout(()=>{if(warning)warning.style.display='none'},4000)}else{warning.style.display='none'}}
 document.addEventListener('DOMContentLoaded',function(){const o=document.getElementById('observacions');if(o){o.addEventListener('input',function(){saveToLocalStorage()})}init()});
 // ============================================
 // GESTOS TOUCH ULTRA-SENSIBLES (VISTA COMPACTA)
