@@ -1843,46 +1843,31 @@ function togglePlayerWaterStatus(playerNum){
 }
 function checkPlayersInWater(){
     const warning=document.getElementById('waterWarning');
-    const bar = document.getElementById('playersInWaterBar');
-    const list = document.getElementById('playersInWaterList');
-    
-    if(!warning || !bar || !list){return}
+    if(!warning){return}
     
     const count=playersInWater.size;
     
-    // ✅ MOSTRAR SEMPRE LA BARRA AMB ELS NÚMEROS
-    if(count > 0) {
-        const playerNumbers = Array.from(playersInWater).sort((a,b) => a-b);
-        list.textContent = playerNumbers.join(' - ');
-        bar.style.display = 'block';
-        
-        if(count === 7) {
-            bar.style.background = 'rgba(34, 197, 94, 0.9)';
-        } else if(count < 7) {
-            bar.style.background = 'rgba(251, 191, 36, 0.9)';
-        } else {
-            bar.style.background = 'rgba(239, 68, 68, 0.9)';
-        }
-    } else {
-        bar.style.display = 'none';
-    }
-    
-    // Avís temporal només si no és 7
     if(count!==7){
-        warning.style.display='block';
+        // ✅ AFEGIR LLISTA DE JUGADORS DINS
+        const playerNumbers = Array.from(playersInWater).sort((a,b) => a-b);
+        const playersList = playerNumbers.length > 0 ? ` (Dins: ${playerNumbers.join('-')})` : '';
+        
         if(count<7){
-            warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)`
+            warning.textContent=`⚠️ Falten ${7-count} jugador${7-count===1?'':'s'} DINS! (${count}/7)${playersList}`
         }else{
-            warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)`
+            warning.textContent=`⚠️ Hi ha ${count-7} jugador${count-7===1?'':'s'} de més DINS! (${count}/7)${playersList}`
         }
+        
+        warning.style.display='block';
+        
+        // ✅ CANCEL·LAR QUALSEVOL TIMER ANTERIOR
         if(window.waterWarningTimer){
-            clearTimeout(window.waterWarningTimer)
+            clearTimeout(window.waterWarningTimer);
+            window.waterWarningTimer = null;
         }
-        window.waterWarningTimer=setTimeout(()=>{
-            if(warning)warning.style.display='none'
-        },3000)
     }else{
-        warning.style.display='none'
+        // ✅ NOMÉS AMAGAR QUAN HI HA EXACTAMENT 7
+        warning.style.display='none';
     }
 }
 function processQuarterStart(quarter){const timestamp=Date.now();quarterStartTimes[quarter]=timestamp;const newLineup=lineups[quarter];playersInWater.forEach(num=>{if(!newLineup.includes(num)){playerWaterChanges.push({playerNum:num,quarter:quarter,action:'out',timestamp:timestamp})}});playersInWater.clear();newLineup.forEach(num=>{playersInWater.add(num);playerWaterChanges.push({playerNum:num,quarter:quarter,action:'in',timestamp:timestamp})});renderCompactView();if(compactMode)renderCompactView();saveToLocalStorage()}
