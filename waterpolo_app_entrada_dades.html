@@ -2080,12 +2080,15 @@ document.addEventListener('touchend', function(e) {
     const diffX = endX - startX;
     const diffY = endY - startY;
     
-    if (Math.abs(diffX) < 30) {
-        isDragging = false;
-        // ✅ Reset després d'un moment
-        setTimeout(() => { window.isCurrentlyDragging = false; }, 100);
-        return;
-    }
+   // ✅ CRITICAL: Només activar swipe si el moviment és MÉS HORITZONTAL que vertical
+   const isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
+   const isSignificantMove = Math.abs(diffX) > 50; // Augmentat de 30 a 50 per més seguretat
+   
+   if (!isHorizontalSwipe || !isSignificantMove) {
+       isDragging = false;
+       setTimeout(() => { window.isCurrentlyDragging = false; }, 100);
+       return;
+   }
     
     // Vista actual
     const onStats = !document.getElementById('statsView').classList.contains('hidden');
