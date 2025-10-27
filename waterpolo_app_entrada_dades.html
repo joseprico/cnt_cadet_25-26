@@ -264,6 +264,7 @@ svg { display: inline-block; vertical-align: middle; }
             <button class="modal-btn" onclick="selectActionType('perdua')">❌ Pèrdua</button>
 			<button class="modal-btn" onclick="selectActionType('xut')">🚫 Xut Fallat</button>
 			<button class="modal-btn" onclick="selectActionType('block')">🚫 Block</button>
+			<button class="modal-btn" onclick="selectActionType('contrafalta')">⚠️ Contrafalta</button>
         </div>
         <button class="btn btn-red" style="width: 100%;" onclick="closeActionModal()">Cancelar</button>
     </div>
@@ -523,7 +524,9 @@ function selectActionType(type) {
         stats[playerNum].xutsFallats = (stats[playerNum].xutsFallats || 0) + 1;
     } else if (type === 'block') {
         stats[playerNum].blocks = (stats[playerNum].blocks || 0) + 1;
-    }
+    } else if (type === 'contrafalta') {
+		stats[playerNum].contrafaltes = (stats[playerNum].contrafaltes || 0) + 1;
+	} 
     
     chronologicalActions.push({
         timestamp: timestamp,
@@ -539,7 +542,8 @@ function selectActionType(type) {
                            type === 'robatori' ? '🛡️ Robatori' : 
                            type === 'perdua' ? '❌ Pèrdua' :
                            type === 'xut' ? '🚫 Xut Fallat' :
-                           type === 'block' ? '🚫 Block' : '';
+                           type === 'block' ? '🚫 Block' :
+						   type === 'contrafalta' ? '⚠️ Contrafalta' : '';
     
     addToHistory({
         type: 'action',
@@ -580,7 +584,9 @@ function decrementLastAction(n) {
             stats[n].xutsFallats--;
         } else if (type === 'block' && stats[n].blocks > 0) {
             stats[n].blocks--;
-        }
+        }	else if (type === 'contrafalta' && stats[n].contrafaltes > 0) {
+			stats[n].contrafaltes--;
+		}
     } else {
         // Si no trobem cap, decrementem en ordre
         if (stats[n].infraccions2m > 0) {
@@ -593,7 +599,9 @@ function decrementLastAction(n) {
             stats[n].xutsFallats--;
         } else if (stats[n].blocks > 0) {
             stats[n].blocks--;
-        }
+        } else if (stats[n].contrafaltes > 0) {
+			stats[n].contrafaltes--;
+		}
     }
     
     if (compactMode) {
@@ -1761,7 +1769,11 @@ function undoAction(index){
             stats[action.playerNum].xutsFallats--;
         } else if (type === 'block' && stats[action.playerNum].blocks > 0) {
             stats[action.playerNum].blocks--;
-        }
+        } else if (type === 'contrafalta' && stats[action.playerNum].contrafaltes > 0) {
+			stats[action.playerNum].contrafaltes--;
+		} else if (type === '2metres' && stats[action.playerNum].infraccions2m > 0) {
+			stats[action.playerNum].infraccions2m--;
+		}
         renderCompactView();
         if(compactMode) renderCompactView();
     }
