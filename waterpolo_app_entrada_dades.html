@@ -1367,9 +1367,29 @@ function renderLineups(){
                 </div>
             ` : ''}
             
-            <div class="lineup-counter">${lineups[q].length}/7 seleccionados</div>
+            <div class="lineup-counter">
+    ${(() => {
+        const quarters = ['q1', 'q2', 'q3', 'q4'];
+        const currentIndex = quarters.indexOf(q);
+        if (currentIndex > 0 && quarterRealEndTimes[quarters[currentIndex - 1]] === null) {
+            return `🔒 Bloquejat - Finalitza el ${currentIndex}º quart primer`;
+        }
+        return `${lineups[q].length}/7 seleccionados`;
+    })()}
+</div>
             <div class="lineup-grid">
-                ${players.map(p=>`<button class="btn lineup-btn ${lineups[q].includes(p.num)?'selected':''}" onclick="toggleLineup('${q}',${p.num})" ${isStarted ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>${p.num}. ${p.name.split(' ')[0]}</button>`).join('')}
+               ${players.map(p=>{
+    const quarters = ['q1', 'q2', 'q3', 'q4'];
+    const currentIndex = quarters.indexOf(q);
+    const isPreviousQuarterEnded = currentIndex === 0 || quarterRealEndTimes[quarters[currentIndex - 1]] !== null;
+    const isDisabled = isStarted || !isPreviousQuarterEnded;
+    
+    return `<button class="btn lineup-btn ${lineups[q].includes(p.num)?'selected':''}" 
+                    onclick="toggleLineup('${q}',${p.num})" 
+                    ${isDisabled ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                ${p.num}. ${p.name.split(' ')[0]}
+            </button>`;
+}).join('')}
             </div>
             
             ${isStarted && !isEnded ? `
@@ -1507,7 +1527,17 @@ function toggleLineup(q, n) {
         alert('❌ No pots canviar l\'alineació després de començar el quart!');
         return;
     }
+    // ✅ BLOQUEJAR QUARTS FUTURS: No permetre editar si el quart anterior no s'ha finalitzat
+    const quarters = ['q1', 'q2', 'q3', 'q4'];
+    const currentQuarterIndex = quarters.indexOf(q);
     
+    if (currentQuarterIndex > 0) {
+        const previousQuarter = quarters[currentQuarterIndex - 1];
+        if (quarterRealEndTimes[previousQuarter] === null) {
+            alert(`❌ Has de finalitzar el ${currentQuarterIndex}º quart abans de configurar el ${currentQuarterIndex + 1}º quart!`);
+            return;
+        }
+    }
     const l = lineups[q];
     const i = l.indexOf(n);
     
