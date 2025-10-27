@@ -1377,6 +1377,26 @@ function renderLineups(){
         return `${lineups[q].length}/7 seleccionados`;
     })()}
 </div>
+
+${(() => {
+    const quarters = ['q1', 'q2', 'q3', 'q4'];
+    const currentIndex = quarters.indexOf(q);
+    const previousQuarter = currentIndex > 0 ? quarters[currentIndex - 1] : null;
+    const canCopy = previousQuarter && 
+                    quarterRealEndTimes[previousQuarter] !== null && 
+                    !isStarted && 
+                    lineups[q].length < 7;
+    
+    if (canCopy) {
+        return `
+            <button class="btn btn-blue" onclick="copyPreviousLineup('${q}')" 
+                    style="width: 100%; padding: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                📋 Copiar alineació del ${currentIndex}º quart
+            </button>
+        `;
+    }
+    return '';
+})()}
             <div class="lineup-grid">
                ${players.map(p=>{
     const quarters = ['q1', 'q2', 'q3', 'q4'];
@@ -1560,6 +1580,31 @@ function toggleLineup(q, n) {
     
     renderLineups();
     saveToLocalStorage();
+}
+function copyPreviousLineup(currentQuarter) {
+    const quarters = ['q1', 'q2', 'q3', 'q4'];
+    const currentIndex = quarters.indexOf(currentQuarter);
+    
+    if (currentIndex === 0) {
+        alert('❌ No hi ha quart anterior per copiar!');
+        return;
+    }
+    
+    const previousQuarter = quarters[currentIndex - 1];
+    const previousLineup = lineups[previousQuarter];
+    
+    if (previousLineup.length !== 7) {
+        alert('❌ L\'alineació del quart anterior no està completa!');
+        return;
+    }
+    
+    // Copiar l'alineació del quart anterior
+    lineups[currentQuarter] = [...previousLineup];
+    
+    renderLineups();
+    saveToLocalStorage();
+    
+    alert(`✅ Alineació copiada del ${currentIndex}º quart!`);
 }
 function resetQuarterTimes(quarter) {
     if (confirm(`Vols esborrar els temps registrats del ${quarter.toUpperCase()}? Això et permetrà tornar a començar el quart.`)) {
