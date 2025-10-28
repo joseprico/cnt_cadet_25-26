@@ -5,12 +5,12 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-10-28T15:56:34.864951",
-    "parser_version": "5.0_auto_normalize"
+    "downloaded_at": "2025-10-28T17:02:20.029417",
+    "parser_version": "5.1_clean_names"
   },
   "players": [
     {
-      "Nombre": "VeureADAY ACUÑA PRADAS",
+      "Nombre": "ADAY ACUÑA PRADAS",
       "PJ": 2,
       "GT": 2,
       "G": 2,
@@ -32,7 +32,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureBIEL COBACHO BOLDU",
+      "Nombre": "BIEL COBACHO BOLDU",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -54,7 +54,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureDAVID CASADO FUENTES",
+      "Nombre": "DAVID CASADO FUENTES",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -76,7 +76,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureGUILLEM POLEY DIAZ",
+      "Nombre": "GUILLEM POLEY DIAZ",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -98,7 +98,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureHECTOR DIOS ESTEBAN",
+      "Nombre": "HECTOR DIOS ESTEBAN",
       "PJ": 2,
       "GT": 5,
       "G": 5,
@@ -120,7 +120,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureIVAN GALLEGO MARTOS",
+      "Nombre": "IVAN GALLEGO MARTOS",
       "PJ": 2,
       "GT": 1,
       "G": 1,
@@ -142,7 +142,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureJORDI FARRE AMADOR",
+      "Nombre": "JORDI FARRE AMADOR",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -164,7 +164,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureJOSE MANUEL LLENIN SANTIAGO",
+      "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
       "PJ": 4,
       "GT": 2,
       "G": 2,
@@ -186,7 +186,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureLLATZER PEREZ BARADAD",
+      "Nombre": "LLATZER PEREZ BARADAD",
       "PJ": 2,
       "GT": 3,
       "G": 3,
@@ -208,7 +208,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureMAX CEREZO CAVERO",
+      "Nombre": "MAX CEREZO CAVERO",
       "PJ": 2,
       "GT": 5,
       "G": 5,
@@ -230,7 +230,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureNIL CARDENAS SAMPIETRO",
+      "Nombre": "NIL CARDENAS SAMPIETRO",
       "PJ": 2,
       "GT": 4,
       "G": 3,
@@ -252,7 +252,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureOLIVER HERRERA MENDOZA",
+      "Nombre": "OLIVER HERRERA MENDOZA",
       "PJ": 4,
       "GT": 0,
       "G": 0,
@@ -274,7 +274,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeurePAU VELASCO ALONSO",
+      "Nombre": "PAU VELASCO ALONSO",
       "PJ": 0,
       "GT": 0,
       "G": 0,
@@ -296,7 +296,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeurePOL RICO SANAHUJA",
+      "Nombre": "POL RICO SANAHUJA",
       "PJ": 2,
       "GT": 2,
       "G": 2,
@@ -318,7 +318,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureSAMUEL DIAZ MARROQUIN",
+      "Nombre": "SAMUEL DIAZ MARROQUIN",
       "PJ": 2,
       "GT": 10,
       "G": 4,
@@ -340,7 +340,7 @@
       "Vinculado": ""
     },
     {
-      "Nombre": "VeureYAHEL MUÑOZ FUENTES",
+      "Nombre": "YAHEL MUÑOZ FUENTES",
       "PJ": 1,
       "GT": 0,
       "G": 0,
