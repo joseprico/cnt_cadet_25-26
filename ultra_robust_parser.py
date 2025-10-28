@@ -1,6 +1,6 @@
 """
-Parser FINAL ACTAWP v5.0
-Descarrega + Normalitza automàticament
+Parser FINAL ACTAWP v5.1
+Descarrega + Normalitza camps + Neteja noms (elimina Ver/Veure)
 """
 
 import requests
@@ -96,9 +96,20 @@ class FinalActawpParser:
         
         return ''
     
+    def clean_player_name(self, name):
+        """Neteja el nom del jugador eliminant Ver/Veure"""
+        if not name:
+            return name
+        
+        # Eliminar "Veure" del principi (sense espai)
+        name = re.sub(r'^Veure', '', name, flags=re.IGNORECASE)
+        # Eliminar "Ver" del principi (sense espai)
+        name = re.sub(r'^Ver', '', name, flags=re.IGNORECASE)
+        
+        return name.strip()
+    
     def normalize_field_name(self, field_name):
         """Normalitza nom de camp al format curt esperat per l'index.html"""
-        # Mapping CATALÀ i ESPANYOL → curt
         field_mapping = {
             # Català
             'Nom': 'Nombre',
@@ -196,9 +207,9 @@ class FinalActawpParser:
                 value = cell.get_text(strip=True)
                 value = re.sub(r'\s+', ' ', value)
                 
-                # Netejar "Ver" dels noms
+                # CRÍTIC: Netejar "Ver"/"Veure" del camp Nombre
                 if normalized_field == 'Nombre' and value:
-                    value = re.sub(r'\bVer\b\s*', '', value, flags=re.IGNORECASE).strip()
+                    value = self.clean_player_name(value)
                 
                 # Convertir a número si és possible
                 if value and value not in ['', '-', '—', 'N/A']:
@@ -304,7 +315,7 @@ class FinalActawpParser:
     def generate_json(self, team_id, team_key, team_name, coach, language='es'):
         """Genera JSON amb normalització automàtica"""
         print(f"\n{'='*70}")
-        print(f"📥 {team_name} - Parser Final v5.0 (Auto-Normalize)")
+        print(f"📥 {team_name} - Parser v5.1 (Clean Names)")
         print(f"{'='*70}")
         
         result = {
@@ -315,7 +326,7 @@ class FinalActawpParser:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.0_auto_normalize"
+                "parser_version": "5.1_clean_names"
             }
         }
         
@@ -328,12 +339,10 @@ class FinalActawpParser:
             
             if result['players']:
                 first = result['players'][0]
-                print(f"\n  📊 Primer jugador (normalitzat):")
+                print(f"\n  📊 Primer jugador:")
                 print(f"     Nombre: {first.get('Nombre', '?')}")
                 print(f"     PJ: {first.get('PJ', 0)}")
                 print(f"     GT: {first.get('GT', 0)}")
-                print(f"     G: {first.get('G', 0)}")
-                print(f"     EX: {first.get('EX', 0)}")
         else:
             result['players'] = []
         
@@ -387,10 +396,10 @@ if __name__ == "__main__":
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER FINAL ACTAWP v5.0                                  ║
+║   PARSER FINAL ACTAWP v5.1                                  ║
 ║   ✅ Descarrega automàtica                                  ║
-║   ✅ Normalitza automàticament (PJ, GT, G, EX...)           ║
-║   ✅ Suporta català i espanyol                              ║
+║   ✅ Normalitza camps (PJ, GT, G, EX...)                    ║
+║   ✅ NETEJA NOMS (elimina Ver/Veure)                        ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -434,12 +443,10 @@ if __name__ == "__main__":
         print("\n" + "="*70)
     
     print("""
-✅ FITXERS GENERATS AMB NORMALITZACIÓ AUTOMÀTICA!
+✅ JSON GENERATS AMB NOMS NETS (sense Ver/Veure)!
 
 📤 Puja'ls a GitHub:
    git add actawp_*.json
-   git commit -m "✨ Dades ACTAWP normalitzades automàticament"
+   git commit -m "✨ Noms nets sense Ver/Veure"
    git push
-
-🔄 Aquest parser ja pots usar-lo a la GitHub Action!
 """)
