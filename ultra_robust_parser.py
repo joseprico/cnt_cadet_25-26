@@ -1,6 +1,6 @@
 """
-Parser FINAL ACTAWP v5.1
-Descarrega + Normalitza camps + Neteja noms (elimina Ver/Veure)
+Parser ACTAWP v5.2
+Afegeix: marcadors dels resultats i dates dels partits
 """
 
 import requests
@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 
-class FinalActawpParser:
+class ActawpParserV52:
     
     def __init__(self):
         self.session = requests.Session()
@@ -101,9 +101,7 @@ class FinalActawpParser:
         if not name:
             return name
         
-        # Eliminar "Veure" del principi (sense espai)
         name = re.sub(r'^Veure', '', name, flags=re.IGNORECASE)
-        # Eliminar "Ver" del principi (sense espai)
         name = re.sub(r'^Ver', '', name, flags=re.IGNORECASE)
         
         return name.strip()
@@ -111,7 +109,6 @@ class FinalActawpParser:
     def normalize_field_name(self, field_name):
         """Normalitza nom de camp al format curt esperat per l'index.html"""
         field_mapping = {
-            # Català
             'Nom': 'Nombre',
             'Partits jugats': 'PJ',
             'Total goals': 'GT',
@@ -131,8 +128,6 @@ class FinalActawpParser:
             'Temps morts': 'TM',
             'Joc net': 'JL',
             'Vinculat': 'Vinculado',
-            
-            # Espanyol
             'Nombre': 'Nombre',
             'Partidos jugados': 'PJ',
             'Goles totales': 'GT',
@@ -166,7 +161,6 @@ class FinalActawpParser:
         if not table:
             return players
         
-        # Extreure headers
         headers = []
         thead = table.find('thead')
         if thead:
@@ -177,7 +171,6 @@ class FinalActawpParser:
         if not headers:
             return players
         
-        # Extreure dades
         tbody = table.find('tbody')
         if not tbody:
             return players
@@ -200,18 +193,13 @@ class FinalActawpParser:
                 if not header:
                     continue
                 
-                # Normalitzar nom del camp
                 normalized_field = self.normalize_field_name(header)
-                
-                # Extreure valor
                 value = cell.get_text(strip=True)
                 value = re.sub(r'\s+', ' ', value)
                 
-                # CRÍTIC: Netejar "Ver"/"Veure" del camp Nombre
                 if normalized_field == 'Nombre' and value:
                     value = self.clean_player_name(value)
                 
-                # Convertir a número si és possible
                 if value and value not in ['', '-', '—', 'N/A']:
                     try:
                         if value.isdigit():
@@ -223,7 +211,6 @@ class FinalActawpParser:
                     except:
                         pass
                 else:
-                    # Si està buit i no és text, posar 0
                     if i > 0 and normalized_field not in ['Nombre', 'Vinculado']:
                         value = 0
                 
@@ -234,8 +221,8 @@ class FinalActawpParser:
         
         return players
     
-    def parse_matches(self, html_content):
-        """Parser per partits"""
+    def parse_matches(self, html_content, include_score=False):
+        """Parser per partits amb marcador i data millorada"""
         soup = BeautifulSoup(html_content, 'html.parser')
         matches = []
         
@@ -257,7 +244,7 @@ class FinalActawpParser:
                 if len(cols) < 3:
                     continue
                 
-                # Equip 1
+                # Equip 1 (columna 0)
                 col1 = cols[0]
                 team1_span = col1.find('span', class_='ellipsis')
                 if team1_span:
@@ -272,42 +259,67 @@ class FinalActawpParser:
                     if match_id_search:
                         match_info['match_id'] = match_id_search.group(1)
                 
-                # Data
-                col2 = cols[1]
-                date_span = col2.find('span', attrs={'data-sort': True})
+                # Marcador (si include_score=True, està a la columna 1)
+                if include_score and len(cols) >= 4:
+                    score_col = cols[1]
+                    score_text = score_col.get_text(strip=True)
+                    # Format esperat: "10 - 8" o similar
+                    score_match = re.search(r'(\d+)\s*-\s*(\d+)', score_text)
+                    if score_match:
+                        match_info['score_team1'] = int(score_match.group(1))
+                        match_info['score_team2'] = int(score_match.group(2))
+                        match_info['score'] = score_text
+                    
+                    # Data i hora (columna 2)
+                    date_col = cols[2]
+                    equip2_col = cols[3]
+                else:
+                    # Pròxims partits: data i hora a columna 1
+                    date_col = cols[1]
+                    equip2_col = cols[2]
+                
+                # Data i hora
+                date_span = date_col.find('span', attrs={'data-sort': True})
                 if date_span:
                     date_text = date_span.get_text(strip=True)
-                    date_match = re.search(r'([A-Za-z]{3},?\s+\d{1,2}/\d{1,2}/\d{4}\s+\d{1,2}:\d{2})', date_text)
+                    
+                    # Extreure data i hora
+                    date_match = re.search(r'([A-Za-z]{3,},?\s+\d{1,2}/\d{1,2}/\d{4}\s+\d{1,2}:\d{2})', date_text)
                     if date_match:
                         full_date = date_match.group(1)
                         match_info['date_time'] = full_date
+                        
+                        # Separar data i hora
                         parts = full_date.split()
                         if len(parts) >= 3:
-                            match_info['date'] = parts[1]
-                            match_info['time'] = parts[2]
+                            match_info['date'] = parts[1]  # Ex: "19/10/2024"
+                            match_info['time'] = parts[2]  # Ex: "18:00"
                     
+                    # Venue (lloc)
                     venue_span = date_span.find('span', class_='ellipsis')
                     if venue_span:
                         match_info['venue'] = venue_span.get('title') or venue_span.get_text(strip=True)
                 
                 # Equip 2
-                col3 = cols[2]
-                team2_span = col3.find('span', class_='ellipsis')
+                team2_span = equip2_col.find('span', class_='ellipsis')
                 if team2_span:
                     match_info['team2'] = team2_span.get_text(strip=True)
                 
-                # Home/Away
+                # Determinar home/away
                 if 'team1' in match_info and 'TERRASSA' in match_info['team1'].upper():
                     match_info['home_team'] = match_info['team1']
                     match_info['away_team'] = match_info.get('team2', '')
+                    match_info['is_home'] = True
                 else:
                     match_info['home_team'] = match_info.get('team2', '')
                     match_info['away_team'] = match_info.get('team1', '')
+                    match_info['is_home'] = False
                 
                 if match_info.get('match_id'):
                     matches.append(match_info)
                 
             except Exception as e:
+                print(f"  ⚠️ Error processant fila: {e}")
                 continue
         
         return matches
@@ -315,7 +327,7 @@ class FinalActawpParser:
     def generate_json(self, team_id, team_key, team_name, coach, language='es'):
         """Genera JSON amb normalització automàtica"""
         print(f"\n{'='*70}")
-        print(f"📥 {team_name} - Parser v5.1 (Clean Names)")
+        print(f"📥 {team_name} - Parser v5.2 (Marcadors + Dates)")
         print(f"{'='*70}")
         
         result = {
@@ -326,7 +338,7 @@ class FinalActawpParser:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.1_clean_names"
+                "parser_version": "5.2_scores_dates"
             }
         }
         
@@ -339,10 +351,7 @@ class FinalActawpParser:
             
             if result['players']:
                 first = result['players'][0]
-                print(f"\n  📊 Primer jugador:")
-                print(f"     Nombre: {first.get('Nombre', '?')}")
-                print(f"     PJ: {first.get('PJ', 0)}")
-                print(f"     GT: {first.get('GT', 0)}")
+                print(f"  📊 Primer: {first.get('Nombre', '?')} - PJ:{first.get('PJ', 0)} GT:{first.get('GT', 0)}")
         else:
             result['players'] = []
         
@@ -370,21 +379,28 @@ class FinalActawpParser:
         result['team_stats'] = team_stats
         print(f"  ✅ {len(team_stats)} estadístiques")
         
-        # Pròxims partits
+        # Pròxims partits (sense marcador)
         print("\n3️⃣ PRÒXIMS PARTITS:")
         upcoming_data = self.get_tab_content(team_id, 'upcoming-matches', language)
         if upcoming_data and upcoming_data.get('code') == 0:
-            result['upcoming_matches'] = self.parse_matches(upcoming_data.get('content', ''))
+            result['upcoming_matches'] = self.parse_matches(upcoming_data.get('content', ''), include_score=False)
             print(f"  ✅ {len(result['upcoming_matches'])} partits")
+            if result['upcoming_matches']:
+                first = result['upcoming_matches'][0]
+                print(f"  📅 Pròxim: {first.get('away_team', '?')} - {first.get('date', '?')} {first.get('time', '?')}")
         else:
             result['upcoming_matches'] = []
         
-        # Últims resultats
+        # Últims resultats (amb marcador)
         print("\n4️⃣ ÚLTIMS RESULTATS:")
         results_data = self.get_tab_content(team_id, 'last-results', language)
         if results_data and results_data.get('code') == 0:
-            result['last_results'] = self.parse_matches(results_data.get('content', ''))
+            result['last_results'] = self.parse_matches(results_data.get('content', ''), include_score=True)
             print(f"  ✅ {len(result['last_results'])} resultats")
+            if result['last_results']:
+                first = result['last_results'][0]
+                score = first.get('score', '?')
+                print(f"  📊 Últim: {first.get('away_team', '?')} - {score}")
         else:
             result['last_results'] = []
         
@@ -392,14 +408,15 @@ class FinalActawpParser:
 
 
 if __name__ == "__main__":
-    parser = FinalActawpParser()
+    parser = ActawpParserV52()
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER FINAL ACTAWP v5.1                                  ║
-║   ✅ Descarrega automàtica                                  ║
-║   ✅ Normalitza camps (PJ, GT, G, EX...)                    ║
-║   ✅ NETEJA NOMS (elimina Ver/Veure)                        ║
+║   PARSER ACTAWP v5.2                                        ║
+║   ✅ Noms nets (sense Ver/Veure)                           ║
+║   ✅ Camps normalitzats (PJ, GT, G, EX...)                 ║
+║   ✨ MARCADORS dels resultats                              ║
+║   ✨ DATES dels pròxims partits                            ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -428,7 +445,6 @@ if __name__ == "__main__":
                 team_info['language']
             )
             
-            # Guardar
             filename = f"actawp_{team_key}_data.json"
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
@@ -443,10 +459,10 @@ if __name__ == "__main__":
         print("\n" + "="*70)
     
     print("""
-✅ JSON GENERATS AMB NOMS NETS (sense Ver/Veure)!
+✅ JSON GENERATS AMB MARCADORS I DATES!
 
 📤 Puja'ls a GitHub:
    git add actawp_*.json
-   git commit -m "✨ Noms nets sense Ver/Veure"
+   git commit -m "✨ Afegir marcadors i dates"
    git push
 """)
