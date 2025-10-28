@@ -5,12 +5,13 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-10-28T12:02:30.269944",
-    "parser_version": "5.0_auto_normalize"
+    "downloaded_at": "2025-10-28T12:02:51.768782",
+    "parser_version": "4.1_normalized",
+    "normalized_at": "2025-10-28T12:30:00"
   },
   "players": [
     {
-      "Nombre": "VeureADAY ACUÑA PRADAS",
+      "Nombre": "ADAY ACUÑA PRADAS",
       "PJ": 2,
       "GT": 2,
       "G": 2,
@@ -28,11 +29,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureBIEL COBACHO BOLDU",
+      "Nombre": "BIEL COBACHO BOLDU",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -50,11 +51,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureDAVID CASADO FUENTES",
+      "Nombre": "DAVID CASADO FUENTES",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -72,11 +73,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureGUILLEM POLEY DIAZ",
+      "Nombre": "GUILLEM POLEY DIAZ",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -94,11 +95,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureHECTOR DIOS ESTEBAN",
+      "Nombre": "HECTOR DIOS ESTEBAN",
       "PJ": 2,
       "GT": 5,
       "G": 5,
@@ -116,11 +117,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureIVAN GALLEGO MARTOS",
+      "Nombre": "IVAN GALLEGO MARTOS",
       "PJ": 2,
       "GT": 1,
       "G": 1,
@@ -138,11 +139,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureJORDI FARRE AMADOR",
+      "Nombre": "JORDI FARRE AMADOR",
       "PJ": 2,
       "GT": 0,
       "G": 0,
@@ -160,11 +161,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureJOSE MANUEL LLENIN SANTIAGO",
+      "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
       "PJ": 4,
       "GT": 2,
       "G": 2,
@@ -182,11 +183,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureLLATZER PEREZ BARADAD",
+      "Nombre": "LLATZER PEREZ BARADAD",
       "PJ": 2,
       "GT": 3,
       "G": 3,
@@ -204,11 +205,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureMAX CEREZO CAVERO",
+      "Nombre": "MAX CEREZO CAVERO",
       "PJ": 2,
       "GT": 5,
       "G": 5,
@@ -226,11 +227,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureNIL CARDENAS SAMPIETRO",
+      "Nombre": "NIL CARDENAS SAMPIETRO",
       "PJ": 2,
       "GT": 4,
       "G": 3,
@@ -248,11 +249,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureOLIVER HERRERA MENDOZA",
+      "Nombre": "OLIVER HERRERA MENDOZA",
       "PJ": 4,
       "GT": 0,
       "G": 0,
@@ -270,11 +271,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeurePAU VELASCO ALONSO",
+      "Nombre": "PAU VELASCO ALONSO",
       "PJ": 0,
       "GT": 0,
       "G": 0,
@@ -292,11 +293,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeurePOL RICO SANAHUJA",
+      "Nombre": "POL RICO SANAHUJA",
       "PJ": 2,
       "GT": 2,
       "G": 2,
@@ -314,11 +315,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureSAMUEL DIAZ MARROQUIN",
+      "Nombre": "SAMUEL DIAZ MARROQUIN",
       "PJ": 2,
       "GT": 10,
       "G": 4,
@@ -336,11 +337,11 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     },
     {
-      "Nombre": "VeureYAHEL MUÑOZ FUENTES",
+      "Nombre": "YAHEL MUÑOZ FUENTES",
       "PJ": 1,
       "GT": 0,
       "G": 0,
@@ -358,8 +359,8 @@
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "Vinculado": 0,
+      "MVP": 0
     }
   ],
   "team_stats": {
