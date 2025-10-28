@@ -28,7 +28,7 @@ jobs:
       
       - name: Download ACTAWP data with final parser
         run: |
-          python final_parser.py
+          python ultra_robust_parser.py
       
       - name: Check if there are changes
         id: check_changes
