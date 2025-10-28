@@ -1,6 +1,6 @@
 """
-Parser ULTRA-ROBUST per jugadors ACTAWP
-Prova tots els mètodes possibles per extreure headers correctament
+Parser FINAL ACTAWP v5.0
+Descarrega + Normalitza automàticament
 """
 
 import requests
@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 
-class UltraRobustActawpParser:
+class FinalActawpParser:
     
     def __init__(self):
         self.session = requests.Session()
@@ -59,18 +59,13 @@ class UltraRobustActawpParser:
             return None
     
     def extract_header_text(self, th):
-        """
-        Extreu el text del header provant múltiples mètodes
-        Retorna el text més descriptiu possible
-        """
+        """Extreu el text del header"""
         candidates = []
         
-        # Mètode 1: Atribut title
         title = th.get('title', '').strip()
         if title:
             candidates.append(('title', title))
         
-        # Mètode 2: Span amb title
         span = th.find('span')
         if span:
             span_title = span.get('title', '').strip()
@@ -81,17 +76,14 @@ class UltraRobustActawpParser:
             if span_text:
                 candidates.append(('span_text', span_text))
         
-        # Mètode 3: Text directe del th
         th_text = th.get_text(strip=True)
         if th_text:
             candidates.append(('th_text', th_text))
         
-        # Mètode 4: data-original-title (Bootstrap tooltips)
         data_title = th.get('data-original-title', '').strip()
         if data_title:
             candidates.append(('data_title', data_title))
         
-        # Prioritat: title > span_title > span_text > th_text
         priority = ['title', 'span_title', 'data_title', 'span_text', 'th_text']
         
         for method in priority:
@@ -99,48 +91,89 @@ class UltraRobustActawpParser:
                 if candidate_method == method and candidate_text:
                     return candidate_text
         
-        # Si no hem trobat res, retornar el primer que hi hagi
         if candidates:
             return candidates[0][1]
         
         return ''
     
-    def parse_players_ultra_robust(self, html_content):
-        """Parser ultra-robust per jugadors"""
+    def normalize_field_name(self, field_name):
+        """Normalitza nom de camp al format curt esperat per l'index.html"""
+        # Mapping CATALÀ i ESPANYOL → curt
+        field_mapping = {
+            # Català
+            'Nom': 'Nombre',
+            'Partits jugats': 'PJ',
+            'Total goals': 'GT',
+            'Gols': 'G',
+            'Gols penal': 'GP',
+            'Gols en tanda de penals': 'G5P',
+            'Targetes grogues': 'TA',
+            'Targetes vermelles': 'TR',
+            'Expulsions per 20 segons': 'EX',
+            'Expulsions definitives, amb substitució disciplinària': 'ED',
+            'Expulsions definitives per brutalitat, amb substitució als 4 minuts': 'EB',
+            'Expulsions definitives, amb substitució no disciplinària': 'EN',
+            'Expulsions i penal': 'EP',
+            'Faltes per penal': 'P',
+            'Penals fallats': 'PF',
+            'Altres': 'O',
+            'Temps morts': 'TM',
+            'Joc net': 'JL',
+            'Vinculat': 'Vinculado',
+            
+            # Espanyol
+            'Nombre': 'Nombre',
+            'Partidos jugados': 'PJ',
+            'Goles totales': 'GT',
+            'Goles': 'G',
+            'Goles de penalti': 'GP',
+            'Goles en tanda de penaltis': 'G5P',
+            'Tarjetas amarillas': 'TA',
+            'Tarjetas rojas': 'TR',
+            'Expulsiones por 20 segundos': 'EX',
+            'Expulsiones definitivas, con sustitución disciplinaria': 'ED',
+            'Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos': 'EB',
+            'Expulsiones definitivas, con sustitución no disciplinaria': 'EN',
+            'Expulsiones y penalti': 'EP',
+            'Faltas por penalti': 'P',
+            'Penaltis fallados': 'PF',
+            'Otros': 'O',
+            'Tiempos muertos': 'TM',
+            'Juego limpio': 'JL',
+            'Vinculado': 'Vinculado',
+            'MVP': 'MVP'
+        }
+        
+        return field_mapping.get(field_name, field_name)
+    
+    def parse_players(self, html_content):
+        """Parser de jugadors amb normalització automàtica"""
         soup = BeautifulSoup(html_content, 'html.parser')
         players = []
         
         table = soup.find('table')
         if not table:
-            print("  ⚠️ No s'ha trobat cap taula")
             return players
         
-        # Extreure headers amb mètode robust
+        # Extreure headers
         headers = []
         thead = table.find('thead')
         if thead:
-            ths = thead.find_all('th')
-            print(f"  📋 Trobats {len(ths)} headers")
-            
-            for i, th in enumerate(ths):
+            for th in thead.find_all('th'):
                 header_text = self.extract_header_text(th)
                 headers.append(header_text)
-                print(f"     {i+1}. \"{header_text}\"")
         
         if not headers:
-            print("  ⚠️ No s'han trobat headers!")
             return players
         
         # Extreure dades
         tbody = table.find('tbody')
         if not tbody:
-            print("  ⚠️ No s'ha trobat tbody")
             return players
         
         rows = tbody.find_all('tr')
-        print(f"  👥 Trobades {len(rows)} files de jugadors")
         
-        for row_idx, row in enumerate(rows, 1):
+        for row in rows:
             cells = row.find_all('td')
             
             if len(cells) < 2:
@@ -156,12 +189,15 @@ class UltraRobustActawpParser:
                 if not header:
                     continue
                 
-                # Extreure text de la cel·la
+                # Normalitzar nom del camp
+                normalized_field = self.normalize_field_name(header)
+                
+                # Extreure valor
                 value = cell.get_text(strip=True)
                 value = re.sub(r'\s+', ' ', value)
                 
                 # Netejar "Ver" dels noms
-                if i == 0 or 'nombre' in header.lower() or 'nom' in header.lower():
+                if normalized_field == 'Nombre' and value:
                     value = re.sub(r'\bVer\b\s*', '', value, flags=re.IGNORECASE).strip()
                 
                 # Convertir a número si és possible
@@ -176,26 +212,19 @@ class UltraRobustActawpParser:
                     except:
                         pass
                 else:
-                    # Si està buit i no és un camp de text, posar 0
-                    if i > 0 and header.lower() not in ['nombre', 'nom', 'name', 'vinculado', 'posición', 'posicio']:
+                    # Si està buit i no és text, posar 0
+                    if i > 0 and normalized_field not in ['Nombre', 'Vinculado']:
                         value = 0
                 
-                player_data[header] = value
+                player_data[normalized_field] = value
             
             if player_data:
                 players.append(player_data)
-                
-                # Debug: mostrar primer jugador complet
-                if row_idx == 1:
-                    print(f"\n  🔍 Primer jugador (debug):")
-                    for key, val in player_data.items():
-                        print(f"     {key}: {val}")
-                    print()
         
         return players
     
-    def parse_table_matches(self, html_content):
-        """Parser per partits (igual que abans)"""
+    def parse_matches(self, html_content):
+        """Parser per partits"""
         soup = BeautifulSoup(html_content, 'html.parser')
         matches = []
         
@@ -217,7 +246,7 @@ class UltraRobustActawpParser:
                 if len(cols) < 3:
                     continue
                 
-                # Columna 1: Equip 1
+                # Equip 1
                 col1 = cols[0]
                 team1_span = col1.find('span', class_='ellipsis')
                 if team1_span:
@@ -232,7 +261,7 @@ class UltraRobustActawpParser:
                     if match_id_search:
                         match_info['match_id'] = match_id_search.group(1)
                 
-                # Columna 2: Data
+                # Data
                 col2 = cols[1]
                 date_span = col2.find('span', attrs={'data-sort': True})
                 if date_span:
@@ -250,13 +279,13 @@ class UltraRobustActawpParser:
                     if venue_span:
                         match_info['venue'] = venue_span.get('title') or venue_span.get_text(strip=True)
                 
-                # Columna 3: Equip 2
+                # Equip 2
                 col3 = cols[2]
                 team2_span = col3.find('span', class_='ellipsis')
                 if team2_span:
                     match_info['team2'] = team2_span.get_text(strip=True)
                 
-                # Determinar home/away
+                # Home/Away
                 if 'team1' in match_info and 'TERRASSA' in match_info['team1'].upper():
                     match_info['home_team'] = match_info['team1']
                     match_info['away_team'] = match_info.get('team2', '')
@@ -273,9 +302,9 @@ class UltraRobustActawpParser:
         return matches
     
     def generate_json(self, team_id, team_key, team_name, coach, language='es'):
-        """Genera JSON amb parser ultra-robust"""
+        """Genera JSON amb normalització automàtica"""
         print(f"\n{'='*70}")
-        print(f"📥 {team_name} - Parser Ultra-Robust")
+        print(f"📥 {team_name} - Parser Final v5.0 (Auto-Normalize)")
         print(f"{'='*70}")
         
         result = {
@@ -286,7 +315,7 @@ class UltraRobustActawpParser:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "4.0_ultra_robust"
+                "parser_version": "5.0_auto_normalize"
             }
         }
         
@@ -294,19 +323,21 @@ class UltraRobustActawpParser:
         print("\n1️⃣ JUGADORS:")
         players_data = self.get_tab_content(team_id, 'players', language)
         if players_data and players_data.get('code') == 0:
-            result['players'] = self.parse_players_ultra_robust(players_data.get('content', ''))
-            print(f"  ✅ {len(result['players'])} jugadors extrets")
+            result['players'] = self.parse_players(players_data.get('content', ''))
+            print(f"  ✅ {len(result['players'])} jugadors")
             
             if result['players']:
-                first_player = result['players'][0]
-                print(f"\n  📊 Camps disponibles:")
-                for key in first_player.keys():
-                    print(f"     • {key}")
+                first = result['players'][0]
+                print(f"\n  📊 Primer jugador (normalitzat):")
+                print(f"     Nombre: {first.get('Nombre', '?')}")
+                print(f"     PJ: {first.get('PJ', 0)}")
+                print(f"     GT: {first.get('GT', 0)}")
+                print(f"     G: {first.get('G', 0)}")
+                print(f"     EX: {first.get('EX', 0)}")
         else:
             result['players'] = []
-            print("  ❌ Error obtenint jugadors")
         
-        # Estadístiques (igual que abans)
+        # Estadístiques
         print("\n2️⃣ ESTADÍSTIQUES:")
         stats_data = self.get_tab_content(team_id, 'stats', language)
         team_stats = {}
@@ -334,7 +365,7 @@ class UltraRobustActawpParser:
         print("\n3️⃣ PRÒXIMS PARTITS:")
         upcoming_data = self.get_tab_content(team_id, 'upcoming-matches', language)
         if upcoming_data and upcoming_data.get('code') == 0:
-            result['upcoming_matches'] = self.parse_table_matches(upcoming_data.get('content', ''))
+            result['upcoming_matches'] = self.parse_matches(upcoming_data.get('content', ''))
             print(f"  ✅ {len(result['upcoming_matches'])} partits")
         else:
             result['upcoming_matches'] = []
@@ -343,7 +374,7 @@ class UltraRobustActawpParser:
         print("\n4️⃣ ÚLTIMS RESULTATS:")
         results_data = self.get_tab_content(team_id, 'last-results', language)
         if results_data and results_data.get('code') == 0:
-            result['last_results'] = self.parse_table_matches(results_data.get('content', ''))
+            result['last_results'] = self.parse_matches(results_data.get('content', ''))
             print(f"  ✅ {len(result['last_results'])} resultats")
         else:
             result['last_results'] = []
@@ -352,12 +383,14 @@ class UltraRobustActawpParser:
 
 
 if __name__ == "__main__":
-    parser = UltraRobustActawpParser()
+    parser = FinalActawpParser()
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ULTRA-ROBUST ACTAWP v4.0                           ║
-║   Múltiples mètodes per extreure headers i dades            ║
+║   PARSER FINAL ACTAWP v5.0                                  ║
+║   ✅ Descarrega automàtica                                  ║
+║   ✅ Normalitza automàticament (PJ, GT, G, EX...)           ║
+║   ✅ Suporta català i espanyol                              ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -393,13 +426,6 @@ if __name__ == "__main__":
             
             print(f"\n💾 Guardat: {filename}")
             
-            # Mostrar exemple
-            if data['players']:
-                print(f"\n📊 Exemple primer jugador:")
-                first = data['players'][0]
-                for k, v in list(first.items())[:5]:
-                    print(f"   {k}: {v}")
-            
         except Exception as e:
             print(f"\n❌ Error: {e}")
             import traceback
@@ -408,12 +434,12 @@ if __name__ == "__main__":
         print("\n" + "="*70)
     
     print("""
-✅ FITXERS GENERATS!
+✅ FITXERS GENERATS AMB NORMALITZACIÓ AUTOMÀTICA!
 
-🔍 REVISA LA SORTIDA:
-- Mira quins headers s'han detectat
-- Comprova les dades del primer jugador
-- Si els valors són 0, els headers no són correctes
+📤 Puja'ls a GitHub:
+   git add actawp_*.json
+   git commit -m "✨ Dades ACTAWP normalitzades automàticament"
+   git push
 
-📤 Puja els nous JSON a GitHub per veure si ara funciona!
+🔄 Aquest parser ja pots usar-lo a la GitHub Action!
 """)
