@@ -5,8 +5,8 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-10-28T17:54:29.733585",
-    "parser_version": "5.2_scores_dates"
+    "downloaded_at": "2025-10-28T19:39:13.660918",
+    "parser_version": "5.3_final"
   },
   "players": [
     {
@@ -382,19 +382,19 @@
       "team1": "C.N. BARCELONA A",
       "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143260145/results",
       "match_id": "143260145",
-      "team2": "C.N. TERRASSA A",
-      "home_team": "C.N. TERRASSA A",
-      "away_team": "C.N. BARCELONA A",
-      "is_home": false
+      "score_team1": 16,
+      "score_team2": 13,
+      "score": "16 - 13",
+      "team2": "C.N. TERRASSA A"
     },
     {
       "team1": "C.N. TERRASSA A",
       "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results",
       "match_id": "143260144",
-      "team2": "C.N. MONTJUIC",
-      "home_team": "C.N. TERRASSA A",
-      "away_team": "C.N. MONTJUIC",
-      "is_home": true
+      "score_team1": 21,
+      "score_team2": 8,
+      "score": "21 - 8",
+      "team2": "C.N. MONTJUIC"
     }
   ]
 }
