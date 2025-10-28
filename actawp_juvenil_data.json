@@ -5,8 +5,8 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-10-28T17:39:38.032465",
-    "parser_version": "5.1_clean_names"
+    "downloaded_at": "2025-10-28T17:54:16.478315",
+    "parser_version": "5.2_scores_dates"
   },
   "players": [
     {
@@ -475,7 +475,8 @@
       "venue": "163 - Terrassa C.N.",
       "team2": "C.N. MONTJUIC B",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. MONTJUIC B"
+      "away_team": "C.N. MONTJUIC B",
+      "is_home": true
     },
     {
       "team1": "C.N. TERRASSA",
@@ -487,7 +488,8 @@
       "venue": "163 - Terrassa C.N.",
       "team2": "C.E. MEDITERRANI",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.E. MEDITERRANI"
+      "away_team": "C.E. MEDITERRANI",
+      "is_home": true
     },
     {
       "team1": "C.N. RUBÍ",
@@ -499,7 +501,8 @@
       "venue": "186 - Rubí, CN - Can Rosés",
       "team2": "C.N. TERRASSA",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. RUBÍ"
+      "away_team": "C.N. RUBÍ",
+      "is_home": false
     },
     {
       "team1": "C.N. MONTJUIC B",
@@ -511,7 +514,8 @@
       "venue": "161 - Montjuic, CN - Zona Esportiva",
       "team2": "C.N. TERRASSA",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. MONTJUIC B"
+      "away_team": "C.N. MONTJUIC B",
+      "is_home": false
     },
     {
       "team1": "C.E. MEDITERRANI",
@@ -523,7 +527,8 @@
       "venue": "258 - Mediterrani CE, Josep Vallès - 50m",
       "team2": "C.N. TERRASSA",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.E. MEDITERRANI"
+      "away_team": "C.E. MEDITERRANI",
+      "is_home": false
     },
     {
       "team1": "C.N. TERRASSA",
@@ -535,7 +540,8 @@
       "venue": "163 - Terrassa C.N.",
       "team2": "C.N. RUBÍ",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. RUBÍ"
+      "away_team": "C.N. RUBÍ",
+      "is_home": true
     }
   ],
   "last_results": [
@@ -545,7 +551,8 @@
       "match_id": "143253265",
       "team2": "C.N. MOLINS DE REI",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. MOLINS DE REI"
+      "away_team": "C.N. MOLINS DE REI",
+      "is_home": true
     },
     {
       "team1": "C.N. MONTJUIC A",
@@ -553,7 +560,8 @@
       "match_id": "143253266",
       "team2": "C.N. TERRASSA",
       "home_team": "C.N. TERRASSA",
-      "away_team": "C.N. MONTJUIC A"
+      "away_team": "C.N. MONTJUIC A",
+      "is_home": false
     }
   ]
 }

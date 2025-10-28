@@ -5,8 +5,8 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-10-28T17:39:52.213335",
-    "parser_version": "5.1_clean_names"
+    "downloaded_at": "2025-10-28T17:54:29.733585",
+    "parser_version": "5.2_scores_dates"
   },
   "players": [
     {
@@ -384,7 +384,8 @@
       "match_id": "143260145",
       "team2": "C.N. TERRASSA A",
       "home_team": "C.N. TERRASSA A",
-      "away_team": "C.N. BARCELONA A"
+      "away_team": "C.N. BARCELONA A",
+      "is_home": false
     },
     {
       "team1": "C.N. TERRASSA A",
@@ -392,7 +393,8 @@
       "match_id": "143260144",
       "team2": "C.N. MONTJUIC",
       "home_team": "C.N. TERRASSA A",
-      "away_team": "C.N. MONTJUIC"
+      "away_team": "C.N. MONTJUIC",
+      "is_home": true
     }
   ]
 }
