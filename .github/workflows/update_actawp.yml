@@ -1,1 +1,58 @@
+name: Update ACTAWP Data
 
+on:
+  schedule:
+    # Executar cada diumenge a les 20:00 UTC (21:00/22:00 hora catalana segons l'estació)
+    - cron: '0 20 * * 0'
+  
+  # Permetre executar manualment des de la pestanya Actions
+  workflow_dispatch:
+
+jobs:
+  update-actawp:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+      
+      - name: Download ACTAWP data
+        run: |
+          python generate_actawp_json.py
+      
+      - name: Check if there are changes
+        id: check_changes
+        run: |
+          git diff --exit-code actawp_*.json || echo "changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add actawp_*.json
+          git commit -m "🔄 Actualització automàtica dades ACTAWP - $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "### 📊 Actualització ACTAWP" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Data:** $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+            echo "✅ **Estat:** Dades actualitzades correctament" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **Estat:** No hi ha canvis respecte l'última actualització" >> $GITHUB_STEP_SUMMARY
+          fi
