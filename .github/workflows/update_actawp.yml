@@ -2,8 +2,8 @@ name: Update ACTAWP Data
 
 on:
   schedule:
-    # Executar cada 4 hores: 08:00, 12:00, 16:00, 20:00 UTC (09:00/10:00, 13:00/14:00, 17:00/18:00, 21:00/22:00 hora catalana)
-    - cron: '1 9,11,17,21 * * *'
+    # Executar cada 6 hores: 08:00, 14:00, 20:00 UTC (09:00/10:00, 15:00/16:00, 21:00/22:00 hora catalana)
+    - cron: '1 8,14,20 * * *'
   
   # Permetre executar manualment des de la pestanya Actions
   workflow_dispatch:
