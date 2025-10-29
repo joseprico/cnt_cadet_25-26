@@ -617,6 +617,11 @@ class ActawpParserV53:
         else:
             result['ranking'] = []
         
+        # Afegir timestamp d'actualització amb timezone Europe/Madrid
+        from datetime import timezone, timedelta
+        tz_madrid = timezone(timedelta(hours=1))  # UTC+1 (o +2 en horari d'estiu)
+        result['last_update'] = datetime.now(tz_madrid).isoformat()
+        
         return result
 
 
