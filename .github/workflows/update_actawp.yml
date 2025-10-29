@@ -1,0 +1,87 @@
+name: Update ACTAWP Data
+
+on:
+  schedule:
+   # Executar cada dia a les 08:00 i 20:00 UTC (09:00/10:00 i 21:00/22:00 hora catalana)
+    - cron: '0 8,20 * * *'
+  
+  # Permetre executar manualment des de la pestanya Actions
+  workflow_dispatch:
+
+jobs:
+  update-actawp:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+      
+      - name: Download ACTAWP data
+        run: |
+          python generate_actawp_json.py
+      
+      - name: Add timestamp to JSON files
+        run: |
+          python3 << EOF
+          import json
+          from datetime import datetime
+          
+          # Actualitzar fitxer Cadet
+          try:
+              with open('actawp_cadet_data.json', 'r', encoding='utf-8') as f:
+                  data = json.load(f)
+              data['last_update'] = datetime.now().isoformat()
+              with open('actawp_cadet_data.json', 'w', encoding='utf-8') as f:
+                  json.dump(data, f, ensure_ascii=False, indent=2)
+              print("✅ Timestamp afegit a actawp_cadet_data.json")
+          except Exception as e:
+              print(f"⚠️ Error amb Cadet: {e}")
+          
+          # Actualitzar fitxer Juvenil
+          try:
+              with open('actawp_juvenil_data.json', 'r', encoding='utf-8') as f:
+                  data = json.load(f)
+              data['last_update'] = datetime.now().isoformat()
+              with open('actawp_juvenil_data.json', 'w', encoding='utf-8') as f:
+                  json.dump(data, f, ensure_ascii=False, indent=2)
+              print("✅ Timestamp afegit a actawp_juvenil_data.json")
+          except Exception as e:
+              print(f"⚠️ Error amb Juvenil: {e}")
+          EOF
+      
+      - name: Check if there are changes
+        id: check_changes
+        run: |
+          git diff --exit-code actawp_*.json || echo "changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add actawp_*.json
+          git commit -m "🔄 Actualització automàtica dades ACTAWP - $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "### 📊 Actualització ACTAWP" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Data:** $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+            echo "✅ **Estat:** Dades actualitzades correctament" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **Estat:** No hi ha canvis respecte l'última actualització" >> $GITHUB_STEP_SUMMARY
+          fi
