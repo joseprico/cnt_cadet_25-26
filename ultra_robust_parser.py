@@ -380,23 +380,63 @@ class ActawpParserV53:
                 print("  ⚠️ No s'ha trobat cap taula de classificació")
                 return []
             
+            # Debug: mostrar headers
+            headers = []
+            thead = table.find('thead')
+            if thead:
+                for th in thead.find_all('th'):
+                    header_text = th.get_text(strip=True)
+                    headers.append(header_text)
+                print(f"  📋 Headers trobats: {headers}")
+            
             tbody = table.find('tbody')
             if not tbody:
                 print("  ⚠️ No s'ha trobat tbody a la taula")
                 return []
             
             rows = tbody.find_all('tr')
+            print(f"  📊 Files trobades: {len(rows)}")
             
-            for row in rows:
+            for idx, row in enumerate(rows):
                 try:
                     cols = row.find_all('td')
                     
-                    if len(cols) < 6:
+                    if len(cols) < 3:
                         continue
                     
+                    # Debug primera fila
+                    if idx == 0:
+                        print(f"  🔍 Primera fila ({len(cols)} columnes):")
+                        for i, col in enumerate(cols):
+                            print(f"      Col {i}: '{col.get_text(strip=True)[:50]}'")
+                    
+                    # Identificar quina columna és quina
+                    # Típicament: [Pos] [Equip] [PJ] [V] [E] [P] [GF] [GC] [Pts]
+                    # Però pot variar, així que busquem l'equip (text més llarg)
+                    
+                    posicio_idx = 0
+                    equip_idx = 1
+                    
+                    # Buscar la columna amb el nom de l'equip (normalment la més llarga o amb logo)
+                    for i, col in enumerate(cols[:3]):
+                        if col.find('img') or len(col.get_text(strip=True)) > 5:
+                            equip_idx = i
+                            break
+                    
+                    # La posició sol ser la columna anterior a l'equip
+                    if equip_idx > 0:
+                        posicio_idx = equip_idx - 1
+                    
+                    # Extreure posició
+                    posicio_text = cols[posicio_idx].get_text(strip=True)
+                    # Netejar "Veure" o altres textos
+                    posicio_text = re.sub(r'Veure|Ver|View', '', posicio_text, flags=re.IGNORECASE).strip()
+                    
                     # Extreure nom de l'equip i logo
-                    equip_cell = cols[1]
+                    equip_cell = cols[equip_idx]
                     equip_text = equip_cell.get_text(strip=True)
+                    # Netejar "Veure" del nom
+                    equip_text = re.sub(r'Veure|Ver|View', '', equip_text, flags=re.IGNORECASE).strip()
                     
                     # Buscar logo
                     logo_url = None
@@ -405,37 +445,46 @@ class ActawpParserV53:
                         logo_src = logo_img['src']
                         logo_url = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
                     
+                    # Les estadístiques comencen després de l'equip
+                    stats_start = equip_idx + 1
+                    
                     team_data = {
-                        'posicio': cols[0].get_text(strip=True),
+                        'posicio': posicio_text,
                         'equip': equip_text,
                         'logo': logo_url,
-                        'partits': int(cols[2].get_text(strip=True)) if cols[2].get_text(strip=True).isdigit() else 0,
-                        'guanyats': int(cols[3].get_text(strip=True)) if cols[3].get_text(strip=True).isdigit() else 0,
-                        'empatats': int(cols[4].get_text(strip=True)) if cols[4].get_text(strip=True).isdigit() else 0,
-                        'perduts': int(cols[5].get_text(strip=True)) if cols[5].get_text(strip=True).isdigit() else 0
+                        'partits': 0,
+                        'guanyats': 0,
+                        'empatats': 0,
+                        'perduts': 0,
+                        'gols_favor': 0,
+                        'gols_contra': 0,
+                        'punts': 0
                     }
                     
-                    # Camps opcionals (gols favor, contra, punts)
-                    if len(cols) > 6:
-                        gf_text = cols[6].get_text(strip=True)
-                        team_data['gols_favor'] = int(gf_text) if gf_text.isdigit() else 0
-                    if len(cols) > 7:
-                        gc_text = cols[7].get_text(strip=True)
-                        team_data['gols_contra'] = int(gc_text) if gc_text.isdigit() else 0
-                    if len(cols) > 8:
-                        pts_text = cols[8].get_text(strip=True)
-                        team_data['punts'] = int(pts_text) if pts_text.isdigit() else 0
+                    # Extreure estadístiques (ordre típic: PJ, V, E, P, GF, GC, Pts)
+                    stat_fields = ['partits', 'guanyats', 'empatats', 'perduts', 'gols_favor', 'gols_contra', 'punts']
                     
-                    ranking.append(team_data)
+                    for i, field in enumerate(stat_fields):
+                        col_idx = stats_start + i
+                        if col_idx < len(cols):
+                            value_text = cols[col_idx].get_text(strip=True)
+                            if value_text.isdigit():
+                                team_data[field] = int(value_text)
+                    
+                    # Només afegir si té dades vàlides
+                    if team_data['equip'] and len(team_data['equip']) > 1:
+                        ranking.append(team_data)
                     
                 except Exception as e:
-                    print(f"  ⚠️ Error processant fila de classificació: {e}")
+                    print(f"  ⚠️ Error processant fila {idx}: {e}")
                     continue
             
             return ranking
             
         except Exception as e:
             print(f"  ❌ Error obtenint classificació: {e}")
+            import traceback
+            traceback.print_exc()
             return []
     
     def generate_json(self, team_id, team_key, team_name, coach, language='es', ranking_url=None):
