@@ -28,7 +28,7 @@ jobs:
       
       - name: Download ACTAWP data
         run: |
-          python generate_actawp_json.py
+          python ultra_robust_parser.py
       
       - name: Add timestamp to JSON files
         run: |
