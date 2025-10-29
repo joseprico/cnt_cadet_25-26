@@ -1,8 +1,9 @@
 """
-Parser ACTAWP v5.3 - DEFINITIU
+Parser ACTAWP v5.4 - AMB LOGOS
 Estructura correcta segons captures:
 - Pròxims: [Equip1] [Data/Hora/Lloc] [Equip2]
 - Resultats: [Equip1] [MARCADOR] [Equip2]
+- NOVITAT: Extreu logos dels equips en tots els partits i classificació
 """
 
 import requests
@@ -255,6 +256,14 @@ class ActawpParserV53:
                 if team1_span:
                     match_info['team1'] = team1_span.get_text(strip=True)
                 
+                # Logo equip 1
+                team1_logo = cols[0].find('img')
+                if team1_logo and team1_logo.get('src'):
+                    logo_src = team1_logo['src']
+                    match_info['team1_logo'] = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
+                else:
+                    match_info['team1_logo'] = None
+                
                 # Enllaç
                 link = cols[0].find('a', href=True)
                 if link:
@@ -284,6 +293,14 @@ class ActawpParserV53:
                 team2_span = cols[2].find('span', class_='ellipsis')
                 if team2_span:
                     match_info['team2'] = team2_span.get_text(strip=True)
+                
+                # Logo equip 2
+                team2_logo = cols[2].find('img')
+                if team2_logo and team2_logo.get('src'):
+                    logo_src = team2_logo['src']
+                    match_info['team2_logo'] = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
+                else:
+                    match_info['team2_logo'] = None
                 
                 if match_info.get('match_id'):
                     matches.append(match_info)
@@ -326,6 +343,14 @@ class ActawpParserV53:
                 if team1_span:
                     match_info['team1'] = team1_span.get_text(strip=True)
                 
+                # Logo equip 1
+                team1_logo = cols[0].find('img')
+                if team1_logo and team1_logo.get('src'):
+                    logo_src = team1_logo['src']
+                    match_info['team1_logo'] = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
+                else:
+                    match_info['team1_logo'] = None
+                
                 # Enllaç
                 link = cols[0].find('a', href=True)
                 if link:
@@ -347,6 +372,14 @@ class ActawpParserV53:
                 team2_span = cols[2].find('span', class_='ellipsis')
                 if team2_span:
                     match_info['team2'] = team2_span.get_text(strip=True)
+                
+                # Logo equip 2
+                team2_logo = cols[2].find('img')
+                if team2_logo and team2_logo.get('src'):
+                    logo_src = team2_logo['src']
+                    match_info['team2_logo'] = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
+                else:
+                    match_info['team2_logo'] = None
                 
                 if match_info.get('match_id'):
                     matches.append(match_info)
@@ -501,7 +534,7 @@ class ActawpParserV53:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.3_final"
+                "parser_version": "5.4_logos"
             }
         }
         
@@ -592,11 +625,12 @@ if __name__ == "__main__":
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ACTAWP v5.3 - DEFINITIU                            ║
+║   PARSER ACTAWP v5.4 - AMB LOGOS                            ║
 ║   ✅ Noms nets (sense Ver/Veure)                           ║
 ║   ✅ Camps normalitzats (PJ, GT, G, EX...)                 ║
 ║   ✅ MARCADORS correctes dels resultats                     ║
 ║   ✅ DATES correctes dels pròxims partits                   ║
+║   ⭐ LOGOS dels equips en partits i classificació           ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
