@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-10-29T14:54:46.199299",
+    "downloaded_at": "2025-10-29T16:36:35.752850",
     "parser_version": "5.3_final"
   },
   "players": [
@@ -399,9 +399,9 @@
   ],
   "ranking": [
     {
-      "posicio": "Veure",
-      "equip": "1",
-      "logo": null,
+      "posicio": "1",
+      "equip": "C.N. MANRESA",
+      "logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -411,9 +411,9 @@
       "punts": 0
     },
     {
-      "posicio": "Veure",
-      "equip": "2",
-      "logo": null,
+      "posicio": "2",
+      "equip": "C.N. ATL BARCELONETA",
+      "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -423,9 +423,9 @@
       "punts": 0
     },
     {
-      "posicio": "Veure",
-      "equip": "3",
-      "logo": null,
+      "posicio": "3",
+      "equip": "C.N. TERRASSA A",
+      "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -434,6 +434,5 @@
       "gols_contra": 0,
       "punts": 0
     }
-  ],
-  "last_update": "2025-10-29T15:34:27.610361"
+  ]
 }
