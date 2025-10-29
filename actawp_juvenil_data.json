@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-10-29T11:12:40.891135",
+    "downloaded_at": "2025-10-29T14:54:31.454149",
     "parser_version": "5.3_final"
   },
   "players": [
@@ -540,5 +540,55 @@
       "team2": "C.N. TERRASSA"
     }
   ],
-  "last_update": "2025-10-29T11:31:01.104264"
+  "ranking": [
+    {
+      "posicio": "Veure",
+      "equip": "1",
+      "logo": null,
+      "partits": 0,
+      "guanyats": 0,
+      "empatats": 0,
+      "perduts": 0,
+      "gols_favor": 0,
+      "gols_contra": 0,
+      "punts": 0
+    },
+    {
+      "posicio": "Veure",
+      "equip": "2",
+      "logo": null,
+      "partits": 0,
+      "guanyats": 0,
+      "empatats": 0,
+      "perduts": 0,
+      "gols_favor": 0,
+      "gols_contra": 0,
+      "punts": 0
+    },
+    {
+      "posicio": "Veure",
+      "equip": "3",
+      "logo": null,
+      "partits": 0,
+      "guanyats": 0,
+      "empatats": 0,
+      "perduts": 0,
+      "gols_favor": 0,
+      "gols_contra": 0,
+      "punts": 0
+    },
+    {
+      "posicio": "Veure",
+      "equip": "4",
+      "logo": null,
+      "partits": 0,
+      "guanyats": 0,
+      "empatats": 0,
+      "perduts": 0,
+      "gols_favor": 0,
+      "gols_contra": 0,
+      "punts": 0
+    }
+  ],
+  "last_update": "2025-10-29T14:55:00.765579"
 }
