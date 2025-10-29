@@ -357,7 +357,88 @@ class ActawpParserV53:
         
         return matches
     
-    def generate_json(self, team_id, team_key, team_name, coach, language='es'):
+    def parse_ranking(self, ranking_url):
+        """
+        Parser per CLASSIFICACIÓ
+        Extreu la taula de classificació des d'una URL específica
+        """
+        try:
+            response = self.session.get(ranking_url)
+            if response.status_code != 200:
+                print(f"  ⚠️ Error HTTP {response.status_code} al obtenir classificació")
+                return []
+            
+            soup = BeautifulSoup(response.content, 'html.parser')
+            ranking = []
+            
+            # Buscar la taula de classificació
+            table = soup.find('table', class_='table')
+            if not table:
+                table = soup.find('table')
+            
+            if not table:
+                print("  ⚠️ No s'ha trobat cap taula de classificació")
+                return []
+            
+            tbody = table.find('tbody')
+            if not tbody:
+                print("  ⚠️ No s'ha trobat tbody a la taula")
+                return []
+            
+            rows = tbody.find_all('tr')
+            
+            for row in rows:
+                try:
+                    cols = row.find_all('td')
+                    
+                    if len(cols) < 6:
+                        continue
+                    
+                    # Extreure nom de l'equip i logo
+                    equip_cell = cols[1]
+                    equip_text = equip_cell.get_text(strip=True)
+                    
+                    # Buscar logo
+                    logo_url = None
+                    logo_img = equip_cell.find('img')
+                    if logo_img and logo_img.get('src'):
+                        logo_src = logo_img['src']
+                        logo_url = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
+                    
+                    team_data = {
+                        'posicio': cols[0].get_text(strip=True),
+                        'equip': equip_text,
+                        'logo': logo_url,
+                        'partits': int(cols[2].get_text(strip=True)) if cols[2].get_text(strip=True).isdigit() else 0,
+                        'guanyats': int(cols[3].get_text(strip=True)) if cols[3].get_text(strip=True).isdigit() else 0,
+                        'empatats': int(cols[4].get_text(strip=True)) if cols[4].get_text(strip=True).isdigit() else 0,
+                        'perduts': int(cols[5].get_text(strip=True)) if cols[5].get_text(strip=True).isdigit() else 0
+                    }
+                    
+                    # Camps opcionals (gols favor, contra, punts)
+                    if len(cols) > 6:
+                        gf_text = cols[6].get_text(strip=True)
+                        team_data['gols_favor'] = int(gf_text) if gf_text.isdigit() else 0
+                    if len(cols) > 7:
+                        gc_text = cols[7].get_text(strip=True)
+                        team_data['gols_contra'] = int(gc_text) if gc_text.isdigit() else 0
+                    if len(cols) > 8:
+                        pts_text = cols[8].get_text(strip=True)
+                        team_data['punts'] = int(pts_text) if pts_text.isdigit() else 0
+                    
+                    ranking.append(team_data)
+                    
+                except Exception as e:
+                    print(f"  ⚠️ Error processant fila de classificació: {e}")
+                    continue
+            
+            return ranking
+            
+        except Exception as e:
+            print(f"  ❌ Error obtenint classificació: {e}")
+            return []
+    
+    def generate_json(self, team_id, team_key, team_name, coach, language='es', ranking_url=None):
         """Genera JSON amb normalització automàtica"""
         print(f"\n{'='*70}")
         print(f"📥 {team_name} - Parser v5.3 (DEFINITIU)")
@@ -437,6 +518,23 @@ class ActawpParserV53:
         else:
             result['last_results'] = []
         
+        # Classificació (si s'especifica URL)
+        if ranking_url:
+            print("\n5️⃣ CLASSIFICACIÓ:")
+            result['ranking'] = self.parse_ranking(ranking_url)
+            print(f"  ✅ {len(result['ranking'])} equips a la classificació")
+            if result['ranking']:
+                # Buscar CN Terrassa a la classificació
+                cnt_position = None
+                for team in result['ranking']:
+                    if 'TERRASSA' in team['equip'].upper():
+                        cnt_position = team
+                        break
+                if cnt_position:
+                    print(f"  🏆 CN Terrassa: Posició {cnt_position['posicio']} - {cnt_position['punts']} punts")
+        else:
+            result['ranking'] = []
+        
         return result
 
 
@@ -458,13 +556,15 @@ if __name__ == "__main__":
             'id': '15621223',
             'name': 'CN Terrassa Juvenil',
             'coach': 'Jordi Busquets',
-            'language': 'es'
+            'language': 'es',
+            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317471/ranking/3654570'
         },
         'cadet': {
             'id': '15621224',
             'name': 'CN Terrassa Cadet',
             'coach': 'Didac Cobacho',
-            'language': 'ca'
+            'language': 'ca',
+            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317474/ranking/3654582'
         }
     }
     
@@ -475,7 +575,8 @@ if __name__ == "__main__":
                 team_key,
                 team_info['name'],
                 team_info['coach'],
-                team_info['language']
+                team_info['language'],
+                team_info.get('ranking_url')
             )
             
             filename = f"actawp_{team_key}_data.json"
