@@ -109,10 +109,26 @@ jobs:
       - name: Add timestamp to JSON files
         if: steps.download.outputs.success == 'true'
         run: |
-          python3 << EOF
+          # Usar script Python que detecta automàticament DST
+          python3 << 'EOF'
           import json
-          from datetime import datetime
+          from datetime import datetime, timezone, timedelta
+          import time
           import os
+          
+          # Detectar si estem en horari d'estiu (DST)
+          if time.daylight and time.localtime().tm_isdst:
+              offset_hours = 2  # Estiu: UTC+2
+              season = "estiu"
+          else:
+              offset_hours = 1  # Hivern: UTC+1
+              season = "hivern"
+          
+          tz_cat = timezone(timedelta(hours=offset_hours))
+          current_time = datetime.now(tz_cat)
+          
+          print(f"🌍 Timezone: UTC+{offset_hours} ({season})")
+          print(f"⏰ Hora Catalunya: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
           
           files_updated = []
           
@@ -121,7 +137,7 @@ jobs:
               try:
                   with open('actawp_cadet_data.json', 'r', encoding='utf-8') as f:
                       data = json.load(f)
-                  data['last_update'] = datetime.now().isoformat()
+                  data['last_update'] = current_time.isoformat()
                   data['workflow_run'] = '${{ github.run_number }}'
                   with open('actawp_cadet_data.json', 'w', encoding='utf-8') as f:
                       json.dump(data, f, ensure_ascii=False, indent=2)
@@ -135,7 +151,7 @@ jobs:
               try:
                   with open('actawp_juvenil_data.json', 'r', encoding='utf-8') as f:
                       data = json.load(f)
-                  data['last_update'] = datetime.now().isoformat()
+                  data['last_update'] = current_time.isoformat()
                   data['workflow_run'] = '${{ github.run_number }}'
                   with open('actawp_juvenil_data.json', 'w', encoding='utf-8') as f:
                       json.dump(data, f, ensure_ascii=False, indent=2)
