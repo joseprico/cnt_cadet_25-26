@@ -2,11 +2,9 @@ name: Update ACTAWP Data
 
 on:
   schedule:
-    # FreqÃ¼Ã¨ncia reduÃ¯da: només 2 vegades al dia (09:00 i 21:00 hora catalana)
-    # Menys peticions = menys problemes de rate limiting
+    # Freqüència reduïda: només 2 vegades al dia (09:00 i 21:00 hora catalana)
     - cron: '0 7,19 * * *'
   
-  # Permetre executar manualment des de la pestanya Actions
   workflow_dispatch:
 
 jobs:
@@ -17,7 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # â­ MILLORA 1: Usar el token personal per augmentar límits
           token: ${{ secrets.GH_TOKEN }}
           fetch-depth: 0
       
@@ -31,8 +28,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
       
-      # â­ MILLORA 2: Afegir retry logic per evitar errors temporals
+      # â­ MILLORA: Executar amb millor gestió d'errors
       - name: Download ACTAWP data with retry
+        id: download
+        continue-on-error: true
         run: |
           max_attempts=3
           attempt=0
@@ -41,50 +40,101 @@ jobs:
             attempt=$((attempt + 1))
             echo "ðŸ"„ Intent $attempt de $max_attempts..."
             
-            if python ultra_robust_parser.py; then
+            # Executar amb output detallat
+            if python ultra_robust_parser.py 2>&1 | tee parser_output.log; then
               echo "âœ… Descà rrega exitosa!"
+              echo "success=true" >> $GITHUB_OUTPUT
               exit 0
             else
+              error_code=$?
+              echo "âš ï¸ Error code: $error_code"
+              
+              # Mostrar les últimes línies del log
+              echo "ðŸ"„ Ãšltimes línies del log:"
+              tail -20 parser_output.log || true
+              
               if [ $attempt -lt $max_attempts ]; then
                 wait_time=$((attempt * 30))
-                echo "âš ï¸ Error. Esperant ${wait_time}s abans de reintentar..."
+                echo "â³ Esperant ${wait_time}s abans de reintentar..."
                 sleep $wait_time
               else
                 echo "âŒ Error després de $max_attempts intents"
+                echo "success=false" >> $GITHUB_OUTPUT
+                
+                # Guardar log complet com artifact
+                echo "ðŸ"„ Log complet guardat per debugging"
                 exit 1
               fi
             fi
           done
       
+      # â­ MILLORA: Upload logs si hi ha error
+      - name: Upload error logs
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: parser-error-logs
+          path: parser_output.log
+          retention-days: 7
+      
+      - name: Check if JSON files were created
+        id: check_json
+        run: |
+          if [ -f "actawp_cadet_data.json" ] || [ -f "actawp_juvenil_data.json" ]; then
+            echo "json_exists=true" >> $GITHUB_OUTPUT
+            echo "âœ… Fitxers JSON creats correctament"
+            
+            # Mostrar mida dels fitxers
+            ls -lh actawp_*.json 2>/dev/null || true
+          else
+            echo "json_exists=false" >> $GITHUB_OUTPUT
+            echo "âŒ No s'han creat els fitxers JSON"
+            exit 1
+          fi
+      
       - name: Add timestamp to JSON files
+        if: steps.check_json.outputs.json_exists == 'true'
         run: |
           python3 << EOF
           import json
           from datetime import datetime
+          import os
+          
+          files_updated = []
           
           # Actualitzar fitxer Cadet
-          try:
-              with open('actawp_cadet_data.json', 'r', encoding='utf-8') as f:
-                  data = json.load(f)
-              data['last_update'] = datetime.now().isoformat()
-              data['workflow_run'] = '${{ github.run_number }}'
-              with open('actawp_cadet_data.json', 'w', encoding='utf-8') as f:
-                  json.dump(data, f, ensure_ascii=False, indent=2)
-              print("âœ… Timestamp afegit a actawp_cadet_data.json")
-          except Exception as e:
-              print(f"âš ï¸ Error amb Cadet: {e}")
+          if os.path.exists('actawp_cadet_data.json'):
+              try:
+                  with open('actawp_cadet_data.json', 'r', encoding='utf-8') as f:
+                      data = json.load(f)
+                  data['last_update'] = datetime.now().isoformat()
+                  data['workflow_run'] = '${{ github.run_number }}'
+                  with open('actawp_cadet_data.json', 'w', encoding='utf-8') as f:
+                      json.dump(data, f, ensure_ascii=False, indent=2)
+                  print("âœ… Timestamp afegit a actawp_cadet_data.json")
+                  files_updated.append('cadet')
+              except Exception as e:
+                  print(f"âš ï¸ Error amb Cadet: {e}")
           
           # Actualitzar fitxer Juvenil
-          try:
-              with open('actawp_juvenil_data.json', 'r', encoding='utf-8') as f:
-                  data = json.load(f)
-              data['last_update'] = datetime.now().isoformat()
-              data['workflow_run'] = '${{ github.run_number }}'
-              with open('actawp_juvenil_data.json', 'w', encoding='utf-8') as f:
-                  json.dump(data, f, ensure_ascii=False, indent=2)
-              print("âœ… Timestamp afegit a actawp_juvenil_data.json")
-          except Exception as e:
-              print(f"âš ï¸ Error amb Juvenil: {e}")
+          if os.path.exists('actawp_juvenil_data.json'):
+              try:
+                  with open('actawp_juvenil_data.json', 'r', encoding='utf-8') as f:
+                      data = json.load(f)
+                  data['last_update'] = datetime.now().isoformat()
+                  data['workflow_run'] = '${{ github.run_number }}'
+                  with open('actawp_juvenil_data.json', 'w', encoding='utf-8') as f:
+                      json.dump(data, f, ensure_ascii=False, indent=2)
+                  print("âœ… Timestamp afegit a actawp_juvenil_data.json")
+                  files_updated.append('juvenil')
+              except Exception as e:
+                  print(f"âš ï¸ Error amb Juvenil: {e}")
+          
+          if not files_updated:
+              print("âŒ No s'ha actualitzat cap fitxer")
+              exit(1)
+          else:
+              print(f"âœ… Fitxers actualitzats: {', '.join(files_updated)}")
           EOF
       
       - name: Check if there are changes
@@ -100,7 +150,7 @@ jobs:
           git add actawp_*.json
           git commit -m "ðŸ"„ ActualitzaciÃ³ automÃ tica dades ACTAWP - $(date +'%Y-%m-%d %H:%M:%S')"
           
-          # â­ MILLORA 3: Retry logic per al push també
+          # Retry logic per al push
           max_attempts=3
           attempt=0
           
@@ -122,7 +172,6 @@ jobs:
             fi
           done
       
-      # â­ MILLORA 4: Summary millorat amb més info
       - name: Create summary
         if: always()
         run: |
@@ -132,15 +181,41 @@ jobs:
           echo "**Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
+          # Estat del download
+          if [ "${{ steps.download.outputs.success }}" == "true" ]; then
+            echo "âœ… **Download:** Exitós" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "âŒ **Download:** Error (veure logs)" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Estat dels JSON
+          if [ "${{ steps.check_json.outputs.json_exists }}" == "true" ]; then
+            echo "âœ… **Fitxers JSON:** Creats" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "âŒ **Fitxers JSON:** No creats" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Canvis detectats
           if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
             echo "âœ… **Estat:** Dades actualitzades correctament" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "**Canvis detectats:**" >> $GITHUB_STEP_SUMMARY
-            git diff HEAD~1 actawp_*.json --stat >> $GITHUB_STEP_SUMMARY || true
+            git diff HEAD~1 actawp_*.json --stat >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No es pot mostrar diff" >> $GITHUB_STEP_SUMMARY
           else
             echo "â„¹ï¸ **Estat:** No hi ha canvis respecte l'Ãºltima actualitzaciÃ³" >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Token:** Utilitzant GH_TOKEN (limit: 5000 req/h)" >> $GITHUB_STEP_SUMMARY
-          echo "**ProperÃ  execuciÃ³:** Automatitzada a les 07:00 i 19:00 UTC" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "**ConfiguraciÃ³:**" >> $GITHUB_STEP_SUMMARY
+          echo "- Token: Utilitzant GH_TOKEN (limit: 5000 req/h)" >> $GITHUB_STEP_SUMMARY
+          echo "- ProperÃ  execuciÃ³: Automatitzada a les 07:00 i 19:00 UTC" >> $GITHUB_STEP_SUMMARY
+          
+          # Mostrar últimes línies del parser si hi ha errors
+          if [ -f "parser_output.log" ] && [ "${{ steps.download.outputs.success }}" != "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**ðŸ"„ Ãšltimes línies del parser:**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -15 parser_output.log >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
