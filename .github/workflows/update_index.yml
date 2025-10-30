@@ -1,1 +1,61 @@
+name: Update index.json Cadet
 
+on:
+  push:
+    paths:
+      - 'cnt_stats_*.json'
+  schedule:
+    - cron: '0 */6 * * *'  # Cada 6 hores
+  workflow_dispatch:
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Generate index.json
+        run: |
+          echo "📝 Generant index.json per Cadet..."
+          
+          echo '{' > index.json
+          echo '  "files": [' >> index.json
+          
+          first=true
+          for file in cnt_stats_*.json; do
+            if [ -f "$file" ]; then
+              if [ "$first" = true ]; then
+                echo "    \"$file\"" >> index.json
+                first=false
+              else
+                echo "    ,\"$file\"" >> index.json
+              fi
+            fi
+          done
+          
+          echo '  ],' >> index.json
+          echo "  \"team\": \"cadet\"," >> index.json
+          echo "  \"last_updated\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"," >> index.json
+          echo "  \"total_files\": $(ls cnt_stats_*.json 2>/dev/null | wc -l)" >> index.json
+          echo '}' >> index.json
+          
+          echo "✅ index.json generat:"
+          cat index.json
+      
+      - name: Commit and push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          if git diff --quiet index.json; then
+            echo "ℹ️ No hi ha canvis a index.json"
+          else
+            git add index.json
+            git commit -m "🔄 Actualitzar index.json Cadet - $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ index.json actualitzat i pujat"
+          fi
