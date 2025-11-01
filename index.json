@@ -2,9 +2,10 @@
   "files": [
     "cnt_stats_2025-10-04_cn_montjuic.json"
     ,"cnt_stats_2025-10-11_cnb.json"
+    ,"cnt_stats_2025-11-01_prova_cadet2.json"
     ,"cnt_stats_2025-11-01_provacadet.json"
   ],
   "team": "cadet",
-  "last_updated": "2025-11-01T17:22:47Z",
-  "total_files": 3
+  "last_updated": "2025-11-01T17:25:14Z",
+  "total_files": 4
 }
