@@ -1,0 +1,959 @@
+{
+  "temporada": "25/26 CADET",
+  "equip": "CN TERRASSA",
+  "data": "2025-11-01T17:25:00.063Z",
+  "scoreCNT": 0,
+  "scoreRival": 1,
+  "lineups": {
+    "q1": [
+      3,
+      4,
+      2,
+      6,
+      8,
+      7,
+      5
+    ],
+    "q2": [],
+    "q3": [],
+    "q4": []
+  },
+  "periodScores": {
+    "q1": {
+      "cnt": 0,
+      "rival": 0
+    },
+    "q2": {
+      "cnt": 0,
+      "rival": 0
+    },
+    "q3": {
+      "cnt": 0,
+      "rival": 0
+    },
+    "q4": {
+      "cnt": 0,
+      "rival": 0
+    }
+  },
+  "tempsMortCNT": 0,
+  "tempsMortRival": 0,
+  "rivalTeam": "Prova cadet2",
+  "matchLocation": "home",
+  "rivalStats": [
+    {
+      "num": 1,
+      "name": "",
+      "exclusions": 0,
+      "gols": 1,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 1,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      },
+      "goalZones": {
+        "bottom-right": 1
+      }
+    },
+    {
+      "num": 2,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 3,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 4,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 5,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 6,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 7,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 8,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 9,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 10,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 11,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 12,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 13,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 14,
+      "name": "",
+      "exclusions": 0,
+      "gols": 0,
+      "penaltyMissed": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 0,
+        "boya": 0
+      },
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 0
+      }
+    }
+  ],
+  "jugadors": [
+    {
+      "numero": 1,
+      "nom": "DAVID CASADO",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 2,
+      "nom": "SAMUEL DIAZ",
+      "estadistiques": {
+        "exclusions": 2,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 1,
+          "penalty": 1
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 1,
+        "blocks": 1,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {},
+        "infraccions2m": 1,
+        "contrafaltes": 1
+      }
+    },
+    {
+      "numero": 3,
+      "nom": "MAX CEREZO",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 4,
+      "nom": "POL RICO",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {},
+        "infraccions2m": 1
+      }
+    },
+    {
+      "numero": 5,
+      "nom": "OLIVER HERRERA",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 6,
+      "nom": "NIL CARDENAS",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {},
+        "contrafaltes": 1
+      }
+    },
+    {
+      "numero": 7,
+      "nom": "LLATZER PEREZ",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 8,
+      "nom": "JORDI FARRE",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 9,
+      "nom": "IVAN GALLEGO",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 10,
+      "nom": "ADAY ACUÑA",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 11,
+      "nom": "HECTOR DIOS",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 12,
+      "nom": "BIEL COBACHO",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 13,
+      "nom": "GUILLEM POLEY",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    },
+    {
+      "numero": 14,
+      "nom": "JOSE MANUEL LLENIN",
+      "estadistiques": {
+        "exclusions": 0,
+        "gols": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 0,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocks": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 0,
+        "golsRebutsZones": {}
+      }
+    }
+  ],
+  "observacions": "",
+  "chronologicalActions": [
+    {
+      "timestamp": 1762017752435,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "h+",
+      "goalZone": "bottom-right",
+      "team": "rival",
+      "playerNum": 0,
+      "playerName": "Rival 1",
+      "goalkeeperNum": null
+    },
+    {
+      "timestamp": 1762017858680,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1762017860629,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "2metres",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1762017863501,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "2metres",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017864860,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017866066,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017867116,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017868327,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017869660,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "block",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017870720,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017872847,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1762017881893,
+      "quarter": "q1",
+      "type": "swim-race",
+      "result": "win",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO",
+      "team": "cnt"
+    }
+  ],
+  "quarterStartTimes": {
+    "q1": 1762017881895,
+    "q2": null,
+    "q3": null,
+    "q4": null
+  },
+  "playerWaterChanges": [
+    {
+      "playerNum": 3,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1762017881895
+    }
+  ]
+}
