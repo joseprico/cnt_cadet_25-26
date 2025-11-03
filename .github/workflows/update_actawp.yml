@@ -2,9 +2,9 @@ name: Update ACTAWP Data
 
 on:
   schedule:
-    # ⏰ Cada 30 minuts de 9:00 a 22:30 hora Catalunya
-    # HIVERN (UTC+1): 8:00-21:30 UTC
-    - cron: '0,30 8,9,10,11,12,13,14,15,16,17,18,19,20,21 * * *'
+    # ⏰ Cada 30 minuts de 8:00 a 22:30 hora Catalunya
+    # HIVERN (UTC+1): 7:00-21:30 UTC
+    - cron: '0,30 7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 * * *'
   
   workflow_dispatch:
 
