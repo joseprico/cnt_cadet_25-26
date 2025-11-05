@@ -1,9 +1,10 @@
 """
-Parser ACTAWP v5.4 - AMB LOGOS
+Parser ACTAWP v5.5 - AMB LOGOS I JORNADES
 Estructura correcta segons captures:
-- PrÃ²xims: [Equip1] [Data/Hora/Lloc] [Equip2]
+- Pròxims: [Equip1] [Data/Hora/Lloc] [Equip2]
 - Resultats: [Equip1] [MARCADOR] [Equip2]
-- NOVITAT: Extreu logos dels equips en tots els partits i classificaciÃ³
+- NOVITAT: Extreu logos dels equips en tots els partits i classificació
+- NOVITAT v5.5: Afegeix número de jornada basat en l'ordre d'aparició
 """
 
 import requests
@@ -18,7 +19,7 @@ class ActawpParserV53:
         self.session = requests.Session()
     
     def get_csrf_token(self, team_id, language='es'):
-        """ObtÃ© el token CSRF"""
+        """Obté el token CSRF"""
         url = f"https://actawp.natacio.cat/{language}/team/{team_id}"
         response = self.session.get(url)
         
@@ -34,7 +35,7 @@ class ActawpParserV53:
         return None
     
     def get_tab_content(self, team_id, tab_name, language='es'):
-        """ObtÃ© el contingut d'una pestanya"""
+        """Obté el contingut d'una pestanya"""
         csrf_token = self.get_csrf_token(team_id, language)
         
         if not csrf_token:
@@ -121,9 +122,9 @@ class ActawpParserV53:
             'Targetes grogues': 'TA',
             'Targetes vermelles': 'TR',
             'Expulsions per 20 segons': 'EX',
-            'Expulsions definitives, amb substituciÃ³ disciplinÃ ria': 'ED',
-            'Expulsions definitives per brutalitat, amb substituciÃ³ als 4 minuts': 'EB',
-            'Expulsions definitives, amb substituciÃ³ no disciplinÃ ria': 'EN',
+            'Expulsions definitives, amb substitució disciplinària': 'ED',
+            'Expulsions definitives per brutalitat, amb substitució als 4 minuts': 'EB',
+            'Expulsions definitives, amb substitució no disciplinària': 'EN',
             'Expulsions i penal': 'EP',
             'Faltes per penal': 'P',
             'Penals fallats': 'PF',
@@ -140,9 +141,9 @@ class ActawpParserV53:
             'Tarjetas amarillas': 'TA',
             'Tarjetas rojas': 'TR',
             'Expulsiones por 20 segundos': 'EX',
-            'Expulsiones definitivas, con sustituciÃ³n disciplinaria': 'ED',
-            'Expulsiones definitivas por brutalidad, con sustituciÃ³n a los 4 minutos': 'EB',
-            'Expulsiones definitivas, con sustituciÃ³n no disciplinaria': 'EN',
+            'Expulsiones definitivas, con sustitución disciplinaria': 'ED',
+            'Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos': 'EB',
+            'Expulsiones definitivas, con sustitución no disciplinaria': 'EN',
             'Expulsiones y penalti': 'EP',
             'Faltas por penalti': 'P',
             'Penaltis fallados': 'PF',
@@ -156,7 +157,7 @@ class ActawpParserV53:
         return field_mapping.get(field_name, field_name)
     
     def parse_players(self, html_content):
-        """Parser de jugadors amb normalitzaciÃ³ automÃ tica"""
+        """Parser de jugadors amb normalització automàtica"""
         soup = BeautifulSoup(html_content, 'html.parser')
         players = []
         
@@ -203,35 +204,31 @@ class ActawpParserV53:
                 if normalized_field == 'Nombre' and value:
                     value = self.clean_player_name(value)
                 
-                if value and value not in ['', '-', 'â€”', 'N/A']:
+                if value and value not in ['', '-', '—', 'N/A']:
                     try:
                         if value.isdigit():
                             value = int(value)
-                        elif ',' in value or '.' in value:
-                            value_cleaned = value.replace(',', '.')
-                            if value_cleaned.replace('.', '').isdigit():
-                                value = float(value_cleaned)
+                        elif value.replace(',', '').replace('.', '').isdigit():
+                            value = float(value.replace(',', '.'))
                     except:
                         pass
-                else:
-                    if i > 0 and normalized_field not in ['Nombre', 'Vinculado']:
-                        value = 0
-                
-                player_data[normalized_field] = value
+                    
+                    player_data[normalized_field] = value
             
-            if player_data:
+            if player_data and 'Nombre' in player_data:
                 players.append(player_data)
         
         return players
     
     def parse_upcoming_matches(self, html_content):
         """
-        Parser per PRÃ’XIMS PARTITS
+        Parser per PRÒXIMS PARTITS
         Estructura: [Equip1] [Data/Hora/Lloc] [Equip2]
+        ✅ INCLOU NÚMERO DE JORNADA
         """
         soup = BeautifulSoup(html_content, 'html.parser')
         matches = []
-        match_number = 1  # ✅ Comptador de jornada
+        match_number = 1  # Comptador de jornada
         
         table = soup.find('table')
         if not table:
@@ -271,7 +268,7 @@ class ActawpParserV53:
                 else:
                     match_info['team1_logo'] = None
                 
-                # EnllaÃ§
+                # Enllaç
                 link = cols[0].find('a', href=True)
                 if link:
                     href = link['href']
@@ -306,10 +303,7 @@ class ActawpParserV53:
                     team2_text = team2_cell.get_text(strip=True)
                     team2_text = re.sub(r'^\d+\s*', '', team2_text)  # Treure números inicials
                     match_info['team2'] = team2_text
-                if match_info.get('match_id'):
-    match_info['jornada'] = match_number  # ✅ AFEGIR AIXÒ
-    matches.append(match_info)
-    match_number += 1  # ✅ I AIXÒ
+                
                 # Logo equip 2
                 team2_logo = cols[2].find('img')
                 if team2_logo and team2_logo.get('src'):
@@ -318,23 +312,28 @@ class ActawpParserV53:
                 else:
                     match_info['team2_logo'] = None
                 
+                # ✅ AFEGIR PARTIT AMB NÚMERO DE JORNADA
                 if match_info.get('match_id'):
+                    match_info['jornada'] = match_number
                     matches.append(match_info)
+                    match_number += 1
                 
             except Exception as e:
-                print(f"  âš ï¸ Error processant prÃ²xim partit: {e}")
+                print(f"  ⚠️ Error processant pròxim partit: {e}")
                 continue
         
         return matches
     
     def parse_last_results(self, html_content):
         """
-        Parser per ÃšLTIMS RESULTATS
+        Parser per ÚLTIMS RESULTATS
         Estructura: [Equip1] [MARCADOR] [Equip2]
+        ✅ INCLOU NÚMERO DE JORNADA
         """
         soup = BeautifulSoup(html_content, 'html.parser')
         matches = []
-        match_number = 1  # ✅ Comptador de jornada
+        match_number = 1  # Comptador de jornada
+        
         table = soup.find('table')
         if not table:
             return matches
@@ -367,7 +366,7 @@ class ActawpParserV53:
                 else:
                     match_info['team1_logo'] = None
                 
-                # EnllaÃ§
+                # Enllaç
                 link = cols[0].find('a', href=True)
                 if link:
                     href = link['href']
@@ -397,106 +396,87 @@ class ActawpParserV53:
                 else:
                     match_info['team2_logo'] = None
                 
+                # ✅ AFEGIR RESULTAT AMB NÚMERO DE JORNADA
                 if match_info.get('match_id'):
-    match_info['jornada'] = match_number  # ✅ AFEGIR
-    matches.append(match_info)
-    match_number += 1  # ✅ AFEGIR
+                    match_info['jornada'] = match_number
+                    matches.append(match_info)
+                    match_number += 1
                 
             except Exception as e:
-                print(f"  âš ï¸ Error processant resultat: {e}")
+                print(f"  ⚠️ Error processant resultat: {e}")
                 continue
         
         return matches
     
     def parse_ranking(self, ranking_url):
         """
-        Parser per CLASSIFICACIÃ“
-        Extreu la taula de classificaciÃ³ des d'una URL especÃ­fica
+        Parser per CLASSIFICACIÓ
+        Extreu la taula de classificació des d'una URL específica
         """
         try:
             response = self.session.get(ranking_url)
             if response.status_code != 200:
-                print(f"  âš ï¸ Error HTTP {response.status_code} al obtenir classificaciÃ³")
+                print(f"  ⚠️ Error HTTP {response.status_code} al obtenir classificació")
                 return []
             
             soup = BeautifulSoup(response.content, 'html.parser')
             ranking = []
             
-            # Buscar la taula de classificaciÃ³
+            # Buscar la taula de classificació
             table = soup.find('table', class_='table')
             if not table:
                 table = soup.find('table')
             
             if not table:
-                print("  âš ï¸ No s'ha trobat cap taula de classificaciÃ³")
+                print("  ⚠️ No s'ha trobat cap taula de classificació")
                 return []
-            
-            # Debug: mostrar headers
-            headers = []
-            thead = table.find('thead')
-            if thead:
-                for th in thead.find_all('th'):
-                    header_text = th.get_text(strip=True)
-                    headers.append(header_text)
-                print(f"  ðŸ“‹ Headers trobats: {headers}")
             
             tbody = table.find('tbody')
             if not tbody:
-                print("  âš ï¸ No s'ha trobat tbody a la taula")
+                print("  ⚠️ No s'ha trobat tbody a la taula")
                 return []
             
             rows = tbody.find_all('tr')
-            print(f"  ðŸ“Š Files trobades: {len(rows)}")
             
-            for idx, row in enumerate(rows):
+            for idx, row in enumerate(rows, 1):
                 try:
                     cols = row.find_all('td')
                     
                     if len(cols) < 3:
                         continue
                     
-                    # Debug primera fila
-                    if idx == 0:
-                        print(f"  ðŸ” Primera fila ({len(cols)} columnes):")
-                        for i, col in enumerate(cols):
-                            print(f"      Col {i}: '{col.get_text(strip=True)[:50]}'")
+                    # Trobar columna amb logo i nom de l'equip
+                    equip_col = None
+                    equip_idx = -1
                     
-                    # Identificar quina columna Ã©s quina
-                    # TÃ­picament: [Pos] [Equip] [PJ] [V] [E] [P] [GF] [GC] [Pts]
-                    # PerÃ² pot variar, aixÃ­ que busquem l'equip (text mÃ©s llarg)
-                    
-                    posicio_idx = 0
-                    equip_idx = 1
-                    
-                    # Buscar la columna amb el nom de l'equip (normalment la mÃ©s llarga o amb logo)
-                    for i, col in enumerate(cols[:3]):
-                        if col.find('img') or len(col.get_text(strip=True)) > 5:
+                    for i, col in enumerate(cols):
+                        img = col.find('img')
+                        span = col.find('span', class_='ellipsis')
+                        if img or span:
+                            equip_col = col
                             equip_idx = i
                             break
                     
-                    # La posiciÃ³ sol ser la columna anterior a l'equip
-                    if equip_idx > 0:
-                        posicio_idx = equip_idx - 1
+                    if not equip_col or equip_idx == -1:
+                        continue
                     
-                    # Extreure posiciÃ³
-                    posicio_text = cols[posicio_idx].get_text(strip=True)
-                    # Netejar "Veure" o altres textos
-                    posicio_text = re.sub(r'Veure|Ver|View', '', posicio_text, flags=re.IGNORECASE).strip()
-                    
-                    # Extreure nom de l'equip i logo
-                    equip_cell = cols[equip_idx]
-                    equip_text = equip_cell.get_text(strip=True)
-                    # Netejar "Veure" del nom
-                    equip_text = re.sub(r'Veure|Ver|View', '', equip_text, flags=re.IGNORECASE).strip()
-                    
-                    # Buscar logo
+                    # Extreure logo
                     logo_url = None
-                    logo_img = equip_cell.find('img')
-                    if logo_img and logo_img.get('src'):
-                        logo_src = logo_img['src']
+                    img = equip_col.find('img')
+                    if img and img.get('src'):
+                        logo_src = img['src']
                         logo_url = logo_src if logo_src.startswith('http') else 'https://actawp.natacio.cat' + logo_src
                     
-                    # Les estadÃ­stiques comencen desprÃ©s de l'equip
+                    # Extreure nom de l'equip
+                    span = equip_col.find('span', class_='ellipsis')
+                    equip_text = span.get_text(strip=True) if span else equip_col.get_text(strip=True)
+                    
+                    # Extreure posició (primera columna abans de l'equip)
+                    posicio_text = '?'
+                    if equip_idx > 0:
+                        posicio_text = cols[0].get_text(strip=True)
+                    
+                    # Les estadístiques comencen després de la columna de l'equip
                     stats_start = equip_idx + 1
                     
                     team_data = {
@@ -512,7 +492,7 @@ class ActawpParserV53:
                         'punts': 0
                     }
                     
-                    # Extreure estadÃ­stiques (ordre tÃ­pic: PJ, V, E, P, GF, GC, Pts)
+                    # Extreure estadístiques (ordre típic: PJ, V, E, P, GF, GC, Pts)
                     stat_fields = ['partits', 'guanyats', 'empatats', 'perduts', 'gols_favor', 'gols_contra', 'punts']
                     
                     for i, field in enumerate(stat_fields):
@@ -522,26 +502,26 @@ class ActawpParserV53:
                             if value_text.isdigit():
                                 team_data[field] = int(value_text)
                     
-                    # NomÃ©s afegir si tÃ© dades vÃ lides
+                    # Només afegir si té dades vàlides
                     if team_data['equip'] and len(team_data['equip']) > 1:
                         ranking.append(team_data)
                     
                 except Exception as e:
-                    print(f"  âš ï¸ Error processant fila {idx}: {e}")
+                    print(f"  ⚠️ Error processant fila {idx}: {e}")
                     continue
             
             return ranking
             
         except Exception as e:
-            print(f"  âŒ Error obtenint classificaciÃ³: {e}")
+            print(f"  ❌ Error obtenint classificació: {e}")
             import traceback
             traceback.print_exc()
             return []
     
     def generate_json(self, team_id, team_key, team_name, coach, language='es', ranking_url=None):
-        """Genera JSON amb normalitzaciÃ³ automÃ tica"""
+        """Genera JSON amb normalització automàtica"""
         print(f"\n{'='*70}")
-        print(f"ðŸ“¥ {team_name} - Parser v5.3 (DEFINITIU)")
+        print(f"🔥 {team_name} - Parser v5.5 (AMB JORNADES)")
         print(f"{'='*70}")
         
         result = {
@@ -552,25 +532,25 @@ class ActawpParserV53:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.4_logos"
+                "parser_version": "5.5_jornades"
             }
         }
         
         # Jugadors
-        print("\n1ï¸âƒ£ JUGADORS:")
+        print("\n1️⃣ JUGADORS:")
         players_data = self.get_tab_content(team_id, 'players', language)
         if players_data and players_data.get('code') == 0:
             result['players'] = self.parse_players(players_data.get('content', ''))
-            print(f"  âœ… {len(result['players'])} jugadors")
+            print(f"  ✅ {len(result['players'])} jugadors")
             
             if result['players']:
                 first = result['players'][0]
-                print(f"  ðŸ“Š Primer: {first.get('Nombre', '?')} - PJ:{first.get('PJ', 0)} GT:{first.get('GT', 0)}")
+                print(f"  📊 Primer: {first.get('Nombre', '?')} - PJ:{first.get('PJ', 0)} GT:{first.get('GT', 0)}")
         else:
             result['players'] = []
         
-        # EstadÃ­stiques
-        print("\n2ï¸âƒ£ ESTADÃSTIQUES:")
+        # Estadístiques
+        print("\n2️⃣ ESTADÍSTIQUES:")
         stats_data = self.get_tab_content(team_id, 'stats', language)
         team_stats = {}
         if stats_data and stats_data.get('code') == 0:
@@ -591,51 +571,51 @@ class ActawpParserV53:
                             pass
                         team_stats[key] = value
         result['team_stats'] = team_stats
-        print(f"  âœ… {len(team_stats)} estadÃ­stiques")
+        print(f"  ✅ {len(team_stats)} estadístiques")
         
-        # PrÃ²xims partits
-        print("\n3ï¸âƒ£ PRÃ’XIMS PARTITS:")
+        # Pròxims partits
+        print("\n3️⃣ PRÒXIMS PARTITS:")
         upcoming_data = self.get_tab_content(team_id, 'upcoming-matches', language)
         if upcoming_data and upcoming_data.get('code') == 0:
             result['upcoming_matches'] = self.parse_upcoming_matches(upcoming_data.get('content', ''))
-            print(f"  âœ… {len(result['upcoming_matches'])} partits")
+            print(f"  ✅ {len(result['upcoming_matches'])} partits")
             if result['upcoming_matches']:
                 first = result['upcoming_matches'][0]
-                print(f"  ðŸ“… PrÃ²xim: {first.get('team1', '?')} vs {first.get('team2', '?')} - {first.get('date', '?')}")
+                print(f"  📅 Pròxim: J{first.get('jornada', '?')} - {first.get('team1', '?')} vs {first.get('team2', '?')} - {first.get('date', '?')}")
         else:
             result['upcoming_matches'] = []
         
-        # Ãšltims resultats
-        print("\n4ï¸âƒ£ ÃšLTIMS RESULTATS:")
+        # Últims resultats
+        print("\n4️⃣ ÚLTIMS RESULTATS:")
         results_data = self.get_tab_content(team_id, 'last-results', language)
         if results_data and results_data.get('code') == 0:
             result['last_results'] = self.parse_last_results(results_data.get('content', ''))
-            print(f"  âœ… {len(result['last_results'])} resultats")
+            print(f"  ✅ {len(result['last_results'])} resultats")
             if result['last_results']:
                 first = result['last_results'][0]
                 score = first.get('score', '?')
-                print(f"  ðŸ“Š Ãšltim: {first.get('team1', '?')} {score} {first.get('team2', '?')}")
+                print(f"  📊 Últim: J{first.get('jornada', '?')} - {first.get('team1', '?')} {score} {first.get('team2', '?')}")
         else:
             result['last_results'] = []
         
-        # ClassificaciÃ³ (si s'especifica URL)
+        # Classificació (si s'especifica URL)
         if ranking_url:
-            print("\n5ï¸âƒ£ CLASSIFICACIÃ“:")
+            print("\n5️⃣ CLASSIFICACIÓ:")
             result['ranking'] = self.parse_ranking(ranking_url)
-            print(f"  âœ… {len(result['ranking'])} equips a la classificaciÃ³")
+            print(f"  ✅ {len(result['ranking'])} equips a la classificació")
             if result['ranking']:
-                # Buscar CN Terrassa a la classificaciÃ³
+                # Buscar CN Terrassa a la classificació
                 cnt_position = None
                 for team in result['ranking']:
                     if 'TERRASSA' in team['equip'].upper():
                         cnt_position = team
                         break
                 if cnt_position:
-                    print(f"  ðŸ† CN Terrassa: PosiciÃ³ {cnt_position['posicio']} - {cnt_position['punts']} punts")
+                    print(f"  🏆 CN Terrassa: Posició {cnt_position['posicio']} - {cnt_position['punts']} punts")
         else:
             result['ranking'] = []
         
-        # Afegir timestamp d'actualitzaciÃ³ amb timezone Europe/Madrid
+        # Afegir timestamp d'actualització amb timezone Europe/Madrid
         from datetime import timezone, timedelta
         tz_madrid = timezone(timedelta(hours=1))  # UTC+1 (o +2 en horari d'estiu)
         result['last_update'] = datetime.now(tz_madrid).isoformat()
@@ -647,14 +627,15 @@ if __name__ == "__main__":
     parser = ActawpParserV53()
     
     print("""
-â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
-â•‘   PARSER ACTAWP v5.4 - AMB LOGOS                            â•‘
-â•‘   âœ… Noms nets (sense Ver/Veure)                           â•‘
-â•‘   âœ… Camps normalitzats (PJ, GT, G, EX...)                 â•‘
-â•‘   âœ… MARCADORS correctes dels resultats                     â•‘
-â•‘   âœ… DATES correctes dels prÃ²xims partits                   â•‘
-â•‘   â­ LOGOS dels equips en partits i classificaciÃ³           â•‘
-â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+╔══════════════════════════════════════════════════════════════╗
+║   PARSER ACTAWP v5.5 - AMB LOGOS I JORNADES                 ║
+║   ✅ Noms nets (sense Ver/Veure)                           ║
+║   ✅ Camps normalitzats (PJ, GT, G, EX...)                 ║
+║   ✅ MARCADORS correctes dels resultats                     ║
+║   ✅ DATES correctes dels pròxims partits                   ║
+║   ⭐ LOGOS dels equips en partits i classificació           ║
+║   🆕 NÚMERO DE JORNADA en cada partit                       ║
+╚══════════════════════════════════════════════════════════════╝
 """)
     
     teams = {
@@ -689,20 +670,20 @@ if __name__ == "__main__":
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
             
-            print(f"\nðŸ’¾ Guardat: {filename}")
+            print(f"\n💾 Guardat: {filename}")
             
         except Exception as e:
-            print(f"\nâŒ Error: {e}")
+            print(f"\n❌ Error: {e}")
             import traceback
             traceback.print_exc()
         
         print("\n" + "="*70)
     
     print("""
-âœ… JSON GENERATS CORRECTAMENT!
+✅ JSON GENERATS CORRECTAMENT!
 
-ðŸ“¤ Puja'ls a GitHub:
+📤 Puja'ls a GitHub:
    git add actawp_*.json
-   git commit -m "âœ¨ Parser v5.3 definitiu amb marcadors"
+   git commit -m "✨ Parser v5.5 amb jornades"
    git push
 """)
