@@ -491,9 +491,12 @@ class ActawpParserV53:
                     span = equip_col.find('span', class_='ellipsis')
                     equip_text = span.get_text(strip=True) if span else equip_col.get_text(strip=True)
                     
-                    posicio_text = '?'
-                    if equip_idx > 0:
-                        posicio_text = cols[0].get_text(strip=True)
+                    # Extreure posició (primera columna abans de l'equip)
+posicio_text = '?'
+if equip_idx > 0:
+    posicio_text = cols[0].get_text(strip=True)
+    # ✅ Netejar "Veure" / "Ver" de la posició
+    posicio_text = re.sub(r'^(Veure|Ver)\s*', '', posicio_text, flags=re.IGNORECASE).strip()
                     
                     stats_start = equip_idx + 1
                     
