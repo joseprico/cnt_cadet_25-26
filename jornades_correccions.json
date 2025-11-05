@@ -6,7 +6,11 @@
     },
     "143649171": {
       "jornada_real": 3,
-      "nota": "Passa a ser J4 per ajornament del Barceloneta"
+      "nota": "Passa a ser J3 per ajornament del Barceloneta"
+    },
+    "143649172": {
+      "jornada_real": 4,
+      "nota": "Correcció de jornada"
     }
   },
   "juvenil": {
