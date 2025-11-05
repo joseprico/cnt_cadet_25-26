@@ -1,8 +1,14 @@
 {
-     "cadet": {
-       "143649168": {
-         "jornada_real": 2,
-         "nota": "Partit ajornat del 15/11 al 3/12"
-       }
-     }
-   }
+  "cadet": {
+    "143649168": {
+      "jornada_real": 2,
+      "nota": "Partit ajornat del 15/11 al 3/12"
+    },
+    "143649171": {
+      "jornada_real": 4,
+      "nota": "Passa a ser J4 per ajornament del Barceloneta"
+    }
+  },
+  "juvenil": {
+  }
+}
