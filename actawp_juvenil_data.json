@@ -5,8 +5,8 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-11-05T16:33:31.338343",
-    "parser_version": "5.4_logos"
+    "downloaded_at": "2025-11-05T16:50:41.377025",
+    "parser_version": "5.5_jornades"
   },
   "players": [
     {
@@ -19,17 +19,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ALAN GONZALEZ ARRIBAS",
@@ -41,17 +40,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ARNAU MERCADE SEGURA",
@@ -63,17 +61,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 2,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 1,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "BIEL GARCIA ARJONA",
@@ -85,17 +82,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 2,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ERIC MORA FERNANDEZ",
@@ -107,17 +103,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ERIC VILLAREAL MURIEL",
@@ -129,17 +124,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "HECTOR DIOS ESTEBAN",
@@ -151,17 +145,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 1,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 1,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "IAN BARTOLOME COLLADO",
@@ -173,17 +166,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "JORDI TARRADAS VARGAS",
@@ -195,17 +187,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 2,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "LLATZER PEREZ BARADAD",
@@ -217,17 +208,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "MARC CAMPAÑA SALVADOR",
@@ -239,17 +229,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 1,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 1,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "MARC MORENO FOLCH",
@@ -261,17 +250,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "MARTI ARIMON HUMET",
@@ -283,17 +271,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 4,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "MAX VALLS FORNIELES",
@@ -305,17 +292,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 1,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ORIOL SANCHEZ CARRILLO",
@@ -327,17 +313,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 1,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "POL RICO SANAHUJA",
@@ -349,17 +334,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ROGER FARRE AMADOR",
@@ -371,17 +355,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 3,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "ROGER ROVIRA MARTINEZ",
@@ -393,17 +376,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 2,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 1,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "SAMUEL DIAZ MARROQUIN",
@@ -415,17 +397,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 1,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     },
     {
       "Nombre": "YABSIRA CASADO FUENTES",
@@ -437,17 +418,16 @@
       "TA": 0,
       "TR": 0,
       "EX": 0,
-      "Expulsiones definitivas, con sustitución disciplinaria": 0,
-      "Expulsiones definitivas por brutalidad, con sustitución a los 4 minutos": 0,
-      "Expulsiones definitivas, con sustitución no disciplinaria": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
       "EP": 0,
       "P": 0,
       "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
-      "MVP": 0,
-      "Vinculado": ""
+      "MVP": 0
     }
   ],
   "team_stats": {
@@ -474,7 +454,8 @@
       "time": "10:30",
       "date_time": "Dom 09/11/2025 10:30",
       "team2": "C.N. TERRASSA",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 1
     },
     {
       "team1": "C.N. TERRASSA",
@@ -485,7 +466,8 @@
       "time": "12:55",
       "date_time": "Dom 16/11/2025 12:55",
       "team2": "C.E. MEDITERRANI",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+      "jornada": 2
     },
     {
       "team1": "C.N. RUBÍ",
@@ -496,7 +478,8 @@
       "time": "11:30",
       "date_time": "Dom 23/11/2025 11:30",
       "team2": "C.N. TERRASSA",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 3
     },
     {
       "team1": "C.N. TERRASSA",
@@ -507,7 +490,8 @@
       "time": "12:55",
       "date_time": "Dom 30/11/2025 12:55",
       "team2": "C.N. MONTJUIC B",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+      "jornada": 4
     },
     {
       "team1": "C.E. MEDITERRANI",
@@ -518,7 +502,8 @@
       "time": "09:30",
       "date_time": "Dom 14/12/2025 09:30",
       "team2": "C.N. TERRASSA",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 5
     },
     {
       "team1": "C.N. TERRASSA",
@@ -529,7 +514,8 @@
       "time": "12:55",
       "date_time": "Dom 21/12/2025 12:55",
       "team2": "C.N. RUBÍ",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
+      "jornada": 6
     }
   ],
   "last_results": [
@@ -542,7 +528,8 @@
       "score_team2": 7,
       "score": "23 - 7",
       "team2": "C.N. MOLINS DE REI",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
+      "jornada": 1
     },
     {
       "team1": "C.N. MONTJUIC A",
@@ -553,12 +540,13 @@
       "score_team2": 20,
       "score": "10 - 20",
       "team2": "C.N. TERRASSA",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg"
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 2
     }
   ],
   "ranking": [
     {
-      "posicio": "1",
+      "posicio": "Veure",
       "equip": "C.N. TERRASSA",
       "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "partits": 0,
@@ -570,7 +558,7 @@
       "punts": 0
     },
     {
-      "posicio": "2",
+      "posicio": "Veure",
       "equip": "C.E. MEDITERRANI",
       "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
       "partits": 0,
@@ -582,7 +570,7 @@
       "punts": 0
     },
     {
-      "posicio": "3",
+      "posicio": "Veure",
       "equip": "C.N. RUBÍ",
       "logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
       "partits": 0,
@@ -594,7 +582,7 @@
       "punts": 0
     },
     {
-      "posicio": "4",
+      "posicio": "Veure",
       "equip": "C.N. MONTJUIC B",
       "logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
       "partits": 0,
@@ -606,6 +594,6 @@
       "punts": 0
     }
   ],
-  "last_update": "2025-11-05T17:38:04.911448+01:00",
-  "workflow_run": "169"
+  "last_update": "2025-11-05T17:51:09.762084+01:00",
+  "workflow_run": "170"
 }
