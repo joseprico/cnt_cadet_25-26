@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-11-05T18:35:45.536799",
+    "downloaded_at": "2025-11-05T19:20:22.817416",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -383,7 +383,7 @@
       "date_time": "Dis 22/11/2025 12:50",
       "team2": "C.N. MANRESA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
-      "jornada": 4
+      "jornada": 3
     },
     {
       "team1": "C.N. MOLINS DE REI",
@@ -510,6 +510,6 @@
       "punts": 0
     }
   ],
-  "last_update": "2025-11-05T19:36:00.553219+01:00",
-  "workflow_run": "180"
+  "last_update": "2025-11-05T20:20:37.861340+01:00",
+  "workflow_run": "181"
 }
