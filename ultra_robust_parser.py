@@ -491,7 +491,7 @@ class ActawpParserV53:
                     span = equip_col.find('span', class_='ellipsis')
                     equip_text = span.get_text(strip=True) if span else equip_col.get_text(strip=True)
   # Extreure posició (primera columna abans de l'equip)
-posicio_text = '?'
+posicio_text = str(idx)
 if equip_idx > 0:
     raw_text = cols[0].get_text(strip=True)
     # ✅ Extreure només els números (primer grup de dígits)
