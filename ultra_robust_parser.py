@@ -492,14 +492,8 @@ class ActawpParserV53:
                     equip_text = span.get_text(strip=True) if span else equip_col.get_text(strip=True)
   # Extreure posició (primera columna abans de l'equip)
 posicio_text = str(idx)
-if equip_idx > 0:
-    raw_text = cols[0].get_text(strip=True)
-    # ✅ Extreure només els números (primer grup de dígits)
-    posicio_match = re.search(r'(\d+)', raw_text)
-    if posicio_match:
-        posicio_text = posicio_match.group(1)
                     
-                    stats_start = equip_idx + 1
+stats_start = equip_idx + 1
                     
                     team_data = {
                         'posicio': posicio_text,
