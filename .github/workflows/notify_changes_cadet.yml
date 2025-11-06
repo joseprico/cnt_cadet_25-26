@@ -159,11 +159,22 @@ jobs:
                   with open(filename, 'r', encoding='utf-8') as f:
                       match_data = json.load(f)
                   
-                  # Extreure informació del partit
-                  rival = match_data.get('metadata', {}).get('rival', 'Rival desconegut')
-                  date = match_data.get('metadata', {}).get('date', '')
-                  our_score = match_data.get('team_score', 0)
-                  rival_score = match_data.get('rival_score', 0)
+                  # Extreure informació del partit amb l'estructura correcta
+                  rival = match_data.get('rivalTeam', 'Rival desconegut')
+                  date_raw = match_data.get('data', '')
+                  temporada = match_data.get('temporada', '')
+                  our_score = match_data.get('scoreCNT', 0)
+                  rival_score = match_data.get('scoreRival', 0)
+                  
+                  # Formatar la data si existeix
+                  date = ''
+                  if date_raw:
+                      try:
+                          from datetime import datetime
+                          dt = datetime.fromisoformat(date_raw.replace('Z', '+00:00'))
+                          date = dt.strftime('%d/%m/%Y')
+                      except:
+                          date = date_raw
                   
                   # Determinar resultat
                   if our_score > rival_score:
@@ -176,8 +187,13 @@ jobs:
                       emoji = "🤝"
                       result = "Empat"
                   
+                  # Extreure equip (CADET o JUVENIL) de temporada
+                  team = "CADET"
+                  if temporada and "JUVENIL" in temporada.upper():
+                      team = "JUVENIL"
+                  
                   # Construir missatge
-                  title = f"CN Terrassa CADET - {result}"
+                  title = f"CN Terrassa {team} - {result}"
                   message = f"{emoji} CN Terrassa {our_score} - {rival_score} {rival}"
                   if date:
                       message += f"\n📅 {date}"
