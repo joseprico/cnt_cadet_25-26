@@ -1,0 +1,172 @@
+name: Notificar canvis
+
+on:
+  # Executar cada 4 hores (descàrrega automàtica)
+  schedule:
+    - cron: '15 */4 * * *'
+  
+  # Executar quan es fa push als fitxers JSON (partits afegits manualment)
+  push:
+    branches:
+      - main  # o 'master' si el teu branch principal és master
+    paths:
+      - 'actawp_cadet_data.json'
+      - 'actawp_juvenil_data.json'
+  
+  # Permetre executar manualment
+  workflow_dispatch:
+
+jobs:
+  check-and-notify:
+    runs-on: ubuntu-latest
+    
+    # Evitar bucle infinit: no executar si el commit és del bot
+    if: github.event.head_commit.author.username != 'github-actions[bot]'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # Necessitem almenys 2 commits per comparar
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+      
+      - name: Detect trigger type
+        id: trigger
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "trigger=manual_push" >> $GITHUB_OUTPUT
+            echo "🔵 Execució disparada per PUSH MANUAL"
+          elif [ "${{ github.event_name }}" == "schedule" ]; then
+            echo "trigger=scheduled" >> $GITHUB_OUTPUT
+            echo "🕐 Execució PROGRAMADA (cada 4 hores)"
+          else
+            echo "trigger=manual" >> $GITHUB_OUTPUT
+            echo "🔘 Execució MANUAL"
+          fi
+      
+      - name: Save last committed data as old
+        run: |
+          echo "📦 Guardant penúltima versió commitejada..."
+          
+          # Obtenir la versió de FA 1 COMMIT (HEAD~1)
+          if git show HEAD~1:actawp_cadet_data.json > /dev/null 2>&1; then
+            git show HEAD~1:actawp_cadet_data.json > old_actawp_cadet.json
+            echo "✅ Penúltima versió Cadet obtinguda (HEAD~1)"
+          else
+            echo "⚠️ No existeix penúltima versió de actawp_cadet_data.json"
+            echo '{"upcoming_matches":[],"last_results":[]}' > old_actawp_cadet.json
+          fi
+          
+          if git show HEAD~1:actawp_juvenil_data.json > /dev/null 2>&1; then
+            git show HEAD~1:actawp_juvenil_data.json > old_actawp_juvenil.json
+            echo "✅ Penúltima versió Juvenil obtinguda (HEAD~1)"
+          else
+            echo "⚠️ No existeix penúltima versió de actawp_juvenil_data.json"
+            echo '{"upcoming_matches":[],"last_results":[]}' > old_actawp_juvenil.json
+          fi
+      
+      - name: Download new ACTAWP data (only on scheduled runs)
+        if: steps.trigger.outputs.trigger == 'scheduled'
+        run: |
+          echo "🌐 Descarregant dades noves de ACTAWP (execució programada)..."
+          python ultra_robust_parser.py
+      
+      - name: Use current data (on manual push)
+        if: steps.trigger.outputs.trigger == 'manual_push'
+        run: |
+          echo "📝 Utilitzant dades del commit actual (push manual)..."
+          echo "No cal descarregar - ja tenim les dades noves al repositori"
+      
+      - name: Check changes and send notifications
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: |
+          echo "🔍 Comprovant canvis i enviant notificacions..."
+          python notify_changes.py
+      
+      - name: Add timestamp to JSON files (only on scheduled runs)
+        if: steps.trigger.outputs.trigger == 'scheduled'
+        run: |
+          python3 << EOF
+          import json
+          from datetime import datetime
+          
+          # Actualitzar fitxer Cadet
+          try:
+              with open('actawp_cadet_data.json', 'r', encoding='utf-8') as f:
+                  data = json.load(f)
+              data['last_update'] = datetime.now().isoformat()
+              with open('actawp_cadet_data.json', 'w', encoding='utf-8') as f:
+                  json.dump(data, f, ensure_ascii=False, indent=2)
+              print("✅ Timestamp afegit a actawp_cadet_data.json")
+          except Exception as e:
+              print(f"⚠️ Error amb Cadet: {e}")
+          
+          # Actualitzar fitxer Juvenil
+          try:
+              with open('actawp_juvenil_data.json', 'r', encoding='utf-8') as f:
+                  data = json.load(f)
+              data['last_update'] = datetime.now().isoformat()
+              with open('actawp_juvenil_data.json', 'w', encoding='utf-8') as f:
+                  json.dump(data, f, ensure_ascii=False, indent=2)
+              print("✅ Timestamp afegit a actawp_juvenil_data.json")
+          except Exception as e:
+              print(f"⚠️ Error amb Juvenil: {e}")
+          EOF
+      
+      - name: Check if there are changes (only on scheduled runs)
+        if: steps.trigger.outputs.trigger == 'scheduled'
+        id: check_changes
+        run: |
+          git diff --exit-code actawp_*.json || echo "changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push if changed (only on scheduled runs)
+        if: steps.trigger.outputs.trigger == 'scheduled' && steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add actawp_*.json
+          git commit -m "📊 Actualització automàtica ACTAWP - $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "### 🔔 Comprovació de canvis ACTAWP" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Data:** $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.trigger.outputs.trigger }}" == "manual_push" ]; then
+            echo "**Tipus:** 🔵 Push manual detectat" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **Estat:** Notificacions enviades per canvis manuals" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ steps.trigger.outputs.trigger }}" == "scheduled" ]; then
+            echo "**Tipus:** 🕐 Execució programada" >> $GITHUB_STEP_SUMMARY
+            if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+              echo "✅ **Estat:** Canvis detectats i notificacions enviades" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "ℹ️ **Estat:** No hi ha canvis des de l'última comprovació" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "**Tipus:** 🔘 Execució manual" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Mostrar resum de fitxers
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Fitxers processats:**" >> $GITHUB_STEP_SUMMARY
+          if [ -f actawp_cadet_data.json ]; then
+            echo "- ✅ actawp_cadet_data.json" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f actawp_juvenil_data.json ]; then
+            echo "- ✅ actawp_juvenil_data.json" >> $GITHUB_STEP_SUMMARY
+          fi
