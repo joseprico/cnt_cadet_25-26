@@ -110,8 +110,23 @@ jobs:
                       json=payload,
                       timeout=10
                   )
+                  
+                  print(f"📊 Response status: {response.status_code}")
+                  print(f"📊 Response body: {response.text}")
+                  
                   if response.status_code == 200:
-                      print(f"✅ Notificació enviada: {message}")
+                      response_data = response.json()
+                      recipients = response_data.get('recipients', 0)
+                      print(f"✅ Notificació enviada correctament")
+                      print(f"📱 Recipients: {recipients}")
+                      
+                      if recipients == 0:
+                          print("⚠️ WARNING: La notificació s'ha enviat però 0 usuaris la rebran!")
+                          print("   Això pot ser perquè:")
+                          print("   - No hi ha usuaris subscrits al segment 'Subscribed Users'")
+                          print("   - Els usuaris no tenen notificacions activades")
+                          print("   - El segment està buit")
+                      
                       return True
                   else:
                       print(f"❌ Error enviant notificació ({response.status_code}): {response.text}")
