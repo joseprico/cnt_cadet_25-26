@@ -97,7 +97,7 @@ jobs:
               
               payload = {
                   "app_id": app_id,
-                  "included_segments": ["Subscribed Users"],
+                  "included_segments": ["Active Users"],
                   "headings": {"ca": title, "es": title, "en": title},
                   "contents": {"ca": message, "es": message, "en": message},
                   "url": url
