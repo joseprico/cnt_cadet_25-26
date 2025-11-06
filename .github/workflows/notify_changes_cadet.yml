@@ -118,18 +118,26 @@ jobs:
                   
                   if response.status_code == 200:
                       response_data = response.json()
-                      recipients = response_data.get('recipients', 0)
-                      print(f"✅ Notificació enviada correctament")
-                      print(f"📱 Recipients: {recipients}")
+                      notification_id = response_data.get('id', '')
+                      recipients = response_data.get('recipients', None)
                       
-                      if recipients == 0:
-                          print("⚠️ WARNING: La notificació s'ha enviat però 0 usuaris la rebran!")
-                          print("   Això pot ser perquè:")
-                          print("   - No hi ha usuaris subscrits al segment 'Subscribed Users'")
-                          print("   - Els usuaris no tenen notificacions activades")
-                          print("   - El segment està buit")
-                      
-                      return True
+                      if notification_id:
+                          print(f"✅ Notificació enviada correctament")
+                          print(f"🆔 Notification ID: {notification_id}")
+                          
+                          if recipients is not None:
+                              print(f"📱 Recipients: {recipients}")
+                              if recipients == 0:
+                                  print("⚠️ WARNING: 0 recipients reportats per OneSignal")
+                          else:
+                              print(f"📱 Recipients: No disponible (usat filtres)")
+                              print(f"   La notificació s'ha enviat correctament però OneSignal")
+                              print(f"   no retorna el nombre de recipients quan s'usen filtres.")
+                          
+                          return True
+                      else:
+                          print(f"❌ Error: No s'ha rebut ID de notificació")
+                          return False
                   else:
                       print(f"❌ Error enviant notificació ({response.status_code}): {response.text}")
                       return False
