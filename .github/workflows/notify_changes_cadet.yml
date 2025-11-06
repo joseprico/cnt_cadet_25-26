@@ -97,7 +97,9 @@ jobs:
               
               payload = {
                   "app_id": app_id,
-                  "included_segments": ["Active Users"],
+                  "filters": [
+                      {"field": "session_count", "relation": ">", "value": "0"}
+                  ],
                   "headings": {"ca": title, "es": title, "en": title},
                   "contents": {"ca": message, "es": message, "en": message},
                   "url": url
