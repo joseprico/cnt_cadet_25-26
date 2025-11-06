@@ -32,6 +32,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
       
+      # ✅ GUARDAR CÒPIES ANTIGUES PER COMPARAR
+      - name: Save old JSON files for comparison
+        run: |
+          cp actawp_cadet_data.json old_actawp_cadet.json 2>/dev/null || echo "No old cadet file"
+          cp actawp_juvenil_data.json old_actawp_juvenil.json 2>/dev/null || echo "No old juvenil file"
+      
       # ⭐ MILLORA: Lògica més Intel·ligent - prioritza que els JSON existeixin
       - name: Download ACTAWP data
         id: download
@@ -60,7 +66,7 @@ jobs:
               echo "❌ CADET JSON: Existeix però no és vàlid"
             fi
           else
-            echo "⚠️  CADET JSON: No trobat"
+            echo "⚠️ CADET JSON: No trobat"
           fi
           
           if [ -f "actawp_juvenil_data.json" ]; then
@@ -72,7 +78,7 @@ jobs:
               echo "❌ JUVENIL JSON: Existeix però no és vàlid"
             fi
           else
-            echo "⚠️  JUVENIL JSON: No trobat"
+            echo "⚠️ JUVENIL JSON: No trobat"
           fi
           
           # Decisió: Success si ALMENYS UN JSON és vàlid
@@ -83,8 +89,8 @@ jobs:
             
             if [ $parser_exit_code -ne 0 ]; then
               echo ""
-              echo "⚠️  NOTA: El parser va retornar exit code $parser_exit_code"
-              echo "⚠️  Però els JSON són vàlids, continuem!"
+              echo "⚠️ NOTA: El parser va retornar exit code $parser_exit_code"
+              echo "⚠️ Però els JSON són vàlids, continuem!"
               echo ""
               echo "📄 Últimes 30 línies del parser (per debugging):"
               tail -30 parser_output.log || true
@@ -100,6 +106,15 @@ jobs:
             tail -40 parser_output.log || true
             exit 1
           fi
+      
+      # 🔔 COMPARAR I ENVIAR NOTIFICACIONS
+      - name: Compare and send notifications
+        if: steps.download.outputs.success == 'true'
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: |
+          python3 notify_changes.py || echo "⚠️ Error enviant notificacions (continuem)"
       
       # ⭐ MILLORA: Upload logs sempre (tant si funciona com si no)
       - name: Upload parser logs
@@ -225,13 +240,13 @@ jobs:
           if [ -f "actawp_cadet_data.json" ]; then
             echo "✅ **Cadet:** JSON creat" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️  **Cadet:** JSON no trobat" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Cadet:** JSON no trobat" >> $GITHUB_STEP_SUMMARY
           fi
           
           if [ -f "actawp_juvenil_data.json" ]; then
             echo "✅ **Juvenil:** JSON creat" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️  **Juvenil:** JSON no trobat" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Juvenil:** JSON no trobat" >> $GITHUB_STEP_SUMMARY
           fi
           
           # Canvis detectats
@@ -240,14 +255,15 @@ jobs:
             echo "✅ **Git:** Canvis commitejats i pujats" >> $GITHUB_STEP_SUMMARY
           else
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "ℹ️  **Git:** No hi ha canvis respecte l'última actualització" >> $GITHUB_STEP_SUMMARY
+            echo "ℹ️ **Git:** No hi ha canvis respecte l'última actualització" >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "**Configuració:**" >> $GITHUB_STEP_SUMMARY
           echo "- Token: GH_TOKEN (5000 req/h)" >> $GITHUB_STEP_SUMMARY
-          echo "- Propera execució: 07:00 i 19:00 UTC" >> $GITHUB_STEP_SUMMARY
+          echo "- Notificacions: OneSignal activat" >> $GITHUB_STEP_SUMMARY
+          echo "- Propera execució: cada 30 min de 07:00 a 21:30 UTC" >> $GITHUB_STEP_SUMMARY
           echo "- Logs disponibles com artifact: \`parser-logs-${{ github.run_number }}\`" >> $GITHUB_STEP_SUMMARY
           
           # Mostrar fragment del log si hi ha
