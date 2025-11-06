@@ -1,0 +1,194 @@
+name: Notificar nou partit Cadet
+
+on:
+  push:
+    paths:
+      - 'cnt_stats_*.json'
+  workflow_dispatch:
+
+jobs:
+  notify-new-match:
+    runs-on: ubuntu-latest
+    
+    # Evitar bucle infinit
+    if: github.event.head_commit.author.username != 'github-actions[bot]'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: Detect new match file
+        id: detect
+        run: |
+          echo "🔍 Detectant fitxers nous de partits..."
+          
+          # Obtenir fitxers modificats en aquest commit
+          NEW_FILES=$(git diff --name-only HEAD~1 HEAD | grep 'cnt_stats_.*\.json' || true)
+          
+          if [ -z "$NEW_FILES" ]; then
+            echo "has_new=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No s'han detectat fitxers nous de partits"
+          else
+            echo "has_new=true" >> $GITHUB_OUTPUT
+            echo "files=$NEW_FILES" >> $GITHUB_OUTPUT
+            echo "✅ Fitxers nous detectats:"
+            echo "$NEW_FILES"
+          fi
+      
+      - name: Debug secrets
+        if: steps.detect.outputs.has_new == 'true'
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: |
+          echo "🔍 Verificant secrets..."
+          
+          if [ -z "$ONESIGNAL_APP_ID" ]; then
+            echo "❌ ONESIGNAL_APP_ID està buit!"
+          else
+            echo "✅ ONESIGNAL_APP_ID present (longitud: ${#ONESIGNAL_APP_ID})"
+            echo "   Primers 8 chars: ${ONESIGNAL_APP_ID:0:8}..."
+          fi
+          
+          if [ -z "$ONESIGNAL_API_KEY" ]; then
+            echo "❌ ONESIGNAL_API_KEY està buida!"
+          else
+            echo "✅ ONESIGNAL_API_KEY present (longitud: ${#ONESIGNAL_API_KEY})"
+            echo "   Primers 8 chars: ${ONESIGNAL_API_KEY:0:8}..."
+          fi
+      
+      - name: Send notification
+        if: steps.detect.outputs.has_new == 'true'
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: |
+          python3 << 'EOF'
+          import json
+          import requests
+          import os
+          import sys
+          
+          def send_notification(title, message, url="https://joseprico.github.io/"):
+              """Envia notificació via OneSignal"""
+              app_id = os.environ.get('ONESIGNAL_APP_ID', '')
+              api_key = os.environ.get('ONESIGNAL_API_KEY', '')
+              
+              if not app_id or not api_key:
+                  print("⚠️ OneSignal credentials no configurades")
+                  return False
+              
+              headers = {
+                  "Authorization": f"Basic {api_key}",
+                  "Content-Type": "application/json"
+              }
+              
+              payload = {
+                  "app_id": app_id,
+                  "included_segments": ["Subscribed Users"],
+                  "headings": {"ca": title, "es": title, "en": title},
+                  "contents": {"ca": message, "es": message, "en": message},
+                  "url": url
+              }
+              
+              try:
+                  response = requests.post(
+                      "https://onesignal.com/api/v1/notifications",
+                      headers=headers,
+                      json=payload,
+                      timeout=10
+                  )
+                  if response.status_code == 200:
+                      print(f"✅ Notificació enviada: {message}")
+                      return True
+                  else:
+                      print(f"❌ Error enviant notificació ({response.status_code}): {response.text}")
+                      return False
+              except Exception as e:
+                  print(f"❌ Error de connexió: {e}")
+                  return False
+          
+          # Obtenir nom del fitxer nou des de les variables d'entorn
+          files = "${{ steps.detect.outputs.files }}"
+          
+          print(f"📤 Processant fitxers: {files}")
+          
+          for filename in files.split('\n'):
+              if not filename or not filename.endswith('.json'):
+                  continue
+              
+              try:
+                  # Llegir el fitxer del partit
+                  with open(filename, 'r', encoding='utf-8') as f:
+                      match_data = json.load(f)
+                  
+                  # Extreure informació del partit
+                  rival = match_data.get('metadata', {}).get('rival', 'Rival desconegut')
+                  date = match_data.get('metadata', {}).get('date', '')
+                  our_score = match_data.get('team_score', 0)
+                  rival_score = match_data.get('rival_score', 0)
+                  
+                  # Determinar resultat
+                  if our_score > rival_score:
+                      emoji = "🎉"
+                      result = "Victòria!"
+                  elif our_score < rival_score:
+                      emoji = "💪"
+                      result = "Derrota"
+                  else:
+                      emoji = "🤝"
+                      result = "Empat"
+                  
+                  # Construir missatge
+                  title = f"CN Terrassa CADET - {result}"
+                  message = f"{emoji} CN Terrassa {our_score} - {rival_score} {rival}"
+                  if date:
+                      message += f"\n📅 {date}"
+                  
+                  # Enviar notificació
+                  print(f"\n{'='*60}")
+                  print(f"Enviant notificació per: {filename}")
+                  print(f"Title: {title}")
+                  print(f"Message: {message}")
+                  print(f"{'='*60}\n")
+                  
+                  send_notification(title, message)
+                  
+              except Exception as e:
+                  print(f"❌ Error processant {filename}: {e}")
+                  import traceback
+                  traceback.print_exc()
+          
+          print("\n✅ Procés de notificacions completat!")
+          EOF
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "### 🔔 Notificació nou partit CADET" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Data:** $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.detect.outputs.has_new }}" == "true" ]; then
+            echo "✅ **Estat:** Nou partit detectat i notificació enviada" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Fitxers nous:**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "${{ steps.detect.outputs.files }}" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **Estat:** No s'han detectat nous partits" >> $GITHUB_STEP_SUMMARY
+          fi
