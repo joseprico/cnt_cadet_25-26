@@ -89,7 +89,17 @@ def get_match_lineup(match_url):
                 
                 if 'TERRASSA' in table_text:
                     print("✅ Taula CN Terrassa trobada!")
+                    
+                    # DEBUG: Mostrar primeres línies de la taula
+                    lines_sample = table_text.split('\n')[:10]
+                    print(f"📝 Contingut taula (primeres línies):")
+                    for line in lines_sample[:5]:
+                        if line.strip():
+                            print(f"   '{line.strip()}'")
+                    
+                    # Estratègia 1: Cel·les td/th tradicionals
                     rows = table.query_selector_all('tr')
+                    print(f"📋 Files trobades: {len(rows)}")
                     
                     for row in rows:
                         cells = row.query_selector_all('td, th')
@@ -103,6 +113,43 @@ def get_match_lineup(match_url):
                                     "num": int(num_match.group()),
                                     "name": name_text.upper()
                                 })
+                    
+                    print(f"✓ Estratègia 1: {len(result['cn_terrassa_players'])} jugadors")
+                    
+                    # Estratègia 2: Si no hem trobat res, analitzar text
+                    if not result["cn_terrassa_players"]:
+                        print("🔍 Provant estratègia 2: anàlisi de text...")
+                        lines = table_text.split('\n')
+                        for line in lines:
+                            line = line.strip()
+                            # Patró: número (1-2 dígits) + espais + nom
+                            match = re.match(r'^(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ][A-ZÀÈÉÍÒÓÚÇ\s\-\'\.]{2,})$', line)
+                            if match:
+                                num = int(match.group(1))
+                                name = match.group(2).strip()
+                                if 1 <= num <= 99 and len(name) > 2 and name not in ['TERRASSA', 'CN', 'C.N.']:
+                                    result["cn_terrassa_players"].append({
+                                        "num": num,
+                                        "name": name.upper()
+                                    })
+                        print(f"✓ Estratègia 2: {len(result['cn_terrassa_players'])} jugadors")
+                    
+                    # Estratègia 3: Buscar per spans/divs dins la taula
+                    if not result["cn_terrassa_players"]:
+                        print("🔍 Provant estratègia 3: cerca per elements...")
+                        all_text = table.inner_text()
+                        # Buscar tots els números seguits de text
+                        matches = re.finditer(r'(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ][A-ZÀÈÉÍÒÓÚÇ\s\-\'\.]{3,})', all_text)
+                        for match in matches:
+                            num = int(match.group(1))
+                            name = match.group(2).strip()
+                            if 1 <= num <= 99 and len(name) > 2:
+                                result["cn_terrassa_players"].append({
+                                    "num": num,
+                                    "name": name.upper()
+                                })
+                        print(f"✓ Estratègia 3: {len(result['cn_terrassa_players'])} jugadors")
+                    
                     break
             
             # Buscar equip rival
