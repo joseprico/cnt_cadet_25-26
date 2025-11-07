@@ -2541,28 +2541,28 @@ function loadFromLocalStorage() {
     }
 }
 // ========================================
-// GENERAR I IMPORTAR CONVOCATÒRIA AUTOMÀTICA
+// FUNCIÓ JAVASCRIPT CORREGIDA
 // ========================================
+// Afegeix-la ABANS de </script> (línia ~2551)
+
 async function generateAndImportLineup() {
     const matchUrl = prompt(
         '🔗 Enganxa la URL del partit d\'ACTAWP:\n\n' +
         'Exemple:\n' +
         'https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results\n\n' +
-        '⚡ S\'invocarà GitHub Actions per generar la convocatòria automàticament!'
+        '⚡ S\'invocarà GitHub Actions automàticament!'
     );
     
     if (!matchUrl || matchUrl.trim() === '') return;
     
-    // Extreure match_id
     const matchIdMatch = matchUrl.match(/\/match\/(\d+)/);
     if (!matchIdMatch) {
-        alert('❌ URL no vàlida');
+        alert('❌ URL no vàlida.\n\nHa de contenir: /match/NUMERO');
         return;
     }
     
     const matchId = matchIdMatch[1];
     
-    // Missatge de càrrega
     const loadingMsg = document.createElement('div');
     loadingMsg.id = 'action-loading';
     loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.95);color:white;padding:30px;border-radius:15px;z-index:9999;text-align:center;max-width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.6);';
@@ -2583,12 +2583,10 @@ async function generateAndImportLineup() {
     document.body.appendChild(loadingMsg);
     
     try {
-        // OPCIÓ 1: Triggerar GitHub Action amb Personal Access Token
-        // Nota: Cal configurar un token a les settings
-        const githubToken = githubConfig.token; // Reutilitzem el token de GitHub
+        const githubToken = githubConfig.token;
         
         if (!githubToken) {
-            throw new Error('Cal configurar el token de GitHub primer');
+            throw new Error('❌ Cal configurar el token de GitHub primer!\n\nVés a Config → Configuración GitHub');
         }
         
         // Triggerar el workflow
@@ -2611,12 +2609,12 @@ async function generateAndImportLineup() {
         );
         
         if (!triggerResponse.ok) {
-            throw new Error('Error al triggerar GitHub Action');
+            throw new Error('Error al triggerar GitHub Action.\n\nComprova que el token té permisos "workflow"');
         }
         
         document.getElementById('status-text').innerHTML = 
             '✅ Workflow iniciat!<br>' +
-            '⏳ Esperant que GitHub generi el JSON...<br>' +
+            '⏳ GitHub està generant el JSON...<br>' +
             '📊 Comprovant cada 10 segons...';
         
         // Esperar i comprovar si el fitxer està disponible
@@ -2625,14 +2623,13 @@ async function generateAndImportLineup() {
         let jsonAvailable = false;
         
         while (attempts < maxAttempts && !jsonAvailable) {
-            await new Promise(resolve => setTimeout(resolve, 10000)); // Esperar 10s
+            await new Promise(resolve => setTimeout(resolve, 10000));
             attempts++;
             
             document.getElementById('status-text').innerHTML = 
                 `⏳ Intent ${attempts}/${maxAttempts}<br>` +
                 `🔍 Comprovant si el JSON està llest...`;
             
-            // Comprovar si el JSON ja existeix
             const jsonUrl = `https://raw.githubusercontent.com/joseprico/cnt_cadet_25-26/main/match_${matchId}_lineup.json?t=${Date.now()}`;
             const checkResponse = await fetch(jsonUrl);
             
@@ -2640,12 +2637,19 @@ async function generateAndImportLineup() {
                 jsonAvailable = true;
                 const data = await checkResponse.json();
                 
-                // Importar jugadors automàticament
                 document.getElementById('status-text').innerHTML = 
                     '✅ JSON generat!<br>' +
                     '📥 Important jugadors...';
                 
                 if (data.players && data.players.length > 0) {
+                    // CORRECCIO: Assegurar que players i playerStats existeixen
+                    if (typeof players === 'undefined') {
+                        window.players = [];
+                    }
+                    if (typeof playerStats === 'undefined') {
+                        window.playerStats = {};
+                    }
+                    
                     players = data.players;
                     
                     players.forEach(p => {
@@ -2657,22 +2661,31 @@ async function generateAndImportLineup() {
                         };
                     });
                     
-                    lineups = { q1: [], q2: [], q3: [], q4: [] };
-                    
-                    if (data.rival_team) {
-                        rivalTeam = data.rival_team;
-                        const rivalInput = document.getElementById('rivalTeam');
-                        if (rivalInput) rivalInput.value = rivalTeam;
+                    // Inicialitzar lineups si no existeix
+                    if (typeof lineups === 'undefined') {
+                        window.lineups = { q1: [], q2: [], q3: [], q4: [] };
+                    } else {
+                        lineups = { q1: [], q2: [], q3: [], q4: [] };
                     }
                     
-                    renderPlayers();
-                    renderLineups();
-                    if (compactMode) renderCompactView();
-                    saveToLocalStorage();
+                    if (data.rival_team) {
+                        if (typeof rivalTeam !== 'undefined') {
+                            rivalTeam = data.rival_team;
+                        }
+                        const rivalInput = document.getElementById('rivalTeam');
+                        if (rivalInput) rivalInput.value = data.rival_team;
+                    }
+                    
+                    // Cridar funcions de renderització si existeixen
+                    if (typeof renderPlayers === 'function') renderPlayers();
+                    if (typeof renderLineups === 'function') renderLineups();
+                    if (typeof compactMode !== 'undefined' && compactMode && typeof renderCompactView === 'function') {
+                        renderCompactView();
+                    }
+                    if (typeof saveToLocalStorage === 'function') saveToLocalStorage();
                     
                     document.body.removeChild(loadingMsg);
                     
-                    // Missatge d'èxit
                     alert(
                         `✅ CONVOCATÒRIA IMPORTADA!\n\n` +
                         `👥 ${players.length} jugadors carregats\n` +
@@ -2685,9 +2698,8 @@ async function generateAndImportLineup() {
             }
         }
         
-        // Si hem arribat aquí, hem exhaurit els intents
         if (!jsonAvailable) {
-            throw new Error('Timeout: El JSON no s\'ha generat en 2 minuts.\n\nComprova GitHub Actions manualment.');
+            throw new Error('⏱️ Timeout: El JSON no s\'ha generat en 2 minuts.\n\n💡 Comprova GitHub Actions manualment:\nGitHub → Actions → Últim workflow');
         }
         
     } catch (error) {
@@ -2701,10 +2713,11 @@ async function generateAndImportLineup() {
                     ${error.message}
                 </div>
                 <div style="font-size:11px;color:#bae6fd;background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;margin-bottom:15px;line-height:1.5;">
-                    💡 <b>Alternatives:</b><br>
-                    • Genera la convocatòria manualment a GitHub → Actions<br>
-                    • Després usa el botó "Importar des de Partit"<br>
-                    • O comprova que el token de GitHub és correcte
+                    💡 <b>Possibles solucions:</b><br>
+                    • Comprova que el token de GitHub és correcte<br>
+                    • Verifica que el token té permís "workflow"<br>
+                    • Mira GitHub → Actions per veure l'error<br>
+                    • Prova a generar-lo manualment a GitHub Actions
                 </div>
                 <button onclick="document.body.removeChild(document.getElementById('action-loading'))" 
                         style="background:#ef4444;color:white;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:14px;">
@@ -2714,6 +2727,12 @@ async function generateAndImportLineup() {
         }
     }
 }
+
+
+
+
+
+
 
 </script>
 <script>
