@@ -41,12 +41,41 @@ def get_match_lineup(match_url):
     
     with sync_playwright() as p:
         print("🚀 Iniciant navegador...")
-        browser = p.chromium.launch(headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
-        page = browser.new_page()
+        browser = p.chromium.launch(
+            headless=True,
+            args=[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-http2',  # Desactivar HTTP/2
+                '--disable-blink-features=AutomationControlled',
+                '--disable-dev-shm-usage',
+                '--disable-gpu'
+            ]
+        )
+        
+        # Crear context amb user agent realista
+        context = browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            viewport={'width': 1920, 'height': 1080},
+            ignore_https_errors=True
+        )
+        
+        page = context.new_page()
         
         try:
             print(f"🌐 Accedint a: {match_url}")
-            page.goto(match_url, wait_until="domcontentloaded", timeout=30000)
+            
+            # Intentar amb diferents estratègies
+            try:
+                page.goto(match_url, wait_until="networkidle", timeout=40000)
+            except Exception as e1:
+                print(f"⚠️  Primer intent fallit, provant alternativa...")
+                try:
+                    page.goto(match_url, wait_until="load", timeout=40000)
+                except Exception as e2:
+                    print(f"⚠️  Segon intent fallit, últim intent...")
+                    page.goto(match_url, timeout=40000)
+            
             page.wait_for_timeout(4000)  # Esperar JavaScript
             
             print("🔍 Buscant jugadors...")
@@ -100,6 +129,7 @@ def get_match_lineup(match_url):
             print(f"❌ Error: {e}")
             return {"error": str(e)}
         finally:
+            context.close()
             browser.close()
     
     return result
