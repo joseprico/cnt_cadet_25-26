@@ -226,8 +226,9 @@ if __name__ == "__main__":
         if formatted['rival_players']:
             print(f"   Jugadors rivals: {len(formatted['rival_players'])}")
     
-    # Guardar a fitxer JSON
-    output_file = "match_lineup.json"
+    # Guardar a fitxer JSON amb match_id al nom
+    match_id = lineup_data.get('match_id', 'unknown')
+    output_file = f"match_{match_id}_lineup.json"
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(formatted, f, ensure_ascii=False, indent=2)
     
