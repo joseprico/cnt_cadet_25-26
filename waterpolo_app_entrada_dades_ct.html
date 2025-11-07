@@ -12,6 +12,65 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .container { max-width: 1024px; margin: 0 auto; padding: 8px; padding-top: 85px; padding-bottom: 80px; box-sizing: border-box; width: 100%; }
 .header-fixed { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #1e3a8a 0%, #0891b2 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 4px solid #22d3ee; z-index: 1000; padding: 6px 0; }
 .scoreboard { max-width: 1024px; margin: 0 auto; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+/* ============================================
+   CRONÒMETRE DEL QUARTER
+   ============================================ */
+.quarter-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 80px;
+}
+
+.quarter-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #67e8f9;
+    letter-spacing: 1px;
+}
+
+.timer-display {
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.timer-status {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.timer-status.recording {
+    background: #ef4444;
+    animation: pulse-record 1.5s infinite;
+}
+
+@keyframes pulse-record {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Ajustos per mòbil */
+@media (max-width: 768px) {
+    .quarter-timer {
+        min-width: 70px;
+    }
+    
+    .quarter-label {
+        font-size: 9px;
+    }
+    
+    .timer-display {
+        font-size: 20px;
+    }
+}
 .team-score { flex: 1; text-align: center; }
 .team-label { font-size: 9px; font-weight: bold; color: #67e8f9; margin-bottom: 1px; }
 .score-display { font-size: 28px; font-weight: 900; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
@@ -161,21 +220,33 @@ svg { display: inline-block; vertical-align: middle; }
     <div class="header-fixed">
         <div style="position: absolute; top: 5px; right: 15px; font-size: 9px; color: rgba(255,255,255,0.5); font-style: italic;">by Josep Rico</div>
         <div class="scoreboard">
-            <div class="team-score">
-                <div class="team-label">CNT</div>
-                <div class="score-display" id="scoreCNT">0</div>
-                <div class="temps-mort-compact">TM: <span id="tempsMortCNT">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortCNT(1)">+</button></div>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
-                <div class="score-separator">-</div>
-                <div class="quarter-info" id="quarterInfo">Q1: 0-0</div>
-            </div>
-            <div class="team-score">
-                <div class="team-label" id="rivalTeamLabel">RIVAL</div>
-                <div class="score-display" id="scoreRival">0</div>
-                <div class="temps-mort-compact">TM: <span id="tempsMortRival">0</span> <button class="btn btn-red" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(-1)">-</button> <button class="btn btn-green" style="padding: 1px 3px; font-size: 8px;" onclick="updateTempsMortRival(1)">+</button></div>
-            </div>
+    <div class="team-score">
+        <div class="team-label">CN TERRASSA</div>
+        <div class="score-display" id="scoreCNT">0</div>
+        <div class="temps-mort-compact">
+            <button class="btn-mini" onclick="updateTempsMortCNT(-1)">-</button>
+            <span id="tempsMortCNT">0</span> TM
+            <button class="btn-mini" onclick="updateTempsMortCNT(1)">+</button>
         </div>
+    </div>
+    
+    <!-- ✅ CRONÒMETRE NOU AL CENTRE -->
+    <div class="quarter-timer">
+        <div class="quarter-label" id="quarterLabel">Q1</div>
+        <div class="timer-display" id="timerDisplay">00:00</div>
+        <div class="timer-status" id="timerStatus"></div>
+    </div>
+    
+    <div class="team-score">
+        <div class="team-label" id="rivalTeamLabel">RIVAL</div>
+        <div class="score-display" id="scoreRival">0</div>
+        <div class="temps-mort-compact">
+            <button class="btn-mini" onclick="updateTempsMortRival(-1)">-</button>
+            <span id="tempsMortRival">0</span> TM
+            <button class="btn-mini" onclick="updateTempsMortRival(1)">+</button>
+        </div>
+    </div>
+</div>
     </div>
 
     <div id="goalModal" class="modal">
@@ -1318,7 +1389,7 @@ function renderCompactView(){
                 `}
                 <button onclick="openExclusionModal(${p.num},false,1)" style="flex:1;padding:3px 0;background:#ef4444;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="exc-${p.num}">${exc}</span><br>🟥</button>
                 <button onclick="openActionModal(${p.num},1)" style="flex:1;padding:3px 0;background:#3b82f6;color:white;border:none;border-radius:2px;font-size:7px;font-weight:bold;min-width:0;line-height:1.2;"><span id="actions-${p.num}">${totalActions}</span><br>📊</button>
-                <button onclick="togglePlayerWaterStatus(${p.num})" style="flex:1;padding:3px 0;background:${isInWater?'#22c55e':'#3b82f6'};color:white;border:none;border-radius:2px;font-size:5px;font-weight:bold;min-width:0;line-height:1.2;">${isInWater?'DINS':'FORA'}<br>💧</button>
+                <button onclick="togglePlayerWaterStatus(${p.num})" style="flex:1;padding:3px 0;background:${isInWater?'#14b8a6':'#a855f7'};color:white;border:none;border-radius:2px;font-size:5px;font-weight:bold;min-width:0;line-height:1.2;">${isInWater?'DINS':'FORA'}<br>💧</button>
             </div>
         </div>`;
     }).join('');
@@ -1938,7 +2009,7 @@ function renderCompactView(){
                     <span id="actions-${p.num}" style="font-size:11px;line-height:1;">${totalActions}</span>
                     <span style="font-size:9px;">📊</span>
                 </button>
-                <button onclick="togglePlayerWaterStatus(${p.num})" style="padding:4px 1px;background:${isInWater?'#22c55e':'#3b82f6'};color:white;border:none;border-radius:4px;font-size:6px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
+                <button onclick="togglePlayerWaterStatus(${p.num})" style="padding:4px 1px;background:${isInWater?'#14b8a6':'#a855f7'};color:white;border:none;border-radius:4px;font-size:6px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:0;">
                     <span style="font-size:7px;line-height:1;">${isInWater?'DINS':'FORA'}</span>
                     <span style="font-size:9px;">💧</span>
                 </button>
@@ -2314,6 +2385,158 @@ function updateSave(n, inc) {
         renderCompactView()
     }
     saveToLocalStorage();
+}
+// ============================================
+// CRONÒMETRE DEL QUARTER
+// ============================================
+
+let timerInterval = null;
+
+function updateQuarterTimer() {
+    const currentQuarter = getCurrentQuarter();
+    const quarterStart = quarterStartTimes[currentQuarter];
+    
+    // Actualitzar label del quarter
+    document.getElementById('quarterLabel').textContent = currentQuarter.toUpperCase();
+    
+    // Si el quarter no ha començat
+    if (!quarterStart) {
+        document.getElementById('timerDisplay').textContent = '00:00';
+        document.getElementById('timerStatus').classList.remove('recording');
+        return;
+    }
+    
+    // Si el quarter ha acabat
+    if (quarterRealEndTimes[currentQuarter]) {
+        const elapsed = (quarterRealEndTimes[currentQuarter] - quarterStart) / 1000;
+        document.getElementById('timerDisplay').textContent = formatTime(Math.floor(elapsed));
+        document.getElementById('timerStatus').classList.remove('recording');
+        return;
+    }
+    
+    // Calcular temps transcorregut
+    const now = Date.now();
+    const elapsed = Math.floor((now - quarterStart) / 1000);
+    
+    // Mostrar temps (màxim 8:00)
+    const displayTime = Math.min(elapsed, 480);
+    document.getElementById('timerDisplay').textContent = formatTime(displayTime);
+    
+    // Indicador de gravació actiu
+    document.getElementById('timerStatus').classList.add('recording');
+    
+    // Avís si passa dels 8 minuts
+    if (elapsed > 480 && elapsed % 30 === 0) {
+        console.warn('⚠️ El quarter ha superat els 8 minuts!');
+    }
+}
+
+function startQuarterTimer() {
+    // Actualitzar immediatament
+    updateQuarterTimer();
+    
+    // Actualitzar cada segon
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    
+    timerInterval = setInterval(updateQuarterTimer, 1000);
+}
+
+function stopQuarterTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    document.getElementById('timerStatus').classList.remove('recording');
+}
+
+// ✅ Modificar la funció startQuarter() existent
+function startQuarter(q) {
+    if (lineups[q].length !== 7) {
+        alert('Necessites 7 jugadors a l\'alineació per començar el quart!');
+        return;
+    }
+    
+    if (quarterStartTimes[q] !== null) {
+        alert('Aquest quart ja ha començat!');
+        return;
+    }
+    
+    const timestamp = Date.now();
+    quarterStartTimes[q] = timestamp;
+    
+    // Inicialitzar jugadors dins l'aigua amb l'alineació titular
+    playersInWater.clear();
+    lineups[q].forEach(num => {
+        playersInWater.add(num);
+        playerWaterChanges.push({
+            playerNum: num,
+            quarter: q,
+            action: 'in',
+            timestamp: timestamp
+        });
+    });
+    
+    if (compactMode) renderCompactView();
+    renderLineups();
+    saveToLocalStorage();
+    
+    // ✅ INICIAR CRONÒMETRE
+    startQuarterTimer();
+    
+    alert(`✅ ${q.toUpperCase()} començat!`);
+}
+
+// ✅ Modificar la funció endQuarter() existent
+function endQuarter(quarter) {
+    const timestamp = Date.now();
+    quarterRealEndTimes[quarter] = timestamp;
+    
+    captureLineupScore(quarter);
+    
+    playersInWater.forEach(num => {
+        playerWaterChanges.push({
+            playerNum: num,
+            quarter: quarter,
+            action: 'out',
+            timestamp: timestamp
+        });
+    });
+    
+    playersInWater.clear();
+    
+    if(compactMode) renderCompactView();
+    renderLineups();
+    renderPeriodScores();
+    saveToLocalStorage();
+    
+    // ✅ ATURAR CRONÒMETRE
+    stopQuarterTimer();
+    
+    alert(`✅ ${quarter.toUpperCase()} finalitzat correctament!`);
+}
+
+// ✅ Iniciar el cronòmetre quan es carrega la pàgina
+document.addEventListener('DOMContentLoaded', function() {
+    // ... codi existent ...
+    
+    // Iniciar cronòmetre si hi ha un quarter actiu
+    const currentQuarter = getCurrentQuarter();
+    if (quarterStartTimes[currentQuarter] && !quarterRealEndTimes[currentQuarter]) {
+        startQuarterTimer();
+    }
+});
+
+// ✅ Actualitzar cronòmetre quan es carreguen dades
+function loadFromLocalStorage() {
+    // ... codi existent de càrrega ...
+    
+    // Reiniciar cronòmetre
+    const currentQuarter = getCurrentQuarter();
+    if (quarterStartTimes[currentQuarter] && !quarterRealEndTimes[currentQuarter]) {
+        startQuarterTimer();
+    }
 }
 </script>
 <script>
