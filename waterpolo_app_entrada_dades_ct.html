@@ -739,6 +739,11 @@ function loadFromLocalStorage(){
                 document.getElementById('locationAway')?.classList.add('selected');
             }
         }
+		// ✅ Reiniciar cronòmetre si hi ha un quarter actiu
+        const currentQuarter = getCurrentQuarter();
+        if (quarterStartTimes[currentQuarter] && !quarterRealEndTimes[currentQuarter]) {
+            startQuarterTimer();
+        }
     }catch(e){
         console.error('Error:',e);
     }
@@ -2517,27 +2522,7 @@ function endQuarter(quarter) {
     alert(`✅ ${quarter.toUpperCase()} finalitzat correctament!`);
 }
 
-// ✅ Iniciar el cronòmetre quan es carrega la pàgina
-document.addEventListener('DOMContentLoaded', function() {
-    // ... codi existent ...
-    
-    // Iniciar cronòmetre si hi ha un quarter actiu
-    const currentQuarter = getCurrentQuarter();
-    if (quarterStartTimes[currentQuarter] && !quarterRealEndTimes[currentQuarter]) {
-        startQuarterTimer();
-    }
-});
 
-// ✅ Actualitzar cronòmetre quan es carreguen dades
-function loadFromLocalStorage() {
-    // ... codi existent de càrrega ...
-    
-    // Reiniciar cronòmetre
-    const currentQuarter = getCurrentQuarter();
-    if (quarterStartTimes[currentQuarter] && !quarterRealEndTimes[currentQuarter]) {
-        startQuarterTimer();
-    }
-}
 </script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
