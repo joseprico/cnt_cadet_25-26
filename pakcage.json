@@ -1,14 +1,8 @@
 {
-  "name": "cnt-stats",
+  "name": "cnt-cadet-25-26",
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "echo \"(front estàtic)\"",
-    "start": "vercel dev"
-  },
   "dependencies": {
-    "cheerio": "^1.0.0",
-    "node-fetch": "^3.3.2"
+    "cheerio": "^1.0.0"
   }
 }
