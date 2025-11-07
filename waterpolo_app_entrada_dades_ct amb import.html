@@ -2333,131 +2333,97 @@ function updateSave(n, inc) {
     saveToLocalStorage();
 }
 
-(function() {
-  const $ = (sel) => document.querySelector(sel);
 
-  async function importarDesDeActa(urlActa) {
-    const res = await fetch('/api/importar-acta', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: urlActa })
-    });
-    if (!res.ok) {
-      const msg = await res.text().catch(()=>'');
-      throw new Error(`Error importació (${res.status}): ${msg || 'consulta el servidor'}`);
-    }
-    return res.json(); // { local: {nomEquip, jugadors:[{dorsal, nom}]}, visitant:{...} }
-  }
+// Evita ReferenceError si el teu codi fa servir 'hasMoved'
+  window.hasMoved = window.hasMoved || function() { return false; };
 
-  function normalitzaNomEquip(n) {
-    return (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
-  }
+  (function() {
+    const $ = (s) => document.querySelector(s);
 
-  function intentaMaparLocalVisitant(data) {
-    // Ajusta si tens ja el nom d’equip configurat (p.ex. “CN TERRASSA”).
-    const equipCNT = normalitzaNomEquip('CN TERRASSA');
-    const loc = normalitzaNomEquip(data.local?.nomEquip);
-    const vis = normalitzaNomEquip(data.visitant?.nomEquip);
-    if (loc.includes('terrassa') && !vis.includes('terrassa')) {
-      return { cnt: data.local, rival: data.visitant };
-    }
-    if (vis.includes('terrassa') && !loc.includes('terrassa')) {
-      return { cnt: data.visitant, rival: data.local };
-    }
-    // En cas de dubte, conserva l’ordre original
-    return { cnt: data.local, rival: data.visitant };
-  }
-
-  function toModelJugador(j) {
-    // Adapta a l’esquema que uses al teu JSON (id/dorsal/nom/posició, etc.)
-    return {
-      dorsal: (j.dorsal || '').trim(),
-      nom: (j.nom || '').trim()
-    };
-  }
-
-  async function onClickImportar() {
-    const url = $('#urlActaInput').value.trim();
-    if (!url) {
-      alert('Enganxa l’enllaç de l’acta (acaba amb /results)');
-      return;
-    }
-    const btn = $('#btnImportarActa');
-    const prev = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Important...';
-
-    try {
-      const data = await importarDesDeActa(url);
-      const { cnt, rival } = intentaMaparLocalVisitant(data);
-
-      const jugCNT = (cnt?.jugadors || []).map(toModelJugador);
-      const jugRival = (rival?.jugadors || []).map(toModelJugador);
-
-      // >>> Crides als teus helpers de UI / estat <<< //
-      if (window.setAlineacioCNT) window.setAlineacioCNT(jugCNT);
-      if (window.setAlineacioRival) window.setAlineacioRival(jugRival);
-
-      // Opcional: si tens un store global de “entrada de dades”
-      if (window.updateEntradaDades) {
-        window.updateEntradaDades(draft => {
-          draft.cnt.nomEquip = cnt?.nomEquip || draft.cnt.nomEquip;
-          draft.rival.nomEquip = rival?.nomEquip || draft.rival.nomEquip;
-          draft.cnt.jugadors = jugCNT;
-          draft.rival.jugadors = jugRival;
-        });
+    async function importarDesDeActa(urlActa) {
+      const res = await fetch('/api/importar-acta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: urlActa })
+      });
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> '');
+        throw new Error(`Error importació (${res.status}): ${txt || 'consulta el servidor'}`);
       }
-
-      // Missatge ràpid
-      toastOK(`Alineacions importades de l’acta: ${cnt?.nomEquip ?? 'Local'} i ${rival?.nomEquip ?? 'Visitant'}`);
-    } catch (err) {
-      console.error(err);
-      alert(err.message || 'No s\'ha pogut importar l\'acta');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = prev;
+      return res.json();
     }
-  }
 
-  function toastOK(msg) {
-    // Usa el teu sistema de notificacions si en tens.
-    console.log('✅', msg);
-  }
+    function normalitza(n) {
+      return (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+    }
 
-  // Wire-up
-  window.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('btnImportarActa');
-    if (btn) btn.addEventListener('click', onClickImportar);
-  });
+    function decideixCNTvsRival(d) {
+      const loc = normalitza(d.local?.nomEquip);
+      const vis = normalitza(d.visitant?.nomEquip);
+      if (loc.includes('terrassa') && !vis.includes('terrassa')) return { cnt: d.local, rival: d.visitant };
+      if (vis.includes('terrassa') && !loc.includes('terrassa')) return { cnt: d.visitant, rival: d.local };
+      return { cnt: d.local, rival: d.visitant };
+    }
 
-  // >>> Helpers mínims (si no tens encara setAlineacioXXX) <<<
-  // Esperen que a la teva UI hi hagi contenidors/llistes per als jugadors CNT i Rival
-  if (!window.setAlineacioCNT) {
-    window.setAlineacioCNT = (jugadors) => {
-      // Ex: omplir un <ul id="llistaCNT">
-      const ul = document.getElementById('llistaCNT');
-      if (!ul) return;
-      ul.innerHTML = '';
-      jugadors.forEach(j => {
-        const li = document.createElement('li');
-        li.textContent = (j.dorsal ? `#${j.dorsal} ` : '') + j.nom;
-        ul.appendChild(li);
-      });
-    };
-  }
-  if (!window.setAlineacioRival) {
-    window.setAlineacioRival = (jugadors) => {
-      const ul = document.getElementById('llistaRival');
-      if (!ul) return;
-      ul.innerHTML = '';
-      jugadors.forEach(j => {
-        const li = document.createElement('li');
-        li.textContent = (j.dorsal ? `#${j.dorsal} ` : '') + j.nom;
-        ul.appendChild(li);
-      });
-    };
-  }
-})();
+    function toModel(j) {
+      return { dorsal: (j.dorsal||'').trim(), nom: (j.nom||'').trim() };
+    }
+
+    async function onClickImportar() {
+      const url = $('#urlActaInput').value.trim();
+      if (!url) return alert('Enganxa l’URL de l’acta (acaba amb /results)');
+      const btn = $('#btnImportarActa');
+      const prev = btn.textContent; btn.disabled = true; btn.textContent = 'Important...';
+      try {
+        const data = await importarDesDeActa(url);
+        const { cnt, rival } = decideixCNTvsRival(data);
+        const jugCNT   = (cnt?.jugadors||[]).map(toModel);
+        const jugRival = (rival?.jugadors||[]).map(toModel);
+
+        if (window.setAlineacioCNT)   window.setAlineacioCNT(jugCNT);
+        if (window.setAlineacioRival) window.setAlineacioRival(jugRival);
+
+        alert(`Alineacions importades:\n- ${cnt?.nomEquip || 'Local'}\n- ${rival?.nomEquip || 'Visitant'}`);
+      } catch (e) {
+        console.error(e);
+        alert(e.message || 'No s’ha pogut importar l’acta');
+      } finally {
+        btn.disabled = false; btn.textContent = prev;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('btnImportarActa');
+      if (btn) btn.addEventListener('click', onClickImportar);
+    });
+
+    // Helpers mínims per veure llista si no tens els teus:
+    if (!window.setAlineacioCNT) {
+      window.setAlineacioCNT = (jugadors) => {
+        let ul = document.getElementById('llistaCNT');
+        if (!ul) { ul = document.createElement('ul'); ul.id = 'llistaCNT'; document.body.appendChild(ul); }
+        ul.innerHTML = '';
+        jugadors.forEach(j => {
+          const li = document.createElement('li');
+          li.textContent = (j.dorsal ? `#${j.dorsal} ` : '') + j.nom;
+          ul.appendChild(li);
+        });
+      };
+    }
+    if (!window.setAlineacioRival) {
+      window.setAlineacioRival = (jugadors) => {
+        let ul = document.getElementById('llistaRival');
+        if (!ul) { ul = document.createElement('ul'); ul.id = 'llistaRival'; document.body.appendChild(ul); }
+        ul.innerHTML = '';
+        jugadors.forEach(j => {
+          const li = document.createElement('li');
+          li.textContent = (j.dorsal ? `#${j.dorsal} ` : '') + j.nom;
+          ul.appendChild(li);
+        });
+      };
+    }
+  })();
+
 
 </script>
 <script>
