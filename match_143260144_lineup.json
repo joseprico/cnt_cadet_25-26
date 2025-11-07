@@ -1,12 +1,7 @@
 {
-  "players": [
-    {
-      "num": 8,
-      "name": "C.N. TERRASSA A"
-    }
-  ],
-  "rival_team": "Informació",
+  "players": [],
+  "rival_team": "",
   "rival_players": [],
-  "js_code": "let players = [\n  {\n    \"num\": 8,\n    \"name\": \"C.N. TERRASSA A\"\n  }\n];",
-  "count": 1
+  "js_code": "let players = [];",
+  "count": 0
 }
