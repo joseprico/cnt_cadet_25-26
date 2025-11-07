@@ -1,0 +1,47 @@
+name: 📋 Generar Convocatòria
+
+on:
+  workflow_dispatch:
+    inputs:
+      match_url:
+        description: 'URL del partit d''ACTAWP'
+        required: true
+        type: string
+        default: 'https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results'
+
+jobs:
+  generate-lineup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: 📦 Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+          
+      - name: ⚙️ Generate lineup JSON
+        run: |
+          python match_lineup_parser.py "${{ github.event.inputs.match_url }}"
+          
+      - name: 📤 Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add match_*.json
+          git commit -m "📋 Convocatòria automàtica - $(date +'%Y-%m-%d %H:%M')" || echo "No changes"
+          git push
+          
+      - name: ✅ Success notification
+        if: success()
+        run: |
+          MATCH_ID=$(echo "${{ github.event.inputs.match_url }}" | grep -oP '/match/\K\d+')
+          echo "✅ Convocatòria generada!"
+          echo "📄 Fitxer: match_${MATCH_ID}_lineup.json"
+          echo "🔗 Ara pots importar-la a l'app!"
