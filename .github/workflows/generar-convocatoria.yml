@@ -22,14 +22,10 @@ jobs:
         with:
           python-version: '3.11'
           
-      - name: 🌐 Setup Chrome/Chromium
+      - name: 📦 Install Playwright
         run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-          
-      - name: 📦 Install dependencies
-        run: |
-          pip install requests-html beautifulsoup4
+          pip install playwright
+          playwright install --with-deps chromium
           
       - name: ⚙️ Generate lineup JSON
         run: |
