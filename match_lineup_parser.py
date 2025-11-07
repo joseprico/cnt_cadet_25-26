@@ -1,55 +1,36 @@
 """
-Parser per obtenir la convocatòria d'un partit específic de ACTAWP
-Exemple d'ús:
+Parser ROBUST per obtenir la convocatòria d'un partit d'ACTAWP
+Usa requests-html per executar JavaScript de forma lleugera
+
+Instal·lació:
+    pip install requests-html --break-system-packages
+
+Ús:
     python match_lineup_parser.py https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results
 """
 
-import requests
-from bs4 import BeautifulSoup
 import json
 import sys
 import re
+
+try:
+    from requests_html import HTMLSession
+    HAS_REQUESTS_HTML = True
+except ImportError:
+    HAS_REQUESTS_HTML = False
+    import requests
+    from bs4 import BeautifulSoup
 
 def get_match_lineup(match_url):
     """
     Obté els jugadors convocats per CN Terrassa d'un partit específic
     """
     try:
-        # Fer la petició amb headers per simular un navegador
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        }
-        
-        session = requests.Session()
-        
-        # Primer obtenir el CSRF token de la pàgina principal
-        response = session.get(match_url, headers=headers)
-        
-        if response.status_code != 200:
-            return {"error": f"Error {response.status_code} al accedir a la URL"}
-        
-        # Buscar el match_id a la URL
         match_id_search = re.search(r'/match/(\d+)', match_url)
         if not match_id_search:
             return {"error": "No s'ha pogut trobar l'ID del partit a la URL"}
         
         match_id = match_id_search.group(1)
-        
-        # Intentar obtenir les dades via AJAX (com fa la pàgina web)
-        ajax_url = f"https://actawp.natacio.cat/ca/ajax/match/{match_id}/change-tab"
-        
-        # Buscar CSRF token
-        csrf_token = None
-        csrf_match = re.search(r'csrf_token["\']?\s*[:=]\s*["\']([^"\']+)["\']', response.text)
-        if csrf_match:
-            csrf_token = csrf_match.group(1)
-        
-        if not csrf_token:
-            soup = BeautifulSoup(response.text, 'html.parser')
-            csrf_input = soup.find('input', {'name': 'csrf_token'})
-            if csrf_input:
-                csrf_token = csrf_input.get('value')
         
         result = {
             "match_url": match_url,
@@ -59,123 +40,152 @@ def get_match_lineup(match_url):
             "rival_players": []
         }
         
-        # Intentar obtenir la pestanya de "lineup" o "players"
-        if csrf_token:
-            data = {
-                'csrf_token': csrf_token,
-                'tab': 'lineup'  # o 'players' segons la pàgina
-            }
-            
-            ajax_headers = headers.copy()
-            ajax_headers.update({
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Referer': match_url
-            })
-            
-            ajax_response = session.post(ajax_url, data=data, headers=ajax_headers)
-            
-            if ajax_response.status_code == 200:
-                try:
-                    ajax_data = ajax_response.json()
-                    if ajax_data.get('code') == 0:
-                        content = ajax_data.get('content', '')
-                        result = parse_lineup_content(content, result)
-                except:
-                    pass
-        
-        # Si no hem obtingut res via AJAX, intentar parsejar el HTML directe
-        if not result["cn_terrassa_players"]:
-            soup = BeautifulSoup(response.text, 'html.parser')
-            result = parse_lineup_from_html(soup, result)
+        if HAS_REQUESTS_HTML:
+            print("🔧 Usant requests-html (pot executar JavaScript)...")
+            result = get_lineup_with_js(match_url, result)
+        else:
+            print("⚠️  requests-html no disponible, usant mètode bàsic...")
+            print("💡 Instal·la: pip install requests-html --break-system-packages")
+            result = get_lineup_basic(match_url, result)
         
         return result
         
     except Exception as e:
         return {"error": str(e)}
 
-def parse_lineup_content(html_content, result):
+def get_lineup_with_js(match_url, result):
     """
-    Parseja el contingut HTML per obtenir les convocatòries
+    Obté la convocatòria executant JavaScript (més fiable)
     """
-    soup = BeautifulSoup(html_content, 'html.parser')
+    session = HTMLSession()
     
-    # Buscar taules de jugadors
+    try:
+        print(f"🌐 Accedint a: {match_url}")
+        response = session.get(match_url)
+        
+        # Executar JavaScript per carregar contingut dinàmic
+        print("⚙️  Executant JavaScript...")
+        response.html.render(sleep=2, timeout=20)
+        
+        # Buscar jugadors en el HTML renderitzat
+        print("🔍 Buscant jugadors...")
+        
+        # Estratègia 1: Buscar taules
+        tables = response.html.find('table')
+        print(f"📊 Trobades {len(tables)} taules")
+        
+        for table in tables:
+            table_html = table.html
+            
+            # Comprovar si conté "TERRASSA"
+            if 'TERRASSA' in table_html.upper():
+                print("✅ Taula de CN Terrassa trobada!")
+                result["cn_terrassa_players"] = extract_players_from_table_html(table.html)
+                
+                # Buscar nom rival
+                try:
+                    headers = response.html.find('h2, h3, h4')
+                    for header in headers:
+                        header_text = header.text.strip()
+                        if header_text and 'TERRASSA' not in header_text.upper() and len(header_text) > 3:
+                            result["rival_team"] = header_text
+                            break
+                except:
+                    pass
+                
+                break
+        
+        # Estratègia 2: Si no hem trobat res, buscar amb selectors CSS
+        if not result["cn_terrassa_players"]:
+            print("🔍 Provant selectors CSS...")
+            selectors = [
+                '.lineup-player',
+                '.player-row',
+                '[data-player-id]',
+                'tr[data-player]',
+                'tbody tr'
+            ]
+            
+            for selector in selectors:
+                elements = response.html.find(selector)
+                if elements:
+                    for elem in elements:
+                        text = elem.text
+                        # Buscar patró: número + nom
+                        match = re.search(r'(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ\s]+)', text)
+                        if match:
+                            num = int(match.group(1))
+                            name = match.group(2).strip()
+                            if 1 <= num <= 99 and len(name) > 3:
+                                result["cn_terrassa_players"].append({
+                                    "num": num,
+                                    "name": name.upper()
+                                })
+                    
+                    if result["cn_terrassa_players"]:
+                        print(f"✅ Trobats jugadors amb selector: {selector}")
+                        break
+        
+        # Eliminar duplicats
+        seen = set()
+        unique_players = []
+        for player in result["cn_terrassa_players"]:
+            key = (player["num"], player["name"])
+            if key not in seen:
+                seen.add(key)
+                unique_players.append(player)
+        
+        result["cn_terrassa_players"] = sorted(unique_players, key=lambda x: x["num"])
+        
+    finally:
+        session.close()
+    
+    return result
+
+def get_lineup_basic(match_url, result):
+    """
+    Mètode bàsic sense JavaScript (menys fiable per ACTAWP)
+    """
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    }
+    
+    response = requests.get(match_url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Buscar taules
     tables = soup.find_all('table')
     
     for table in tables:
-        # Buscar capçalera que indiqui CN TERRASSA
-        header = table.find_previous(['h3', 'h4', 'div'], string=re.compile(r'TERRASSA', re.I))
-        
-        if header:
-            # És la taula de CN Terrassa
-            result["cn_terrassa_players"] = extract_players_from_table(table)
-        else:
-            # Podria ser la taula rival
-            rival_header = table.find_previous(['h3', 'h4', 'div'])
-            if rival_header and result["rival_team"] == "":
-                result["rival_team"] = rival_header.get_text(strip=True)
-                result["rival_players"] = extract_players_from_table(table)
+        if 'TERRASSA' in str(table).upper():
+            result["cn_terrassa_players"] = extract_players_from_table_html(str(table))
+            break
     
     return result
 
-def parse_lineup_from_html(soup, result):
+def extract_players_from_table_html(table_html):
     """
-    Parseja directament el HTML de la pàgina quan no hi ha AJAX
+    Extreu jugadors del HTML d'una taula
     """
-    # Buscar seccions d'equips
-    team_sections = soup.find_all(['div', 'section'], class_=re.compile(r'team|lineup', re.I))
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(table_html, 'html.parser')
     
-    for section in team_sections:
-        team_name_elem = section.find(['h2', 'h3', 'h4'])
-        if team_name_elem:
-            team_name = team_name_elem.get_text(strip=True)
-            
-            if 'TERRASSA' in team_name.upper():
-                # Buscar taula de jugadors dins aquesta secció
-                table = section.find('table')
-                if table:
-                    result["cn_terrassa_players"] = extract_players_from_table(table)
-            else:
-                if result["rival_team"] == "":
-                    result["rival_team"] = team_name
-                    table = section.find('table')
-                    if table:
-                        result["rival_players"] = extract_players_from_table(table)
-    
-    return result
-
-def extract_players_from_table(table):
-    """
-    Extreu jugadors d'una taula HTML
-    """
     players = []
-    
-    tbody = table.find('tbody')
-    if not tbody:
-        return players
-    
-    rows = tbody.find_all('tr')
+    rows = soup.find_all('tr')
     
     for row in rows:
-        cols = row.find_all(['td', 'th'])
-        if len(cols) < 2:
-            continue
-        
-        # Primer columna sol ser el número
-        num_text = cols[0].get_text(strip=True)
-        
-        # Segon columna sol ser el nom
-        name_text = cols[1].get_text(strip=True)
-        
-        # Intentar extraure número
-        num_match = re.search(r'\d+', num_text)
-        if num_match and name_text:
-            player = {
-                "num": int(num_match.group()),
-                "name": name_text.strip().upper()
-            }
-            players.append(player)
+        cells = row.find_all(['td', 'th'])
+        if len(cells) >= 2:
+            num_text = cells[0].get_text(strip=True)
+            name_text = cells[1].get_text(strip=True)
+            
+            num_match = re.search(r'\d+', num_text)
+            if num_match and name_text and len(name_text) > 2:
+                player = {
+                    "num": int(num_match.group()),
+                    "name": name_text.upper()
+                }
+                players.append(player)
     
     return players
 
@@ -186,10 +196,8 @@ def format_for_app(lineup_data):
     if "error" in lineup_data:
         return lineup_data
     
-    # Ordenar jugadors per número
     players = sorted(lineup_data["cn_terrassa_players"], key=lambda x: x["num"])
     
-    # Format JavaScript per copiar directament
     js_format = "let players = " + json.dumps(players, ensure_ascii=False, indent=2) + ";"
     
     return {
@@ -203,37 +211,48 @@ def format_for_app(lineup_data):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Ús: python match_lineup_parser.py <URL_PARTIT>")
-        print("Exemple: python match_lineup_parser.py https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results")
+        print("\nExemple:")
+        print("  python match_lineup_parser.py https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results")
+        print("\n📦 Recomanat instal·lar:")
+        print("  pip install requests-html --break-system-packages")
         sys.exit(1)
     
     match_url = sys.argv[1]
     
-    print(f"\n🔍 Obtenint convocatòria de: {match_url}\n")
+    print(f"\n{'='*60}")
+    print(f"🏊 CN TERRASSA - Parser de Convocatòries")
+    print(f"{'='*60}\n")
     
     lineup_data = get_match_lineup(match_url)
     formatted = format_for_app(lineup_data)
     
     if "error" in formatted:
-        print(f"❌ Error: {formatted['error']}")
+        print(f"\n❌ ERROR: {formatted['error']}\n")
         sys.exit(1)
     
-    print(f"✅ Trobats {formatted['count']} jugadors de CN Terrassa:")
-    for player in formatted['players']:
-        print(f"   {player['num']:2d}. {player['name']}")
+    print(f"\n{'='*60}")
+    print(f"✅ RESULTAT")
+    print(f"{'='*60}\n")
+    print(f"👥 Jugadors CN Terrassa: {formatted['count']}")
+    
+    if formatted['count'] > 0:
+        print("\n📋 Llista de jugadors:")
+        for player in formatted['players']:
+            print(f"   {player['num']:2d}. {player['name']}")
+    else:
+        print("\n⚠️  No s'han pogut extreure jugadors.")
+        print("💡 Potser ACTAWP ha canviat el format o cal JavaScript.")
+        print("   Prova instal·lar: pip install requests-html")
     
     if formatted['rival_team']:
         print(f"\n🆚 Equip rival: {formatted['rival_team']}")
-        if formatted['rival_players']:
-            print(f"   Jugadors rivals: {len(formatted['rival_players'])}")
     
-    # Guardar a fitxer JSON amb match_id al nom
+    # Guardar a fitxer JSON
     match_id = lineup_data.get('match_id', 'unknown')
     output_file = f"match_{match_id}_lineup.json"
+    
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(formatted, f, ensure_ascii=False, indent=2)
     
-    print(f"\n💾 Dades guardades a: {output_file}")
-    print("\n📋 Codi JavaScript per copiar a l'app:")
-    print("=" * 60)
-    print(formatted['js_code'])
-    print("=" * 60)
+    print(f"\n💾 Fitxer generat: {output_file}")
+    print(f"\n{'='*60}\n")
