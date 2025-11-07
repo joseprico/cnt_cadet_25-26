@@ -80,77 +80,99 @@ def get_match_lineup(match_url):
             
             print("🔍 Buscant jugadors...")
             
+            # Primer, intentar clicar pestanya de lineup/convocatòria
+            try:
+                print("🔎 Buscant pestanya de convocatòria...")
+                links = page.query_selector_all('a, button, .tab, [role="tab"]')
+                for link in links:
+                    text = link.inner_text().lower()
+                    if any(word in text for word in ['lineup', 'convocatoria', 'convocatòria', 'alineació', 'jugador']):
+                        print(f"✅ Clicant pestanya: {link.inner_text()}")
+                        link.click()
+                        page.wait_for_timeout(2000)
+                        break
+            except Exception as e:
+                print(f"⚠️  No s'ha trobat pestanya específica: {e}")
+            
             # Buscar taules
             tables = page.query_selector_all('table')
             print(f"📊 Trobades {len(tables)} taules")
             
-            for table in tables:
+            for idx, table in enumerate(tables):
                 table_text = table.inner_text().upper()
+                table_html = table.inner_html()
                 
+                # Ignorar taula de marcador (conté molts números seguits)
+                if re.search(r'\d+\s+\d+\s+\d+\s+\d+\s+\d+\s+\d+', table_text):
+                    print(f"⏭️  Taula {idx+1}: Marcador/Estadístiques (ignorada)")
+                    continue
+                
+                # Buscar taula amb TERRASSA i format de jugadors
                 if 'TERRASSA' in table_text:
-                    print("✅ Taula CN Terrassa trobada!")
+                    print(f"✅ Taula {idx+1}: CN Terrassa trobada!")
                     
-                    # DEBUG: Mostrar primeres línies de la taula
-                    lines_sample = table_text.split('\n')[:10]
-                    print(f"📝 Contingut taula (primeres línies):")
-                    for line in lines_sample[:5]:
+                    # DEBUG: Mostrar estructura
+                    lines_sample = table_text.split('\n')[:15]
+                    print(f"📝 Contingut (primeres 15 línies):")
+                    for i, line in enumerate(lines_sample):
                         if line.strip():
-                            print(f"   '{line.strip()}'")
+                            print(f"   {i+1:2d}. '{line.strip()[:80]}'")
+                    
+                    # Buscar capçalera amb "Nº" o "#" o "Dorsal"
+                    has_number_header = any(word in table_html for word in ['Nº', '#', 'NUM', 'DORSAL', 'NUMBER'])
+                    if has_number_header:
+                        print("✓ Taula sembla tenir jugadors (té capçalera de números)")
                     
                     # Estratègia 1: Cel·les td/th tradicionals
                     rows = table.query_selector_all('tr')
                     print(f"📋 Files trobades: {len(rows)}")
                     
-                    for row in rows:
+                    for row_idx, row in enumerate(rows):
                         cells = row.query_selector_all('td, th')
                         if len(cells) >= 2:
-                            num_text = cells[0].inner_text().strip()
-                            name_text = cells[1].inner_text().strip()
+                            cell0 = cells[0].inner_text().strip()
+                            cell1 = cells[1].inner_text().strip()
                             
-                            num_match = re.search(r'\d+', num_text)
-                            if num_match and name_text and len(name_text) > 2:
+                            # Verificar que el primer no és una capçalera
+                            if cell0.upper() in ['Nº', '#', 'NUM', 'DORSAL', 'NUMBER', 'NÚMERO']:
+                                continue
+                            
+                            num_match = re.search(r'^(\d{1,2})$', cell0)
+                            if num_match and cell1 and len(cell1) > 2 and not cell1.isdigit():
+                                print(f"   → Fila {row_idx}: {cell0} - {cell1}")
                                 result["cn_terrassa_players"].append({
-                                    "num": int(num_match.group()),
-                                    "name": name_text.upper()
+                                    "num": int(num_match.group(1)),
+                                    "name": cell1.upper()
                                 })
                     
                     print(f"✓ Estratègia 1: {len(result['cn_terrassa_players'])} jugadors")
                     
-                    # Estratègia 2: Si no hem trobat res, analitzar text
+                    # Estratègia 2: Text amb patró número + nom
                     if not result["cn_terrassa_players"]:
-                        print("🔍 Provant estratègia 2: anàlisi de text...")
+                        print("🔍 Estratègia 2: cerca per patró...")
                         lines = table_text.split('\n')
                         for line in lines:
                             line = line.strip()
-                            # Patró: número (1-2 dígits) + espais + nom
-                            match = re.match(r'^(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ][A-ZÀÈÉÍÒÓÚÇ\s\-\'\.]{2,})$', line)
+                            # Buscar: número (1-2 dígits) al principi + nom
+                            match = re.match(r'^(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ][A-ZÀÈÉÍÒÓÚÇ\s\-\',\.]{3,})', line)
                             if match:
                                 num = int(match.group(1))
                                 name = match.group(2).strip()
-                                if 1 <= num <= 99 and len(name) > 2 and name not in ['TERRASSA', 'CN', 'C.N.']:
+                                # Filtrar noms vàlids
+                                if (1 <= num <= 99 and 
+                                    len(name) > 2 and 
+                                    name not in ['TERRASSA', 'CN', 'C.N.', 'MONTJUIC'] and
+                                    not re.match(r'^\d+$', name)):  # No és tot números
+                                    print(f"   → {num} - {name}")
                                     result["cn_terrassa_players"].append({
                                         "num": num,
                                         "name": name.upper()
                                     })
                         print(f"✓ Estratègia 2: {len(result['cn_terrassa_players'])} jugadors")
                     
-                    # Estratègia 3: Buscar per spans/divs dins la taula
-                    if not result["cn_terrassa_players"]:
-                        print("🔍 Provant estratègia 3: cerca per elements...")
-                        all_text = table.inner_text()
-                        # Buscar tots els números seguits de text
-                        matches = re.finditer(r'(\d{1,2})\s+([A-ZÀÈÉÍÒÓÚÇ][A-ZÀÈÉÍÒÓÚÇ\s\-\'\.]{3,})', all_text)
-                        for match in matches:
-                            num = int(match.group(1))
-                            name = match.group(2).strip()
-                            if 1 <= num <= 99 and len(name) > 2:
-                                result["cn_terrassa_players"].append({
-                                    "num": num,
-                                    "name": name.upper()
-                                })
-                        print(f"✓ Estratègia 3: {len(result['cn_terrassa_players'])} jugadors")
-                    
-                    break
+                    # Si hem trobat jugadors, sortir
+                    if result["cn_terrassa_players"]:
+                        break
             
             # Buscar equip rival
             if result["cn_terrassa_players"]:
