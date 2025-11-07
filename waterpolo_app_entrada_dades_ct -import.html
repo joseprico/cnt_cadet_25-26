@@ -360,7 +360,7 @@ svg { display: inline-block; vertical-align: middle; }
         <div id="lineupsView" class="hidden"><div id="lineupsContainer"></div></div>
         
         <div id="configView" class="hidden"><div class="card"><h2>Configuración GitHub</h2><div id="githubStatus"></div><div style="margin-bottom: 12px;"><label>Token de GitHub</label><input type="password" class="input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" onchange="saveGithubConfig()"><p style="font-size: 10px; color: #bae6fd; margin-top: 4px;">Crea un token en: Settings → Developer settings → Personal access tokens</p></div><div style="margin-bottom: 12px;"><label>Usuario/Repositorio</label><input type="text" class="input" id="githubRepo" value="joseprico/cnt_cadet_25-26" onchange="saveGithubConfig()"></div><div style="margin-bottom: 12px;"><label>Rama</label><input type="text" class="input" id="githubBranch" value="main" onchange="saveGithubConfig()"></div>
-<button class="btn btn-blue" onclick="testGithubConnection()">Probar conexión</button></div><div class="card" style="margin-top: 15px;"><h3 style="margin: 0 0 15px 0; color: #22d3ee;">📥 Importar Convocatòria</h3><button onclick="importPlayersFromMatch()" class="btn btn-green" style="width:100%; padding:14px; display:flex; align-items:center; justify-content:center; gap:10px; font-size:15px;"><span style="font-size:24px;">⚡</span><span>Importar AUTOMÀTICAMENT</span></button><div style="font-size:11px; color:#bae6fd; text-align:center; margin-top:8px; line-height:1.4;">Enganxa la URL i s'importa tot sol!<br>No cal Python ni generar JSON</div></div></div>		
+<button class="btn btn-blue" onclick="testGithubConnection()">Probar conexión</button></div><div class="card" style="margin-top: 15px;"><h3 style="margin: 0 0 15px 0; color: #22d3ee;">📥 Generar Convocatòria</h3><button onclick="generateAndImportLineup()" class="btn btn-green" style="width:100%; padding:14px; display:flex; align-items:center; justify-content:center; gap:10px; font-size:15px;"><span style="font-size:24px;">⚡</span><span>Generar Automàticament</span></button><div style="font-size:11px; color:#bae6fd; text-align:center; margin-top:8px; line-height:1.4;">Genera des d'ACTAWP i importa (40-60s)<br>Tot automàtic sense sortir de l'app!</div></div></div>		
 		</div></div>
         
         <div class="card"><h2>Observacions / Penaltis Fallados</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><textarea class="input" id="observacions" placeholder="Anotaciones..." style="min-height: 100px;"></textarea><div><button class="btn btn-red" style="width: 100%; margin-bottom: 8px;" onclick="openPenaltyMissedModal()">❌ Penalty Fallado</button><button class="btn btn-blue" style="width: 100%; margin-bottom: 8px;" onclick="showPlayingTimes()">⏱️ Temps de Joc</button><div style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 8px; max-height: 84px; overflow-y: auto;"><div style="font-size: 10px; color: #bae6fd; margin-bottom: 4px;">Resumen:</div><div id="penaltyMissedSummary" style="font-size: 9px;"></div></div></div></div></div>
@@ -2541,310 +2541,179 @@ function loadFromLocalStorage() {
     }
 }
 // ========================================
-// IMPORTAR CONVOCATÒRIA DIRECTAMENT D'ACTAWP
+// GENERAR I IMPORTAR CONVOCATÒRIA AUTOMÀTICA
 // ========================================
-async function importPlayersFromMatch() {
+async function generateAndImportLineup() {
     const matchUrl = prompt(
         '🔗 Enganxa la URL del partit d\'ACTAWP:\n\n' +
         'Exemple:\n' +
         'https://actawp.natacio.cat/ca/tournament/1317474/match/143260144/results\n\n' +
-        '✨ La convocatòria s\'importarà automàticament!'
+        '⚡ S\'invocarà GitHub Actions per generar la convocatòria automàticament!'
     );
     
     if (!matchUrl || matchUrl.trim() === '') return;
     
+    // Extreure match_id
+    const matchIdMatch = matchUrl.match(/\/match\/(\d+)/);
+    if (!matchIdMatch) {
+        alert('❌ URL no vàlida');
+        return;
+    }
+    
+    const matchId = matchIdMatch[1];
+    
+    // Missatge de càrrega
+    const loadingMsg = document.createElement('div');
+    loadingMsg.id = 'action-loading';
+    loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.95);color:white;padding:30px;border-radius:15px;z-index:9999;text-align:center;max-width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.6);';
+    loadingMsg.innerHTML = `
+        <div style="font-size:50px;margin-bottom:15px;animation:spin 2s linear infinite;">⚙️</div>
+        <div style="font-size:18px;margin-bottom:10px;font-weight:bold;">Generant convocatòria</div>
+        <div id="status-text" style="font-size:13px;color:#bae6fd;line-height:1.6;">
+            🔄 Invocant GitHub Actions...<br>
+            ⏱️ Això pot trigar 40-60 segons
+        </div>
+        <style>
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        </style>
+    `;
+    document.body.appendChild(loadingMsg);
+    
     try {
-        // Extreure match_id de la URL
-        const matchIdMatch = matchUrl.match(/\/match\/(\d+)/);
-        if (!matchIdMatch) {
-            alert('❌ URL no vàlida.\n\nHa de contenir: /match/NUMERO');
-            return;
+        // OPCIÓ 1: Triggerar GitHub Action amb Personal Access Token
+        // Nota: Cal configurar un token a les settings
+        const githubToken = githubConfig.token; // Reutilitzem el token de GitHub
+        
+        if (!githubToken) {
+            throw new Error('Cal configurar el token de GitHub primer');
         }
         
-        const matchId = matchIdMatch[1];
-        
-        // Mostrar missatge de càrrega
-        const loadingMsg = document.createElement('div');
-        loadingMsg.id = 'match-loading';
-        loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.95);color:white;padding:30px;border-radius:15px;z-index:9999;text-align:center;max-width:90%;box-shadow:0 10px 40px rgba(0,0,0,0.6);';
-        loadingMsg.innerHTML = `
-            <div style="font-size:50px;margin-bottom:15px;animation:spin 2s linear infinite;">⚙️</div>
-            <div style="font-size:18px;margin-bottom:10px;font-weight:bold;">Processant partit ${matchId}</div>
-            <div style="font-size:13px;color:#bae6fd;line-height:1.6;">
-                🔍 Carregant pàgina d'ACTAWP...<br>
-                📋 Extraient convocatòria...<br>
-                👥 Identificant jugadors...
-            </div>
-            <style>
-                @keyframes spin {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-            </style>
-        `;
-        document.body.appendChild(loadingMsg);
-        
-        // OPCIÓ 1: Intentar carregar des del cache/GitHub (si existeix)
-        try {
-            const cachedUrl = `https://raw.githubusercontent.com/joseprico/cnt_cadet_25-26/main/match_${matchId}_lineup.json`;
-            const cachedResponse = await fetch(cachedUrl);
-            
-            if (cachedResponse.ok) {
-                const cachedData = await cachedResponse.json();
-                loadingMsg.innerHTML = '<div style="font-size:40px;margin-bottom:10px;">✅</div><div style="font-size:14px;">Convocatòria trobada al cache!</div>';
-                setTimeout(() => document.body.removeChild(loadingMsg), 800);
-                
-                await processLineupData(cachedData);
-                return;
-            }
-        } catch (e) {
-            // Cache no disponible, continuar amb scraping
-        }
-        
-        // OPCIÓ 2: Parsejar directament d'ACTAWP amb CORS proxy
-        loadingMsg.innerHTML = `
-            <div style="font-size:50px;margin-bottom:15px;animation:spin 2s linear infinite;">🌐</div>
-            <div style="font-size:16px;margin-bottom:10px;font-weight:bold;">Accedint a ACTAWP...</div>
-            <div style="font-size:12px;color:#bae6fd;">Això pot trigar uns segons</div>
-        `;
-        
-        // Usar CORS proxy per accedir a ACTAWP
-        const corsProxies = [
-            `https://api.allorigins.win/raw?url=${encodeURIComponent(matchUrl)}`,
-            `https://corsproxy.io/?${encodeURIComponent(matchUrl)}`,
-            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(matchUrl)}`
-        ];
-        
-        let htmlContent = null;
-        let usedProxy = null;
-        
-        for (const proxyUrl of corsProxies) {
-            try {
-                const response = await fetch(proxyUrl);
-                if (response.ok) {
-                    htmlContent = await response.text();
-                    usedProxy = proxyUrl;
-                    break;
-                }
-            } catch (e) {
-                continue;
-            }
-        }
-        
-        if (!htmlContent) {
-            throw new Error('No s\'ha pogut accedir a ACTAWP. Prova més tard.');
-        }
-        
-        // Parsejar l'HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-        
-        // Buscar equips i jugadors
-        const players = [];
-        let rivalTeamName = '';
-        
-        // Estratègia 1: Buscar taules de jugadors
-        const tables = doc.querySelectorAll('table');
-        let cnTerrassaTable = null;
-        let rivalTable = null;
-        
-        tables.forEach(table => {
-            const prevHeading = table.previousElementSibling;
-            if (prevHeading && prevHeading.textContent.toUpperCase().includes('TERRASSA')) {
-                cnTerrassaTable = table;
-            } else if (prevHeading && !cnTerrassaTable) {
-                rivalTable = table;
-                rivalTeamName = prevHeading.textContent.trim();
-            }
-        });
-        
-        // Si no trobem taules, buscar títols i noms
-        if (!cnTerrassaTable) {
-            // Estratègia 2: Buscar per títols/headers
-            const allText = doc.body.textContent;
-            const terrassaMatch = allText.match(/TERRASSA[^]*?(?=C\.N\.|CN |Entrenador|$)/i);
-            if (terrassaMatch) {
-                // Extreure noms de jugadors (paraules en majúscules)
-                const names = terrassaMatch[0].match(/[A-ZÀÈÉÍÒÓÚÄËÏÖÜ]{3,}(\s+[A-ZÀÈÉÍÒÓÚÄËÏÖÜ]{3,})+/g);
-                if (names) {
-                    names.forEach((name, idx) => {
-                        if (!name.includes('TERRASSA') && !name.includes('ENTRENADOR')) {
-                            players.push({
-                                num: idx + 1,
-                                name: name.trim()
-                            });
-                        }
-                    });
-                }
-            }
-        } else {
-            // Parsejar la taula de CN Terrassa
-            const rows = cnTerrassaTable.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const cols = row.querySelectorAll('td');
-                if (cols.length >= 2) {
-                    const numText = cols[0].textContent.trim();
-                    const nameText = cols[1].textContent.trim();
-                    const numMatch = numText.match(/\d+/);
-                    if (numMatch && nameText) {
-                        players.push({
-                            num: parseInt(numMatch[0]),
-                            name: nameText.toUpperCase()
-                        });
+        // Triggerar el workflow
+        const triggerResponse = await fetch(
+            'https://api.github.com/repos/joseprico/cnt_cadet_25-26/actions/workflows/generar-convocatoria.yml/dispatches',
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ref: 'main',
+                    inputs: {
+                        match_url: matchUrl
                     }
-                }
-            });
+                })
+            }
+        );
+        
+        if (!triggerResponse.ok) {
+            throw new Error('Error al triggerar GitHub Action');
         }
         
-        // Buscar nom del rival si no el tenim
-        if (!rivalTeamName) {
-            const headings = doc.querySelectorAll('h1, h2, h3, h4');
-            headings.forEach(h => {
-                const text = h.textContent;
-                if (text.includes('—') || text.includes('-') || text.includes('vs')) {
-                    const parts = text.split(/—|-|vs/i);
-                    parts.forEach(part => {
-                        const clean = part.trim();
-                        if (clean && !clean.toUpperCase().includes('TERRASSA')) {
-                            rivalTeamName = clean;
-                        }
+        document.getElementById('status-text').innerHTML = 
+            '✅ Workflow iniciat!<br>' +
+            '⏳ Esperant que GitHub generi el JSON...<br>' +
+            '📊 Comprovant cada 10 segons...';
+        
+        // Esperar i comprovar si el fitxer està disponible
+        let attempts = 0;
+        const maxAttempts = 12; // 2 minuts màxim
+        let jsonAvailable = false;
+        
+        while (attempts < maxAttempts && !jsonAvailable) {
+            await new Promise(resolve => setTimeout(resolve, 10000)); // Esperar 10s
+            attempts++;
+            
+            document.getElementById('status-text').innerHTML = 
+                `⏳ Intent ${attempts}/${maxAttempts}<br>` +
+                `🔍 Comprovant si el JSON està llest...`;
+            
+            // Comprovar si el JSON ja existeix
+            const jsonUrl = `https://raw.githubusercontent.com/joseprico/cnt_cadet_25-26/main/match_${matchId}_lineup.json?t=${Date.now()}`;
+            const checkResponse = await fetch(jsonUrl);
+            
+            if (checkResponse.ok) {
+                jsonAvailable = true;
+                const data = await checkResponse.json();
+                
+                // Importar jugadors automàticament
+                document.getElementById('status-text').innerHTML = 
+                    '✅ JSON generat!<br>' +
+                    '📥 Important jugadors...';
+                
+                if (data.players && data.players.length > 0) {
+                    players = data.players;
+                    
+                    players.forEach(p => {
+                        playerStats[p.num] = {
+                            q1: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
+                            q2: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
+                            q3: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
+                            q4: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 }
+                        };
                     });
+                    
+                    lineups = { q1: [], q2: [], q3: [], q4: [] };
+                    
+                    if (data.rival_team) {
+                        rivalTeam = data.rival_team;
+                        const rivalInput = document.getElementById('rivalTeam');
+                        if (rivalInput) rivalInput.value = rivalTeam;
+                    }
+                    
+                    renderPlayers();
+                    renderLineups();
+                    if (compactMode) renderCompactView();
+                    saveToLocalStorage();
+                    
+                    document.body.removeChild(loadingMsg);
+                    
+                    // Missatge d'èxit
+                    alert(
+                        `✅ CONVOCATÒRIA IMPORTADA!\n\n` +
+                        `👥 ${players.length} jugadors carregats\n` +
+                        `🆚 ${data.rival_team || 'No definit'}\n\n` +
+                        `Ja pots començar a registrar el partit!`
+                    );
+                    
+                    return;
                 }
-            });
+            }
         }
         
-        if (players.length === 0) {
-            throw new Error('No s\'han pogut extreure els jugadors.\n\nPotser ACTAWP ha canviat el format.');
+        // Si hem arribat aquí, hem exhaurit els intents
+        if (!jsonAvailable) {
+            throw new Error('Timeout: El JSON no s\'ha generat en 2 minuts.\n\nComprova GitHub Actions manualment.');
         }
-        
-        // Ordenar per número
-        players.sort((a, b) => a.num - b.num);
-        
-        const lineupData = {
-            players: players,
-            rival_team: rivalTeamName || 'Equip rival',
-            match_id: matchId,
-            match_url: matchUrl
-        };
-        
-        document.body.removeChild(loadingMsg);
-        
-        await processLineupData(lineupData);
         
     } catch (error) {
         console.error('Error:', error);
-        const errorMsg = document.getElementById('match-loading');
+        const errorMsg = document.getElementById('action-loading');
         if (errorMsg) {
             errorMsg.innerHTML = `
                 <div style="font-size:40px;margin-bottom:15px;">⚠️</div>
-                <div style="font-size:16px;margin-bottom:15px;font-weight:bold;">Error en processar</div>
+                <div style="font-size:16px;margin-bottom:15px;font-weight:bold;">Error</div>
                 <div style="font-size:12px;color:#fca5a5;margin-bottom:20px;line-height:1.6;">
                     ${error.message}
                 </div>
                 <div style="font-size:11px;color:#bae6fd;background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;margin-bottom:15px;line-height:1.5;">
-                    💡 <b>Consells:</b><br>
-                    • Comprova que la URL és correcta<br>
-                    • Assegura't que el partit existeix a ACTAWP<br>
-                    • Prova d'obrir la URL al navegador primer<br>
-                    • Si el problema persisteix, contacta amb suport
+                    💡 <b>Alternatives:</b><br>
+                    • Genera la convocatòria manualment a GitHub → Actions<br>
+                    • Després usa el botó "Importar des de Partit"<br>
+                    • O comprova que el token de GitHub és correcte
                 </div>
-                <button onclick="document.body.removeChild(document.getElementById('match-loading'))" 
+                <button onclick="document.body.removeChild(document.getElementById('action-loading'))" 
                         style="background:#ef4444;color:white;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:14px;">
                     Tancar
                 </button>
             `;
-        } else {
-            alert(`❌ Error: ${error.message}`);
         }
     }
 }
-
-// Funció auxiliar per processar i aplicar les dades
-async function processLineupData(data) {
-    if (!data.players || data.players.length === 0) {
-        alert('❌ No s\'han trobat jugadors convocats');
-        return;
-    }
-    
-    // Mostrar previsualització
-    const playersList = data.players.slice(0, 7).map(p => `  ${p.num}. ${p.name}`).join('\n');
-    const moreText = data.players.length > 7 ? `\n  ... i ${data.players.length - 7} més` : '';
-    
-    const confirmed = confirm(
-        `✅ Convocatòria extreta!\n\n` +
-        `🆚 RIVAL: ${data.rival_team}\n` +
-        `👥 CONVOCATS: ${data.players.length} jugadors\n\n` +
-        `📋 Jugadors:\n${playersList}${moreText}\n\n` +
-        `⚠️ Això sobreescriurà els jugadors actuals.\n\n` +
-        `Vols continuar?`
-    );
-    
-    if (!confirmed) return;
-    
-    // Actualitzar jugadors
-    players = data.players;
-    
-    // Reiniciar estadístiques
-    players.forEach(p => {
-        playerStats[p.num] = {
-            q1: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
-            q2: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
-            q3: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 },
-            q4: { gols: 0, assists: 0, steals: 0, blocks: 0, exclusions: 0, turnovers: 0 }
-        };
-    });
-    
-    // Reiniciar alineacions
-    lineups = { q1: [], q2: [], q3: [], q4: [] };
-    
-    // Carregar equip rival
-    if (data.rival_team) {
-        rivalTeam = data.rival_team;
-        const rivalInput = document.getElementById('rivalTeam');
-        if (rivalInput) {
-            rivalInput.value = rivalTeam;
-        }
-    }
-    
-    // Actualitzar visualització
-    renderPlayers();
-    renderLineups();
-    if (compactMode) renderCompactView();
-    saveToLocalStorage();
-    
-    // Missatge d'èxit
-    const successMsg = document.createElement('div');
-    successMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#10b981,#059669);color:white;padding:30px;border-radius:15px;z-index:9999;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;';
-    successMsg.innerHTML = `
-        <div style="font-size:60px;margin-bottom:15px;">✅</div>
-        <div style="font-size:20px;margin-bottom:10px;font-weight:bold;">Convocatòria importada!</div>
-        <div style="font-size:14px;opacity:0.9;margin-bottom:20px;">
-            👥 ${players.length} jugadors carregats<br>
-            🆚 ${data.rival_team}
-        </div>
-        <div style="font-size:12px;background:rgba(255,255,255,0.2);padding:10px;border-radius:8px;">
-            Ja pots començar a registrar el partit!
-        </div>
-        <style>
-            @keyframes slideIn {
-                from { transform: translate(-50%, -60%); opacity: 0; }
-                to { transform: translate(-50%, -50%); opacity: 1; }
-            }
-        </style>
-    `;
-    document.body.appendChild(successMsg);
-    
-    setTimeout(() => {
-        successMsg.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => document.body.removeChild(successMsg), 300);
-    }, 3000);
-}
-
-
-
-
-
-
 
 </script>
 <script>
