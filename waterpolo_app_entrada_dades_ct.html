@@ -716,6 +716,11 @@ function loadFromLocalStorage(){
             if(d.tempsMortCNT!==undefined)tempsMortCNT=d.tempsMortCNT;
             if(d.tempsMortRival!==undefined)tempsMortRival=d.tempsMortRival;
             if(d.rivalTeam)rivalTeam=d.rivalTeam;
+			if(d.rivalTeam){
+    rivalTeam=d.rivalTeam;
+    document.getElementById('rivalTeamInput').value=rivalTeam;
+    document.getElementById('rivalTeamLabel').textContent=rivalTeam;
+}
             if(d.matchLocation)matchLocation=d.matchLocation;
             if(d.observacions)observacions=d.observacions;
             if(d.players){
