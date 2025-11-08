@@ -2428,16 +2428,17 @@ function updateQuarterTimer() {
     const now = Date.now();
     const elapsed = Math.floor((now - quarterStart) / 1000);
     
-    // Mostrar temps (màxim 8:00)
-    const displayTime = Math.min(elapsed, 480);
-    document.getElementById('timerDisplay').textContent = formatTime(displayTime);
+    // ✅ Mostrar temps REAL (sense límit)
+    document.getElementById('timerDisplay').textContent = formatTime(elapsed);
     
     // Indicador de gravació actiu
     document.getElementById('timerStatus').classList.add('recording');
     
-    // Avís si passa dels 8 minuts
-    if (elapsed > 480 && elapsed % 30 === 0) {
-        console.warn('⚠️ El quarter ha superat els 8 minuts!');
+    // ⚠️ Canviar color si passa dels 8 minuts
+    if (elapsed > 480) {
+        document.getElementById('timerDisplay').style.color = '#fbbf24'; // Groc d'avís
+    } else {
+        document.getElementById('timerDisplay').style.color = 'white';
     }
 }
 
