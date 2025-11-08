@@ -532,7 +532,7 @@
           "normal": 0,
           "h+": 0,
           "penalty": 0,
-          "contra": 2,
+          "contra": 1,
           "boya": 0
         },
         "exclusionTypes": {
@@ -552,7 +552,6 @@
         "xutsFallats": 1,
         "blocatges": 0,
         "faltesRebudes": 1,
-        "contrafaltes": 2
         "goalZones": {
           "mid-left": 1
         }
