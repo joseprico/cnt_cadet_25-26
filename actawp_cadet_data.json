@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-11-08T09:40:00.267039",
+    "downloaded_at": "2025-11-08T10:42:22.401238",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -465,13 +465,13 @@
       "posicio": "1",
       "equip": "C.N. ATL BARCELONETA",
       "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-      "partits": 0,
-      "guanyats": 0,
-      "empatats": 0,
+      "partits": 3,
+      "guanyats": 1,
+      "empatats": 1,
       "perduts": 0,
       "gols_favor": 0,
-      "gols_contra": 0,
-      "punts": 0
+      "gols_contra": 33,
+      "punts": 6
     },
     {
       "posicio": "2",
@@ -502,14 +502,14 @@
       "equip": "C.N. MANRESA",
       "logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "partits": 0,
-      "guanyats": 0,
+      "guanyats": 1,
       "empatats": 0,
       "perduts": 0,
-      "gols_favor": 0,
-      "gols_contra": 0,
-      "punts": 0
+      "gols_favor": 1,
+      "gols_contra": 6,
+      "punts": 33
     }
   ],
-  "last_update": "2025-11-08T11:23:02.697875+01:00",
-  "workflow_run": "247"
+  "last_update": "2025-11-08T11:42:37.538085+01:00",
+  "workflow_run": "248"
 }
