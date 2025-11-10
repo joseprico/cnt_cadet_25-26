@@ -361,7 +361,9 @@ svg { display: inline-block; vertical-align: middle; }
         
         <div id="configView" class="hidden"><div class="card"><h2>Configuración GitHub</h2><div id="githubStatus"></div><div style="margin-bottom: 12px;"><label>Token de GitHub</label><input type="password" class="input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" onchange="saveGithubConfig()"><p style="font-size: 10px; color: #bae6fd; margin-top: 4px;">Crea un token en: Settings → Developer settings → Personal access tokens</p></div><div style="margin-bottom: 12px;"><label>Usuario/Repositorio</label><input type="text" class="input" id="githubRepo" value="joseprico/cnt_cadet_25-26" onchange="saveGithubConfig()"></div><div style="margin-bottom: 12px;"><label>Rama</label><input type="text" class="input" id="githubBranch" value="main" onchange="saveGithubConfig()"></div><button class="btn btn-blue" onclick="testGithubConnection()">Probar conexión</button></div></div>
         
-        <div class="card"><h2>Observacions / Penaltis Fallados</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><textarea class="input" id="observacions" placeholder="Anotaciones..." style="min-height: 100px;"></textarea><div><button class="btn btn-red" style="width: 100%; margin-bottom: 8px;" onclick="openPenaltyMissedModal()">❌ Penalty Fallado</button><button class="btn btn-blue" style="width: 100%; margin-bottom: 8px;" onclick="showPlayingTimes()">⏱️ Temps de Joc</button><div style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 8px; max-height: 84px; overflow-y: auto;"><div style="font-size: 10px; color: #bae6fd; margin-bottom: 4px;">Resumen:</div><div id="penaltyMissedSummary" style="font-size: 9px;"></div></div></div></div></div>
+        <div class="card"><h2>Observacions / Penaltis Fallados</h2><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><textarea class="input" id="observacions" placeholder="Anotaciones..." style="min-height: 100px;"></textarea><div><button class="btn btn-red" style="width: 100%; margin-bottom: 8px;" onclick="openPenaltyMissedModal()">❌ Penalty Fallado</button>
+		<button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="rotacioCompleta()">🔄 Rotació Completa (6x6)</button>
+		<div style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 8px; max-height: 84px; overflow-y: auto;"><div style="font-size: 10px; color: #bae6fd; margin-bottom: 4px;">Resumen:</div><div id="penaltyMissedSummary" style="font-size: 9px;"></div></div></div></div></div>
         <div class="card"><h2>Marcadores por Periodo</h2><div id="periodScores"></div></div>
        <div class="actions-grid">
     <button class="btn btn-green" onclick="uploadToGithub()"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>GitHub</button>
@@ -2295,6 +2297,113 @@ document.addEventListener('click', function(e) {
         return false;
     }
 }, true); // ✅ true = captura l'event ABANS que arribi als botons
+
+function rotacioCompleta() {
+    // Verificar que hi ha exactament 7 jugadors dins
+    if (playersInWater.size !== 7) {
+        alert(`⚠️ No es pot fer la rotació! Hi ha ${playersInWater.size} jugadors dins (necessites 7)`);
+        return;
+    }
+    
+    // Identificar el porter dins (1 o 13)
+    let porterDins = null;
+    if (playersInWater.has(1)) porterDins = 1;
+    else if (playersInWater.has(13)) porterDins = 13;
+    
+    if (!porterDins) {
+        alert('⚠️ No hi ha porter dins! (1 o 13)');
+        return;
+    }
+    
+    // Obtenir els 6 jugadors de camp que estan dins
+    const jugadorsDins = Array.from(playersInWater).filter(num => num !== porterDins);
+    
+    // Obtenir els jugadors de camp que estan fora (excloent els dos porters)
+    const jugadorsFora = players
+        .filter(p => !playersInWater.has(p.num) && p.num !== 1 && p.num !== 13)
+        .map(p => p.num);
+    
+    // Verificar que hi ha 6 jugadors fora disponibles
+    if (jugadorsFora.length !== 6) {
+        alert(`⚠️ No hi ha exactament 6 jugadors de camp fora! (Tens ${jugadorsFora.length})`);
+        return;
+    }
+    
+    const timestamp = Date.now();
+    const currentQuarter = getCurrentQuarter();
+    
+    // Treure els 6 jugadors de camp
+    jugadorsDins.forEach(playerNum => {
+        playersInWater.delete(playerNum);
+        const player = players.find(p => p.num === playerNum);
+        const playerName = player ? player.name : `Jugador ${playerNum}`;
+        
+        playerWaterChanges.push({
+            playerNum: playerNum,
+            quarter: currentQuarter,
+            action: 'out',
+            timestamp: timestamp
+        });
+        
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'out',
+            text: `${playerName}: Surt (Rotació)`
+        });
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'out',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    });
+    
+    // Posar els 6 jugadors de camp que estaven fora
+    jugadorsFora.forEach(playerNum => {
+        playersInWater.add(playerNum);
+        const player = players.find(p => p.num === playerNum);
+        const playerName = player ? player.name : `Jugador ${playerNum}`;
+        
+        playerWaterChanges.push({
+            playerNum: playerNum,
+            quarter: currentQuarter,
+            action: 'in',
+            timestamp: timestamp
+        });
+        
+        addToHistory({
+            type: 'water-change',
+            playerNum: playerNum,
+            isRival: false,
+            action: 'in',
+            text: `${playerName}: Entra (Rotació)`
+        });
+        
+        chronologicalActions.push({
+            timestamp: timestamp,
+            quarter: currentQuarter,
+            type: 'water-change',
+            action: 'in',
+            team: 'cnt',
+            playerNum: playerNum,
+            playerName: playerName
+        });
+    });
+    
+    // Actualitzar vista
+    renderCompactView();
+    if (compactMode) renderCompactView();
+    saveToLocalStorage();
+    checkPlayersInWater();
+    
+    alert(`✅ Rotació completa! Han sortit: ${jugadorsDins.join(', ')} | Han entrat: ${jugadorsFora.join(', ')}`);
+}
 function quickChangeTab(viewName, tabIndex) {
     // Canviar vista
     const views = ['statsView', 'rivalView', 'lineupsView'];
