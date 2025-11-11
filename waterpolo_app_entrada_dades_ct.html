@@ -613,39 +613,13 @@ function syncToFirebase() {
         updateFirebaseIndicator('disconnected');
     }
 }
-function endQuarter(quarter) {
-    if (!currentMatch.quarterStartTimes[quarter]) {
-        alert('Aquest quart no s\'ha començat!');
-        return;
-    }
-    
-    currentMatch.quarterRealEndTimes = currentMatch.quarterRealEndTimes || {};
-    currentMatch.quarterRealEndTimes[quarter] = Date.now();
-    
-    console.log(`⏹️ Quart ${quarter} finalitzat`);
-    
-    // Actualitzar Firebase
-    syncToFirebase();
-    
-    // 🔴 AFEGIR: Si és Q4, finalitzar partit
-    if (quarter === 'q4') {
-        console.log('🏁 És el Q4! Finalitzant partit automàticament...');
-        
-        // Petit delay per assegurar que Firebase s'ha actualitzat
-        setTimeout(() => {
-            finalizeMatch();
-        }, 500);
-    }
-    
-    // Re-renderitzar
-    renderQuarterControls();
-}
+
 function confirmEndMatch() {
     const score = `${currentMatch.scoreCNT || 0} - ${currentMatch.scoreRival || 0}`;
     
     if (confirm(`Segur que vols finalitzar el partit?\n\nMarcador: ${score}\n\nEs descarregarà el JSON automàticament.`)) {
         endQuarter('q4');
-        finalizeMatch();
+        //finalizeMatch();
     }
 }
 function calculatePlayingTimeForMatch(){
