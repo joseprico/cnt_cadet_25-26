@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-11-12",
+    "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
+  },
+  "teams": {
+    "CN Molins de Rei": {
+      "fullName": "CN Molins de Rei",
+      "lastPlayed": "2025-10-26",
+      "lastUpdated": "2025-10-26",
+      "players": [
+        {"num": 1, "name": "Porter"},
+        {"num": 2, "name": "Jugador 2"},
+        {"num": 3, "name": "Jugador 3"},
+        {"num": 4, "name": "Jugador 4"},
+        {"num": 5, "name": "Jugador 5"},
+        {"num": 6, "name": "Jugador 6"},
+        {"num": 7, "name": "Jugador 7"},
+        {"num": 8, "name": "Jugador 8"},
+        {"num": 9, "name": "Jugador 9"},
+        {"num": 10, "name": "Jugador 10"},
+        {"num": 11, "name": "Jugador 11"},
+        {"num": 12, "name": "Jugador 12"},
+        {"num": 13, "name": "Porter Suplent"}
+      ]
+    },
+    "CN Montjuïc": {
+      "fullName": "CN Montjuïc",
+      "lastPlayed": "2025-10-19",
+      "lastUpdated": "2025-10-19",
+      "players": [
+        {"num": 1, "name": "Porter"},
+        {"num": 2, "name": "Jugador 2"},
+        {"num": 3, "name": "Jugador 3"},
+        {"num": 4, "name": "Jugador 4"},
+        {"num": 5, "name": "Jugador 5"},
+        {"num": 6, "name": "Jugador 6"},
+        {"num": 7, "name": "Jugador 7"},
+        {"num": 8, "name": "Jugador 8"},
+        {"num": 9, "name": "Jugador 9"},
+        {"num": 10, "name": "Jugador 10"},
+        {"num": 11, "name": "Jugador 11"},
+        {"num": 12, "name": "Jugador 12"},
+        {"num": 13, "name": "Porter Suplent"}
+      ]
+    },
+    "PLANTILLA_BUIDA": {
+      "fullName": "Equip Nou",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {"num": 1, "name": "Porter"},
+        {"num": 2, "name": "Jugador 2"},
+        {"num": 3, "name": "Jugador 3"},
+        {"num": 4, "name": "Jugador 4"},
+        {"num": 5, "name": "Jugador 5"},
+        {"num": 6, "name": "Jugador 6"},
+        {"num": 7, "name": "Jugador 7"},
+        {"num": 8, "name": "Jugador 8"},
+        {"num": 9, "name": "Jugador 9"},
+        {"num": 10, "name": "Jugador 10"},
+        {"num": 11, "name": "Jugador 11"},
+        {"num": 12, "name": "Jugador 12"},
+        {"num": 13, "name": "Porter Suplent"}
+      ]
+    }
+  }
+}
