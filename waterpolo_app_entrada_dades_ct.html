@@ -3069,8 +3069,604 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+// ============================================
+// 🗄️ SISTEMA DE BASE DE DADES DE RIVALS v2.0
+// Versió amb gestió d'errors i millor visibilitat
+// ============================================
 
+// Variable global per la base de dades de rivals
+let rivalsDatabase = null;
+
+// Funció millorada per detectar l'equip
+function detectTeam() {
+    const url = window.location.href.toLowerCase();
+    
+    // Comprovar variants de CADET
+    if (url.includes('cadet') || url.includes('_ct_') || url.includes('_ct.') || url.includes('/ct/')) {
+        return 'cadet';
+    }
+    
+    // Comprovar variants de JUVENIL  
+    if (url.includes('juvenil') || url.includes('_jv_') || url.includes('_jv.') || url.includes('/jv/')) {
+        return 'juvenil';
+    }
+    
+    // Per defecte, si no detecta res, avisa i usa juvenil
+    console.warn('⚠️ No s\'ha pogut detectar l\'equip automàticament. Utilitzant juvenil per defecte.');
+    console.warn('   URL actual:', url);
+    return 'juvenil';
+}
+
+const CURRENT_TEAM = detectTeam();
+
+// URL de la base de dades segons l'equip detectat
+const RIVALS_DB_URL = CURRENT_TEAM === 'cadet'
+    ? 'https://joseprico.github.io/cnt_cadet_25-26/rivals_database_cadet.json'
+    : 'https://joseprico.github.io/CNT_juvenil_25_26/rivals_database_juvenil.json';
+
+console.log('🗄️ Sistema de Rivals carregat');
+console.log('🏊 Equip detectat:', CURRENT_TEAM.toUpperCase());
+console.log('🔗 URL base de dades:', RIVALS_DB_URL);
+
+// ============================================
+// 📥 CARREGAR BASE DE DADES DE RIVALS
+// ============================================
+async function loadRivalsDatabase() {
+    try {
+        console.log('📥 Carregant base de dades de rivals des de:', RIVALS_DB_URL);
+        const response = await fetch(RIVALS_DB_URL + '?t=' + Date.now());
+        
+        console.log('📡 Resposta del servidor:', response.status, response.statusText);
+        
+        if (!response.ok) {
+            console.error('❌ Error HTTP:', response.status);
+            console.error('🔗 URL intentada:', RIVALS_DB_URL);
+            console.warn('⚠️ Fitxer no trobat. Creant base de dades per defecte...');
+            throw new Error(`Error ${response.status}: Fitxer no trobat al repositori`);
+        }
+        
+        const jsonText = await response.text();
+        console.log('📄 Text rebut (primers 200 chars):', jsonText.substring(0, 200));
+        
+        rivalsDatabase = JSON.parse(jsonText);
+        
+        const teamNames = Object.keys(rivalsDatabase.teams);
+        console.log('✅ Base de dades carregada correctament!');
+        console.log('📊 Nombre d\'equips:', teamNames.length);
+        console.log('🏊 Equips trobats:', teamNames);
+        
+        return rivalsDatabase;
+    } catch (error) {
+        console.error('❌ Error carregant base de dades de rivals:', error.message);
+        
+        // ⚠️ FALLBACK: Base de dades per defecte si no existeix
+        console.log('🔧 Creant base de dades temporal...');
+        rivalsDatabase = {
+            metadata: {
+                version: "1.0",
+                lastUpdated: new Date().toISOString().split('T')[0],
+                description: "Base de dades de plantilles d'equips rivals (temporal)",
+                warning: "Puja rivals_database_cadet.json o rivals_database_juvenil.json al repositori per utilitzar plantilles guardades"
+            },
+            teams: {
+                "PLANTILLA_BUIDA": {
+                    fullName: "Equip Nou",
+                    lastPlayed: null,
+                    lastUpdated: null,
+                    players: Array.from({length: 13}, (_, i) => ({
+                        num: i + 1,
+                        name: i === 0 || i === 12 ? "Porter" : `Jugador ${i + 1}`
+                    }))
+                }
+            }
+        };
+        
+        // Mostrar avís a l'usuari
+        setTimeout(() => {
+            if (confirm('⚠️ BASE DE DADES DE RIVALS NO TROBADA\n\nEl fitxer rivals_database_' + CURRENT_TEAM + '.json no existeix al repositori.\n\n¿Vols descarregar una plantilla per pujar-la al repositori?')) {
+                downloadEmptyDatabase();
+            }
+        }, 2000);
+        
+        return rivalsDatabase;
+    }
+}
+
+// ============================================
+// 📥 DESCARREGAR BASE DE DADES BUIDA
+// ============================================
+function downloadEmptyDatabase() {
+    const emptyDB = {
+        metadata: {
+            version: "1.0",
+            lastUpdated: new Date().toISOString().split('T')[0],
+            description: `Base de dades de plantilles d'equips rivals - CN Terrassa ${CURRENT_TEAM.toUpperCase()}`
+        },
+        teams: {
+            "PLANTILLA_BUIDA": {
+                fullName: "Equip Nou",
+                lastPlayed: null,
+                lastUpdated: null,
+                players: Array.from({length: 13}, (_, i) => ({
+                    num: i + 1,
+                    name: i === 0 || i === 12 ? "Porter" : `Jugador ${i + 1}`
+                }))
+            }
+        }
+    };
+    
+    const blob = new Blob([JSON.stringify(emptyDB, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `rivals_database_${CURRENT_TEAM}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert('✅ Plantilla descarregada!\n\nPuja-la a l\'arrel del repositori:\n' + 
+          (CURRENT_TEAM === 'cadet' ? 'cnt_cadet_25-26/' : 'CNT_juvenil_25_26/') + 
+          '\n\nDesprés refresca la pàgina.');
+}
+
+// ============================================
+// 🎯 MOSTRAR SELECTOR D'EQUIP RIVAL
+// ============================================
+function showRivalSelector() {
+    if (!rivalsDatabase) {
+        alert('❌ Error: Base de dades de rivals no carregada');
+        return;
+    }
+    
+    console.log('🎯 Mostrant selector d\'equips');
+    console.log('📊 Base de dades disponible:', rivalsDatabase);
+    console.log('🏊 Teams object:', rivalsDatabase.teams);
+    console.log('🔑 Keys disponibles:', Object.keys(rivalsDatabase.teams));
+    
+    const teams = Object.keys(rivalsDatabase.teams).filter(t => t !== 'PLANTILLA_BUIDA');
+    
+    console.log('✅ Equips després de filtrar PLANTILLA_BUIDA:', teams);
+    console.log('📈 Nombre d\'equips per mostrar:', teams.length);
+    
+    let html = `
+        <div id="rivalSelectorModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+            overflow-y: auto;
+        ">
+            <div style="
+                background: linear-gradient(135deg, #1e3a8a, #1e40af);
+                border-radius: 16px;
+                padding: 30px;
+                max-width: 500px;
+                width: 100%;
+                max-height: 90vh;
+                overflow-y: auto;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            ">
+                <h2 style="color: #22d3ee; margin-bottom: 20px; font-size: 24px;">
+                    ⚽ Selecciona l'equip rival
+                </h2>
+                
+                ${rivalsDatabase.metadata.warning ? `
+                <div style="
+                    background: rgba(251, 191, 36, 0.2);
+                    border-left: 4px solid #fbbf24;
+                    padding: 12px;
+                    margin-bottom: 15px;
+                    border-radius: 4px;
+                    color: #fbbf24;
+                    font-size: 12px;
+                ">
+                    ⚠️ ${rivalsDatabase.metadata.warning}
+                </div>
+                ` : ''}
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #bae6fd; margin-bottom: 8px; font-weight: bold;">
+                        ${teams.length > 0 ? 'Equips guardats:' : 'No hi ha equips guardats encara'}
+                    </label>
+                    <select id="rivalTeamSelect" style="
+                        width: 100%;
+                        padding: 12px;
+                        border-radius: 8px;
+                        border: 2px solid #22d3ee;
+                        background: rgba(255,255,255,0.1);
+                        color: white;
+                        font-size: 16px;
+                    ">
+                        <option value="">-- Selecciona un equip --</option>
+                        ${teams.map(team => `
+                            <option value="${team}">${team}</option>
+                        `).join('')}
+                        <option value="PLANTILLA_BUIDA">🆕 Equip nou (plantilla buida)</option>
+                    </select>
+                </div>
+                
+                <div id="rivalTeamInfo" style="
+                    display: none;
+                    background: rgba(34, 211, 238, 0.1);
+                    border-left: 4px solid #22d3ee;
+                    padding: 12px;
+                    margin-bottom: 20px;
+                    border-radius: 4px;
+                ">
+                    <div style="color: #67e8f9; font-size: 12px; margin-bottom: 4px;">
+                        Última actualització: <span id="rivalLastUpdate">--</span>
+                    </div>
+                    <div style="color: #bae6fd; font-size: 12px;">
+                        Últim partit: <span id="rivalLastPlayed">--</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="loadSelectedRival()" style="
+                        flex: 1;
+                        padding: 12px;
+                        background: linear-gradient(135deg, #22c55e, #16a34a);
+                        border: none;
+                        border-radius: 8px;
+                        color: white;
+                        font-weight: bold;
+                        font-size: 16px;
+                        cursor: pointer;
+                    ">
+                        ✅ Carregar jugadors
+                    </button>
+                    
+                    <button onclick="closeRivalSelector()" style="
+                        padding: 12px 20px;
+                        background: rgba(239, 68, 68, 0.2);
+                        border: 2px solid #ef4444;
+                        border-radius: 8px;
+                        color: #fca5a5;
+                        font-weight: bold;
+                        cursor: pointer;
+                    ">
+                        ✖️ Cancel·lar
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', html);
+    
+    // Event listener per mostrar info quan selecciones un equip
+    document.getElementById('rivalTeamSelect').addEventListener('change', function() {
+        const selectedTeam = this.value;
+        const infoDiv = document.getElementById('rivalTeamInfo');
+        
+        if (selectedTeam && selectedTeam !== 'PLANTILLA_BUIDA') {
+            const teamData = rivalsDatabase.teams[selectedTeam];
+            document.getElementById('rivalLastUpdate').textContent = teamData.lastUpdated || 'Mai';
+            document.getElementById('rivalLastPlayed').textContent = teamData.lastPlayed || 'Mai';
+            infoDiv.style.display = 'block';
+        } else {
+            infoDiv.style.display = 'none';
+        }
+    });
+}
+
+// ============================================
+// 📋 CARREGAR JUGADORS DEL RIVAL SELECCIONAT
+// ============================================
+function loadSelectedRival() {
+    const select = document.getElementById('rivalTeamSelect');
+    const selectedTeam = select.value;
+    
+    if (!selectedTeam) {
+        alert('⚠️ Sisplau, selecciona un equip');
+        return;
+    }
+    
+    const teamData = rivalsDatabase.teams[selectedTeam];
+    
+    if (!teamData) {
+        alert('❌ Error: No s\'han trobat dades per aquest equip');
+        return;
+    }
+    
+    // Guardar el nom de l'equip rival
+    if (typeof rivalTeam !== 'undefined') {
+        rivalTeam = selectedTeam === 'PLANTILLA_BUIDA' ? '' : teamData.fullName;
+    }
+    
+    // Actualitzar el camp de nom d'equip rival
+    const rivalInput = document.getElementById('rivalTeamInput');
+    if (rivalInput) {
+        rivalInput.value = teamData.fullName;
+        // Trigger event per actualitzar
+        if (typeof updateRivalTeam === 'function') {
+            updateRivalTeam();
+        }
+    }
+    
+    const rivalLabel = document.getElementById('rivalTeamLabel');
+    if (rivalLabel) {
+        rivalLabel.textContent = teamData.fullName || 'Equip Rival';
+    }
+    
+    // Carregar jugadors rivals
+    if (typeof rivalStats !== 'undefined') {
+        rivalStats = teamData.players.map(p => ({
+            num: p.num,
+            name: p.name,
+            gols: 0,
+            exclusions: 0,
+            assistencies: 0,
+            parades: 0,
+            robatoris: 0,
+            perdues: 0,
+            blocks: 0,
+            xutsFallats: 0,
+            contrafaltes: 0,
+            infraccions2m: 0
+        }));
+        
+        console.log('✅ Jugadors rivals carregats:', rivalStats.length);
+    }
+    
+    // Actualitzar la vista
+    if (typeof renderCompactView === 'function') {
+        renderCompactView();
+    }
+    if (typeof renderRivalPlayers === 'function') {
+        renderRivalPlayers();
+    }
+    
+    // Tancar el modal
+    closeRivalSelector();
+    
+    // Mostrar confirmació
+    alert(`✅ Plantilla de ${teamData.fullName || 'equip rival'} carregada!\n\n${teamData.players.length} jugadors importats.`);
+}
+
+// ============================================
+// ✖️ TANCAR SELECTOR
+// ============================================
+function closeRivalSelector() {
+    const modal = document.getElementById('rivalSelectorModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// ============================================
+// 🔍 DEBUG DEL SISTEMA
+// ============================================
+function debugRivalsSystem() {
+    console.log('\n========================================');
+    console.log('🔍 DEBUG DEL SISTEMA DE RIVALS');
+    console.log('========================================\n');
+    
+    console.log('📦 Versió:', '2.2 (detecció millorada)');
+    console.log('🏊 Equip actual:', CURRENT_TEAM);
+    console.log('🔗 URL de la base de dades:', RIVALS_DB_URL);
+    console.log('\n--- ESTAT DE LA BASE DE DADES ---');
+    console.log('📊 Base de dades carregada:', rivalsDatabase !== null);
+    
+    if (rivalsDatabase) {
+        console.log('📝 Metadata:', rivalsDatabase.metadata);
+        console.log('🏊 Nombre d\'equips:', Object.keys(rivalsDatabase.teams).length);
+        console.log('🔑 Equips disponibles:', Object.keys(rivalsDatabase.teams));
+        
+        // Mostrar cada equip
+        Object.keys(rivalsDatabase.teams).forEach(teamName => {
+            const team = rivalsDatabase.teams[teamName];
+            console.log(`\n  📁 ${teamName}:`);
+            console.log(`     - Jugadors: ${team.players.length}`);
+            console.log(`     - Últim partit: ${team.lastPlayed || 'Mai'}`);
+            console.log(`     - Actualització: ${team.lastUpdated || 'Mai'}`);
+        });
+    } else {
+        console.error('❌ Base de dades NO carregada!');
+    }
+    
+    console.log('\n--- TEST DE CONNECTIVITAT ---');
+    
+    // Test fetch
+    fetch(RIVALS_DB_URL + '?debug=' + Date.now())
+        .then(response => {
+            console.log('✅ Fetch exitós');
+            console.log('   Status:', response.status);
+            console.log('   Status Text:', response.statusText);
+            console.log('   Content-Type:', response.headers.get('content-type'));
+            return response.text();
+        })
+        .then(text => {
+            console.log('📄 Contingut rebut (primers 300 chars):');
+            console.log(text.substring(0, 300));
+            
+            try {
+                const json = JSON.parse(text);
+                console.log('✅ JSON vàlid');
+                console.log('🔑 Keys trobades:', Object.keys(json.teams));
+            } catch (e) {
+                console.error('❌ Error parseant JSON:', e.message);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error en el fetch:', error.message);
+            console.error('   Això significa que el fitxer NO està al repositori');
+        });
+    
+    console.log('\n========================================');
+    
+    // Mostrar info visual
+    alert('🔍 DEBUG DEL SISTEMA\n\n' +
+          'Mira la CONSOLA (F12) per veure els detalls complets.\n\n' +
+          'Equips carregats: ' + (rivalsDatabase ? Object.keys(rivalsDatabase.teams).length : 0) + '\n' +
+          'URL: ' + RIVALS_DB_URL);
+}
+
+// ============================================
+// 💾 EXPORTAR PLANTILLA ACTUALITZADA
+// ============================================
+function exportRivalTemplate() {
+    if (typeof rivalTeam === 'undefined' || !rivalTeam || typeof rivalStats === 'undefined' || rivalStats.length === 0) {
+        alert('⚠️ No hi ha dades de rival per exportar.\n\nPrimer has de completar un partit amb jugadors rivals.');
+        return;
+    }
+    
+    const teamKey = rivalTeam.trim();
+    
+    const templateData = {
+        fullName: rivalTeam,
+        lastPlayed: new Date().toISOString().split('T')[0],
+        lastUpdated: new Date().toISOString().split('T')[0],
+        players: rivalStats.map(p => ({
+            num: p.num,
+            name: p.name
+        }))
+    };
+    
+    // Crear un JSON per copiar/enganxar a la base de dades
+    const exportData = {
+        team: teamKey,
+        instructions: "Copia el bloc 'template' i enganxa'l dins rivals_database_" + CURRENT_TEAM + ".json dins la clau 'teams'",
+        example: `AFEGIR AIXÒ A rivals_database_${CURRENT_TEAM}.json:\n\n"${teamKey}": ${JSON.stringify(templateData, null, 2)}`,
+        template: templateData
+    };
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `rival_template_${teamKey.toLowerCase().replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('✅ Plantilla de rival exportada');
+    
+    alert(`✅ Plantilla de ${rivalTeam} exportada!\n\nAra pots:\n1. Obrir el fitxer descarregat\n2. Copiar el bloc 'template'\n3. Enganxar-lo a rivals_database_${CURRENT_TEAM}.json`);
+}
+
+// ============================================
+// 🎯 CREAR BOTONS EN POSICIÓ VISIBLE
+// ============================================
+function createRivalLoaderButton() {
+    console.log('🔧 Creant botons del sistema de rivals...');
+    
+    // Buscar el contenidor de la vista de rivals
+    const rivalView = document.getElementById('rivalView');
+    
+    if (!rivalView) {
+        console.warn('⚠️ No s\'ha trobat rivalView');
+        return;
+    }
+    
+    // Buscar on està el input del rival
+    const rivalInput = document.getElementById('rivalTeamInput');
+    
+    if (!rivalInput) {
+        console.warn('⚠️ No s\'ha trobat rivalTeamInput');
+        return;
+    }
+    
+    // Crear contenidor de botons DESPRÉS del títol
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'rivalsButtonsContainer';
+    buttonContainer.style.cssText = `
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+        flex-wrap: wrap;
+    `;
+    
+    buttonContainer.innerHTML = `
+        <button onclick="showRivalSelector()" class="btn" style="
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        " title="Carregar plantilla d'equip rival">
+            📋 Carregar plantilla
+        </button>
+        
+        <button onclick="exportRivalTemplate()" class="btn" style="
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        " title="Exportar plantilla actualitzada">
+            💾 Exportar plantilla
+        </button>
+        
+          `;
+    
+    // Inserir DESPRÉS de la grid de jugadors
+    const playersGrid = document.getElementById('rivalPlayersList');
+    if (playersGrid) {
+        playersGrid.parentNode.insertBefore(buttonContainer, playersGrid.nextSibling);
+        console.log('✅ Botons inserits correctament després de la llista de jugadors');
+    } else {
+        // Fallback: inserir després del input
+        rivalInput.parentNode.insertBefore(buttonContainer, rivalInput.nextSibling);
+        console.log('✅ Botons inserits correctament després del input (fallback)');
+    }
+}
+
+// ============================================
+// 🚀 INICIALITZACIÓ
+// ============================================
+async function initRivalsSystem() {
+    console.log('🚀 Inicialitzant sistema de rivals v2.2 (detecció millorada)...');
+    
+    // Carregar base de dades (amb gestió d'errors millorada)
+    await loadRivalsDatabase();
+    
+    // Esperar que el DOM estigui completament carregat
+    setTimeout(() => {
+        // Crear botons
+        createRivalLoaderButton();
+        console.log('✅ Sistema de rivals inicialitzat correctament');
+    }, 1000);
+}
+
+// Executar quan es carrega la pàgina
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRivalsSystem);
+} else {
+    // Si ja està carregat, executar amb delay per assegurar que tot està renderitzat
+    setTimeout(initRivalsSystem, 500);
+}
+
+console.log('📦 rivals_database_system.js v2.2 (detecció millorada) carregat');
 </script>
+<script src="rivals_database_system.js"></script>
 <script>
     // 🔒 Bloqueo de clic derecho y atajos
   /*  document.addEventListener("contextmenu", event => event.preventDefault());
