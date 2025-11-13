@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-11-13T14:43:18.113242",
+    "downloaded_at": "2025-11-13T15:44:59.593227",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -374,18 +374,6 @@
       "jornada": 3
     },
     {
-      "team1": "C.N. MOLINS DE REI",
-      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
-      "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649172/results",
-      "match_id": "143649172",
-      "date": "Dis 29/11/2025",
-      "time": "10:00",
-      "date_time": "Dis 29/11/2025 10:00",
-      "team2": "C.N. TERRASSA A",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 4
-    },
-    {
       "team1": "C.N. ATL BARCELONETA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649168/results",
@@ -396,6 +384,18 @@
       "team2": "C.N. TERRASSA A",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "jornada": 2
+    },
+    {
+      "team1": "C.N. MOLINS DE REI",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
+      "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649172/results",
+      "match_id": "143649172",
+      "date": "Dij 04/12/2025",
+      "time": "21:00",
+      "date_time": "Dij 04/12/2025 21:00",
+      "team2": "C.N. TERRASSA A",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 4
     },
     {
       "team1": "C.N. TERRASSA A",
@@ -514,6 +514,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-11-13T16:44:07.290243+01:00",
-  "workflow_run": "391"
+  "last_update": "2025-11-13T16:45:14.901925+01:00",
+  "workflow_run": "392"
 }
