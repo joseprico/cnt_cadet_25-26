@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-11-18T14:25:40.069118",
+    "downloaded_at": "2025-11-18T14:47:09.922919",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -599,6 +599,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-11-18T15:26:06.700847+01:00",
-  "workflow_run": "518"
+  "last_update": "2025-11-18T15:47:39.748808+01:00",
+  "workflow_run": "519"
 }
