@@ -25,24 +25,24 @@
         {"num": 13, "name": "Porter Suplent"}
       ]
     },
-    "CN Montjuïc": {
-      "fullName": "CN Montjuïc",
-      "lastPlayed": "2025-10-19",
-      "lastUpdated": "2025-10-19",
+        "CN Manresa": {
+      "fullName": "CN Manresa",
+      "lastPlayed": null,
+      "lastUpdated": null,
       "players": [
-        {"num": 1, "name": "Porter"},
-        {"num": 2, "name": "Jugador 2"},
-        {"num": 3, "name": "Jugador 3"},
-        {"num": 4, "name": "Jugador 4"},
-        {"num": 5, "name": "Jugador 5"},
-        {"num": 6, "name": "Jugador 6"},
-        {"num": 7, "name": "Jugador 7"},
-        {"num": 8, "name": "Jugador 8"},
-        {"num": 9, "name": "Jugador 9"},
-        {"num": 10, "name": "Jugador 10"},
-        {"num": 11, "name": "Jugador 11"},
-        {"num": 12, "name": "Jugador 12"},
-        {"num": 13, "name": "Porter Suplent"}
+        {"num": 1, "ISERN MAURI CASTILLO": "Porter"},
+        {"num": 2, "IBAI ESCALONA MAZARIEGOS": "Jugador 2"},
+        {"num": 3, "ANGEL BOISO QUIRANTE": "Jugador 3"},
+        {"num": 4, "GIL SERRACANTA VENTURA": "Jugador 4"},
+        {"num": 5, "IAN CAPARROS BLANCO": "Jugador 5"},
+        {"num": 6, "GERARD SOLER LOPEZ": "Jugador 6"},
+        {"num": 7, "LYAN PELAEZ SALIM": "Jugador 7"},
+        {"num": 8, "MARTI YERRO DE LAS HERAS": "Jugador 8"},
+        {"num": 9, "ROGER SOLER CODINA": "Jugador 9"},
+        {"num": 10, "ROC RUAIX MONTERO": "Jugador 10"},
+        {"num": 11, "ARAN LOPEZ MORENO": "Jugador 11"},
+        {"num": 12, "ORIOL POPULO TARRES": "Jugador 12"},
+        {"num": 13, "LEO HERRERA FERRANDEZ": "Porter Suplent"}
       ]
     },
     "PLANTILLA_BUIDA": {
