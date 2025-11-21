@@ -25,24 +25,24 @@
         {"num": 13, "name": "Porter Suplent"}
       ]
     },
-        "CN Manresa": {
+    "CN Manresa": {
       "fullName": "CN Manresa",
       "lastPlayed": null,
       "lastUpdated": null,
       "players": [
-        {"num": 1, "ISERN MAURI CASTILLO": "Porter"},
-        {"num": 2, "IBAI ESCALONA MAZARIEGOS": "Jugador 2"},
-        {"num": 3, "ANGEL BOISO QUIRANTE": "Jugador 3"},
-        {"num": 4, "GIL SERRACANTA VENTURA": "Jugador 4"},
-        {"num": 5, "IAN CAPARROS BLANCO": "Jugador 5"},
-        {"num": 6, "GERARD SOLER LOPEZ": "Jugador 6"},
-        {"num": 7, "LYAN PELAEZ SALIM": "Jugador 7"},
-        {"num": 8, "MARTI YERRO DE LAS HERAS": "Jugador 8"},
-        {"num": 9, "ROGER SOLER CODINA": "Jugador 9"},
-        {"num": 10, "ROC RUAIX MONTERO": "Jugador 10"},
-        {"num": 11, "ARAN LOPEZ MORENO": "Jugador 11"},
-        {"num": 12, "ORIOL POPULO TARRES": "Jugador 12"},
-        {"num": 13, "LEO HERRERA FERRANDEZ": "Porter Suplent"}
+        {"num": 1, "name": "ISERN MAURI CASTILLO"},
+        {"num": 2, "name": "IBAI ESCALONA MAZARIEGOS"},
+        {"num": 3, "name": "ANGEL BOISO QUIRANTE"},
+        {"num": 4, "name": "GIL SERRACANTA VENTURA"},
+        {"num": 5, "name": "IAN CAPARROS BLANCO"},
+        {"num": 6, "name": "GERARD SOLER LOPEZ"},
+        {"num": 7, "name": "LYAN PELAEZ SALIM"},
+        {"num": 8, "name": "MARTI YERRO DE LAS HERAS"},
+        {"num": 9, "name": "ROGER SOLER CODINA"},
+        {"num": 10,"name": "ROC RUAIX MONTERO"},
+        {"num": 11,"name": "ARAN LOPEZ MORENO"},
+        {"num": 12,"name": "ORIOL POPULO TARRES"},
+        {"num": 13,"name": "LEO HERRERA FERRANDEZ"}
       ]
     },
     "PLANTILLA_BUIDA": {
