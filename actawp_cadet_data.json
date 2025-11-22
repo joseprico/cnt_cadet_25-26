@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-11-22T09:40:30.715032",
+    "downloaded_at": "2025-11-22T10:41:41.848855",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -465,14 +465,14 @@
       "posicio": "1",
       "equip": "C.N. ATL BARCELONETA",
       "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-      "punts": 3,
-      "partits": 1,
-      "guanyats": 1,
+      "punts": 6,
+      "partits": 2,
+      "guanyats": 2,
       "empatats": 0,
       "perduts": 0,
-      "gols_favor": 33,
-      "gols_contra": 6,
-      "diferencia": 27
+      "gols_favor": 65,
+      "gols_contra": 9,
+      "diferencia": 56
     },
     {
       "posicio": "2",
@@ -489,19 +489,6 @@
     },
     {
       "posicio": "3",
-      "equip": "C.N. MOLINS DE REI",
-      "logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
-      "punts": 0,
-      "partits": 1,
-      "guanyats": 0,
-      "empatats": 0,
-      "perduts": 1,
-      "gols_favor": 11,
-      "gols_contra": 21,
-      "diferencia": 0
-    },
-    {
-      "posicio": "4",
       "equip": "C.N. MANRESA",
       "logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "punts": 0,
@@ -512,8 +499,21 @@
       "gols_favor": 6,
       "gols_contra": 33,
       "diferencia": 0
+    },
+    {
+      "posicio": "4",
+      "equip": "C.N. MOLINS DE REI",
+      "logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
+      "punts": 0,
+      "partits": 2,
+      "guanyats": 0,
+      "empatats": 0,
+      "perduts": 2,
+      "gols_favor": 14,
+      "gols_contra": 53,
+      "diferencia": 0
     }
   ],
-  "last_update": "2025-11-22T11:23:51.470469+01:00",
-  "workflow_run": "614"
+  "last_update": "2025-11-22T11:41:57.714358+01:00",
+  "workflow_run": "615"
 }
