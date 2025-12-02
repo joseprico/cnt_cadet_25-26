@@ -1,3 +1,4 @@
+
 {
   "metadata": {
     "version": "1.0",
@@ -63,6 +64,27 @@
         {"num": 11, "name": "Jugador 11"},
         {"num": 12, "name": "Jugador 12"},
         {"num": 13, "name": "Porter Suplent"}
+      ]
+    },
+    "CNAB": {
+      "fullName": "CN Atlètic-Barceloneta",
+      "lastPlayed": null,
+      "lastUpdated": "2025-12-02",
+      "players": [
+        {"num": 1, "name": "MARCOS HIPPLE PEREZ"},
+        {"num": 2, "name": "POL GINABREDA CABELLO"},
+        {"num": 3, "name": "JOHN JOSEPH SHINSKE MARTIN"},
+        {"num": 4, "name": "TON COLL POCH"},
+        {"num": 5, "name": "BIEL FONT SUAREZ"},
+        {"num": 6, "name": "JAN PEREZ CABALLERO"},
+        {"num": 7, "name": "CESC AGUIRRE RUBIO"},
+        {"num": 8, "name": "YAGO MARTIN LOPEZ"},
+        {"num": 9, "name": "JAN MITRANI DELGADO"},
+        {"num": 10, "name": "ENZO MARTIN LOPEZ"},
+        {"num": 11, "name": "MARC PERIANES CANTON"},
+        {"num": 12, "name": "MARC HAM-MAN ROMERO"},
+        {"num": 13, "name": "MARIO RODRIGUEZ HIDALGO"},
+        {"num": 14, "name": "INAKI OLIVE HAM-MAN"}
       ]
     }
   }
