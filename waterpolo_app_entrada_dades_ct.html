@@ -1831,14 +1831,17 @@ ${(() => {
                 </div>
             ` : ''}
             
-            ${isStarted && isEnded ? `
-                <div style="background: rgba(34, 211, 238, 0.3); border: 1px solid #22d3ee; padding: 10px; border-radius: 8px; margin-top: 12px; text-align: center;">
-                    <div style="font-size: 14px; font-weight: bold; color: #22d3ee;">✅ Cuarto Finalitzat</div>
-                    <div style="font-size: 10px; color: #bae6fd; margin-top: 4px;">
-                        ${new Date(quarterStartTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })} - ${new Date(quarterRealEndTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                </div>
-            ` : ''}
+           ${isStarted && isEnded ? `
+    <div style="background: rgba(34, 211, 238, 0.3); border: 1px solid #22d3ee; padding: 10px; border-radius: 8px; margin-top: 12px; text-align: center;">
+        <div style="font-size: 14px; font-weight: bold; color: #22d3ee;">✅ Cuarto Finalitzat</div>
+        <div style="font-size: 10px; color: #bae6fd; margin-top: 4px;">
+            ${new Date(quarterStartTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })} - ${new Date(quarterRealEndTimes[q]).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}
+        </div>
+        <button class="btn" onclick="undoEndQuarter('${q}')" style="margin-top: 8px; padding: 6px 12px; font-size: 11px; background: rgba(251, 191, 36, 0.8); color: #000;">
+            ↩️ Reobrir quart
+        </button>
+    </div>
+` : ''}
         </div>`;
     }).join('');
 }
@@ -1946,7 +1949,15 @@ function updateRivalNameColor(i,exc){const cards=document.querySelectorAll('#riv
 function updateRivalName(i,name){rivalStats[i].name=name;saveToLocalStorage()}
 function updateTempsMortCNT(inc){tempsMortCNT=Math.max(0,tempsMortCNT+inc);document.getElementById('tempsMortCNT').textContent=tempsMortCNT;saveToLocalStorage()}
 function updateTempsMortRival(inc){tempsMortRival=Math.max(0,tempsMortRival+inc);document.getElementById('tempsMortRival').textContent=tempsMortRival;saveToLocalStorage()}
-function updateRivalTeam(){rivalTeam=document.getElementById('rivalTeamInput').value||'Rival';document.getElementById('rivalTeamLabel').textContent=rivalTeam;saveToLocalStorage()}
+function updateRivalTeam(){
+    rivalTeam=document.getElementById('rivalTeamInput').value||'Rival';
+    document.getElementById('rivalTeamLabel').textContent=rivalTeam;
+    
+    // 🔥 RECONECTAR A FIREBASE AMB EL NOU ID!
+    connectToFirebase();
+    
+    saveToLocalStorage();
+}
 function setLocation(loc){matchLocation=loc;document.getElementById('locationHome').classList.remove('selected');document.getElementById('locationAway').classList.remove('selected');document.getElementById('location'+(loc==='home'?'Home':'Away')).classList.add('selected');saveToLocalStorage()}
 function updateScores(){const cs=Object.values(stats).reduce((s,st)=>s+st.gols,0);const rs=rivalStats.reduce((s,p)=>s+p.gols,0);document.getElementById('scoreCNT').textContent=cs;document.getElementById('scoreRival').textContent=rs}
 function toggleLineup(q, n) {
@@ -2968,6 +2979,25 @@ function endQuarter(quarter) {
 // 🏁 FINALITZAR PARTIT (quan acaba Q4)
 // ============================================
 
+function undoEndQuarter(quarter) {
+    if (!confirm(`Segur que vols reobrir el ${quarter.toUpperCase()}?\n\nAixò permetrà continuar afegint accions al quart.`)) {
+        return;
+    }
+    
+    // Esborrar el temps de finalització
+    quarterRealEndTimes[quarter] = null;
+    
+    // Reiniciar el cronòmetre del quart
+    startQuarterTimer();
+    
+    // Re-renderitzar tot
+    if(compactMode) renderCompactView();
+    renderLineups();
+    renderPeriodScores();
+    saveToLocalStorage();
+    
+    console.log(`↩️ ${quarter.toUpperCase()} reobert`);
+}
 function finalizeMatch() {
     console.log('🏁 Finalitzant partit...');
     
