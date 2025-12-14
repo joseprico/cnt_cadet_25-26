@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-12-14T09:25:39.286511",
+    "downloaded_at": "2025-12-14T10:25:39.304525",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -53,14 +53,14 @@
     },
     {
       "Nombre": "ARNAU MERCADE SEGURA",
-      "PJ": 6,
-      "GT": 12,
-      "G": 11,
+      "PJ": 7,
+      "GT": 13,
+      "G": 12,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 9,
+      "EX": 11,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -144,7 +144,7 @@
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 4,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -165,7 +165,7 @@
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 6,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -179,14 +179,14 @@
     },
     {
       "Nombre": "JORDI TARRADAS VARGAS",
-      "PJ": 5,
+      "PJ": 6,
       "GT": 6,
       "G": 6,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 9,
+      "EX": 11,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -242,14 +242,14 @@
     },
     {
       "Nombre": "MARC MORENO FOLCH",
-      "PJ": 5,
+      "PJ": 6,
       "GT": 3,
       "G": 2,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 4,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -263,10 +263,10 @@
     },
     {
       "Nombre": "MARTI ARIMON HUMET",
-      "PJ": 6,
-      "GT": 22,
-      "G": 19,
-      "GP": 3,
+      "PJ": 7,
+      "GT": 26,
+      "G": 22,
+      "GP": 4,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
@@ -284,7 +284,7 @@
     },
     {
       "Nombre": "MAX VALLS FORNIELES",
-      "PJ": 6,
+      "PJ": 7,
       "GT": 0,
       "G": 0,
       "GP": 0,
@@ -305,14 +305,14 @@
     },
     {
       "Nombre": "ORIOL SANCHEZ CARRILLO",
-      "PJ": 6,
-      "GT": 24,
-      "G": 23,
+      "PJ": 7,
+      "GT": 29,
+      "G": 28,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 6,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -333,7 +333,7 @@
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 4,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -389,19 +389,19 @@
     },
     {
       "Nombre": "SAMUEL DIAZ MARROQUIN",
-      "PJ": 6,
-      "GT": 12,
-      "G": 11,
+      "PJ": 7,
+      "GT": 14,
+      "G": 13,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 2,
+      "EX": 3,
       "ED": 0,
       "EB": 0,
       "EN": 0,
       "EP": 0,
-      "P": 1,
+      "P": 2,
       "PF": 0,
       "O": 0,
       "TM": 0,
@@ -431,34 +431,22 @@
     }
   ],
   "team_stats": {
-    "Puntos": 15,
-    "A favor": 108,
-    "En contra": 60,
-    "Partidos jugados": 6,
-    "Partidos ganados": 5,
+    "Puntos": 18,
+    "A favor": 120,
+    "En contra": 71,
+    "Partidos jugados": 7,
+    "Partidos ganados": 6,
     "Partidos empatados": 0,
     "Partidos perdidos": 1,
-    "Goles de penalti": 9,
-    "Expulsiones por 20 segundos": 70,
+    "Goles de penalti": 10,
+    "Expulsiones por 20 segundos": 80,
     "Tarjetas amarillas": 1,
-    "Goles": 99,
-    "Faltas por penalti": 11,
+    "Goles": 110,
+    "Faltas por penalti": 12,
     "Penaltis fallados": 6,
-    "Tiempos muertos": 9
+    "Tiempos muertos": 10
   },
   "upcoming_matches": [
-    {
-      "team1": "C.E. MEDITERRANI",
-      "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574245/results",
-      "match_id": "143574245",
-      "date": "Dom 14/12/2025",
-      "time": "09:30",
-      "date_time": "Dom 14/12/2025 09:30",
-      "team2": "C.N. TERRASSA",
-      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 1
-    },
     {
       "team1": "C.N. TERRASSA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -469,10 +457,22 @@
       "date_time": "Sáb 20/12/2025 11:30",
       "team2": "C.N. RUBÍ",
       "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
-      "jornada": 2
+      "jornada": 1
     }
   ],
   "last_results": [
+    {
+      "team1": "C.E. MEDITERRANI",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574245/results",
+      "match_id": "143574245",
+      "score_team1": 11,
+      "score_team2": 12,
+      "score": "11 - 12",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 1
+    },
     {
       "team1": "C.N. TERRASSA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -483,7 +483,7 @@
       "score": "25 - 10",
       "team2": "C.N. MONTJUIC B",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-      "jornada": 1
+      "jornada": 2
     },
     {
       "team1": "C.N. RUBÍ",
@@ -495,7 +495,7 @@
       "score": "8 - 12",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 2
+      "jornada": 3
     },
     {
       "team1": "C.N. TERRASSA",
@@ -507,7 +507,7 @@
       "score": "7 - 15",
       "team2": "C.E. MEDITERRANI",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "jornada": 3
+      "jornada": 4
     },
     {
       "team1": "C.N. MONTJUIC B",
@@ -519,7 +519,7 @@
       "score": "10 - 21",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 4
+      "jornada": 5
     },
     {
       "team1": "C.N. TERRASSA",
@@ -531,7 +531,7 @@
       "score": "23 - 7",
       "team2": "C.N. MOLINS DE REI",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
-      "jornada": 5
+      "jornada": 6
     },
     {
       "team1": "C.N. MONTJUIC A",
@@ -543,35 +543,35 @@
       "score": "10 - 20",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 6
+      "jornada": 7
     }
   ],
   "ranking": [
     {
       "posicio": "1",
-      "equip": "C.E. MEDITERRANI",
-      "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "punts": 11,
-      "partits": 4,
+      "equip": "C.N. TERRASSA",
+      "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "punts": 12,
+      "partits": 5,
       "guanyats": 4,
       "empatats": 0,
-      "perduts": 0,
-      "gols_favor": 70,
-      "gols_contra": 39,
-      "diferencia": 31
+      "perduts": 1,
+      "gols_favor": 77,
+      "gols_contra": 54,
+      "diferencia": 23
     },
     {
       "posicio": "2",
-      "equip": "C.N. TERRASSA",
-      "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "punts": 9,
-      "partits": 4,
-      "guanyats": 3,
+      "equip": "C.E. MEDITERRANI",
+      "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+      "punts": 11,
+      "partits": 5,
+      "guanyats": 4,
       "empatats": 0,
       "perduts": 1,
-      "gols_favor": 65,
-      "gols_contra": 43,
-      "diferencia": 22
+      "gols_favor": 81,
+      "gols_contra": 51,
+      "diferencia": 30
     },
     {
       "posicio": "3",
@@ -600,6 +600,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-14T10:42:46.525413+01:00",
-  "workflow_run": "1152"
+  "last_update": "2025-12-14T11:26:12.035115+01:00",
+  "workflow_run": "1153"
 }
