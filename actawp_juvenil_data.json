@@ -5,20 +5,20 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-12-20T11:20:03.447473",
+    "downloaded_at": "2025-12-20T11:39:43.918394",
     "parser_version": "5.6_correccions"
   },
   "players": [
     {
       "Nombre": "ADAY ACUÑA PRADAS",
-      "PJ": 2,
+      "PJ": 3,
       "GT": 0,
       "G": 0,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 2,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -74,14 +74,14 @@
     },
     {
       "Nombre": "BIEL GARCIA ARJONA",
-      "PJ": 5,
+      "PJ": 6,
       "GT": 4,
       "G": 4,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 4,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -95,7 +95,7 @@
     },
     {
       "Nombre": "ERIC MORA FERNANDEZ",
-      "PJ": 6,
+      "PJ": 7,
       "GT": 0,
       "G": 0,
       "GP": 0,
@@ -137,14 +137,14 @@
     },
     {
       "Nombre": "HECTOR DIOS ESTEBAN",
-      "PJ": 4,
-      "GT": 0,
-      "G": 0,
+      "PJ": 5,
+      "GT": 2,
+      "G": 2,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 6,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -158,9 +158,9 @@
     },
     {
       "Nombre": "IAN BARTOLOME COLLADO",
-      "PJ": 6,
-      "GT": 6,
-      "G": 6,
+      "PJ": 7,
+      "GT": 7,
+      "G": 7,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -179,14 +179,14 @@
     },
     {
       "Nombre": "JORDI TARRADAS VARGAS",
-      "PJ": 6,
-      "GT": 6,
-      "G": 6,
+      "PJ": 7,
+      "GT": 7,
+      "G": 7,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 11,
+      "EX": 12,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -200,9 +200,9 @@
     },
     {
       "Nombre": "LLATZER PEREZ BARADAD",
-      "PJ": 3,
-      "GT": 4,
-      "G": 4,
+      "PJ": 4,
+      "GT": 5,
+      "G": 5,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -242,14 +242,14 @@
     },
     {
       "Nombre": "MARC MORENO FOLCH",
-      "PJ": 6,
-      "GT": 3,
+      "PJ": 7,
+      "GT": 4,
       "G": 2,
-      "GP": 1,
+      "GP": 2,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 6,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -263,10 +263,10 @@
     },
     {
       "Nombre": "MARTI ARIMON HUMET",
-      "PJ": 7,
-      "GT": 26,
-      "G": 22,
-      "GP": 4,
+      "PJ": 8,
+      "GT": 29,
+      "G": 24,
+      "GP": 5,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
@@ -284,7 +284,7 @@
     },
     {
       "Nombre": "MAX VALLS FORNIELES",
-      "PJ": 7,
+      "PJ": 8,
       "GT": 0,
       "G": 0,
       "GP": 0,
@@ -305,9 +305,9 @@
     },
     {
       "Nombre": "ORIOL SANCHEZ CARRILLO",
-      "PJ": 7,
-      "GT": 29,
-      "G": 28,
+      "PJ": 8,
+      "GT": 31,
+      "G": 30,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
@@ -326,14 +326,14 @@
     },
     {
       "Nombre": "POL RICO SANAHUJA",
-      "PJ": 6,
-      "GT": 5,
-      "G": 4,
+      "PJ": 7,
+      "GT": 6,
+      "G": 5,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 7,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -368,14 +368,14 @@
     },
     {
       "Nombre": "ROGER ROVIRA MARTINEZ",
-      "PJ": 2,
+      "PJ": 3,
       "GT": 1,
       "G": 1,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 2,
+      "EX": 3,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -389,9 +389,9 @@
     },
     {
       "Nombre": "SAMUEL DIAZ MARROQUIN",
-      "PJ": 7,
-      "GT": 14,
-      "G": 13,
+      "PJ": 8,
+      "GT": 15,
+      "G": 14,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
@@ -401,7 +401,7 @@
       "EB": 0,
       "EN": 0,
       "EP": 0,
-      "P": 2,
+      "P": 3,
       "PF": 0,
       "O": 0,
       "TM": 0,
@@ -431,36 +431,35 @@
     }
   ],
   "team_stats": {
-    "Puntos": 18,
-    "A favor": 120,
-    "En contra": 71,
-    "Partidos jugados": 7,
-    "Partidos ganados": 6,
+    "Puntos": 21,
+    "A favor": 133,
+    "En contra": 75,
+    "Partidos jugados": 8,
+    "Partidos ganados": 7,
     "Partidos empatados": 0,
     "Partidos perdidos": 1,
-    "Goles de penalti": 10,
-    "Expulsiones por 20 segundos": 80,
+    "Goles de penalti": 12,
+    "Expulsiones por 20 segundos": 90,
     "Tarjetas amarillas": 1,
-    "Goles": 110,
-    "Faltas por penalti": 12,
+    "Goles": 121,
+    "Faltas por penalti": 13,
     "Penaltis fallados": 6,
     "Tiempos muertos": 10
   },
-  "upcoming_matches": [
+  "upcoming_matches": [],
+  "last_results": [
     {
       "team1": "C.N. TERRASSA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574247/results",
       "match_id": "143574247",
-      "date": "Sáb 20/12/2025",
-      "time": "11:30",
-      "date_time": "Sáb 20/12/2025 11:30",
+      "score_team1": 13,
+      "score_team2": 4,
+      "score": "13 - 4",
       "team2": "C.N. RUBÍ",
       "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
       "jornada": 1
-    }
-  ],
-  "last_results": [
+    },
     {
       "team1": "C.E. MEDITERRANI",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
@@ -471,7 +470,7 @@
       "score": "11 - 12",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 1
+      "jornada": 2
     },
     {
       "team1": "C.N. TERRASSA",
@@ -483,7 +482,7 @@
       "score": "25 - 10",
       "team2": "C.N. MONTJUIC B",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-      "jornada": 2
+      "jornada": 3
     },
     {
       "team1": "C.N. RUBÍ",
@@ -495,7 +494,7 @@
       "score": "8 - 12",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 3
+      "jornada": 4
     },
     {
       "team1": "C.N. TERRASSA",
@@ -507,7 +506,7 @@
       "score": "7 - 15",
       "team2": "C.E. MEDITERRANI",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "jornada": 4
+      "jornada": 5
     },
     {
       "team1": "C.N. MONTJUIC B",
@@ -519,7 +518,7 @@
       "score": "10 - 21",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 5
+      "jornada": 6
     },
     {
       "team1": "C.N. TERRASSA",
@@ -531,7 +530,7 @@
       "score": "23 - 7",
       "team2": "C.N. MOLINS DE REI",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
-      "jornada": 6
+      "jornada": 7
     },
     {
       "team1": "C.N. MONTJUIC A",
@@ -543,7 +542,7 @@
       "score": "10 - 20",
       "team2": "C.N. TERRASSA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 7
+      "jornada": 8
     }
   ],
   "ranking": [
@@ -551,14 +550,14 @@
       "posicio": "1",
       "equip": "C.N. TERRASSA",
       "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "punts": 12,
-      "partits": 5,
-      "guanyats": 4,
+      "punts": 15,
+      "partits": 6,
+      "guanyats": 5,
       "empatats": 0,
       "perduts": 1,
-      "gols_favor": 77,
-      "gols_contra": 54,
-      "diferencia": 23
+      "gols_favor": 90,
+      "gols_contra": 58,
+      "diferencia": 32
     },
     {
       "posicio": "2",
@@ -578,13 +577,13 @@
       "equip": "C.N. RUBÍ",
       "logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
       "punts": 7,
-      "partits": 5,
+      "partits": 6,
       "guanyats": 2,
       "empatats": 0,
-      "perduts": 3,
-      "gols_favor": 64,
-      "gols_contra": 61,
-      "diferencia": 3
+      "perduts": 4,
+      "gols_favor": 68,
+      "gols_contra": 74,
+      "diferencia": 0
     },
     {
       "posicio": "4",
@@ -600,6 +599,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-20T12:20:32.909454+01:00",
-  "workflow_run": "1293"
+  "last_update": "2025-12-20T12:40:14.789592+01:00",
+  "workflow_run": "1294"
 }
