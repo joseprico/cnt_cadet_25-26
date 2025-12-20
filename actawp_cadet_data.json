@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-12-20T16:30:33.917580",
+    "downloaded_at": "2025-12-20T17:21:15.314011",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -284,7 +284,7 @@
     },
     {
       "Nombre": "PAU VELASCO ALONSO",
-      "PJ": 0,
+      "PJ": 1,
       "GT": 4,
       "G": 4,
       "GP": 0,
@@ -534,6 +534,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-20T17:30:51.410898+01:00",
-  "workflow_run": "1301"
+  "last_update": "2025-12-20T18:21:35.950272+01:00",
+  "workflow_run": "1302"
 }
