@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-12-20T15:24:14.256763",
+    "downloaded_at": "2025-12-20T16:30:33.917580",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -32,10 +32,10 @@
     },
     {
       "Nombre": "BIEL COBACHO BOLDU",
-      "PJ": 4,
-      "GT": 12,
-      "G": 10,
-      "GP": 2,
+      "PJ": 5,
+      "GT": 15,
+      "G": 12,
+      "GP": 3,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
@@ -53,7 +53,7 @@
     },
     {
       "Nombre": "DAVID CASADO FUENTES",
-      "PJ": 5,
+      "PJ": 6,
       "GT": 0,
       "G": 0,
       "GP": 0,
@@ -95,9 +95,9 @@
     },
     {
       "Nombre": "HECTOR DIOS ESTEBAN",
-      "PJ": 7,
-      "GT": 12,
-      "G": 12,
+      "PJ": 8,
+      "GT": 16,
+      "G": 16,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -116,9 +116,9 @@
     },
     {
       "Nombre": "IVAN GALLEGO MARTOS",
-      "PJ": 5,
-      "GT": 3,
-      "G": 3,
+      "PJ": 6,
+      "GT": 5,
+      "G": 5,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -137,14 +137,14 @@
     },
     {
       "Nombre": "JORDI FARRE AMADOR",
-      "PJ": 6,
-      "GT": 4,
-      "G": 4,
+      "PJ": 7,
+      "GT": 7,
+      "G": 7,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 5,
+      "EX": 6,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -158,9 +158,9 @@
     },
     {
       "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
-      "PJ": 7,
-      "GT": 6,
-      "G": 6,
+      "PJ": 8,
+      "GT": 7,
+      "G": 7,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -201,8 +201,8 @@
     {
       "Nombre": "LLATZER PEREZ BARADAD",
       "PJ": 6,
-      "GT": 7,
-      "G": 6,
+      "GT": 8,
+      "G": 7,
       "GP": 1,
       "G5P": 0,
       "TA": 0,
@@ -221,9 +221,9 @@
     },
     {
       "Nombre": "MAX CEREZO CAVERO",
-      "PJ": 6,
-      "GT": 13,
-      "G": 13,
+      "PJ": 7,
+      "GT": 18,
+      "G": 18,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -264,8 +264,8 @@
     {
       "Nombre": "OLIVER HERRERA MENDOZA",
       "PJ": 8,
-      "GT": 1,
-      "G": 1,
+      "GT": 2,
+      "G": 2,
       "GP": 0,
       "G5P": 0,
       "TA": 0,
@@ -306,9 +306,9 @@
     {
       "Nombre": "POL RICO SANAHUJA",
       "PJ": 7,
-      "GT": 8,
+      "GT": 9,
       "G": 8,
-      "GP": 0,
+      "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
@@ -327,13 +327,13 @@
     {
       "Nombre": "SAMUEL DIAZ MARROQUIN",
       "PJ": 6,
-      "GT": 27,
-      "G": 16,
-      "GP": 11,
+      "GT": 29,
+      "G": 17,
+      "GP": 12,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 4,
+      "EX": 5,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -348,13 +348,13 @@
     {
       "Nombre": "YAHEL MUÑOZ FUENTES",
       "PJ": 1,
-      "GT": 0,
-      "G": 0,
-      "GP": 0,
+      "GT": 4,
+      "G": 3,
+      "GP": 1,
       "G5P": 0,
       "TA": 0,
       "TR": 0,
-      "EX": 1,
+      "EX": 2,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -368,34 +368,33 @@
     }
   ],
   "team_stats": {
-    "Punts": 15,
-    "En favor": 128,
-    "En contra": 68,
-    "Partits jugats": 7,
-    "Partits guanyats": 5,
+    "Punts": 18,
+    "En favor": 155,
+    "En contra": 72,
+    "Partits jugats": 8,
+    "Partits guanyats": 6,
     "Partits empatats": 0,
     "Partits perduts": 2,
-    "Gols penal": 18,
-    "Expulsions per 20 segons": 50,
-    "Gols": 96,
+    "Gols penal": 22,
+    "Expulsions per 20 segons": 53,
+    "Gols": 119,
     "Faltes per penal": 19,
     "Penals fallats": 8
   },
-  "upcoming_matches": [
+  "upcoming_matches": [],
+  "last_results": [
     {
       "team1": "C.N. MANRESA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649177/results",
       "match_id": "143649177",
-      "date": "Dis 20/12/2025",
-      "time": "16:00",
-      "date_time": "Dis 20/12/2025 16:00",
+      "score_team1": 4,
+      "score_team2": 27,
+      "score": "4 - 27",
       "team2": "C.N. TERRASSA A",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "jornada": 1
-    }
-  ],
-  "last_results": [
+    },
     {
       "team1": "C.N. ATL BARCELONETA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
@@ -418,7 +417,7 @@
       "score": "13 - 14",
       "team2": "C.N. ATL BARCELONETA",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-      "jornada": 2
+      "jornada": 3
     },
     {
       "team1": "C.N. MOLINS DE REI",
@@ -454,7 +453,7 @@
       "score": "21 - 11",
       "team2": "C.N. MOLINS DE REI",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
-      "jornada": 5
+      "jornada": 6
     },
     {
       "team1": "C.N. BARCELONA A",
@@ -466,7 +465,7 @@
       "score": "16 - 13",
       "team2": "C.N. TERRASSA A",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "jornada": 6
+      "jornada": 7
     },
     {
       "team1": "C.N. TERRASSA A",
@@ -478,7 +477,7 @@
       "score": "21 - 8",
       "team2": "C.N. MONTJUIC",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-      "jornada": 7
+      "jornada": 8
     }
   ],
   "ranking": [
@@ -499,14 +498,14 @@
       "posicio": "2",
       "equip": "C.N. TERRASSA A",
       "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "punts": 12,
-      "partits": 5,
-      "guanyats": 4,
+      "punts": 15,
+      "partits": 6,
+      "guanyats": 5,
       "empatats": 0,
       "perduts": 1,
-      "gols_favor": 94,
-      "gols_contra": 44,
-      "diferencia": 50
+      "gols_favor": 121,
+      "gols_contra": 48,
+      "diferencia": 73
     },
     {
       "posicio": "3",
@@ -526,15 +525,15 @@
       "equip": "C.N. MANRESA",
       "logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "punts": 0,
-      "partits": 5,
+      "partits": 6,
       "guanyats": 0,
       "empatats": 0,
-      "perduts": 5,
-      "gols_favor": 26,
-      "gols_contra": 116,
+      "perduts": 6,
+      "gols_favor": 30,
+      "gols_contra": 143,
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-20T16:41:38.206936+01:00",
-  "workflow_run": "1300"
+  "last_update": "2025-12-20T17:30:51.410898+01:00",
+  "workflow_run": "1301"
 }
