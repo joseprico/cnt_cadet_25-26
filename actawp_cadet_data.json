@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2025-12-20T13:31:33.395519",
+    "downloaded_at": "2025-12-20T14:43:04.730164",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -172,6 +172,27 @@
       "EP": 0,
       "P": 2,
       "PF": 2,
+      "O": 0,
+      "TM": 0,
+      "JL": 0,
+      "MVP": 0
+    },
+    {
+      "Nombre": "LEO GARZON REYES",
+      "PJ": 0,
+      "GT": 0,
+      "G": 0,
+      "GP": 0,
+      "G5P": 0,
+      "TA": 0,
+      "TR": 0,
+      "EX": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
+      "EP": 0,
+      "P": 0,
+      "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
@@ -514,6 +535,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-20T15:22:47.647775+01:00",
-  "workflow_run": "1297"
+  "last_update": "2025-12-20T15:43:26.975143+01:00",
+  "workflow_run": "1298"
 }
