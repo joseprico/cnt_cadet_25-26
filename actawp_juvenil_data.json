@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2025-12-31T07:46:20.578008",
+    "downloaded_at": "2025-12-31T08:36:36.938694",
     "parser_version": "5.6_correccions"
   },
   "players": [
@@ -446,7 +446,176 @@
     "Penaltis fallados": 6,
     "Tiempos muertos": 10
   },
-  "upcoming_matches": [],
+  "upcoming_matches": [
+    {
+      "team1": "U.E. D'HORTA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027300/results",
+      "match_id": "144027300",
+      "date": "Dom 11/01/2026",
+      "time": "12:45",
+      "date_time": "Dom 11/01/2026 12:45",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 1
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027305/results",
+      "match_id": "144027305",
+      "date": "Dom 18/01/2026",
+      "time": "12:55",
+      "date_time": "Dom 18/01/2026 12:55",
+      "team2": "C.N. BARCELONA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+      "jornada": 2
+    },
+    {
+      "team1": "C.N. SANT ANDREU",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027309/results",
+      "match_id": "144027309",
+      "date": "Dom 25/01/2026",
+      "time": "13:00",
+      "date_time": "Dom 25/01/2026 13:00",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 3
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027314/results",
+      "match_id": "144027314",
+      "date": "Dom 08/02/2026",
+      "time": "12:55",
+      "date_time": "Dom 08/02/2026 12:55",
+      "team2": "C.N. SABADELL",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+      "jornada": 4
+    },
+    {
+      "team1": "C.N. MONTJUIC A",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027318/results",
+      "match_id": "144027318",
+      "date": "Dom 15/02/2026",
+      "time": "00:00",
+      "date_time": "Dom 15/02/2026 00:00",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 5
+    },
+    {
+      "team1": "C.E. MEDITERRANI",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027323/results",
+      "match_id": "144027323",
+      "date": "Dom 22/02/2026",
+      "time": "11:00",
+      "date_time": "Dom 22/02/2026 11:00",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 6
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027324/results",
+      "match_id": "144027324",
+      "date": "Dom 08/03/2026",
+      "time": "12:55",
+      "date_time": "Dom 08/03/2026 12:55",
+      "team2": "C.N. ATL BARCELONETA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+      "jornada": 7
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027328/results",
+      "match_id": "144027328",
+      "date": "Dom 15/03/2026",
+      "time": "12:55",
+      "date_time": "Dom 15/03/2026 12:55",
+      "team2": "U.E. D'HORTA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+      "jornada": 8
+    },
+    {
+      "team1": "C.N. BARCELONA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027333/results",
+      "match_id": "144027333",
+      "date": "Dom 22/03/2026",
+      "time": "09:30",
+      "date_time": "Dom 22/03/2026 09:30",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 9
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027337/results",
+      "match_id": "144027337",
+      "date": "Dom 12/04/2026",
+      "time": "12:55",
+      "date_time": "Dom 12/04/2026 12:55",
+      "team2": "C.N. SANT ANDREU",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+      "jornada": 10
+    },
+    {
+      "team1": "C.N. SABADELL",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027342/results",
+      "match_id": "144027342",
+      "date": "Dom 19/04/2026",
+      "time": "12:45",
+      "date_time": "Dom 19/04/2026 12:45",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 11
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027346/results",
+      "match_id": "144027346",
+      "date": "Dom 26/04/2026",
+      "time": "12:55",
+      "date_time": "Dom 26/04/2026 12:55",
+      "team2": "C.N. MONTJUIC A",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+      "jornada": 12
+    },
+    {
+      "team1": "C.N. TERRASSA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027351/results",
+      "match_id": "144027351",
+      "date": "Dom 10/05/2026",
+      "time": "12:55",
+      "date_time": "Dom 10/05/2026 12:55",
+      "team2": "C.E. MEDITERRANI",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+      "jornada": 13
+    },
+    {
+      "team1": "C.N. ATL BARCELONETA",
+      "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+      "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027352/results",
+      "match_id": "144027352",
+      "date": "Dom 17/05/2026",
+      "time": "09:15",
+      "date_time": "Dom 17/05/2026 09:15",
+      "team2": "C.N. TERRASSA",
+      "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+      "jornada": 14
+    }
+  ],
   "last_results": [
     {
       "team1": "C.N. TERRASSA",
@@ -599,6 +768,6 @@
       "diferencia": 0
     }
   ],
-  "last_update": "2025-12-31T08:46:49.661512+01:00",
-  "workflow_run": "1556"
+  "last_update": "2025-12-31T09:37:09.856221+01:00",
+  "workflow_run": "1557"
 }
