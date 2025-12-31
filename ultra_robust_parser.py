@@ -651,14 +651,14 @@ if __name__ == "__main__":
             'name': 'CN Terrassa Juvenil',
             'coach': 'Jordi Busquets',
             'language': 'es',
-            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317471/ranking/3654570'
+            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317471/ranking/'
         },
         'cadet': {
             'id': '15621224',
             'name': 'CN Terrassa Cadet',
             'coach': 'Didac Cobacho',
             'language': 'ca',
-            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317474/ranking/3654582'
+            'ranking_url': 'https://actawp.natacio.cat/ca/tournament/1317474/ranking/3669890'
         }
     }
     
