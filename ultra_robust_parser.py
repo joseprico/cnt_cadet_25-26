@@ -1,7 +1,8 @@
 """
-Parser ACTAWP v5.8 - CORREGIT NOMS EQUIPS
+Parser ACTAWP v5.9 - ESTADÍSTIQUES CLASSIFICACIÓ CORREGIDES
 - FIX: Neteja "Ver"/"Veure" dels noms d'equips
 - FIX: Extreu correctament noms de la classificació
+- FIX v5.9: Estadístiques classificació correctes (punts, partits, etc.)
 - NOVITAT v5.7: Obté els últims resultats de cada equip de la classificació
 """
 
@@ -475,20 +476,31 @@ class ActawpParserV58:
                         'diferencia': 0
                     }
                     
-                    # Extreure estadístiques numèriques de les columnes restants
+                    # Extreure estadístiques numèriques de les columnes DESPRÉS del nom
+                    # Ordre típic: PTS | PJ | V | E | D | GF | GC | DIF
                     stat_fields = ['punts', 'partits', 'guanyats', 'empatats', 'perduts', 'gols_favor', 'gols_contra', 'diferencia']
-                    stat_idx = 0
+                    stat_values = []
                     
-                    for col in cols:
+                    # Recollir TOTS els números de les columnes DESPRÉS de la columna de l'equip
+                    for i, col in enumerate(cols):
+                        # Només mirar columnes després de la de l'equip
+                        if i <= equip_idx:
+                            continue
+                        
                         value_text = col.get_text(strip=True)
-                        # Només processar si és un número
-                        if value_text.isdigit() or (value_text.startswith('-') and value_text[1:].isdigit()):
-                            if stat_idx < len(stat_fields):
-                                try:
-                                    team_data[stat_fields[stat_idx]] = int(value_text)
-                                except:
-                                    pass
-                                stat_idx += 1
+                        # Acceptar números positius i negatius
+                        if value_text.lstrip('-').isdigit():
+                            try:
+                                stat_values.append(int(value_text))
+                            except:
+                                pass
+                    
+                    # Assignar els valors als camps
+                    for i, value in enumerate(stat_values):
+                        if i < len(stat_fields):
+                            team_data[stat_fields[i]] = value
+                    
+                    print(f"    📊 Stats: {stat_values[:3]}..." if stat_values else "    ⚠️ No stats")
                     
                     if team_data['equip'] and len(team_data['equip']) > 1:
                         ranking.append(team_data)
@@ -577,7 +589,7 @@ class ActawpParserV58:
         self.current_team_key = team_key
         
         print(f"\n{'='*70}")
-        print(f"🔥 {team_name} - Parser v5.8 (NOMS CORREGITS)")
+        print(f"🔥 {team_name} - Parser v5.9 (STATS CORREGITS)")
         print(f"{'='*70}")
         
         result = {
@@ -588,7 +600,7 @@ class ActawpParserV58:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.8_clean_names"
+                "parser_version": "5.9_stats_fix"
             }
         }
         
@@ -681,7 +693,7 @@ if __name__ == "__main__":
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ACTAWP v5.8 - NOMS D'EQUIPS CORREGITS               ║
+║   PARSER ACTAWP v5.9 - ESTADÍSTIQUES CORREGIDES              ║
 ║   ✅ Noms nets (sense Ver/Veure)                             ║
 ║   ✅ Camps normalitzats (PJ, GT, G, EX...)                   ║
 ║   ✅ MARCADORS correctes dels resultats                       ║
@@ -690,7 +702,7 @@ if __name__ == "__main__":
 ║   🆕 NÚMERO DE JORNADA en cada partit                         ║
 ║   🔧 CORRECCIONS MANUALS per partits ajornats                 ║
 ║   🆕 FORMA DELS RIVALS (últims 5 resultats)                   ║
-║   🔧 FIX: Noms equips sense "Ver/Veure"                       ║
+║   🔧 FIX v5.9: Punts i stats classificació correctes         ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -738,13 +750,14 @@ if __name__ == "__main__":
     print("""
 ✅ JSON GENERATS CORRECTAMENT!
 
-🔧 Correccions v5.8:
+🔧 Correccions v5.9:
    - Noms d'equips sense "Ver/Veure" als partits
    - Classificació amb noms reals dels equips
+   - PUNTS i ESTADÍSTIQUES correctes a la classificació
    - rivals_form amb noms correctes
 
 📤 Puja'ls a GitHub:
    git add actawp_*.json ultra_robust_parser.py
-   git commit -m "🔧 Parser v5.8 - Noms equips corregits"
+   git commit -m "🔧 Parser v5.9 - Stats classificació corregits"
    git push
 """)
