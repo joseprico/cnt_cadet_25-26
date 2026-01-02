@@ -5,8 +5,8 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-01-02T11:23:56.142701",
-    "parser_version": "5.9_stats_fix"
+    "downloaded_at": "2026-01-02T11:35:25.898551",
+    "parser_version": "6.0_top_scorers"
   },
   "players": [
     {
@@ -768,7 +768,24 @@
         "W",
         "W"
       ],
-      "form_string": "WLWWW"
+      "form_string": "WLWWW",
+      "top_scorers": [
+        {
+          "name": "CESC AGUIRRE RUBIO",
+          "goals": 40,
+          "games": 8
+        },
+        {
+          "name": "JOHN JOSEPH SHINSKE MARTIN",
+          "goals": 36,
+          "games": 8
+        },
+        {
+          "name": "BIEL FONT SUAREZ",
+          "goals": 16,
+          "games": 8
+        }
+      ]
     },
     "C.N. BARCELONA A": {
       "team_id": "15612052",
@@ -826,7 +843,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "PAU LOPEZ FERNANDEZ",
+          "goals": 46,
+          "games": 8
+        },
+        {
+          "name": "GUERAU NAVARRO BUENO",
+          "goals": 44,
+          "games": 8
+        },
+        {
+          "name": "PAU JANE VIÑALS",
+          "goals": 14,
+          "games": 8
+        }
+      ]
     },
     "C.N. POBLE NOU A": {
       "team_id": "15623995",
@@ -884,7 +918,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWLWW"
+      "form_string": "WWLWW",
+      "top_scorers": [
+        {
+          "name": "ADRIA LOPEZ FILELLA",
+          "goals": 45,
+          "games": 7
+        },
+        {
+          "name": "PAU PERISSE I GOMEZ",
+          "goals": 20,
+          "games": 8
+        },
+        {
+          "name": "JOAN SUAREZ BENAVENT",
+          "goals": 19,
+          "games": 8
+        }
+      ]
     },
     "C.N. SABADELL": {
       "team_id": "15616558",
@@ -942,7 +993,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "BINE STROMAJER",
+          "goals": 28,
+          "games": 6
+        },
+        {
+          "name": "HUGO RODRIGUEZ BELTRAN",
+          "goals": 28,
+          "games": 8
+        },
+        {
+          "name": "ASIER RUIZ GARCIA",
+          "goals": 27,
+          "games": 8
+        }
+      ]
     },
     "C.E. MEDITERRANI": {
       "team_id": "15609736",
@@ -1000,7 +1068,24 @@
         "W",
         "L"
       ],
-      "form_string": "WLWWL"
+      "form_string": "WLWWL",
+      "top_scorers": [
+        {
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ",
+          "goals": 22,
+          "games": 8
+        },
+        {
+          "name": "PABLO RODRIGUEZ LAGUNA",
+          "goals": 22,
+          "games": 8
+        },
+        {
+          "name": "TEO RODRIGUEZ MARTINEZ",
+          "goals": 13,
+          "games": 8
+        }
+      ]
     },
     "C.N. SANT ANDREU A": {
       "team_id": "15617611",
@@ -1058,7 +1143,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "ALEJANDRO RUDZEVICH RAMIREZ",
+          "goals": 39,
+          "games": 10
+        },
+        {
+          "name": "AXEL GUICH JIMENEZ",
+          "goals": 23,
+          "games": 6
+        },
+        {
+          "name": "MARTI PIÑEIRA GONZALEZ",
+          "goals": 23,
+          "games": 8
+        }
+      ]
     },
     "U.E. D'HORTA": {
       "team_id": "15609772",
@@ -1116,9 +1218,26 @@
         "L",
         "W"
       ],
-      "form_string": "WLWLW"
+      "form_string": "WLWLW",
+      "top_scorers": [
+        {
+          "name": "GERARD PRADAS PEIRON",
+          "goals": 31,
+          "games": 8
+        },
+        {
+          "name": "ARES CEREZUELA CEREIJO",
+          "goals": 26,
+          "games": 8
+        },
+        {
+          "name": "ERIC M. VAQUERO BAENA",
+          "goals": 18,
+          "games": 8
+        }
+      ]
     }
   },
-  "last_update": "2026-01-02T12:30:32.133256+01:00",
-  "workflow_run": "1620"
+  "last_update": "2026-01-02T12:36:31.824552+01:00",
+  "workflow_run": "1621"
 }

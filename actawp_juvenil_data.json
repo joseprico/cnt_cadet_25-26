@@ -5,8 +5,8 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-01-02T11:23:13.777500",
-    "parser_version": "5.9_stats_fix"
+    "downloaded_at": "2026-01-02T11:34:19.026941",
+    "parser_version": "6.0_top_scorers"
   },
   "players": [
     {
@@ -833,7 +833,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "DANIEL MERIDA OROZCO",
+          "goals": 26,
+          "games": 6
+        },
+        {
+          "name": "DANYLO BENYAKH",
+          "goals": 20,
+          "games": 6
+        },
+        {
+          "name": "ENZO FERNANDEZ PERRIER",
+          "goals": 19,
+          "games": 5
+        }
+      ]
     },
     "U.E. D'HORTA": {
       "team_id": "15609765",
@@ -891,7 +908,24 @@
         "W",
         "L"
       ],
-      "form_string": "WLWWL"
+      "form_string": "WLWWL",
+      "top_scorers": [
+        {
+          "name": "MARC SUAREZ VAN DAM",
+          "goals": 24,
+          "games": 8
+        },
+        {
+          "name": "JEFFERSON FERRERAS SALDAÑA",
+          "goals": 23,
+          "games": 7
+        },
+        {
+          "name": "ORIOL HURTADO CLOPES",
+          "goals": 18,
+          "games": 3
+        }
+      ]
     },
     "C.N. BARCELONA": {
       "team_id": "15612054",
@@ -949,7 +983,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "SVILEN PIRALKOV COELLO",
+          "goals": 25,
+          "games": 8
+        },
+        {
+          "name": "MARIO PAZ NUÑEZ",
+          "goals": 21,
+          "games": 8
+        },
+        {
+          "name": "ERIC PEDREROL SARDAÑA",
+          "goals": 16,
+          "games": 8
+        }
+      ]
     },
     "C.N. SANT ANDREU": {
       "team_id": "15617612",
@@ -1007,7 +1058,24 @@
         "W",
         "W"
       ],
-      "form_string": "WLLWW"
+      "form_string": "WLLWW",
+      "top_scorers": [
+        {
+          "name": "EYAL VASHDI",
+          "goals": 21,
+          "games": 8
+        },
+        {
+          "name": "ALEJANDRO RUDZEVICH RAMIREZ",
+          "goals": 20,
+          "games": 8
+        },
+        {
+          "name": "MARTI PIÑEIRA GONZALEZ",
+          "goals": 14,
+          "games": 8
+        }
+      ]
     },
     "C.N. SABADELL": {
       "team_id": "15616560",
@@ -1065,7 +1133,24 @@
         "W",
         "W"
       ],
-      "form_string": "WWWWW"
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "GUILLEM NAVARRO PICAZO",
+          "goals": 19,
+          "games": 7
+        },
+        {
+          "name": "EDGAR VILCHEZ RUIZ",
+          "goals": 18,
+          "games": 7
+        },
+        {
+          "name": "GENIS BATISTA ALFONSO",
+          "goals": 15,
+          "games": 6
+        }
+      ]
     },
     "C.N. MONTJUIC A": {
       "team_id": "15617365",
@@ -1123,7 +1208,24 @@
         "W",
         "L"
       ],
-      "form_string": "WWLWL"
+      "form_string": "WWLWL",
+      "top_scorers": [
+        {
+          "name": "GABRIEL GARCIA SORIA",
+          "goals": 19,
+          "games": 8
+        },
+        {
+          "name": "PAU RUEDA CAMINS",
+          "goals": 16,
+          "games": 6
+        },
+        {
+          "name": "MARC PARERA ALONSO",
+          "goals": 15,
+          "games": 7
+        }
+      ]
     },
     "C.E. MEDITERRANI": {
       "team_id": "15609737",
@@ -1181,9 +1283,26 @@
         "W",
         "W"
       ],
-      "form_string": "WLWWW"
+      "form_string": "WLWWW",
+      "top_scorers": [
+        {
+          "name": "ALEIX GUERRERO GARCIA",
+          "goals": 31,
+          "games": 8
+        },
+        {
+          "name": "BERNAT MARTINEZ VAZQUEZ",
+          "goals": 20,
+          "games": 8
+        },
+        {
+          "name": "MARC MCCAVANAGH PEREZ",
+          "goals": 12,
+          "games": 8
+        }
+      ]
     }
   },
-  "last_update": "2026-01-02T12:30:32.133256+01:00",
-  "workflow_run": "1620"
+  "last_update": "2026-01-02T12:36:31.824552+01:00",
+  "workflow_run": "1621"
 }
