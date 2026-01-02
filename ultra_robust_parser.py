@@ -1,9 +1,10 @@
 """
-Parser ACTAWP v5.9 - ESTADÍSTIQUES CLASSIFICACIÓ CORREGIDES
+Parser ACTAWP v6.0 - AMB JUGADORS CLAU DELS RIVALS
 - FIX: Neteja "Ver"/"Veure" dels noms d'equips
 - FIX: Extreu correctament noms de la classificació
 - FIX v5.9: Estadístiques classificació correctes (punts, partits, etc.)
 - NOVITAT v5.7: Obté els últims resultats de cada equip de la classificació
+- NOVITAT v6.0: Obté els 3 màxims golejadors de cada rival
 """
 
 import requests
@@ -528,6 +529,35 @@ class ActawpParserV58:
             print(f"    ⚠️ Error obtenint resultats de {team_name}: {e}")
             return []
     
+    def get_rival_top_scorers(self, team_id, team_name, language='es'):
+        """🆕 Obté els 3 màxims golejadors d'un equip rival"""
+        try:
+            players_data = self.get_tab_content(team_id, 'players', language)
+            if players_data and players_data.get('code') == 0:
+                players = self.parse_players(players_data.get('content', ''))
+                
+                # Filtrar jugadors amb gols i ordenar per gols totals
+                scorers = []
+                for p in players:
+                    goals = p.get('GT', 0) or p.get('G', 0) or 0
+                    games = p.get('PJ', 0) or 0
+                    name = p.get('Nombre', 'Desconegut')
+                    
+                    if goals > 0:
+                        scorers.append({
+                            'name': name,
+                            'goals': goals,
+                            'games': games
+                        })
+                
+                # Ordenar per gols (descendent) i retornar top 3
+                scorers.sort(key=lambda x: x['goals'], reverse=True)
+                return scorers[:3]
+            return []
+        except Exception as e:
+            print(f"    ⚠️ Error obtenint jugadors de {team_name}: {e}")
+            return []
+    
     def get_all_rivals_form(self, ranking, language='es'):
         """Obté la forma de tots els rivals de la classificació"""
         rivals_form = {}
@@ -549,6 +579,7 @@ class ActawpParserV58:
             print(f"    📊 {team_name}...", end=' ')
             
             results = self.get_rival_last_results(team_id, team_name, language)
+            top_scorers = self.get_rival_top_scorers(team_id, team_name, language)
             
             if results:
                 # Calcular forma (V/E/D)
@@ -576,9 +607,13 @@ class ActawpParserV58:
                     'team_id': team_id,
                     'last_results': results,
                     'form': form,
-                    'form_string': ''.join(form)
+                    'form_string': ''.join(form),
+                    'top_scorers': top_scorers
                 }
-                print(f"✅ {len(results)} resultats ({'-'.join(form)})")
+                
+                # Mostrar info
+                scorers_info = f", Top: {top_scorers[0]['name']} ({top_scorers[0]['goals']}g)" if top_scorers else ""
+                print(f"✅ {len(results)} resultats ({'-'.join(form)}){scorers_info}")
             else:
                 print(f"❌ sense resultats")
         
@@ -589,7 +624,7 @@ class ActawpParserV58:
         self.current_team_key = team_key
         
         print(f"\n{'='*70}")
-        print(f"🔥 {team_name} - Parser v5.9 (STATS CORREGITS)")
+        print(f"🔥 {team_name} - Parser v6.0 (JUGADORS CLAU)")
         print(f"{'='*70}")
         
         result = {
@@ -600,7 +635,7 @@ class ActawpParserV58:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.9_stats_fix"
+                "parser_version": "6.0_top_scorers"
             }
         }
         
@@ -693,7 +728,7 @@ if __name__ == "__main__":
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ACTAWP v5.9 - ESTADÍSTIQUES CORREGIDES              ║
+║   PARSER ACTAWP v6.0 - AMB JUGADORS CLAU DELS RIVALS         ║
 ║   ✅ Noms nets (sense Ver/Veure)                             ║
 ║   ✅ Camps normalitzats (PJ, GT, G, EX...)                   ║
 ║   ✅ MARCADORS correctes dels resultats                       ║
@@ -702,7 +737,7 @@ if __name__ == "__main__":
 ║   🆕 NÚMERO DE JORNADA en cada partit                         ║
 ║   🔧 CORRECCIONS MANUALS per partits ajornats                 ║
 ║   🆕 FORMA DELS RIVALS (últims 5 resultats)                   ║
-║   🔧 FIX v5.9: Punts i stats classificació correctes         ║
+║   ⭐ TOP 3 GOLEJADORS de cada rival                           ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -750,14 +785,13 @@ if __name__ == "__main__":
     print("""
 ✅ JSON GENERATS CORRECTAMENT!
 
-🔧 Correccions v5.9:
-   - Noms d'equips sense "Ver/Veure" als partits
-   - Classificació amb noms reals dels equips
-   - PUNTS i ESTADÍSTIQUES correctes a la classificació
-   - rivals_form amb noms correctes
+🆕 Novetats v6.0:
+   - TOP 3 GOLEJADORS de cada rival
+   - Nom, gols i partits jugats
+   - Perfecte per analitzar rivals!
 
 📤 Puja'ls a GitHub:
    git add actawp_*.json ultra_robust_parser.py
-   git commit -m "🔧 Parser v5.9 - Stats classificació corregits"
+   git commit -m "⭐ Parser v6.0 - Jugadors clau dels rivals"
    git push
 """)
