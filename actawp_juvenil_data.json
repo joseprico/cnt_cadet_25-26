@@ -5,8 +5,8 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-01-02T11:41:29.220903",
-    "parser_version": "6.0_top_scorers"
+    "downloaded_at": "2026-01-02T11:58:21.917857",
+    "parser_version": "6.1_extended_stats"
   },
   "players": [
     {
@@ -838,19 +838,56 @@
         {
           "name": "DANIEL MERIDA OROZCO",
           "goals": 26,
-          "games": 6
+          "games": 6,
+          "exclusions": 5,
+          "penalty_goals": 2,
+          "avg_goals": 4.33
         },
         {
           "name": "DANYLO BENYAKH",
           "goals": 20,
-          "games": 6
+          "games": 6,
+          "exclusions": 0,
+          "penalty_goals": 0,
+          "avg_goals": 3.33
         },
         {
           "name": "ENZO FERNANDEZ PERRIER",
           "goals": 19,
-          "games": 5
+          "games": 5,
+          "exclusions": 1,
+          "penalty_goals": 1,
+          "avg_goals": 3.8
+        },
+        {
+          "name": "CESC AGUIRRE RUBIO",
+          "goals": 18,
+          "games": 8,
+          "exclusions": 1,
+          "penalty_goals": 5,
+          "avg_goals": 2.25
+        },
+        {
+          "name": "MARCOS ELCHE HERNANDEZ",
+          "goals": 17,
+          "games": 5,
+          "exclusions": 6,
+          "penalty_goals": 4,
+          "avg_goals": 3.4
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 125,
+        "total_gc": 23,
+        "avg_gf": 25.0,
+        "avg_gc": 4.6,
+        "matches_played": 5,
+        "wins": 5,
+        "draws": 0,
+        "losses": 0,
+        "trend": "hot",
+        "total_exclusions": 13
+      }
     },
     "U.E. D'HORTA": {
       "team_id": "15609765",
@@ -913,19 +950,56 @@
         {
           "name": "MARC SUAREZ VAN DAM",
           "goals": 24,
-          "games": 8
+          "games": 8,
+          "exclusions": 3,
+          "penalty_goals": 0,
+          "avg_goals": 3.0
         },
         {
           "name": "JEFFERSON FERRERAS SALDAÑA",
           "goals": 23,
-          "games": 7
+          "games": 7,
+          "exclusions": 6,
+          "penalty_goals": 2,
+          "avg_goals": 3.29
         },
         {
           "name": "ORIOL HURTADO CLOPES",
           "goals": 18,
-          "games": 3
+          "games": 3,
+          "exclusions": 4,
+          "penalty_goals": 8,
+          "avg_goals": 6.0
+        },
+        {
+          "name": "POL FONT SUAREZ",
+          "goals": 18,
+          "games": 7,
+          "exclusions": 2,
+          "penalty_goals": 4,
+          "avg_goals": 2.57
+        },
+        {
+          "name": "BERNAL PARIENTE LOPEZ",
+          "goals": 9,
+          "games": 8,
+          "exclusions": 3,
+          "penalty_goals": 1,
+          "avg_goals": 1.12
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 83,
+        "total_gc": 67,
+        "avg_gf": 16.6,
+        "avg_gc": 13.4,
+        "matches_played": 5,
+        "wins": 3,
+        "draws": 0,
+        "losses": 2,
+        "trend": "hot",
+        "total_exclusions": 18
+      }
     },
     "C.N. BARCELONA": {
       "team_id": "15612054",
@@ -988,19 +1062,56 @@
         {
           "name": "SVILEN PIRALKOV COELLO",
           "goals": 25,
-          "games": 8
+          "games": 8,
+          "exclusions": 4,
+          "penalty_goals": 4,
+          "avg_goals": 3.12
         },
         {
           "name": "MARIO PAZ NUÑEZ",
           "goals": 21,
-          "games": 8
+          "games": 8,
+          "exclusions": 8,
+          "penalty_goals": 1,
+          "avg_goals": 2.62
         },
         {
           "name": "ERIC PEDREROL SARDAÑA",
           "goals": 16,
-          "games": 8
+          "games": 8,
+          "exclusions": 6,
+          "penalty_goals": 5,
+          "avg_goals": 2.0
+        },
+        {
+          "name": "PAU ORTIZ MINGUET",
+          "goals": 14,
+          "games": 7,
+          "exclusions": 8,
+          "penalty_goals": 0,
+          "avg_goals": 2.0
+        },
+        {
+          "name": "MARC COMABELLA CIVES",
+          "goals": 12,
+          "games": 3,
+          "exclusions": 1,
+          "penalty_goals": 0,
+          "avg_goals": 4.0
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 99,
+        "total_gc": 36,
+        "avg_gf": 19.8,
+        "avg_gc": 7.2,
+        "matches_played": 5,
+        "wins": 5,
+        "draws": 0,
+        "losses": 0,
+        "trend": "hot",
+        "total_exclusions": 27
+      }
     },
     "C.N. SANT ANDREU": {
       "team_id": "15617612",
@@ -1063,19 +1174,56 @@
         {
           "name": "EYAL VASHDI",
           "goals": 21,
-          "games": 8
+          "games": 8,
+          "exclusions": 10,
+          "penalty_goals": 10,
+          "avg_goals": 2.62
         },
         {
           "name": "ALEJANDRO RUDZEVICH RAMIREZ",
           "goals": 20,
-          "games": 8
+          "games": 8,
+          "exclusions": 6,
+          "penalty_goals": 6,
+          "avg_goals": 2.5
         },
         {
           "name": "MARTI PIÑEIRA GONZALEZ",
           "goals": 14,
-          "games": 8
+          "games": 8,
+          "exclusions": 4,
+          "penalty_goals": 3,
+          "avg_goals": 1.75
+        },
+        {
+          "name": "AXEL GUICH JIMENEZ",
+          "goals": 12,
+          "games": 8,
+          "exclusions": 5,
+          "penalty_goals": 2,
+          "avg_goals": 1.5
+        },
+        {
+          "name": "JOSE CESTERO ALCAIN",
+          "goals": 11,
+          "games": 7,
+          "exclusions": 8,
+          "penalty_goals": 1,
+          "avg_goals": 1.57
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 72,
+        "total_gc": 79,
+        "avg_gf": 14.4,
+        "avg_gc": 15.8,
+        "matches_played": 5,
+        "wins": 3,
+        "draws": 0,
+        "losses": 2,
+        "trend": "cold",
+        "total_exclusions": 33
+      }
     },
     "C.N. SABADELL": {
       "team_id": "15616560",
@@ -1138,19 +1286,56 @@
         {
           "name": "GUILLEM NAVARRO PICAZO",
           "goals": 19,
-          "games": 7
+          "games": 7,
+          "exclusions": 6,
+          "penalty_goals": 4,
+          "avg_goals": 2.71
         },
         {
           "name": "EDGAR VILCHEZ RUIZ",
           "goals": 18,
-          "games": 7
+          "games": 7,
+          "exclusions": 2,
+          "penalty_goals": 0,
+          "avg_goals": 2.57
         },
         {
           "name": "GENIS BATISTA ALFONSO",
           "goals": 15,
-          "games": 6
+          "games": 6,
+          "exclusions": 4,
+          "penalty_goals": 2,
+          "avg_goals": 2.5
+        },
+        {
+          "name": "NIKITA RUDOI BOBULICI",
+          "goals": 14,
+          "games": 7,
+          "exclusions": 3,
+          "penalty_goals": 0,
+          "avg_goals": 2.0
+        },
+        {
+          "name": "TIAGO CARRIO MANDOLINI",
+          "goals": 14,
+          "games": 4,
+          "exclusions": 3,
+          "penalty_goals": 4,
+          "avg_goals": 3.5
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 98,
+        "total_gc": 31,
+        "avg_gf": 19.6,
+        "avg_gc": 6.2,
+        "matches_played": 5,
+        "wins": 5,
+        "draws": 0,
+        "losses": 0,
+        "trend": "hot",
+        "total_exclusions": 18
+      }
     },
     "C.N. MONTJUIC A": {
       "team_id": "15617365",
@@ -1213,19 +1398,56 @@
         {
           "name": "GABRIEL GARCIA SORIA",
           "goals": 19,
-          "games": 8
+          "games": 8,
+          "exclusions": 7,
+          "penalty_goals": 0,
+          "avg_goals": 2.38
         },
         {
           "name": "PAU RUEDA CAMINS",
           "goals": 16,
-          "games": 6
+          "games": 6,
+          "exclusions": 5,
+          "penalty_goals": 5,
+          "avg_goals": 2.67
         },
         {
           "name": "MARC PARERA ALONSO",
           "goals": 15,
-          "games": 7
+          "games": 7,
+          "exclusions": 9,
+          "penalty_goals": 5,
+          "avg_goals": 2.14
+        },
+        {
+          "name": "MARIO PERIBAÑEZ GISBERT",
+          "goals": 13,
+          "games": 6,
+          "exclusions": 7,
+          "penalty_goals": 2,
+          "avg_goals": 2.17
+        },
+        {
+          "name": "LUCA JOVANOVSKI GALLEGO",
+          "goals": 11,
+          "games": 7,
+          "exclusions": 8,
+          "penalty_goals": 2,
+          "avg_goals": 1.57
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 62,
+        "total_gc": 63,
+        "avg_gf": 12.4,
+        "avg_gc": 12.6,
+        "matches_played": 5,
+        "wins": 3,
+        "draws": 0,
+        "losses": 2,
+        "trend": "hot",
+        "total_exclusions": 36
+      }
     },
     "C.E. MEDITERRANI": {
       "team_id": "15609737",
@@ -1288,21 +1510,58 @@
         {
           "name": "ALEIX GUERRERO GARCIA",
           "goals": 31,
-          "games": 8
+          "games": 8,
+          "exclusions": 5,
+          "penalty_goals": 8,
+          "avg_goals": 3.88
         },
         {
           "name": "BERNAT MARTINEZ VAZQUEZ",
           "goals": 20,
-          "games": 8
+          "games": 8,
+          "exclusions": 4,
+          "penalty_goals": 1,
+          "avg_goals": 2.5
         },
         {
           "name": "MARC MCCAVANAGH PEREZ",
           "goals": 12,
-          "games": 8
+          "games": 8,
+          "exclusions": 3,
+          "penalty_goals": 0,
+          "avg_goals": 1.5
+        },
+        {
+          "name": "ORIOL LOPEZ CHARLES",
+          "goals": 12,
+          "games": 8,
+          "exclusions": 5,
+          "penalty_goals": 0,
+          "avg_goals": 1.5
+        },
+        {
+          "name": "LUIS ROJO BALANYA",
+          "goals": 9,
+          "games": 8,
+          "exclusions": 5,
+          "penalty_goals": 0,
+          "avg_goals": 1.12
         }
-      ]
+      ],
+      "stats": {
+        "total_gf": 85,
+        "total_gc": 48,
+        "avg_gf": 17.0,
+        "avg_gc": 9.6,
+        "matches_played": 5,
+        "wins": 4,
+        "draws": 0,
+        "losses": 1,
+        "trend": "hot",
+        "total_exclusions": 22
+      }
     }
   },
-  "last_update": "2026-01-02T12:43:46.377907+01:00",
-  "workflow_run": "1622"
+  "last_update": "2026-01-02T13:00:31.118096+01:00",
+  "workflow_run": "1623"
 }
