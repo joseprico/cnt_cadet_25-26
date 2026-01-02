@@ -5,8 +5,8 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-01-02T10:48:58.247161",
-    "parser_version": "5.7_rivals_form"
+    "downloaded_at": "2026-01-02T10:59:08.678237",
+    "parser_version": "5.8_clean_names"
   },
   "players": [
     {
@@ -383,7 +383,7 @@
   },
   "upcoming_matches": [
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "U.E. D'HORTA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
@@ -393,7 +393,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. ATL BARCELONETA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
@@ -403,7 +403,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.N. BARCELONA A",
+      "team1": "C.N. BARCELONA A",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -413,7 +413,7 @@
       "time": "13:30"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. POBLE NOU A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
@@ -423,7 +423,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.N. SABADELL",
+      "team1": "C.N. SABADELL",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -433,7 +433,7 @@
       "time": "17:30"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.E. MEDITERRANI",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
@@ -443,7 +443,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.N. SANT ANDREU A",
+      "team1": "C.N. SANT ANDREU A",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -453,7 +453,7 @@
       "time": "16:00"
     },
     {
-      "team1": "VeureU.E. D'HORTA",
+      "team1": "U.E. D'HORTA",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -463,7 +463,7 @@
       "time": "10:15"
     },
     {
-      "team1": "VeureC.N. ATL BARCELONETA",
+      "team1": "C.N. ATL BARCELONETA",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -473,7 +473,7 @@
       "time": "10:30"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. BARCELONA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
@@ -483,7 +483,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.N. POBLE NOU A",
+      "team1": "C.N. POBLE NOU A",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -493,7 +493,7 @@
       "time": "17:00"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. SABADELL",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
@@ -503,7 +503,7 @@
       "time": "12:50"
     },
     {
-      "team1": "VeureC.E. MEDITERRANI",
+      "team1": "C.E. MEDITERRANI",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -513,7 +513,7 @@
       "time": "09:00"
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. SANT ANDREU A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
@@ -525,7 +525,7 @@
   ],
   "last_results": [
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. ATL BARCELONETA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
@@ -534,7 +534,7 @@
       "jornada": 1
     },
     {
-      "team1": "VeureC.N. ATL BARCELONETA",
+      "team1": "C.N. ATL BARCELONETA",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -543,7 +543,7 @@
       "jornada": 2
     },
     {
-      "team1": "VeureC.N. MANRESA",
+      "team1": "C.N. MANRESA",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -552,7 +552,7 @@
       "jornada": 3
     },
     {
-      "team1": "VeureC.N. MOLINS DE REI",
+      "team1": "C.N. MOLINS DE REI",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -561,7 +561,7 @@
       "jornada": 4
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. MANRESA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
@@ -570,7 +570,7 @@
       "jornada": 5
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. MOLINS DE REI",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
@@ -579,7 +579,7 @@
       "jornada": 6
     },
     {
-      "team1": "VeureC.N. BARCELONA A",
+      "team1": "C.N. BARCELONA A",
       "team2": "C.N. TERRASSA A",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
@@ -588,7 +588,7 @@
       "jornada": 7
     },
     {
-      "team1": "VeureC.N. TERRASSA A",
+      "team1": "C.N. TERRASSA A",
       "team2": "C.N. MONTJUIC",
       "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
@@ -600,9 +600,9 @@
   "ranking": [
     {
       "posicio": "1",
-      "equip": "Veure",
+      "equip": "C.N. TERRASSA A",
       "team_id": "15621224",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
       "punts": 1,
       "partits": 0,
       "guanyats": 0,
@@ -614,9 +614,9 @@
     },
     {
       "posicio": "2",
-      "equip": "Veure",
+      "equip": "C.N. ATL BARCELONETA",
       "team_id": "15617348",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "punts": 2,
       "partits": 0,
       "guanyats": 0,
@@ -628,9 +628,9 @@
     },
     {
       "posicio": "3",
-      "equip": "Veure",
+      "equip": "C.N. BARCELONA A",
       "team_id": "15612052",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
       "punts": 3,
       "partits": 0,
       "guanyats": 0,
@@ -642,9 +642,9 @@
     },
     {
       "posicio": "4",
-      "equip": "Veure",
+      "equip": "C.N. POBLE NOU A",
       "team_id": "15623995",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
       "punts": 4,
       "partits": 0,
       "guanyats": 0,
@@ -656,9 +656,9 @@
     },
     {
       "posicio": "5",
-      "equip": "Veure",
+      "equip": "C.N. SABADELL",
       "team_id": "15616558",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
       "punts": 5,
       "partits": 0,
       "guanyats": 0,
@@ -670,9 +670,9 @@
     },
     {
       "posicio": "6",
-      "equip": "Veure",
+      "equip": "C.E. MEDITERRANI",
       "team_id": "15609736",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
       "punts": 6,
       "partits": 0,
       "guanyats": 0,
@@ -684,9 +684,9 @@
     },
     {
       "posicio": "7",
-      "equip": "Veure",
+      "equip": "C.N. SANT ANDREU A",
       "team_id": "15617611",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
       "punts": 7,
       "partits": 0,
       "guanyats": 0,
@@ -698,9 +698,9 @@
     },
     {
       "posicio": "8",
-      "equip": "Veure",
+      "equip": "U.E. D'HORTA",
       "team_id": "15609772",
-      "logo": "",
+      "logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
       "punts": 8,
       "partits": 0,
       "guanyats": 0,
@@ -712,11 +712,359 @@
     }
   ],
   "rivals_form": {
-    "Veure": {
+    "C.N. ATL BARCELONETA": {
+      "team_id": "15617348",
+      "last_results": [
+        {
+          "team1": "C.N. TERRASSA A",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "13-14",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. TERRASSA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "score": "12-14",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. MANRESA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaQ43REVF6mG.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "3-32",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. MOLINS DE REI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
+          "score": "27-5",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. MOLINS DE REI",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f4fc6ccd.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "3-32",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "L",
+        "W",
+        "W",
+        "W"
+      ],
+      "form_string": "WLWWW"
+    },
+    "C.N. BARCELONA A": {
+      "team_id": "15612052",
+      "last_results": [
+        {
+          "team1": "C.N. RUBÍ",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "7-21",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.N. BARCELONA A",
+          "team2": "C.N. RUBÍ",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
+          "score": "21-10",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. CATALUNYA",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AajxOQYj1UBb.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "8-25",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "C.N. POBLE NOU A",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. BARCELONA A",
+          "team2": "C.N. CATALUNYA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AajxOQYj1UBb.30x30.jpg",
+          "score": "12-9",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ],
+      "form_string": "WWWWW"
+    },
+    "C.N. POBLE NOU A": {
+      "team_id": "15623995",
+      "last_results": [
+        {
+          "team1": "C.N. POBLE NOU A",
+          "team2": "C.N. CATALUNYA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AajxOQYj1UBb.30x30.jpg",
+          "score": "21-8",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.N. POBLE NOU A",
+          "team2": "C.N. RUBÍ",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
+          "score": "16-10",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. POBLE NOU A",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "C.N. CATALUNYA",
+          "team2": "C.N. POBLE NOU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AajxOQYj1UBb.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "score": "5-15",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. RUBÍ",
+          "team2": "C.N. POBLE NOU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/Aa0ntlmDPJHS.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "score": "14-15",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "L",
+        "W",
+        "W"
+      ],
+      "form_string": "WWLWW"
+    },
+    "C.N. SABADELL": {
+      "team_id": "15616558",
+      "last_results": [
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. MONTJUIC",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "score": "25-13",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. PREMIÀ A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AatzEPbjSvDt.30x30.jpg",
+          "score": "21-4",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. MONTJUIC",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "10-21",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "9-12",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. PREMIÀ A",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AatzEPbjSvDt.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "10-32",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ],
+      "form_string": "WWWWW"
+    },
+    "C.E. MEDITERRANI": {
+      "team_id": "15609736",
+      "last_results": [
+        {
+          "team1": "C.N. PREMIÀ A",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AatzEPbjSvDt.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "2-20",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "9-12",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. MONTJUIC",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "10-14",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. PREMIÀ A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AatzEPbjSvDt.30x30.jpg",
+          "score": "24-4",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "11-7",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "L",
+        "W",
+        "W",
+        "L"
+      ],
+      "form_string": "WLWWL"
+    },
+    "C.N. SANT ANDREU A": {
+      "team_id": "15617611",
+      "last_results": [
+        {
+          "team1": "C.N. SANT ANDREU A",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "18-9",
+          "date": "",
+          "jornada": 1
+        },
+        {
+          "team1": "C.N. MATARÓ \"A\"",
+          "team2": "C.N. SANT ANDREU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaOLLadIjC6E.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "score": "5-15",
+          "date": "",
+          "jornada": 2
+        },
+        {
+          "team1": "C.N. SANT ANDREU A",
+          "team2": "C.N. MATARÓ \"A\"",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaOLLadIjC6E.30x30.jpg",
+          "score": "18-10",
+          "date": "",
+          "jornada": 3
+        },
+        {
+          "team1": "U.E. D'HORTA",
+          "team2": "C.N. SANT ANDREU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 4
+        },
+        {
+          "team1": "C.N. SANT FELIU",
+          "team2": "C.N. SANT ANDREU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaHuNvh2GCD0.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "score": "0-25",
+          "date": "",
+          "jornada": 5
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ],
+      "form_string": "WWWWW"
+    },
+    "U.E. D'HORTA": {
       "team_id": "15609772",
       "last_results": [
         {
-          "team1": "VeureC.N. SANT FELIU",
+          "team1": "C.N. SANT FELIU",
           "team2": "U.E. D'HORTA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaHuNvh2GCD0.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
@@ -725,7 +1073,7 @@
           "jornada": 1
         },
         {
-          "team1": "VeureC.N. MATARÓ \"A\"",
+          "team1": "C.N. MATARÓ \"A\"",
           "team2": "U.E. D'HORTA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaOLLadIjC6E.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
@@ -734,7 +1082,7 @@
           "jornada": 2
         },
         {
-          "team1": "VeureU.E. D'HORTA",
+          "team1": "U.E. D'HORTA",
           "team2": "C.N. SANT FELIU",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaHuNvh2GCD0.30x30.jpg",
@@ -743,7 +1091,7 @@
           "jornada": 3
         },
         {
-          "team1": "VeureC.N. SANT ANDREU A",
+          "team1": "C.N. SANT ANDREU A",
           "team2": "U.E. D'HORTA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
@@ -752,7 +1100,7 @@
           "jornada": 4
         },
         {
-          "team1": "VeureU.E. D'HORTA",
+          "team1": "U.E. D'HORTA",
           "team2": "C.N. MATARÓ \"A\"",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaOLLadIjC6E.30x30.jpg",
@@ -762,15 +1110,15 @@
         }
       ],
       "form": [
+        "W",
         "L",
         "W",
-        "W",
-        "W",
+        "L",
         "W"
       ],
-      "form_string": "LWWWW"
+      "form_string": "WLWLW"
     }
   },
-  "last_update": "2026-01-02T11:49:40.916140+01:00",
-  "workflow_run": "1615"
+  "last_update": "2026-01-02T11:59:45.932107+01:00",
+  "workflow_run": "1616"
 }
