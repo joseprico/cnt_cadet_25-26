@@ -1,11 +1,7 @@
 """
-Parser ACTAWP v5.7 - AMB FORMA DELS RIVALS
-Estructura correcta segons captures:
-- Pròxims: [Equip1] [Data/Hora/Lloc] [Equip2]
-- Resultats: [Equip1] [MARCADOR] [Equip2]
-- NOVITAT: Extreu logos dels equips en tots els partits i classificació
-- NOVITAT v5.5: Afegeix número de jornada basat en l'ordre d'aparició
-- NOVITAT v5.6: Sistema de correccions manuals per jornades ajornades
+Parser ACTAWP v5.8 - CORREGIT NOMS EQUIPS
+- FIX: Neteja "Ver"/"Veure" dels noms d'equips
+- FIX: Extreu correctament noms de la classificació
 - NOVITAT v5.7: Obté els últims resultats de cada equip de la classificació
 """
 
@@ -16,7 +12,7 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 
-class ActawpParserV53:
+class ActawpParserV58:
     
     def __init__(self):
         self.session = requests.Session()
@@ -34,6 +30,17 @@ class ActawpParserV53:
         except Exception as e:
             print(f"⚠️ No s'han pogut carregar correccions: {e}")
         return {}
+    
+    def clean_team_name(self, name):
+        """🆕 Neteja el nom de l'equip eliminant Ver/Veure del principi"""
+        if not name:
+            return name
+        
+        # Treure "Ver" o "Veure" del principi
+        name = re.sub(r'^Veure', '', name, flags=re.IGNORECASE)
+        name = re.sub(r'^Ver', '', name, flags=re.IGNORECASE)
+        
+        return name.strip()
     
     def get_csrf_token(self, team_id, language='es'):
         """Obté el token CSRF"""
@@ -235,7 +242,7 @@ class ActawpParserV53:
         return players
     
     def parse_upcoming_matches(self, html_content):
-        """Parser de pròxims partits amb jornada"""
+        """Parser de pròxims partits amb jornada - AMB NETEJA DE NOMS"""
         soup = BeautifulSoup(html_content, 'html.parser')
         matches = []
         
@@ -260,8 +267,9 @@ class ActawpParserV53:
                 if img2 and img2.get('src'):
                     team2_logo = img2['src']
                 
-                team1 = cols[0].get_text(strip=True)
-                team2 = cols[-1].get_text(strip=True)
+                # 🔧 Netejar noms d'equips
+                team1 = self.clean_team_name(cols[0].get_text(strip=True))
+                team2 = self.clean_team_name(cols[-1].get_text(strip=True))
                 
                 # Info central
                 middle_text = ''
@@ -295,7 +303,7 @@ class ActawpParserV53:
         return matches
     
     def parse_last_results(self, html_content):
-        """Parser d'últims resultats amb jornada"""
+        """Parser d'últims resultats amb jornada - AMB NETEJA DE NOMS"""
         soup = BeautifulSoup(html_content, 'html.parser')
         results = []
         
@@ -320,8 +328,9 @@ class ActawpParserV53:
                 if img2 and img2.get('src'):
                     team2_logo = img2['src']
                 
-                team1 = cols[0].get_text(strip=True)
-                team2 = cols[-1].get_text(strip=True)
+                # 🔧 Netejar noms d'equips
+                team1 = self.clean_team_name(cols[0].get_text(strip=True))
+                team2 = self.clean_team_name(cols[-1].get_text(strip=True))
                 
                 # Buscar marcador
                 score = ''
@@ -355,7 +364,7 @@ class ActawpParserV53:
         return results
     
     def parse_ranking(self, ranking_url):
-        """Parser de classificació - ara també extreu l'ID de cada equip"""
+        """Parser de classificació - CORREGIT per extreure noms correctament"""
         try:
             print(f"  📊 Obtenint classificació de: {ranking_url}")
             response = self.session.get(ranking_url)
@@ -385,37 +394,71 @@ class ActawpParserV53:
                     if len(cols) < 3:
                         continue
                     
-                    # Buscar columna amb nom d'equip i logo
                     equip_text = ''
                     logo_url = ''
-                    equip_idx = -1
                     team_id = ''
+                    equip_idx = -1
                     
+                    # Buscar en totes les columnes
                     for i, col in enumerate(cols):
                         # Buscar link amb ID de l'equip
                         link = col.find('a', href=True)
                         if link and '/team/' in link.get('href', ''):
                             href = link['href']
-                            # Extreure ID: /ca/team/15621223 -> 15621223
+                            # Extreure ID
                             id_match = re.search(r'/team/(\d+)', href)
                             if id_match:
                                 team_id = id_match.group(1)
+                            
+                            # 🔧 CORRECCIÓ: Buscar el nom dins del link
+                            # Pot ser en un span, strong, o directament
+                            link_text = ''
+                            
+                            # Intentar trobar el nom en elements específics
+                            name_elem = link.find(['span', 'strong', 'b'])
+                            if name_elem:
+                                link_text = name_elem.get_text(strip=True)
+                            
+                            # Si no, agafar tot el text del link
+                            if not link_text or link_text.lower() in ['ver', 'veure', 'see']:
+                                # Buscar tots els textos dins del link
+                                all_texts = link.find_all(string=True, recursive=True)
+                                for t in all_texts:
+                                    t = t.strip()
+                                    # Ignorar textos curts o que siguin "Ver/Veure"
+                                    if len(t) > 4 and t.lower() not in ['ver', 'veure', 'see', 'view']:
+                                        link_text = t
+                                        break
+                            
+                            # Si encara no tenim text, mirar el title del link
+                            if not link_text or link_text.lower() in ['ver', 'veure']:
+                                link_text = link.get('title', '')
+                            
+                            if link_text and link_text.lower() not in ['ver', 'veure', 'see', 'view']:
+                                equip_text = self.clean_team_name(link_text)
+                                equip_idx = i
                         
+                        # Buscar logo
                         img = col.find('img')
-                        if img:
+                        if img and img.get('src'):
                             logo_url = img.get('src', '')
                         
-                        text = col.get_text(strip=True)
-                        if len(text) > 3 and not text.isdigit():
-                            equip_text = text
-                            equip_idx = i
-                            break
+                        # Si no hem trobat nom al link, provar amb el text de la cel·la
+                        if not equip_text:
+                            cell_text = col.get_text(strip=True)
+                            cell_text = self.clean_team_name(cell_text)
+                            # Només si és un nom vàlid (no és número ni text curt)
+                            if len(cell_text) > 5 and not cell_text.isdigit() and cell_text.lower() not in ['ver', 'veure']:
+                                equip_text = cell_text
+                                equip_idx = i
                     
-                    if not equip_text or equip_idx < 0:
+                    # Si no hem trobat nom, saltar aquesta fila
+                    if not equip_text or equip_text.lower() in ['ver', 'veure', 'see', 'view']:
+                        print(f"    ⚠️ Fila {idx}: No s'ha trobat nom d'equip")
                         continue
                     
                     posicio_text = str(idx)
-                    stats_start = equip_idx + 1
+                    stats_start = equip_idx + 1 if equip_idx >= 0 else 2
                     
                     team_data = {
                         'posicio': posicio_text,
@@ -432,28 +475,37 @@ class ActawpParserV53:
                         'diferencia': 0
                     }
                     
+                    # Extreure estadístiques numèriques de les columnes restants
                     stat_fields = ['punts', 'partits', 'guanyats', 'empatats', 'perduts', 'gols_favor', 'gols_contra', 'diferencia']
+                    stat_idx = 0
                     
-                    for i, field in enumerate(stat_fields):
-                        col_idx = stats_start + i
-                        if col_idx < len(cols):
-                            value_text = cols[col_idx].get_text(strip=True)
-                            if value_text.isdigit():
-                                team_data[field] = int(value_text)
+                    for col in cols:
+                        value_text = col.get_text(strip=True)
+                        # Només processar si és un número
+                        if value_text.isdigit() or (value_text.startswith('-') and value_text[1:].isdigit()):
+                            if stat_idx < len(stat_fields):
+                                try:
+                                    team_data[stat_fields[stat_idx]] = int(value_text)
+                                except:
+                                    pass
+                                stat_idx += 1
                     
                     if team_data['equip'] and len(team_data['equip']) > 1:
                         ranking.append(team_data)
+                        print(f"    ✅ {idx}. {team_data['equip']} (ID: {team_id})")
                     
                 except Exception as e:
+                    print(f"    ⚠️ Error fila {idx}: {e}")
                     continue
             
             return ranking
             
         except Exception as e:
+            print(f"  ❌ Error: {e}")
             return []
     
     def get_rival_last_results(self, team_id, team_name, language='es'):
-        """🆕 Obté els últims resultats d'un equip rival"""
+        """Obté els últims resultats d'un equip rival"""
         try:
             results_data = self.get_tab_content(team_id, 'last-results', language)
             if results_data and results_data.get('code') == 0:
@@ -465,7 +517,7 @@ class ActawpParserV53:
             return []
     
     def get_all_rivals_form(self, ranking, language='es'):
-        """🆕 Obté la forma de tots els rivals de la classificació"""
+        """Obté la forma de tots els rivals de la classificació"""
         rivals_form = {}
         
         print("\n6️⃣ FORMA DELS RIVALS:")
@@ -525,7 +577,7 @@ class ActawpParserV53:
         self.current_team_key = team_key
         
         print(f"\n{'='*70}")
-        print(f"🔥 {team_name} - Parser v5.7 (AMB FORMA RIVALS)")
+        print(f"🔥 {team_name} - Parser v5.8 (NOMS CORREGITS)")
         print(f"{'='*70}")
         
         result = {
@@ -536,7 +588,7 @@ class ActawpParserV53:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "5.7_rivals_form"
+                "parser_version": "5.8_clean_names"
             }
         }
         
@@ -611,7 +663,7 @@ class ActawpParserV53:
                 if cnt_position:
                     print(f"  🏆 CN Terrassa: Posició {cnt_position['posicio']} - {cnt_position['punts']} punts")
             
-            # 🆕 Obtenir forma dels rivals
+            # Obtenir forma dels rivals
             result['rivals_form'] = self.get_all_rivals_form(result['ranking'], language)
         else:
             result['ranking'] = []
@@ -625,11 +677,11 @@ class ActawpParserV53:
 
 
 if __name__ == "__main__":
-    parser = ActawpParserV53()
+    parser = ActawpParserV58()
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ACTAWP v5.7 - AMB FORMA DELS RIVALS                 ║
+║   PARSER ACTAWP v5.8 - NOMS D'EQUIPS CORREGITS               ║
 ║   ✅ Noms nets (sense Ver/Veure)                             ║
 ║   ✅ Camps normalitzats (PJ, GT, G, EX...)                   ║
 ║   ✅ MARCADORS correctes dels resultats                       ║
@@ -638,6 +690,7 @@ if __name__ == "__main__":
 ║   🆕 NÚMERO DE JORNADA en cada partit                         ║
 ║   🔧 CORRECCIONS MANUALS per partits ajornats                 ║
 ║   🆕 FORMA DELS RIVALS (últims 5 resultats)                   ║
+║   🔧 FIX: Noms equips sense "Ver/Veure"                       ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -685,13 +738,13 @@ if __name__ == "__main__":
     print("""
 ✅ JSON GENERATS CORRECTAMENT!
 
-📊 Nova secció 'rivals_form' amb:
-   - Últims 5 resultats de cada rival
-   - Forma (W/L/D) de cada equip
-   - ID de cada equip per futures consultes
+🔧 Correccions v5.8:
+   - Noms d'equips sense "Ver/Veure" als partits
+   - Classificació amb noms reals dels equips
+   - rivals_form amb noms correctes
 
 📤 Puja'ls a GitHub:
-   git add actawp_*.json
-   git commit -m "✨ Parser v5.7 amb forma dels rivals"
+   git add actawp_*.json ultra_robust_parser.py
+   git commit -m "🔧 Parser v5.8 - Noms equips corregits"
    git push
 """)
