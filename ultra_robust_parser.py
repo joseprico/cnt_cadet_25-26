@@ -1,10 +1,11 @@
 """
-Parser ACTAWP v6.0 - AMB JUGADORS CLAU DELS RIVALS
+Parser ACTAWP v6.1 - DADES AMPLIADES DELS RIVALS
 - FIX: Neteja "Ver"/"Veure" dels noms d'equips
 - FIX: Extreu correctament noms de la classificació
 - FIX v5.9: Estadístiques classificació correctes (punts, partits, etc.)
 - NOVITAT v5.7: Obté els últims resultats de cada equip de la classificació
-- NOVITAT v6.0: Obté els 3 màxims golejadors de cada rival
+- NOVITAT v6.0: Obté els màxims golejadors de cada rival
+- NOVITAT v6.1: 5 jugadors amb exclusions, penals i mitjana gols/partit
 """
 
 import requests
@@ -530,7 +531,7 @@ class ActawpParserV58:
             return []
     
     def get_rival_top_scorers(self, team_id, team_name, language='es'):
-        """🆕 Obté els 3 màxims golejadors d'un equip rival"""
+        """🆕 v6.1 - Obté els 5 màxims golejadors d'un equip rival amb dades ampliades"""
         try:
             players_data = self.get_tab_content(team_id, 'players', language)
             if players_data and players_data.get('code') == 0:
@@ -542,17 +543,25 @@ class ActawpParserV58:
                     goals = p.get('GT', 0) or p.get('G', 0) or 0
                     games = p.get('PJ', 0) or 0
                     name = p.get('Nombre', 'Desconegut')
+                    exclusions = p.get('EX', 0) or 0
+                    penalty_goals = p.get('GP', 0) or 0
                     
-                    if goals > 0:
+                    # Calcular mitjana gols/partit
+                    avg_goals = round(goals / games, 2) if games > 0 else 0
+                    
+                    if goals > 0 or games > 0:  # Incloure jugadors amb participació
                         scorers.append({
                             'name': name,
                             'goals': goals,
-                            'games': games
+                            'games': games,
+                            'exclusions': exclusions,
+                            'penalty_goals': penalty_goals,
+                            'avg_goals': avg_goals
                         })
                 
-                # Ordenar per gols (descendent) i retornar top 3
+                # Ordenar per gols (descendent) i retornar top 5
                 scorers.sort(key=lambda x: x['goals'], reverse=True)
-                return scorers[:3]
+                return scorers[:5]
             return []
         except Exception as e:
             print(f"    ⚠️ Error obtenint jugadors de {team_name}: {e}")
@@ -584,6 +593,9 @@ class ActawpParserV58:
             if results:
                 # Calcular forma (V/E/D)
                 form = []
+                total_gf = 0  # Gols a favor
+                total_gc = 0  # Gols en contra
+                
                 for r in results:
                     score = r.get('score', '0-0')
                     score_parts = score.split('-')
@@ -595,20 +607,61 @@ class ActawpParserV58:
                         # Determinar si l'equip és team1 o team2
                         is_team1 = team_name.upper() in r.get('team1', '').upper()
                         if is_team1:
+                            total_gf += g1
+                            total_gc += g2
                             if g1 > g2: form.append('W')
                             elif g1 < g2: form.append('L')
                             else: form.append('D')
                         else:
+                            total_gf += g2
+                            total_gc += g1
                             if g2 > g1: form.append('W')
                             elif g2 < g1: form.append('L')
                             else: form.append('D')
+                
+                # Calcular mitjanes
+                num_matches = len(results)
+                avg_gf = round(total_gf / num_matches, 1) if num_matches > 0 else 0
+                avg_gc = round(total_gc / num_matches, 1) if num_matches > 0 else 0
+                
+                # Determinar tendència
+                recent_form = form[:3]  # Últims 3 partits
+                wins_recent = recent_form.count('W')
+                losses_recent = recent_form.count('L')
+                
+                if wins_recent >= 2:
+                    trend = 'hot'  # 🔥 En ratxa
+                elif losses_recent >= 2:
+                    trend = 'cold'  # 📉 En baixa
+                elif wins_recent > losses_recent:
+                    trend = 'up'  # 📈 Pujant
+                elif losses_recent > wins_recent:
+                    trend = 'down'  # 📉 Baixant
+                else:
+                    trend = 'stable'  # ➡️ Estable
+                
+                # Calcular total exclusions de l'equip
+                total_exclusions = sum(p.get('exclusions', 0) for p in top_scorers)
                 
                 rivals_form[team_name] = {
                     'team_id': team_id,
                     'last_results': results,
                     'form': form,
                     'form_string': ''.join(form),
-                    'top_scorers': top_scorers
+                    'top_scorers': top_scorers,
+                    # 🆕 v6.1 - Estadístiques ampliades
+                    'stats': {
+                        'total_gf': total_gf,
+                        'total_gc': total_gc,
+                        'avg_gf': avg_gf,
+                        'avg_gc': avg_gc,
+                        'matches_played': num_matches,
+                        'wins': form.count('W'),
+                        'draws': form.count('D'),
+                        'losses': form.count('L'),
+                        'trend': trend,
+                        'total_exclusions': total_exclusions
+                    }
                 }
                 
                 # Mostrar info
@@ -624,7 +677,7 @@ class ActawpParserV58:
         self.current_team_key = team_key
         
         print(f"\n{'='*70}")
-        print(f"🔥 {team_name} - Parser v6.0 (JUGADORS CLAU)")
+        print(f"🔥 {team_name} - Parser v6.1 (DADES AMPLIADES)")
         print(f"{'='*70}")
         
         result = {
@@ -635,7 +688,7 @@ class ActawpParserV58:
                 "team_name": team_name,
                 "coach": coach,
                 "downloaded_at": datetime.now().isoformat(),
-                "parser_version": "6.0_top_scorers"
+                "parser_version": "6.1_extended_stats"
             }
         }
         
@@ -728,16 +781,15 @@ if __name__ == "__main__":
     
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║   PARSER ACTAWP v6.0 - AMB JUGADORS CLAU DELS RIVALS         ║
+║   PARSER ACTAWP v6.1 - DADES AMPLIADES RIVALS                ║
 ║   ✅ Noms nets (sense Ver/Veure)                             ║
 ║   ✅ Camps normalitzats (PJ, GT, G, EX...)                   ║
 ║   ✅ MARCADORS correctes dels resultats                       ║
 ║   ✅ DATES correctes dels pròxims partits                     ║
 ║   ⭐ LOGOS dels equips en partits i classificació             ║
-║   🆕 NÚMERO DE JORNADA en cada partit                         ║
-║   🔧 CORRECCIONS MANUALS per partits ajornats                 ║
 ║   🆕 FORMA DELS RIVALS (últims 5 resultats)                   ║
-║   ⭐ TOP 3 GOLEJADORS de cada rival                           ║
+║   ⭐ TOP 5 GOLEJADORS amb exclusions i penals                 ║
+║   📊 ESTADÍSTIQUES: GF, GC, mitjanes, tendència              ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
     
@@ -785,13 +837,15 @@ if __name__ == "__main__":
     print("""
 ✅ JSON GENERATS CORRECTAMENT!
 
-🆕 Novetats v6.0:
-   - TOP 3 GOLEJADORS de cada rival
-   - Nom, gols i partits jugats
-   - Perfecte per analitzar rivals!
+🆕 Novetats v6.1:
+   - TOP 5 JUGADORS de cada rival (abans 3)
+   - Exclusions i gols de penal per jugador
+   - Mitjana gols/partit per jugador
+   - Stats d'equip: GF, GC, mitjanes atac/defensa
+   - Tendència: 🔥 En ratxa, 📈 Pujant, ➡️ Estable, 📉 Baixant
 
 📤 Puja'ls a GitHub:
    git add actawp_*.json ultra_robust_parser.py
-   git commit -m "⭐ Parser v6.0 - Jugadors clau dels rivals"
+   git commit -m "⭐ Parser v6.1 - Dades ampliades rivals"
    git push
 """)
