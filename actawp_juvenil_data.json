@@ -5,8 +5,8 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-01-02T10:58:30.399837",
-    "parser_version": "5.8_clean_names"
+    "downloaded_at": "2026-01-02T11:13:50.034968",
+    "parser_version": "5.9_stats_fix"
   },
   "players": [
     {
@@ -668,7 +668,7 @@
       "equip": "C.N. ATL BARCELONETA",
       "team_id": "15617346",
       "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-      "punts": 1,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -682,7 +682,7 @@
       "equip": "U.E. D'HORTA",
       "team_id": "15609765",
       "logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
-      "punts": 2,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -696,7 +696,7 @@
       "equip": "C.N. BARCELONA",
       "team_id": "15612054",
       "logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-      "punts": 3,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -710,7 +710,7 @@
       "equip": "C.N. SANT ANDREU",
       "team_id": "15617612",
       "logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
-      "punts": 4,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -724,7 +724,7 @@
       "equip": "C.N. SABADELL",
       "team_id": "15616560",
       "logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-      "punts": 5,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -738,7 +738,7 @@
       "equip": "C.N. MONTJUIC A",
       "team_id": "15617365",
       "logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-      "punts": 6,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -752,7 +752,7 @@
       "equip": "C.N. TERRASSA",
       "team_id": "15621223",
       "logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "punts": 7,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -766,7 +766,7 @@
       "equip": "C.E. MEDITERRANI",
       "team_id": "15609737",
       "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "punts": 8,
+      "punts": 0,
       "partits": 0,
       "guanyats": 0,
       "empatats": 0,
@@ -1184,6 +1184,6 @@
       "form_string": "WLWWW"
     }
   },
-  "last_update": "2026-01-02T11:59:45.932107+01:00",
-  "workflow_run": "1616"
+  "last_update": "2026-01-02T12:15:13.480999+01:00",
+  "workflow_run": "1617"
 }
