@@ -189,7 +189,11 @@ jobs:
         id: check_changes
         run: |
           git diff --exit-code actawp_*.json || echo "changes=true" >> $GITHUB_OUTPUT
-      
+
+      - name: 📋 Actualitzar plantilles rivals
+        run: python update_rivals_database.py cadet
+        continue-on-error: true
+        
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changes == 'true'
         run: |
