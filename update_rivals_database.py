@@ -139,8 +139,14 @@ class RivalsUpdater:
                             print(f"      Trobat '{word}' a pos {idx}: ...{snippet}...")
                 return None
             
-            # Agafar un tros del HTML des del rival (5000 caràcters hauria de ser suficient)
+            # Agafar un tros del HTML des del rival (8000 caràcters hauria de ser suficient)
             section = html_text[rival_section_start:rival_section_start + 8000]
+            
+            # DEBUG: Mostrar un snippet de la secció per veure el format
+            print(f"  📋 Snippet de la secció (500 chars):")
+            # Netejar whitespace excessiu per veure millor
+            clean_snippet = ' '.join(section[:500].split())
+            print(f"      {clean_snippet[:300]}...")
             
             # MÈTODE PRINCIPAL: Regex que funciona
             # Buscar patró: Veure + número + NOM AMB ESPAIS + números estadístiques
@@ -148,6 +154,20 @@ class RivalsUpdater:
             
             matches = re.findall(pattern, section, re.IGNORECASE)
             print(f"  🔍 Regex trobat: {len(matches)} coincidències")
+            
+            # Si no funciona, potser hi ha tags HTML enmig - treure'ls
+            if not matches:
+                print(f"  🔄 Netejant HTML tags...")
+                soup_section = BeautifulSoup(section, 'html.parser')
+                clean_section = soup_section.get_text()
+                
+                # DEBUG: mostrar secció netejada
+                clean_snippet = ' '.join(clean_section[:500].split())
+                print(f"  📋 Secció netejada (300 chars):")
+                print(f"      {clean_snippet[:300]}...")
+                
+                matches = re.findall(pattern, clean_section, re.IGNORECASE)
+                print(f"  🔍 Regex després de netejar: {len(matches)} coincidències")
             
             for match in matches:
                 num = int(match[0])
