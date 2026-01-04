@@ -84,6 +84,10 @@ class RivalsUpdater:
             href = a['href']
             if '/match/' in href:
                 match_url = href if href.startswith('http') else 'https://actawp.natacio.cat' + href
+                
+                # IMPORTANT: Canviar /results per /stats per obtenir la taula de jugadors
+                match_url = match_url.replace('/results', '/stats')
+                
                 print(f"  ✅ Última acta trobada: {match_url}")
                 return match_url
         
@@ -137,15 +141,24 @@ class RivalsUpdater:
                     for prev in table.find_all_previous(['h1', 'h2', 'h3', 'h4', 'h5', 'div', 'span'])[:20]:
                         prev_text = prev.get_text(strip=True).upper() + " " + prev_text
                         # Parar si trobem un dels equips
-                        if 'HORTA' in prev_text or 'TERRASSA' in prev_text or 'SANT FELIU' in prev_text:
+                        if 'HORTA' in prev_text or 'TERRASSA' in prev_text:
                             break
                     
                     # És la taula del rival?
+                    # Netejar apòstrofs i comparar
+                    prev_text_clean = prev_text.replace("'", "").replace("'", "")
+                    rival_clean = rival_normalized.replace("'", "").replace("'", "")
+                    
                     is_rival = False
-                    for part in rival_normalized.split():
-                        if len(part) > 3 and part in prev_text:
+                    # Buscar paraules clau del rival (ignorant apòstrofs)
+                    for part in rival_clean.split():
+                        if len(part) > 3 and part in prev_text_clean:
                             is_rival = True
                             break
+                    
+                    # També comprovar si "HORTA" està al context (cas específic)
+                    if 'HORTA' in rival_name.upper() and 'HORTA' in prev_text and 'TERRASSA' not in prev_text[:50]:
+                        is_rival = True
                     
                     print(f"  📋 Taula {idx}: is_rival={is_rival}, context={prev_text[:50]}...")
                     
