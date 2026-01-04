@@ -101,101 +101,108 @@ class RivalsUpdater:
                 return None
             
             html_text = response.text
+            soup = BeautifulSoup(html_text, 'html.parser')
             
             players = []
             rival_normalized = rival_name.upper().replace('C.N.', '').replace('C.E.', '').replace('U.E.', '').replace("'", "").replace("'", "").strip()
             
             print(f"  🔍 Buscant jugadors de: {rival_normalized}")
             
-            # Buscar la secció del rival al HTML
-            # Normalitzar el HTML per facilitar la cerca
-            html_upper = html_text.upper().replace("'", "").replace("'", "")
+            # Netejar HTML per treballar amb text pla
+            full_text = soup.get_text()
             
-            # Trobar on comença la secció del rival
-            rival_patterns = [
-                rival_normalized,
-                rival_normalized.replace(' ', ''),
-                rival_name.upper().replace("'", "").replace("'", ""),
-            ]
+            # Buscar TOTES les seccions de jugadors (hi haurà 2: local i visitant)
+            # El patró és: nom equip seguit de "Gols igualtat" o "DorsalNom"
             
-            rival_section_start = -1
-            for pattern in rival_patterns:
-                # Buscar el patró dins del HTML
-                idx = html_upper.find(pattern)
-                if idx != -1:
-                    rival_section_start = idx
-                    print(f"  ✅ Secció del rival trobada a posició {idx}")
-                    break
+            # Buscar la secció del rival - ha de ser la que conté el nom del rival
+            # seguit de les estadístiques de jugadors
             
-            if rival_section_start == -1:
-                print(f"  ⚠️ No s'ha trobat la secció del rival al HTML")
-                # Mostrar alguns fragments per debug
-                print(f"  📋 Cercant fragments similars...")
-                for word in rival_normalized.split()[:2]:
-                    if len(word) > 3:
-                        idx = html_upper.find(word)
-                        if idx != -1:
-                            snippet = html_text[max(0,idx-20):idx+50]
-                            print(f"      Trobat '{word}' a pos {idx}: ...{snippet}...")
-                return None
+            # Primer trobem on apareix el rival amb estadístiques
+            # Format típic: "U.E. D'HORTA\nGols igualtat:\n..." seguit de "DorsalNom..."
             
-            # Agafar un tros del HTML des del rival (8000 caràcters hauria de ser suficient)
-            section = html_text[rival_section_start:rival_section_start + 8000]
+            # Buscar totes les taules de jugadors
+            tables = soup.find_all('table')
             
-            # DEBUG: Mostrar un snippet de la secció per veure el format
-            print(f"  📋 Snippet de la secció (500 chars):")
-            # Netejar whitespace excessiu per veure millor
-            clean_snippet = ' '.join(section[:500].split())
-            print(f"      {clean_snippet[:300]}...")
+            print(f"  📋 Taules trobades: {len(tables)}")
             
-            # MÈTODE PRINCIPAL: Regex que funciona
-            # Buscar patró: Veure + número + NOM AMB ESPAIS + números estadístiques
-            pattern = r'Veure(\d{1,2})([A-ZÁÉÍÓÚÀÈÌÒÙÑÇ][A-ZÁÉÍÓÚÀÈÌÒÙÑÇ\s\']+?)(\d{5,})'
-            
-            matches = re.findall(pattern, section, re.IGNORECASE)
-            print(f"  🔍 Regex trobat: {len(matches)} coincidències")
-            
-            # Si no funciona, potser hi ha tags HTML enmig - treure'ls
-            if not matches:
-                print(f"  🔄 Netejant HTML tags...")
-                soup_section = BeautifulSoup(section, 'html.parser')
-                clean_section = soup_section.get_text()
+            for idx, table in enumerate(tables):
+                # Obtenir text de la taula
+                table_text = table.get_text()
                 
-                # DEBUG: mostrar secció netejada
-                clean_snippet = ' '.join(clean_section[:500].split())
-                print(f"  📋 Secció netejada (300 chars):")
-                print(f"      {clean_snippet[:300]}...")
-                
-                matches = re.findall(pattern, clean_section, re.IGNORECASE)
-                print(f"  🔍 Regex després de netejar: {len(matches)} coincidències")
-            
-            for match in matches:
-                num = int(match[0])
-                name = match[1].strip().upper()
-                
-                # Filtrar noms invàlids
-                if num > 0 and num <= 20 and name and len(name) > 3:
-                    # Verificar que no és un equip conegut o text no desitjat
-                    invalid_names = ['TERRASSA', 'ENTRENADOR', 'GOLS', 'EFECTIVITAT', 'SUPERIORITAT', 'IGUALTAT', 'PENAL']
-                    if not any(x in name for x in invalid_names):
-                        players.append({'num': num, 'name': name})
-                        if len(players) <= 3:
-                            print(f"      ✅ {num}. {name}")
-            
-            # Si no trobem res amb el primer mètode, intentar sense "Veure"
-            if not players:
-                print(f"  🔄 Intent sense 'Veure'...")
-                pattern2 = r'(\d{1,2})([A-ZÁÉÍÓÚÀÈÌÒÙÑÇ][A-ZÁÉÍÓÚÀÈÌÒÙÑÇ\s\']+?)(\d{6,})'
-                matches2 = re.findall(pattern2, section)
-                
-                for match in matches2:
-                    num = int(match[0])
-                    name = match[1].strip().upper()
+                # Buscar si té el patró de jugadors (Dorsal, Nom, G, GS, etc.)
+                if 'Dorsal' in table_text or 'Nom' in table_text:
+                    # Mirar el context - buscar quin equip és aquesta taula
+                    # Mirar elements anteriors
+                    prev_text = ""
+                    for prev in table.find_all_previous(['h1', 'h2', 'h3', 'h4', 'h5', 'div', 'span'])[:20]:
+                        prev_text = prev.get_text(strip=True).upper() + " " + prev_text
+                        # Parar si trobem un dels equips
+                        if 'HORTA' in prev_text or 'TERRASSA' in prev_text or 'SANT FELIU' in prev_text:
+                            break
                     
-                    if num > 0 and num <= 20 and name and len(name) > 3:
-                        invalid_names = ['TERRASSA', 'ENTRENADOR', 'GOLS', 'EFECTIVITAT']
-                        if not any(x in name for x in invalid_names):
-                            players.append({'num': num, 'name': name})
+                    # És la taula del rival?
+                    is_rival = False
+                    for part in rival_normalized.split():
+                        if len(part) > 3 and part in prev_text:
+                            is_rival = True
+                            break
+                    
+                    print(f"  📋 Taula {idx}: is_rival={is_rival}, context={prev_text[:50]}...")
+                    
+                    if is_rival:
+                        print(f"  ✅ Taula del rival trobada!")
+                        
+                        # Extreure jugadors de la taula
+                        rows = table.find_all('tr')
+                        for row in rows:
+                            cells = row.find_all('td')
+                            if len(cells) >= 2:
+                                num_text = cells[0].get_text(strip=True)
+                                name_text = cells[1].get_text(strip=True)
+                                
+                                # Netejar "Veure" del text
+                                num_clean = re.sub(r'Veure|Ver|View', '', num_text, flags=re.IGNORECASE).strip()
+                                name_clean = re.sub(r'Veure|Ver|View', '', name_text, flags=re.IGNORECASE).strip().upper()
+                                
+                                if num_clean.isdigit():
+                                    num = int(num_clean)
+                                    if num > 0 and num <= 20 and name_clean and len(name_clean) > 3:
+                                        players.append({'num': num, 'name': name_clean})
+                        
+                        # Si hem trobat jugadors, sortir
+                        if players:
+                            break
+            
+            # MÈTODE ALTERNATIU: Regex sobre text net
+            if not players:
+                print(f"  🔄 Intent amb regex sobre text net...")
+                
+                # Buscar on comença la secció del rival (després del seu nom)
+                # Ha de tenir "Gols igualtat" o similar
+                rival_section_pattern = rf'({rival_name}|U\.E\.\s*D.HORTA).*?Gols\s*igualtat.*?Dorsal'
+                match_section = re.search(rival_section_pattern, full_text, re.IGNORECASE | re.DOTALL)
+                
+                if match_section:
+                    start_pos = match_section.end() - 10  # Un poc abans de "Dorsal"
+                    section = full_text[start_pos:start_pos + 3000]
+                    
+                    print(f"  📋 Secció trobada, snippet: {section[:200]}...")
+                    
+                    # Patró per capturar: número + nom + estadístiques
+                    # El format és: "1ALVARO CAPILLA COBO000000" dins del text
+                    pattern = r'(\d{1,2})([A-ZÁÉÍÓÚÀÈÌÒÙÑÇ][A-ZÁÉÍÓÚÀÈÌÒÙÑÇ\s]+?)(\d{6,})'
+                    matches = re.findall(pattern, section)
+                    
+                    print(f"  🔍 Regex trobat: {len(matches)} coincidències")
+                    
+                    for m in matches:
+                        num = int(m[0])
+                        name = m[1].strip().upper()
+                        
+                        if num > 0 and num <= 20 and name and len(name) > 3:
+                            invalid = ['TERRASSA', 'ENTRENADOR', 'GOLS', 'EFECTIVITAT', 'SUPERIORITAT']
+                            if not any(x in name for x in invalid):
+                                players.append({'num': num, 'name': name})
             
             # Eliminar duplicats i ordenar
             seen = set()
