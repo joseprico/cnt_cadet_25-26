@@ -167,11 +167,42 @@ class RivalsUpdater:
                         
                         # Extreure jugadors de la taula
                         rows = table.find_all('tr')
-                        for row in rows:
+                        print(f"  📋 Files trobades: {len(rows)}")
+                        
+                        # Primer, identificar les columnes pels headers
+                        headers = table.find_all('th')
+                        header_texts = [h.get_text(strip=True).upper() for h in headers]
+                        print(f"  📋 Headers: {header_texts[:10]}")
+                        
+                        # Trobar índex de DORSAL i JUGADOR/NOM
+                        dorsal_idx = -1
+                        name_idx = -1
+                        for i, h in enumerate(header_texts):
+                            if 'DORSAL' in h:
+                                dorsal_idx = i
+                            if 'JUGADOR' in h or 'NOM' in h:
+                                name_idx = i
+                        
+                        print(f"  📋 Índexs: dorsal={dorsal_idx}, name={name_idx}")
+                        
+                        # Si no trobem pels headers, assumir posicions típiques
+                        if dorsal_idx == -1:
+                            dorsal_idx = 2  # Típicament la 3a columna (0-indexed)
+                        if name_idx == -1:
+                            name_idx = 3  # Típicament la 4a columna
+                        
+                        for row_idx, row in enumerate(rows):
                             cells = row.find_all('td')
-                            if len(cells) >= 2:
-                                num_text = cells[0].get_text(strip=True)
-                                name_text = cells[1].get_text(strip=True)
+                            
+                            # Debug primera fila
+                            if row_idx == 0 and cells:
+                                print(f"  📋 Primera fila ({len(cells)} cel·les):")
+                                for ci, c in enumerate(cells[:6]):
+                                    print(f"      [{ci}]: {c.get_text(strip=True)[:30]}")
+                            
+                            if len(cells) > max(dorsal_idx, name_idx):
+                                num_text = cells[dorsal_idx].get_text(strip=True)
+                                name_text = cells[name_idx].get_text(strip=True)
                                 
                                 # Netejar "Veure" del text
                                 num_clean = re.sub(r'Veure|Ver|View', '', num_text, flags=re.IGNORECASE).strip()
@@ -181,6 +212,8 @@ class RivalsUpdater:
                                     num = int(num_clean)
                                     if num > 0 and num <= 20 and name_clean and len(name_clean) > 3:
                                         players.append({'num': num, 'name': name_clean})
+                                        if len(players) <= 3:
+                                            print(f"      ✅ {num}. {name_clean}")
                         
                         # Si hem trobat jugadors, sortir
                         if players:
