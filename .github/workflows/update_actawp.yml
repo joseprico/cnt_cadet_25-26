@@ -191,7 +191,12 @@ jobs:
           git diff --exit-code actawp_*.json || echo "changes=true" >> $GITHUB_OUTPUT
 
       - name: 📋 Actualitzar plantilles rivals
-        run: python update_rivals_database.py cadet
+        run: |
+          python update_rivals_database.py cadet
+          echo "📂 Fitxers JSON al directori:"
+          ls -la *.json
+          echo "📄 Contingut rivals_database_cadet.json:"
+          cat rivals_database_cadet.json || echo "No existeix"
         continue-on-error: true
         
       - name: Commit and push if changed
