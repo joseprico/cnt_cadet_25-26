@@ -1,8 +1,7 @@
-
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2025-11-12",
+    "lastUpdated": "2026-01-05",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -11,19 +10,58 @@
       "lastPlayed": "2025-10-26",
       "lastUpdated": "2025-10-26",
       "players": [
-        {"num": 1, "name": "DAVID VIQUE IGLESIAS"},
-        {"num": 2, "name": "NOAH REYES LARA"},
-        {"num": 3, "name": "NIL ALLED DEL ARCO"},
-        {"num": 4, "name": "JOEL PEINADO MARZO"},
-        {"num": 5, "name": "LLUC MONLEON MARIN"},
-        {"num": 6, "name": "PAU ALLED DEL ARCO"},
-        {"num": 7, "name": "ARNAU PEDREROL SARDANA"},
-        {"num": 8, "name": "NICOLAS CARRO ABADIA"},
-        {"num": 9, "name": "LLUIS CLEMENT RODRIGUEZ"},
-        {"num": 10, "name": "IVAN LOPEZ AGUILERA"},
-        {"num": 11, "name": ""},
-        {"num": 12, "name": ""},
-        {"num": 13, "name": "ARAN PONT"}
+        {
+          "num": 1,
+          "name": "DAVID VIQUE IGLESIAS"
+        },
+        {
+          "num": 2,
+          "name": "NOAH REYES LARA"
+        },
+        {
+          "num": 3,
+          "name": "NIL ALLED DEL ARCO"
+        },
+        {
+          "num": 4,
+          "name": "JOEL PEINADO MARZO"
+        },
+        {
+          "num": 5,
+          "name": "LLUC MONLEON MARIN"
+        },
+        {
+          "num": 6,
+          "name": "PAU ALLED DEL ARCO"
+        },
+        {
+          "num": 7,
+          "name": "ARNAU PEDREROL SARDANA"
+        },
+        {
+          "num": 8,
+          "name": "NICOLAS CARRO ABADIA"
+        },
+        {
+          "num": 9,
+          "name": "LLUIS CLEMENT RODRIGUEZ"
+        },
+        {
+          "num": 10,
+          "name": "IVAN LOPEZ AGUILERA"
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": "ARAN PONT"
+        }
       ]
     },
     "CN Manresa": {
@@ -31,19 +69,58 @@
       "lastPlayed": null,
       "lastUpdated": null,
       "players": [
-        {"num": 1, "name": "ISERN MAURI CASTILLO"},
-        {"num": 2, "name": "IBAI ESCALONA MAZARIEGOS"},
-        {"num": 3, "name": "ANGEL BOISO QUIRANTE"},
-        {"num": 4, "name": "GIL SERRACANTA VENTURA"},
-        {"num": 5, "name": "IAN CAPARROS BLANCO"},
-        {"num": 6, "name": "GERARD SOLER LOPEZ"},
-        {"num": 7, "name": "LYAN PELAEZ SALIM"},
-        {"num": 8, "name": "MARTI YERRO DE LAS HERAS"},
-        {"num": 9, "name": "ROGER SOLER CODINA"},
-        {"num": 10,"name": "ROC RUAIX MONTERO"},
-        {"num": 11,"name": "ARAN LOPEZ MORENO"},
-        {"num": 12,"name": "ORIOL POPULO TARRES"},
-        {"num": 13,"name": "LEO HERRERA FERRANDEZ"}
+        {
+          "num": 1,
+          "name": "ISERN MAURI CASTILLO"
+        },
+        {
+          "num": 2,
+          "name": "IBAI ESCALONA MAZARIEGOS"
+        },
+        {
+          "num": 3,
+          "name": "ANGEL BOISO QUIRANTE"
+        },
+        {
+          "num": 4,
+          "name": "GIL SERRACANTA VENTURA"
+        },
+        {
+          "num": 5,
+          "name": "IAN CAPARROS BLANCO"
+        },
+        {
+          "num": 6,
+          "name": "GERARD SOLER LOPEZ"
+        },
+        {
+          "num": 7,
+          "name": "LYAN PELAEZ SALIM"
+        },
+        {
+          "num": 8,
+          "name": "MARTI YERRO DE LAS HERAS"
+        },
+        {
+          "num": 9,
+          "name": "ROGER SOLER CODINA"
+        },
+        {
+          "num": 10,
+          "name": "ROC RUAIX MONTERO"
+        },
+        {
+          "num": 11,
+          "name": "ARAN LOPEZ MORENO"
+        },
+        {
+          "num": 12,
+          "name": "ORIOL POPULO TARRES"
+        },
+        {
+          "num": 13,
+          "name": "LEO HERRERA FERRANDEZ"
+        }
       ]
     },
     "PLANTILLA_BUIDA": {
@@ -51,19 +128,58 @@
       "lastPlayed": null,
       "lastUpdated": null,
       "players": [
-        {"num": 1, "name": "Porter"},
-        {"num": 2, "name": "Jugador 2"},
-        {"num": 3, "name": "Jugador 3"},
-        {"num": 4, "name": "Jugador 4"},
-        {"num": 5, "name": "Jugador 5"},
-        {"num": 6, "name": "Jugador 6"},
-        {"num": 7, "name": "Jugador 7"},
-        {"num": 8, "name": "Jugador 8"},
-        {"num": 9, "name": "Jugador 9"},
-        {"num": 10, "name": "Jugador 10"},
-        {"num": 11, "name": "Jugador 11"},
-        {"num": 12, "name": "Jugador 12"},
-        {"num": 13, "name": "Porter Suplent"}
+        {
+          "num": 1,
+          "name": "Porter"
+        },
+        {
+          "num": 2,
+          "name": "Jugador 2"
+        },
+        {
+          "num": 3,
+          "name": "Jugador 3"
+        },
+        {
+          "num": 4,
+          "name": "Jugador 4"
+        },
+        {
+          "num": 5,
+          "name": "Jugador 5"
+        },
+        {
+          "num": 6,
+          "name": "Jugador 6"
+        },
+        {
+          "num": 7,
+          "name": "Jugador 7"
+        },
+        {
+          "num": 8,
+          "name": "Jugador 8"
+        },
+        {
+          "num": 9,
+          "name": "Jugador 9"
+        },
+        {
+          "num": 10,
+          "name": "Jugador 10"
+        },
+        {
+          "num": 11,
+          "name": "Jugador 11"
+        },
+        {
+          "num": 12,
+          "name": "Jugador 12"
+        },
+        {
+          "num": 13,
+          "name": "Porter Suplent"
+        }
       ]
     },
     "CNAB": {
@@ -71,20 +187,122 @@
       "lastPlayed": null,
       "lastUpdated": "2025-12-02",
       "players": [
-        {"num": 1, "name": "MARCOS HIPPLE PEREZ"},
-        {"num": 2, "name": "POL GINABREDA CABELLO"},
-        {"num": 3, "name": "JOHN JOSEPH SHINSKE MARTIN"},
-        {"num": 4, "name": "TON COLL POCH"},
-        {"num": 5, "name": "BIEL FONT SUAREZ"},
-        {"num": 6, "name": "JAN PEREZ CABALLERO"},
-        {"num": 7, "name": "CESC AGUIRRE RUBIO"},
-        {"num": 8, "name": "YAGO MARTIN LOPEZ"},
-        {"num": 9, "name": "JAN MITRANI DELGADO"},
-        {"num": 10, "name": "ENZO MARTIN LOPEZ"},
-        {"num": 11, "name": "TOMA KORNEL"},
-        {"num": 12, "name": "MARC HAM-MAN ROMERO"},
-        {"num": 13, "name": "MARIO RODRIGUEZ HIDALGO"},
-        {"num": 14, "name": "INAKI OLIVE HAM-MAN"}
+        {
+          "num": 1,
+          "name": "MARCOS HIPPLE PEREZ"
+        },
+        {
+          "num": 2,
+          "name": "POL GINABREDA CABELLO"
+        },
+        {
+          "num": 3,
+          "name": "JOHN JOSEPH SHINSKE MARTIN"
+        },
+        {
+          "num": 4,
+          "name": "TON COLL POCH"
+        },
+        {
+          "num": 5,
+          "name": "BIEL FONT SUAREZ"
+        },
+        {
+          "num": 6,
+          "name": "JAN PEREZ CABALLERO"
+        },
+        {
+          "num": 7,
+          "name": "CESC AGUIRRE RUBIO"
+        },
+        {
+          "num": 8,
+          "name": "YAGO MARTIN LOPEZ"
+        },
+        {
+          "num": 9,
+          "name": "JAN MITRANI DELGADO"
+        },
+        {
+          "num": 10,
+          "name": "ENZO MARTIN LOPEZ"
+        },
+        {
+          "num": 11,
+          "name": "TOMA KORNEL"
+        },
+        {
+          "num": 12,
+          "name": "MARC HAM-MAN ROMERO"
+        },
+        {
+          "num": 13,
+          "name": "MARIO RODRIGUEZ HIDALGO"
+        },
+        {
+          "num": 14,
+          "name": "INAKI OLIVE HAM-MAN"
+        }
+      ]
+    },
+    "U.E. D'HORTA": {
+      "fullName": "U.E. D'HORTA",
+      "lastPlayed": "2026-01-05",
+      "lastUpdated": "2026-01-05",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649201/stats",
+      "players": [
+        {
+          "num": 1,
+          "name": "IGNASI ALVAREZ DE EULATE BARBERA"
+        },
+        {
+          "num": 2,
+          "name": "ARES CEREZUELA CEREIJO"
+        },
+        {
+          "num": 3,
+          "name": "POL CEREIJO GASSOL (C)"
+        },
+        {
+          "num": 4,
+          "name": "ERIC M. VAQUERO BAENA"
+        },
+        {
+          "num": 5,
+          "name": "EDER LINARES VALLADOLID"
+        },
+        {
+          "num": 6,
+          "name": "GERARD PRADAS PEIRON"
+        },
+        {
+          "num": 7,
+          "name": "MARTI DE POMBO OCHOA"
+        },
+        {
+          "num": 8,
+          "name": "HUGO PEREIRA DE OLIVEIRA"
+        },
+        {
+          "num": 9,
+          "name": "MARCOS VIDAL VIDAL"
+        },
+        {
+          "num": 10,
+          "name": "JAN TIO CANO"
+        },
+        {
+          "num": 11,
+          "name": "DANIEL DOMINGUEZ PEREZ"
+        },
+        {
+          "num": 12,
+          "name": "NICOLAS SEOANE DORCA"
+        },
+        {
+          "num": 14,
+          "name": "DIEGO LAZAGA SOLA"
+        }
       ]
     }
   }
