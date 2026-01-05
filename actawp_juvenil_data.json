@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-01-05T09:38:41.074179",
+    "downloaded_at": "2026-01-05T11:25:16.979384",
     "parser_version": "6.2_fix_urls"
   },
   "players": [
@@ -452,11 +452,11 @@
       "team2": "C.N. TERRASSA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "date_time": "Dom, 11/01/2026 12:45 179 - D'Horta, UE - 33m",
+      "date_time": "Dom, 11/01/2026 10:15 179 - D'Horta, UE - 33m",
       "jornada": 1,
       "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027300/results",
       "date": "11/01/2026",
-      "time": "12:45"
+      "time": "10:15"
     },
     {
       "team1": "C.N. TERRASSA",
@@ -1619,6 +1619,6 @@
       }
     }
   },
-  "last_update": "2026-01-05T11:31:56.888780+01:00",
-  "workflow_run": "1705"
+  "last_update": "2026-01-05T12:27:23.903842+01:00",
+  "workflow_run": "1706"
 }
