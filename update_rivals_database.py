@@ -358,6 +358,41 @@ class RivalsUpdater:
         print(f"  📅 Pròxim partit: {team1} vs {team2}")
         print(f"  🎯 Rival: {rival_name}")
         
+        # 2.5. Comprovar si ja tenim la plantilla actualitzada recentment
+        print(f"\n2️⃣.5 COMPROVANT SI CAL ACTUALITZAR...")
+        
+        try:
+            with open(database_file, 'r', encoding='utf-8') as f:
+                existing_db = json.load(f)
+            
+            # Buscar el rival a la base de dades
+            rival_db_key = rival_name.upper().strip()
+            
+            if rival_db_key in existing_db.get('teams', {}):
+                last_updated = existing_db['teams'][rival_db_key].get('lastUpdated')
+                
+                if last_updated:
+                    last_date = datetime.strptime(last_updated, '%Y-%m-%d')
+                    days_since = (datetime.now() - last_date).days
+                    
+                    print(f"  📅 Última actualització: {last_updated} (fa {days_since} dies)")
+                    
+                    if days_since < 7:
+                        print(f"  ⏭️ Plantilla actualitzada fa menys d'una setmana. Saltant...")
+                        print(f"\n{'='*70}")
+                        print(f"✅ NO CAL ACTUALITZAR - Plantilla recent")
+                        print(f"{'='*70}")
+                        return
+                    else:
+                        print(f"  🔄 Fa més d'una setmana. Actualitzant...")
+                else:
+                    print(f"  ⚠️ Rival trobat però sense data d'actualització. Actualitzant...")
+            else:
+                print(f"  🆕 Rival nou. Descarregant plantilla...")
+                
+        except FileNotFoundError:
+            print(f"  📄 Fitxer {database_file} no existeix. Es crearà nou.")
+        
         # 3. Buscar team_id del rival a rivals_form
         print(f"\n3️⃣ BUSCANT DADES DEL RIVAL...")
         rivals_form = actawp_data.get('rivals_form', {})
