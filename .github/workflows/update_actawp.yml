@@ -204,7 +204,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add actawp_*.json
+          git add actawp_*.json rivals_database_*.json
           git commit -m "📄 Actualització automàtica dades ACTAWP - $(date +'%Y-%m-%d %H:%M:%S')"
           
           # Retry logic per al push
