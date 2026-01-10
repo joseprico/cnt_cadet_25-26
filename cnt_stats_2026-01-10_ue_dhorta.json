@@ -1,0 +1,3335 @@
+{
+  "temporada": "25/26 CADET",
+  "equip": "CN TERRASSA",
+  "data": "2026-01-10T12:57:42.666Z",
+  "scoreCNT": 18,
+  "scoreRival": 3,
+  "lineups": {
+    "q1": [
+      1,
+      3,
+      2,
+      4,
+      10,
+      11,
+      7
+    ],
+    "q2": [
+      1,
+      2,
+      11,
+      10,
+      12,
+      14,
+      9
+    ],
+    "q3": [
+      1,
+      2,
+      3,
+      4,
+      7,
+      10,
+      11
+    ],
+    "q4": [
+      2,
+      12,
+      7,
+      9,
+      13,
+      5,
+      14
+    ]
+  },
+  "periodScores": {
+    "q1": {
+      "cnt": 3,
+      "rival": 0
+    },
+    "q2": {
+      "cnt": 4,
+      "rival": 2
+    },
+    "q3": {
+      "cnt": 7,
+      "rival": 0
+    },
+    "q4": {
+      "cnt": 4,
+      "rival": 1
+    }
+  },
+  "tempsMortCNT": 1,
+  "tempsMortRival": 2,
+  "rivalTeam": "U.E. D'HORTA",
+  "matchLocation": "home",
+  "rivalStats": [
+    {
+      "num": 1,
+      "name": "IGNASI ALVAREZ DE EULATE BARBERA",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    },
+    {
+      "num": 2,
+      "name": "ARES CEREZUELA CEREIJO",
+      "gols": 0,
+      "exclusions": 1,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 1
+      }
+    },
+    {
+      "num": 3,
+      "name": "POL CEREIJO GASSOL (C)",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    },
+    {
+      "num": 4,
+      "name": "ERIC M. VAQUERO BAENA",
+      "gols": 0,
+      "exclusions": 1,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 1
+      }
+    },
+    {
+      "num": 5,
+      "name": "EDER LINARES VALLADOLID",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    },
+    {
+      "num": 6,
+      "name": "GERARD PRADAS PEIRON",
+      "gols": 0,
+      "exclusions": 1,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "exclusionTypes": {
+        "normal": 0,
+        "penalty": 1
+      }
+    },
+    {
+      "num": 7,
+      "name": "NIL MONTOLIO FERNANDEZ",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    },
+    {
+      "num": 8,
+      "name": "HUGO PEREIRA DE OLIVEIRA",
+      "gols": 0,
+      "exclusions": 3,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "exclusionTypes": {
+        "normal": 3,
+        "penalty": 0
+      }
+    },
+    {
+      "num": 9,
+      "name": "MARCOS VIDAL VIDAL",
+      "gols": 1,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 1,
+        "contra": 0,
+        "boya": 0
+      },
+      "goalZones": {
+        "mid-left": 1
+      },
+      "fieldZones": {
+        "5m-left": 1
+      }
+    },
+    {
+      "num": 10,
+      "name": "JAN TIO CANO",
+      "gols": 1,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 1,
+        "boya": 0
+      },
+      "goalZones": {
+        "mid-left": 1
+      },
+      "fieldZones": {
+        "2m-right": 1
+      }
+    },
+    {
+      "num": 11,
+      "name": "DANIEL DOMINGUEZ PEREZ",
+      "gols": 1,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0,
+      "goalTypes": {
+        "normal": 0,
+        "h+": 0,
+        "penalty": 0,
+        "contra": 1,
+        "boya": 0
+      },
+      "goalZones": {
+        "mid-center": 1
+      },
+      "fieldZones": {
+        "5m-center": 1
+      }
+    },
+    {
+      "num": 12,
+      "name": "NICOLAS SEOANE DORCA",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    },
+    {
+      "num": 14,
+      "name": "DIEGO LAZAGA SOLA",
+      "gols": 0,
+      "exclusions": 0,
+      "assistencies": 0,
+      "parades": 0,
+      "robatoris": 0,
+      "perdues": 0,
+      "blocks": 0,
+      "xutsFallats": 0,
+      "contrafaltes": 0,
+      "infraccions2m": 0
+    }
+  ],
+  "jugadors": [
+    {
+      "numero": 1,
+      "nom": "DAVID CASADO",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 8,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 6,
+          "penal": 2
+        },
+        "assistencies": 0,
+        "robatoris": 4,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 2,
+        "golsRebutsZones": {
+          "mid-center": 1,
+          "mid-left": 1
+        },
+        "golsRebutsFieldZones": {
+          "5m-center": 1,
+          "2m-right": 1
+        }
+      }
+    },
+    {
+      "numero": 2,
+      "nom": "SAMUEL DIAZ",
+      "estadistiques": {
+        "gols": 5,
+        "exclusions": 0,
+        "penaltyMissed": 1,
+        "goalTypes": {
+          "normal": 4,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 1,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 1,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 3,
+        "blocatges": 0,
+        "faltesRebudes": 2,
+        "goalZones": {
+          "mid-right": 2,
+          "mid-left": 2,
+          "bottom-left": 1
+        },
+        "fieldZones": {
+          "+6m-left": 1,
+          "5m-left": 1,
+          "+6m-center": 1,
+          "2m-left": 1,
+          "5m-center": 1
+        }
+      }
+    },
+    {
+      "numero": 3,
+      "nom": "MAX CEREZO",
+      "estadistiques": {
+        "gols": 5,
+        "exclusions": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 4,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 1,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 0,
+        "xutsFallats": 1,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "goalZones": {
+          "mid-left": 3,
+          "top-right": 1,
+          "mid-right": 1
+        },
+        "fieldZones": {
+          "2m-right": 1,
+          "5m-center": 1,
+          "5m-left": 2,
+          "2m-left": 1
+        },
+        "blocks": 1
+      }
+    },
+    {
+      "numero": 4,
+      "nom": "POL RICO",
+      "estadistiques": {
+        "gols": 2,
+        "exclusions": 0,
+        "penaltyMissed": 1,
+        "goalTypes": {
+          "normal": 2,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 3,
+        "perdues": 0,
+        "xutsFallats": 3,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "blocks": 1,
+        "goalZones": {
+          "mid-left": 1,
+          "top-right": 1
+        },
+        "fieldZones": {
+          "5m-center": 1,
+          "+6m-left": 1
+        }
+      }
+    },
+    {
+      "numero": 5,
+      "nom": "OLIVER HERRERA",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 1,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 1
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 2,
+        "robatoris": 1,
+        "perdues": 0,
+        "xutsFallats": 1,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "contrafaltes": 1
+      }
+    },
+    {
+      "numero": 6,
+      "nom": "NIL CARDENAS",
+      "estadistiques": {
+        "gols": 1,
+        "exclusions": 3,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 1,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 2,
+          "penalty": 1
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "contrafaltes": 2,
+        "goalZones": {
+          "mid-right": 1
+        },
+        "fieldZones": {
+          "2m-left": 1
+        }
+      }
+    },
+    {
+      "numero": 7,
+      "nom": "LLATZER PEREZ",
+      "estadistiques": {
+        "gols": 1,
+        "exclusions": 0,
+        "penaltyMissed": 1,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 1,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 3,
+        "robatoris": 3,
+        "perdues": 1,
+        "xutsFallats": 2,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "goalZones": {
+          "mid-left": 1
+        },
+        "fieldZones": {
+          "2m-center": 1
+        },
+        "contrafaltes": 1
+      }
+    },
+    {
+      "numero": 8,
+      "nom": "JORDI FARRE",
+      "estadistiques": {
+        "gols": 1,
+        "exclusions": 3,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 1,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 3,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "goalZones": {
+          "mid-left": 1
+        },
+        "fieldZones": {
+          "5m-right": 1
+        }
+      }
+    },
+    {
+      "numero": 9,
+      "nom": "IVAN GALLEGO",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 1,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 1,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0
+      }
+    },
+    {
+      "numero": 10,
+      "nom": "ADAY ACUÑA",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 4,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 3,
+        "blocatges": 0,
+        "faltesRebudes": 0
+      }
+    },
+    {
+      "numero": 11,
+      "nom": "HECTOR DIOS",
+      "estadistiques": {
+        "gols": 3,
+        "exclusions": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 1,
+          "penalty": 0,
+          "contra": 2,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 2,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 2,
+        "goalZones": {
+          "mid-right": 2,
+          "mid-left": 1
+        },
+        "fieldZones": {
+          "2m-center": 1,
+          "2m-left": 2
+        }
+      }
+    },
+    {
+      "numero": 12,
+      "nom": "BIEL COBACHO",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 2,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 1,
+          "penalty": 1
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 1,
+        "robatoris": 1,
+        "perdues": 1,
+        "xutsFallats": 1,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "infraccions2m": 1
+      }
+    },
+    {
+      "numero": 13,
+      "nom": "GUILLEM POLEY",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 0,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 0
+        },
+        "parades": 3,
+        "paradeTypes": {
+          "corner": 1,
+          "rebuig": 0,
+          "atrapa": 2,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 0,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0,
+        "golsRebuts": 1,
+        "golsRebutsZones": {
+          "mid-left": 1
+        },
+        "golsRebutsFieldZones": {
+          "5m-left": 1
+        }
+      }
+    },
+    {
+      "numero": 14,
+      "nom": "JOSE MANUEL LLENIN",
+      "estadistiques": {
+        "gols": 0,
+        "exclusions": 1,
+        "penaltyMissed": 0,
+        "goalTypes": {
+          "normal": 0,
+          "h+": 0,
+          "penalty": 0,
+          "contra": 0,
+          "boya": 0
+        },
+        "exclusionTypes": {
+          "normal": 0,
+          "penalty": 1
+        },
+        "parades": 0,
+        "paradeTypes": {
+          "corner": 0,
+          "rebuig": 0,
+          "atrapa": 0,
+          "penal": 0
+        },
+        "assistencies": 0,
+        "robatoris": 1,
+        "perdues": 2,
+        "xutsFallats": 0,
+        "blocatges": 0,
+        "faltesRebudes": 0
+      }
+    }
+  ],
+  "observacions": "",
+  "chronologicalActions": [
+    {
+      "timestamp": 1768045860577,
+      "quarter": "q1",
+      "type": "swim-race",
+      "result": "loss",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA",
+      "team": "cnt"
+    },
+    {
+      "timestamp": 1768045889500,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768045909339,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768045943530,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768045969983,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-right",
+      "fieldZone": "+6m-left",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046017422,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768046029739,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046031739,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-left",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046075159,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046099611,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768046135482,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "block",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768046163024,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 3,
+      "playerName": "ERIC M. VAQUERO BAENA",
+      "faltaSobreJugador": "11"
+    },
+    {
+      "timestamp": 1768046182720,
+      "quarter": "q1",
+      "type": "penalty-missed",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046201669,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046204349,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046226707,
+      "quarter": "q1",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046240651,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768046253915,
+      "quarter": "q1",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046270778,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768046272778,
+      "quarter": "q1",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-left",
+      "fieldZone": "2m-right",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768046292862,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768046299602,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768046302507,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768046308258,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768046312352,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046332385,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768046364723,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768046413708,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046428754,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768046434988,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768046435453,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768046437934,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768046440379,
+      "quarter": "q1",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768046468771,
+      "quarter": "q1",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046489744,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 1,
+      "playerName": "ARES CEREZUELA CEREIJO",
+      "faltaSobreJugador": "2"
+    },
+    {
+      "timestamp": 1768046510320,
+      "quarter": "q1",
+      "type": "penalty-missed",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768046527823,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046550600,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768046567062,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768046584983,
+      "quarter": "q1",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768046611693,
+      "quarter": "q1",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768046842775,
+      "quarter": "q2",
+      "type": "swim-race",
+      "result": "win",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA",
+      "team": "cnt"
+    },
+    {
+      "timestamp": 1768046869722,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768046918122,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "bottom-left",
+      "fieldZone": "+6m-center",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046924321,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768046926659,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768046973775,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768046997271,
+      "quarter": "q2",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768047018507,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768047020507,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-center",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768047093263,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768047117151,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768047138706,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768047162787,
+      "quarter": "q2",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768047178628,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768047233558,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768047250962,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-center",
+      "fieldZone": "5m-center",
+      "team": "rival",
+      "playerNum": 10,
+      "playerName": "DANIEL DOMINGUEZ PEREZ",
+      "goalkeeperNum": 1
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768047255504,
+      "quarter": "q2",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768047299939,
+      "quarter": "q2",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "rival",
+      "playerNum": 5,
+      "playerName": "GERARD PRADAS PEIRON",
+      "faltaSobreJugador": "2"
+    },
+    {
+      "timestamp": 1768047307774,
+      "quarter": "q2",
+      "type": "penalty-missed",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768047329522,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768047347190,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768047349190,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-center",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768047412159,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768047414159,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-left",
+      "fieldZone": "2m-center",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768047454514,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768047456843,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768047469575,
+      "quarter": "q2",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-left",
+      "fieldZone": "2m-right",
+      "team": "rival",
+      "playerNum": 9,
+      "playerName": "JAN TIO CANO",
+      "goalkeeperNum": 1
+    },
+    {
+      "timestamp": 1768047505648,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768047521959,
+      "quarter": "q2",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768047802334,
+      "quarter": "q3",
+      "type": "swim-race",
+      "result": "win",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA",
+      "team": "cnt"
+    },
+    {
+      "timestamp": 1768047830336,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768047878244,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768047929365,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 7,
+      "playerName": "HUGO PEREIRA DE OLIVEIRA",
+      "faltaSobreJugador": "11"
+    },
+    {
+      "timestamp": 1768047933413,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 7,
+      "playerName": "HUGO PEREIRA DE OLIVEIRA",
+      "faltaSobreJugador": null
+    },
+    {
+      "timestamp": 1768047935284,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "rival",
+      "playerNum": 7,
+      "playerName": "HUGO PEREIRA DE OLIVEIRA",
+      "faltaSobreJugador": null
+    },
+    {
+      "timestamp": 1768048027606,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768048029606,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "h+",
+      "goalZone": "mid-right",
+      "fieldZone": "2m-center",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768048043960,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768048044757,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768048046567,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768048047040,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768048078723,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768048085921,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048094288,
+      "quarter": "q3",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768048122898,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048140810,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768048163580,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "top-right",
+      "fieldZone": "+6m-left",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768048173157,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768048174786,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768048236618,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048238618,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-right",
+      "fieldZone": "2m-left",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768048249404,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048249943,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768048253180,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768048254488,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768048276849,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768048309398,
+      "quarter": "q3",
+      "type": "save",
+      "saveType": "penal",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768048325594,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768048339939,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768048355367,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768048355936,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768048382359,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768048404154,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768048428223,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768048431210,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048432817,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768048433456,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768048437236,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768048446049,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768048511671,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768048534098,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-right",
+      "fieldZone": "2m-left",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768048541696,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768048542394,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768048547104,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 4,
+      "playerName": "POL RICO"
+    },
+    {
+      "timestamp": 1768048548584,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768048554171,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768048563791,
+      "quarter": "q3",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768048594983,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768048608641,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768048610641,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-left",
+      "fieldZone": "2m-left",
+      "team": "cnt",
+      "playerNum": 11,
+      "playerName": "HECTOR DIOS"
+    },
+    {
+      "timestamp": 1768048694984,
+      "quarter": "q3",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768048696984,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-left",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768048737896,
+      "quarter": "q3",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768048760471,
+      "quarter": "q3",
+      "type": "save",
+      "saveType": "penal",
+      "team": "cnt",
+      "playerNum": 1,
+      "playerName": "DAVID CASADO"
+    },
+    {
+      "timestamp": 1768048779264,
+      "quarter": "q3",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "top-right",
+      "fieldZone": "5m-left",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768049003534,
+      "quarter": "q4",
+      "type": "swim-race",
+      "result": "win",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ",
+      "team": "cnt"
+    },
+    {
+      "timestamp": 1768049048015,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768049057104,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "contrafalta",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768049062707,
+      "quarter": "q4",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 13,
+      "playerName": "GUILLEM POLEY"
+    },
+    {
+      "timestamp": 1768049072366,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768049117297,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "2metres",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768049151949,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-center",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768049157504,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 2,
+      "playerName": "SAMUEL DIAZ"
+    },
+    {
+      "timestamp": 1768049159562,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768049163294,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768049164751,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 7,
+      "playerName": "LLATZER PEREZ"
+    },
+    {
+      "timestamp": 1768049243350,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-right",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768049272313,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768049289333,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768049291333,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "contra",
+      "goalZone": "mid-right",
+      "fieldZone": "2m-left",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768049334298,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768049340620,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768049367135,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 5,
+      "playerName": "OLIVER HERRERA"
+    },
+    {
+      "timestamp": 1768049394059,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768049397504,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "penalty",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768049408460,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 6,
+      "playerName": "NIL CARDENAS"
+    },
+    {
+      "timestamp": 1768049409649,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768049427072,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "penalty",
+      "goalZone": "mid-left",
+      "fieldZone": "5m-left",
+      "team": "rival",
+      "playerNum": 8,
+      "playerName": "MARCOS VIDAL VIDAL",
+      "goalkeeperNum": 13
+    },
+    {
+      "timestamp": 1768049455933,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768049465350,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768049478459,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "out",
+      "team": "cnt",
+      "playerNum": 8,
+      "playerName": "JORDI FARRE"
+    },
+    {
+      "timestamp": 1768049479000,
+      "quarter": "q4",
+      "type": "water-change",
+      "action": "in",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768049502603,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "perdua",
+      "team": "cnt",
+      "playerNum": 14,
+      "playerName": "JOSE MANUEL LLENIN"
+    },
+    {
+      "timestamp": 1768049530464,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "robatori",
+      "team": "cnt",
+      "playerNum": 13,
+      "playerName": "GUILLEM POLEY"
+    },
+    {
+      "timestamp": 1768049551245,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768049573731,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768049584774,
+      "quarter": "q4",
+      "type": "save",
+      "saveType": "corner",
+      "team": "cnt",
+      "playerNum": 13,
+      "playerName": "GUILLEM POLEY"
+    },
+    {
+      "timestamp": 1768049605874,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "block",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768049620816,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768049639957,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "assistencia",
+      "team": "cnt",
+      "playerNum": 10,
+      "playerName": "ADAY ACUÑA"
+    },
+    {
+      "timestamp": 1768049641957,
+      "quarter": "q4",
+      "type": "goal",
+      "goalType": "normal",
+      "goalZone": "mid-right",
+      "fieldZone": "2m-left",
+      "team": "cnt",
+      "playerNum": 3,
+      "playerName": "MAX CEREZO"
+    },
+    {
+      "timestamp": 1768049686184,
+      "quarter": "q4",
+      "type": "exclusion",
+      "exclusionType": "normal",
+      "team": "cnt",
+      "playerNum": 9,
+      "playerName": "IVAN GALLEGO"
+    },
+    {
+      "timestamp": 1768049714408,
+      "quarter": "q4",
+      "type": "action",
+      "actionType": "xut",
+      "team": "cnt",
+      "playerNum": 12,
+      "playerName": "BIEL COBACHO"
+    },
+    {
+      "timestamp": 1768049743019,
+      "quarter": "q4",
+      "type": "save",
+      "saveType": "atrapa",
+      "team": "cnt",
+      "playerNum": 13,
+      "playerName": "GUILLEM POLEY"
+    }
+  ],
+  "quarterStartTimes": {
+    "q1": 1768045860606,
+    "q2": 1768046842790,
+    "q3": 1768047802351,
+    "q4": 1768049003561
+  },
+  "playerWaterChanges": [
+    {
+      "playerNum": 1,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768045860606
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046292862
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046299602
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046302507
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046308258
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046312352
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046413708
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046428754
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046434988
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046435453
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046437934
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q1",
+      "action": "in",
+      "timestamp": 1768046440379
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q1",
+      "action": "out",
+      "timestamp": 1768046655166
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046842790
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768046924321
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768046926659
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q2",
+      "action": "in",
+      "timestamp": 1768047255504
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q2",
+      "action": "out",
+      "timestamp": 1768047705120
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768047802351
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048043960
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048044757
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048046567
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048047040
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048173157
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048174786
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048249404
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048249943
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048253180
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048254488
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048355367
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048355936
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048428223
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048431210
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048432817
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048433456
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048437236
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048446049
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048541696
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048542394
+    },
+    {
+      "playerNum": 4,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048547104
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048548584
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048554171
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q3",
+      "action": "in",
+      "timestamp": 1768048563791
+    },
+    {
+      "playerNum": 1,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 11,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q3",
+      "action": "out",
+      "timestamp": 1768048800154
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 13,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049003561
+    },
+    {
+      "playerNum": 2,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049157504
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049159562
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049163294
+    },
+    {
+      "playerNum": 7,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049164751
+    },
+    {
+      "playerNum": 6,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049408460
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049409649
+    },
+    {
+      "playerNum": 8,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049478459
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q4",
+      "action": "in",
+      "timestamp": 1768049479000
+    },
+    {
+      "playerNum": 12,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 9,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 13,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 5,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 14,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 3,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    },
+    {
+      "playerNum": 10,
+      "quarter": "q4",
+      "action": "out",
+      "timestamp": 1768049754210
+    }
+  ]
+}
