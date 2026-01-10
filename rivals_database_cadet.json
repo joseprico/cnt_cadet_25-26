@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-01-05",
+    "lastUpdated": "2026-01-10",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -302,6 +302,70 @@
         {
           "num": 14,
           "name": "DIEGO LAZAGA SOLA"
+        }
+      ]
+    },
+    "C.N. ATL BARCELONETA": {
+      "fullName": "C.N. ATL BARCELONETA",
+      "lastPlayed": "2026-01-10",
+      "lastUpdated": "2026-01-10",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/143649174/stats",
+      "players": [
+        {
+          "num": 1,
+          "name": "MARCOS HIPPLE PEREZ"
+        },
+        {
+          "num": 2,
+          "name": "POL GINABREDA CABELLO"
+        },
+        {
+          "num": 3,
+          "name": "JOHN JOSEPH SHINSKE MARTIN"
+        },
+        {
+          "num": 4,
+          "name": "TON COLL POCH"
+        },
+        {
+          "num": 5,
+          "name": "BIEL FONT SUAREZ"
+        },
+        {
+          "num": 6,
+          "name": "JAN PEREZ CABALLERO"
+        },
+        {
+          "num": 7,
+          "name": "CESC AGUIRRE RUBIO (C)"
+        },
+        {
+          "num": 8,
+          "name": "YAGO MARTIN LOPEZ"
+        },
+        {
+          "num": 9,
+          "name": "JAN MITRANI DELGADO"
+        },
+        {
+          "num": 10,
+          "name": "ENZO MARTIN LOPEZ"
+        },
+        {
+          "num": 11,
+          "name": "TOMA KORNEL"
+        },
+        {
+          "num": 12,
+          "name": "MARC HAM-MAN ROMERO"
+        },
+        {
+          "num": 13,
+          "name": "MARIO RODRIGUEZ HIDALGO"
+        },
+        {
+          "num": 14,
+          "name": "INAKI OLIVE HAM-MAN"
         }
       ]
     }
