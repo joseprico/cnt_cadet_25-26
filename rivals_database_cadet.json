@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-01-10",
+    "lastUpdated": "2026-01-14",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -366,6 +366,70 @@
         {
           "num": 14,
           "name": "INAKI OLIVE HAM-MAN"
+        }
+      ]
+    },
+    "C.N. BARCELONA A": {
+      "fullName": "C.N. BARCELONA A",
+      "lastPlayed": "2026-01-14",
+      "lastUpdated": "2026-01-14",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027413/stats",
+      "players": [
+        {
+          "num": 1,
+          "name": "JAN SINGH PEDROSA"
+        },
+        {
+          "num": 2,
+          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
+        },
+        {
+          "num": 3,
+          "name": "PABLO RODRIGUEZ LAGUNA"
+        },
+        {
+          "num": 4,
+          "name": "LLUIS BOLINCHES PALLARES"
+        },
+        {
+          "num": 5,
+          "name": "KRISTOF TATRAI"
+        },
+        {
+          "num": 6,
+          "name": "MARIO CARDONA SESA"
+        },
+        {
+          "num": 7,
+          "name": "ARNAU FORTUNATO BENITO"
+        },
+        {
+          "num": 8,
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
+        },
+        {
+          "num": 9,
+          "name": "TEO RODRIGUEZ MARTINEZ"
+        },
+        {
+          "num": 10,
+          "name": "ARNAU  ZURITA CILLERO"
+        },
+        {
+          "num": 11,
+          "name": "CALIN BORCEA"
+        },
+        {
+          "num": 12,
+          "name": "GERARD ROMERO PUJOL"
+        },
+        {
+          "num": 13,
+          "name": "ISAAC JIMENEZ ZUÑIGA"
+        },
+        {
+          "num": 14,
+          "name": "ARNAU PRUNA RONDON"
         }
       ]
     }
