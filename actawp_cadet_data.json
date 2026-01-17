@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-01-17T17:43:55.600047",
+    "downloaded_at": "2026-01-17T18:39:54.907798",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -824,10 +824,10 @@
         {
           "name": "HECTOR MOYANO MORAY",
           "goals": 12,
-          "games": 17,
+          "games": 18,
           "exclusions": 10,
           "penalty_goals": 4,
-          "avg_goals": 0.71
+          "avg_goals": 0.67
         },
         {
           "name": "ALEIX VALERO COLLADO",
@@ -1554,6 +1554,6 @@
       }
     }
   },
-  "last_update": "2026-01-17T18:45:40.171156+01:00",
-  "workflow_run": "1973"
+  "last_update": "2026-01-17T19:43:23.945702+01:00",
+  "workflow_run": "1974"
 }
