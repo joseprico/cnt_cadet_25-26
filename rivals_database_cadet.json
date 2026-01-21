@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-01-14",
+    "lastUpdated": "2026-01-21",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -371,65 +371,65 @@
     },
     "C.N. BARCELONA A": {
       "fullName": "C.N. BARCELONA A",
-      "lastPlayed": "2026-01-14",
-      "lastUpdated": "2026-01-14",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027413/stats",
+      "lastPlayed": "2026-01-21",
+      "lastUpdated": "2026-01-21",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027417/stats",
       "players": [
         {
           "num": 1,
-          "name": "JAN SINGH PEDROSA"
+          "name": "ALEX VILAR TORRENT"
         },
         {
           "num": 2,
-          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
+          "name": "PAU LOPEZ FERNANDEZ (C)"
         },
         {
           "num": 3,
-          "name": "PABLO RODRIGUEZ LAGUNA"
+          "name": "RUY GONZALVO GONZALEZ"
         },
         {
           "num": 4,
-          "name": "LLUIS BOLINCHES PALLARES"
+          "name": "NICOLAS PONS LOPEZ-MIGOYA"
         },
         {
           "num": 5,
-          "name": "KRISTOF TATRAI"
+          "name": "PAU JANE VIÑALS"
         },
         {
           "num": 6,
-          "name": "MARIO CARDONA SESA"
+          "name": "NICOLAU SAVARIS CATAFAL"
         },
         {
           "num": 7,
-          "name": "ARNAU FORTUNATO BENITO"
+          "name": "RAMON FEDERICO OZZOLA"
         },
         {
           "num": 8,
-          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
+          "name": "BRUC GONZALEZ I MARTIN"
         },
         {
           "num": 9,
-          "name": "TEO RODRIGUEZ MARTINEZ"
+          "name": "LUCA SOMMA"
         },
         {
           "num": 10,
-          "name": "ARNAU  ZURITA CILLERO"
+          "name": "GUERAU NAVARRO BUENO"
         },
         {
           "num": 11,
-          "name": "CALIN BORCEA"
+          "name": "HECTOR MOYANO MORAY"
         },
         {
           "num": 12,
-          "name": "GERARD ROMERO PUJOL"
+          "name": "ALEIX VALERO COLLADO"
         },
         {
           "num": 13,
-          "name": "ISAAC JIMENEZ ZUÑIGA"
+          "name": "GERARD TEJADA CHECAS"
         },
         {
           "num": 14,
-          "name": "ARNAU PRUNA RONDON"
+          "name": "SANTIAGO  ARBOLEDA SUAREZ"
         }
       ]
     }
