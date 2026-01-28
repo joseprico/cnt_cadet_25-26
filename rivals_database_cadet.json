@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-01-21",
+    "lastUpdated": "2026-01-28",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -371,8 +371,8 @@
     },
     "C.N. BARCELONA A": {
       "fullName": "C.N. BARCELONA A",
-      "lastPlayed": "2026-01-21",
-      "lastUpdated": "2026-01-21",
+      "lastPlayed": "2026-01-28",
+      "lastUpdated": "2026-01-28",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027417/stats",
       "players": [
         {
