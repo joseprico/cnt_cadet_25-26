@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-01-29",
+    "lastUpdated": "2026-02-05",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -435,65 +435,65 @@
     },
     "C.N. POBLE NOU A": {
       "fullName": "C.N. POBLE NOU A",
-      "lastPlayed": "2026-01-29",
-      "lastUpdated": "2026-01-29",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027418/stats",
+      "lastPlayed": "2026-02-05",
+      "lastUpdated": "2026-02-05",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027421/stats",
       "players": [
         {
           "num": 1,
-          "name": "JAN SINGH PEDROSA"
+          "name": "POL MARTINEZ ENJUANES"
         },
         {
           "num": 2,
-          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
+          "name": "ALEJANDRO RUDZEVICH RAMIREZ"
         },
         {
           "num": 3,
-          "name": "PABLO RODRIGUEZ LAGUNA"
+          "name": "ALVARO GARROTE GOMEZ"
         },
         {
           "num": 4,
-          "name": "LLUIS BOLINCHES PALLARES"
+          "name": "HUGO TEJERA DIAZ"
         },
         {
           "num": 5,
-          "name": "KRISTOF TATRAI"
+          "name": "AXEL GUICH JIMENEZ (C)"
         },
         {
           "num": 6,
-          "name": "MARIO CARDONA SESA"
+          "name": "MARTI PIÑEIRA GONZALEZ"
         },
         {
           "num": 7,
-          "name": "ARNAU FORTUNATO BENITO"
+          "name": "ANGEL BOLAÑO ANEAS"
         },
         {
           "num": 8,
-          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
+          "name": "POL VILLALBA VALLS"
         },
         {
           "num": 9,
-          "name": "TEO RODRIGUEZ MARTINEZ"
+          "name": "TARIQ ADAM RABASA"
         },
         {
           "num": 10,
-          "name": "ARNAU  ZURITA CILLERO"
+          "name": "DANIEL MAKSIMOV MOROZOV"
         },
         {
           "num": 11,
-          "name": "CALIN BORCEA"
+          "name": "ANTOLIN SERRANO BARCIA"
         },
         {
           "num": 12,
-          "name": "GERARD ROMERO PUJOL"
+          "name": "MARC ASTOR MUNTANE"
         },
         {
           "num": 13,
-          "name": "ISAAC JIMENEZ ZUÑIGA"
+          "name": "ALEIX RODRIGUEZ OLSINA"
         },
         {
           "num": 14,
-          "name": "ARNAU PRUNA RONDON"
+          "name": "LLUC LORENTE CACERES"
         }
       ]
     }
