@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-02-06T19:23:26.206602",
+    "downloaded_at": "2026-02-06T19:58:44.446629",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -46,6 +46,27 @@
       "EP": 0,
       "P": 4,
       "PF": 1,
+      "O": 0,
+      "TM": 0,
+      "JL": 0,
+      "MVP": 0
+    },
+    {
+      "Nombre": "DANIEL LINARES MATARIN",
+      "PJ": 0,
+      "GT": 0,
+      "G": 0,
+      "GP": 0,
+      "G5P": 0,
+      "TA": 0,
+      "TR": 0,
+      "EX": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
+      "EP": 0,
+      "P": 0,
+      "PF": 0,
       "O": 0,
       "TM": 0,
       "JL": 0,
@@ -1554,6 +1575,6 @@
       }
     }
   },
-  "last_update": "2026-02-06T20:24:40.414452+01:00",
-  "workflow_run": "2336"
+  "last_update": "2026-02-06T20:59:53.190691+01:00",
+  "workflow_run": "2337"
 }
