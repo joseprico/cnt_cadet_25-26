@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-02-05",
+    "lastUpdated": "2026-02-07",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -494,6 +494,70 @@
         {
           "num": 14,
           "name": "SALVADOR LEONARDO CASTILLO RAMOS"
+        }
+      ]
+    },
+    "C.N. SABADELL": {
+      "fullName": "C.N. SABADELL",
+      "lastPlayed": "2026-02-07",
+      "lastUpdated": "2026-02-07",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027442/stats",
+      "players": [
+        {
+          "num": 1,
+          "name": "HUMBERTO MATA ALVAREZ"
+        },
+        {
+          "num": 2,
+          "name": "MAX PALMA INS"
+        },
+        {
+          "num": 3,
+          "name": "LEO SEGURA REVALIENTE"
+        },
+        {
+          "num": 4,
+          "name": "SANTIAGO ALEJANDRO OSSO ESCALANTE"
+        },
+        {
+          "num": 5,
+          "name": "ALEJANDRO CABERO  GALLARDO"
+        },
+        {
+          "num": 6,
+          "name": "MAX MARTIN SASSELLI (C)"
+        },
+        {
+          "num": 7,
+          "name": "MATIAS SANGUINO DE ABREU"
+        },
+        {
+          "num": 8,
+          "name": "ARNAU ARREGUI GARRIDO"
+        },
+        {
+          "num": 9,
+          "name": "HUGO RODRIGUEZ BELTRAN"
+        },
+        {
+          "num": 10,
+          "name": "ASIER RUIZ GARCIA"
+        },
+        {
+          "num": 11,
+          "name": "BINE STROMAJER"
+        },
+        {
+          "num": 12,
+          "name": "MARC CAAMAÑO LEÓN"
+        },
+        {
+          "num": 13,
+          "name": "GUILLEM NADAL MONTERROSO"
+        },
+        {
+          "num": 14,
+          "name": "ADRIAN DORADO GARCIA"
         }
       ]
     }
