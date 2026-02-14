@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-02-07",
+    "lastUpdated": "2026-02-14",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -499,65 +499,65 @@
     },
     "C.N. SABADELL": {
       "fullName": "C.N. SABADELL",
-      "lastPlayed": "2026-02-07",
-      "lastUpdated": "2026-02-07",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027442/stats",
+      "lastPlayed": "2026-02-14",
+      "lastUpdated": "2026-02-14",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027422/stats",
       "players": [
         {
           "num": 1,
-          "name": "HUMBERTO MATA ALVAREZ"
+          "name": "JAN SINGH PEDROSA"
         },
         {
           "num": 2,
-          "name": "MAX PALMA INS"
+          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
         },
         {
           "num": 3,
-          "name": "LEO SEGURA REVALIENTE"
+          "name": "PABLO RODRIGUEZ LAGUNA"
         },
         {
           "num": 4,
-          "name": "SANTIAGO ALEJANDRO OSSO ESCALANTE"
+          "name": "LLUIS BOLINCHES PALLARES"
         },
         {
           "num": 5,
-          "name": "ALEJANDRO CABERO  GALLARDO"
+          "name": "KRISTOF TATRAI"
         },
         {
           "num": 6,
-          "name": "MAX MARTIN SASSELLI (C)"
+          "name": "MARIO CARDONA SESA"
         },
         {
           "num": 7,
-          "name": "MATIAS SANGUINO DE ABREU"
+          "name": "ARNAU FORTUNATO BENITO"
         },
         {
           "num": 8,
-          "name": "ARNAU ARREGUI GARRIDO"
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
         },
         {
           "num": 9,
-          "name": "HUGO RODRIGUEZ BELTRAN"
+          "name": "TEO RODRIGUEZ MARTINEZ"
         },
         {
           "num": 10,
-          "name": "ASIER RUIZ GARCIA"
+          "name": "ARNAU  ZURITA CILLERO"
         },
         {
           "num": 11,
-          "name": "BINE STROMAJER"
+          "name": "CALIN BORCEA"
         },
         {
           "num": 12,
-          "name": "MARC CAAMAÑO LEÓN"
+          "name": "GERARD ROMERO PUJOL"
         },
         {
           "num": 13,
-          "name": "GUILLEM NADAL MONTERROSO"
+          "name": "ISAAC JIMENEZ ZUÑIGA"
         },
         {
           "num": 14,
-          "name": "ADRIAN DORADO GARCIA"
+          "name": "ARNAU PRUNA RONDON"
         }
       ]
     }
