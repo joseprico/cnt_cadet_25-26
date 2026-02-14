@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-02-14T19:30:25.727532",
+    "downloaded_at": "2026-02-14T19:50:08.459429",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -32,7 +32,7 @@
     },
     {
       "Nombre": "BIEL COBACHO BOLDU",
-      "PJ": 7,
+      "PJ": 8,
       "GT": 19,
       "G": 15,
       "GP": 4,
@@ -179,7 +179,7 @@
     },
     {
       "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
-      "PJ": 12,
+      "PJ": 13,
       "GT": 7,
       "G": 7,
       "GP": 0,
@@ -284,7 +284,7 @@
     },
     {
       "Nombre": "OLIVER HERRERA MENDOZA",
-      "PJ": 12,
+      "PJ": 13,
       "GT": 2,
       "G": 2,
       "GP": 0,
@@ -1575,6 +1575,6 @@
       }
     }
   },
-  "last_update": "2026-02-14T20:31:42.967095+01:00",
-  "workflow_run": "2449"
+  "last_update": "2026-02-14T20:51:20.669121+01:00",
+  "workflow_run": "2450"
 }
