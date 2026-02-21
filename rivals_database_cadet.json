@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-02-14",
+    "lastUpdated": "2026-02-21",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -563,8 +563,8 @@
     },
     "C.E. MEDITERRANI": {
       "fullName": "C.E. MEDITERRANI",
-      "lastPlayed": "2026-02-14",
-      "lastUpdated": "2026-02-14",
+      "lastPlayed": "2026-02-21",
+      "lastUpdated": "2026-02-21",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027422/stats",
       "players": [
         {
