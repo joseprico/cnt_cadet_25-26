@@ -624,6 +624,70 @@
           "name": "ARNAU PRUNA RONDON"
         }
       ]
+    },
+    "C.N. SANT ANDREU A": {
+      "fullName": "C.N. SANT ANDREU A",
+      "lastPlayed": "2026-02-21",
+      "lastUpdated": "2026-02-21",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027463/stats",
+      "players": [
+        {
+          "num": 1,
+          "name": "POL MARTINEZ ENJUANES"
+        },
+        {
+          "num": 2,
+          "name": "ALEJANDRO RUDZEVICH RAMIREZ"
+        },
+        {
+          "num": 3,
+          "name": "ALVARO GARROTE GOMEZ"
+        },
+        {
+          "num": 4,
+          "name": "HUGO TEJERA DIAZ"
+        },
+        {
+          "num": 5,
+          "name": "AXEL GUICH JIMENEZ (C)"
+        },
+        {
+          "num": 6,
+          "name": "MARTI PIÑEIRA GONZALEZ"
+        },
+        {
+          "num": 7,
+          "name": "ANGEL BOLAÑO ANEAS"
+        },
+        {
+          "num": 8,
+          "name": "ANTOLIN SERRANO BARCIA"
+        },
+        {
+          "num": 9,
+          "name": "TARIQ ADAM RABASA"
+        },
+        {
+          "num": 10,
+          "name": "DANIEL MAKSIMOV MOROZOV"
+        },
+        {
+          "num": 11,
+          "name": "ALVARO FERNANDEZ PASSOLS"
+        },
+        {
+          "num": 12,
+          "name": "MARC ASTOR MUNTANE"
+        },
+        {
+          "num": 13,
+          "name": "HECTOR GALLEGO HERNANDEZ"
+        },
+        {
+          "num": 14,
+          "name": "LLUC LORENTE CACERES"
+        }
+      ]
     }
   }
 }
