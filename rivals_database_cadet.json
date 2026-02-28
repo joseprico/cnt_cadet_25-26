@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-02-21",
+    "lastUpdated": "2026-02-28",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -627,8 +627,8 @@
     },
     "C.N. SANT ANDREU A": {
       "fullName": "C.N. SANT ANDREU A",
-      "lastPlayed": "2026-02-21",
-      "lastUpdated": "2026-02-21",
+      "lastPlayed": "2026-02-28",
+      "lastUpdated": "2026-02-28",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027463/stats",
       "players": [
         {
