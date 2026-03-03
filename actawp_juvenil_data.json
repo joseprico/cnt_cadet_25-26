@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-03-03T13:10:53.661279",
+    "downloaded_at": "2026-03-03T15:25:58.105103",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -507,11 +507,11 @@
       "team2": "C.N. TERRASSA",
       "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
       "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-      "date_time": "Dom, 22/03/2026 09:30 160 - Barcelona, CN - Nova Escollera - 50m",
+      "date_time": "Jue, 26/03/2026 20:45 160 - Barcelona, CN - Nova Escollera - 50m",
       "jornada": 4,
       "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027333/results",
-      "date": "22/03/2026",
-      "time": "09:30"
+      "date": "26/03/2026",
+      "time": "20:45"
     },
     {
       "team1": "C.N. SABADELL",
@@ -1636,6 +1636,6 @@
       }
     }
   },
-  "last_update": "2026-03-03T15:10:50.131849+01:00",
-  "workflow_run": "2705"
+  "last_update": "2026-03-03T16:28:25.208220+01:00",
+  "workflow_run": "2706"
 }
