@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-02-28",
+    "lastUpdated": "2026-03-07",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -627,65 +627,65 @@
     },
     "C.N. SANT ANDREU A": {
       "fullName": "C.N. SANT ANDREU A",
-      "lastPlayed": "2026-02-28",
-      "lastUpdated": "2026-02-28",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027463/stats",
+      "lastPlayed": "2026-03-07",
+      "lastUpdated": "2026-03-07",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027430/stats",
       "players": [
         {
           "num": 1,
-          "name": "POL MARTINEZ ENJUANES"
+          "name": "JAN SINGH PEDROSA"
         },
         {
           "num": 2,
-          "name": "ALEJANDRO RUDZEVICH RAMIREZ"
+          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
         },
         {
           "num": 3,
-          "name": "ALVARO GARROTE GOMEZ"
+          "name": "KRISTOF TATRAI"
         },
         {
           "num": 4,
-          "name": "HUGO TEJERA DIAZ"
+          "name": "LLUIS BOLINCHES PALLARES"
         },
         {
           "num": 5,
-          "name": "AXEL GUICH JIMENEZ (C)"
+          "name": "MARC AUREL  INDLEKOFER"
         },
         {
           "num": 6,
-          "name": "MARTI PIÑEIRA GONZALEZ"
+          "name": "MARIO CARDONA SESA"
         },
         {
           "num": 7,
-          "name": "ANGEL BOLAÑO ANEAS"
+          "name": "ARNAU FORTUNATO BENITO"
         },
         {
           "num": 8,
-          "name": "ANTOLIN SERRANO BARCIA"
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
         },
         {
           "num": 9,
-          "name": "TARIQ ADAM RABASA"
+          "name": "TEO RODRIGUEZ MARTINEZ (C)"
         },
         {
           "num": 10,
-          "name": "DANIEL MAKSIMOV MOROZOV"
+          "name": "ARNAU  ZURITA CILLERO"
         },
         {
           "num": 11,
-          "name": "ALVARO FERNANDEZ PASSOLS"
+          "name": "CALIN BORCEA"
         },
         {
           "num": 12,
-          "name": "MARC ASTOR MUNTANE"
+          "name": "DANIEL FREIXES BORZUNOV"
         },
         {
           "num": 13,
-          "name": "HECTOR GALLEGO HERNANDEZ"
+          "name": "ISAAC JIMENEZ ZUÑIGA"
         },
         {
           "num": 14,
-          "name": "LLUC LORENTE CACERES"
+          "name": "ARNAU PRUNA RONDON"
         }
       ]
     }
