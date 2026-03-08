@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-03-08T11:26:45.218702",
+    "downloaded_at": "2026-03-08T13:56:42.194872",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -748,28 +748,28 @@
       "equip": "U.E. D'HORTA",
       "team_id": "15609765",
       "logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
-      "punts": 6,
-      "partits": 4,
-      "guanyats": 2,
+      "punts": 9,
+      "partits": 5,
+      "guanyats": 3,
       "empatats": 0,
       "perduts": 2,
-      "gols_favor": 52,
-      "gols_contra": 58,
-      "diferencia": -6
+      "gols_favor": 69,
+      "gols_contra": 69,
+      "diferencia": 0
     },
     {
       "posicio": "5",
       "equip": "C.E. MEDITERRANI",
       "team_id": "15609737",
       "logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-      "punts": 6,
-      "partits": 6,
-      "guanyats": 2,
+      "punts": 9,
+      "partits": 7,
+      "guanyats": 3,
       "empatats": 0,
       "perduts": 4,
-      "gols_favor": 58,
-      "gols_contra": 67,
-      "diferencia": -9
+      "gols_favor": 69,
+      "gols_contra": 75,
+      "diferencia": -6
     },
     {
       "posicio": "6",
@@ -777,13 +777,13 @@
       "team_id": "15617612",
       "logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
       "punts": 3,
-      "partits": 3,
+      "partits": 4,
       "guanyats": 1,
       "empatats": 0,
-      "perduts": 2,
-      "gols_favor": 30,
-      "gols_contra": 36,
-      "diferencia": -6
+      "perduts": 3,
+      "gols_favor": 38,
+      "gols_contra": 47,
+      "diferencia": -9
     },
     {
       "posicio": "7",
@@ -805,13 +805,13 @@
       "team_id": "15617365",
       "logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
       "punts": 0,
-      "partits": 6,
+      "partits": 7,
       "guanyats": 0,
       "empatats": 0,
-      "perduts": 6,
-      "gols_favor": 45,
-      "gols_contra": 116,
-      "diferencia": -71
+      "perduts": 7,
+      "gols_favor": 56,
+      "gols_contra": 133,
+      "diferencia": -77
     }
   ],
   "rivals_form": {
@@ -1170,13 +1170,23 @@
       "team_id": "15609765",
       "last_results": [
         {
+          "team1": "C.N. MONTJUIC A",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027325/results"
+        },
+        {
           "team1": "U.E. D'HORTA",
           "team2": "C.N. BARCELONA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "15-20",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027313/results"
         },
         {
@@ -1186,7 +1196,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
           "score": "10-8",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027311/results"
         },
         {
@@ -1196,7 +1206,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
           "score": "17-11",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027304/results"
         },
         {
@@ -1206,86 +1216,86 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
           "score": "16-13",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027300/results"
-        },
-        {
-          "team1": "U.E. D'HORTA",
-          "team2": "C.N. PREMIÀ",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AatzEPbjSvDt.30x30.jpg",
-          "score": "22-8",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574177/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027300/results"
         }
       ],
       "form": [
-        "L",
         "W",
         "L",
         "W",
+        "L",
         "W"
       ],
-      "form_string": "LWLWW",
+      "form_string": "WLWLW",
       "top_scorers": [
         {
-          "name": "JEFFERSON FERRERAS SALDAÑA",
-          "goals": 33,
-          "games": 11,
-          "exclusions": 11,
-          "penalty_goals": 2,
-          "avg_goals": 3.0
-        },
-        {
           "name": "POL FONT SUAREZ",
-          "goals": 33,
-          "games": 11,
+          "goals": 38,
+          "games": 12,
           "exclusions": 6,
           "penalty_goals": 9,
-          "avg_goals": 3.0
+          "avg_goals": 3.17
+        },
+        {
+          "name": "JEFFERSON FERRERAS SALDAÑA",
+          "goals": 34,
+          "games": 12,
+          "exclusions": 11,
+          "penalty_goals": 2,
+          "avg_goals": 2.83
         },
         {
           "name": "MARC SUAREZ VAN DAM",
-          "goals": 32,
-          "games": 12,
+          "goals": 34,
+          "games": 13,
           "exclusions": 8,
           "penalty_goals": 0,
-          "avg_goals": 2.67
+          "avg_goals": 2.62
         },
         {
           "name": "ORIOL HURTADO CLOPES",
-          "goals": 28,
-          "games": 7,
-          "exclusions": 10,
-          "penalty_goals": 11,
-          "avg_goals": 4.0
+          "goals": 33,
+          "games": 8,
+          "exclusions": 12,
+          "penalty_goals": 13,
+          "avg_goals": 4.12
         },
         {
           "name": "BERNAL PARIENTE LOPEZ",
-          "goals": 11,
-          "games": 12,
+          "goals": 12,
+          "games": 13,
           "exclusions": 6,
           "penalty_goals": 1,
           "avg_goals": 0.92
         }
       ],
       "stats": {
-        "total_gf": 74,
-        "total_gc": 66,
-        "avg_gf": 14.8,
-        "avg_gc": 13.2,
+        "total_gf": 69,
+        "total_gc": 69,
+        "avg_gf": 13.8,
+        "avg_gc": 13.8,
         "matches_played": 5,
         "wins": 3,
         "draws": 0,
         "losses": 2,
-        "trend": "cold",
-        "total_exclusions": 41
+        "trend": "hot",
+        "total_exclusions": 43
       }
     },
     "C.E. MEDITERRANI": {
       "team_id": "15609737",
       "last_results": [
+        {
+          "team1": "C.N. SANT ANDREU",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "8-11",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027327/results"
+        },
         {
           "team1": "C.E. MEDITERRANI",
           "team2": "C.N. TERRASSA",
@@ -1293,7 +1303,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
           "score": "8-6",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027323/results"
         },
         {
@@ -1303,7 +1313,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
           "score": "17-7",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027319/results"
         },
         {
@@ -1313,7 +1323,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
           "score": "17-9",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027315/results"
         },
         {
@@ -1323,86 +1333,86 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
           "score": "10-8",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027311/results"
-        },
-        {
-          "team1": "C.E. MEDITERRANI",
-          "team2": "C.N. SABADELL",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-          "score": "13-14",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027307/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027311/results"
         }
       ],
       "form": [
         "W",
-        "L",
         "W",
         "L",
+        "W",
         "L"
       ],
-      "form_string": "WLWLL",
+      "form_string": "WWLWL",
       "top_scorers": [
         {
           "name": "ALEIX GUERRERO GARCIA",
-          "goals": 50,
-          "games": 14,
-          "exclusions": 10,
+          "goals": 54,
+          "games": 15,
+          "exclusions": 12,
           "penalty_goals": 13,
-          "avg_goals": 3.57
+          "avg_goals": 3.6
         },
         {
           "name": "BERNAT MARTINEZ VAZQUEZ",
-          "goals": 31,
-          "games": 14,
-          "exclusions": 10,
+          "goals": 33,
+          "games": 15,
+          "exclusions": 12,
           "penalty_goals": 1,
-          "avg_goals": 2.21
+          "avg_goals": 2.2
         },
         {
           "name": "ORIOL LOPEZ CHARLES",
           "goals": 17,
-          "games": 14,
-          "exclusions": 7,
+          "games": 15,
+          "exclusions": 9,
           "penalty_goals": 0,
-          "avg_goals": 1.21
+          "avg_goals": 1.13
         },
         {
           "name": "MARC MCCAVANAGH PEREZ",
-          "goals": 13,
-          "games": 14,
+          "goals": 15,
+          "games": 15,
           "exclusions": 4,
           "penalty_goals": 0,
-          "avg_goals": 0.93
+          "avg_goals": 1.0
         },
         {
           "name": "MATIAS MIRANDA FERREIRA",
-          "goals": 13,
-          "games": 13,
-          "exclusions": 18,
+          "goals": 15,
+          "games": 14,
+          "exclusions": 20,
           "penalty_goals": 1,
-          "avg_goals": 1.0
+          "avg_goals": 1.07
         }
       ],
       "stats": {
-        "total_gf": 53,
-        "total_gc": 56,
-        "avg_gf": 10.6,
-        "avg_gc": 11.2,
+        "total_gf": 51,
+        "total_gc": 50,
+        "avg_gf": 10.2,
+        "avg_gc": 10.0,
         "matches_played": 5,
-        "wins": 2,
+        "wins": 3,
         "draws": 0,
-        "losses": 3,
+        "losses": 2,
         "trend": "hot",
-        "total_exclusions": 49
+        "total_exclusions": 57
       }
     },
     "C.N. SANT ANDREU": {
       "team_id": "15617612",
       "last_results": [
+        {
+          "team1": "C.N. SANT ANDREU",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "8-11",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027327/results"
+        },
         {
           "team1": "C.N. BARCELONA",
           "team2": "C.N. SANT ANDREU",
@@ -1410,7 +1420,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
           "score": "10-7",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027322/results"
         },
         {
@@ -1420,7 +1430,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
           "score": "8-14",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027302/results"
         },
         {
@@ -1430,7 +1440,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
           "score": "12-15",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027306/results"
         },
         {
@@ -1440,86 +1450,86 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaOLLadIjC6E.30x30.jpg",
           "score": "17-16",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574210/results"
-        },
-        {
-          "team1": "C.N. CATALUNYA",
-          "team2": "C.N. SANT ANDREU",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AajxOQYj1UBb.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
-          "score": "17-15",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574208/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/143574210/results"
         }
       ],
       "form": [
         "L",
         "L",
+        "L",
         "W",
-        "W",
-        "L"
+        "W"
       ],
-      "form_string": "LLWWL",
+      "form_string": "LLLWW",
       "top_scorers": [
         {
           "name": "EYAL VASHDI",
-          "goals": 29,
-          "games": 10,
-          "exclusions": 12,
+          "goals": 30,
+          "games": 11,
+          "exclusions": 13,
           "penalty_goals": 14,
-          "avg_goals": 2.9
+          "avg_goals": 2.73
         },
         {
           "name": "ALEJANDRO RUDZEVICH RAMIREZ",
-          "goals": 24,
-          "games": 10,
+          "goals": 28,
+          "games": 11,
           "exclusions": 8,
-          "penalty_goals": 7,
-          "avg_goals": 2.4
+          "penalty_goals": 8,
+          "avg_goals": 2.55
         },
         {
           "name": "AXEL GUICH JIMENEZ",
-          "goals": 19,
-          "games": 10,
-          "exclusions": 5,
+          "goals": 20,
+          "games": 11,
+          "exclusions": 6,
           "penalty_goals": 4,
-          "avg_goals": 1.9
+          "avg_goals": 1.82
         },
         {
           "name": "MARTI PIÑEIRA GONZALEZ",
           "goals": 16,
-          "games": 10,
+          "games": 11,
           "exclusions": 5,
           "penalty_goals": 4,
-          "avg_goals": 1.6
+          "avg_goals": 1.45
         },
         {
           "name": "TARIQ ADAM RABASA",
-          "goals": 13,
-          "games": 9,
-          "exclusions": 5,
+          "goals": 14,
+          "games": 10,
+          "exclusions": 6,
           "penalty_goals": 0,
-          "avg_goals": 1.44
+          "avg_goals": 1.4
         }
       ],
       "stats": {
-        "total_gf": 62,
-        "total_gc": 69,
-        "avg_gf": 12.4,
-        "avg_gc": 13.8,
+        "total_gf": 55,
+        "total_gc": 63,
+        "avg_gf": 11.0,
+        "avg_gc": 12.6,
         "matches_played": 5,
         "wins": 2,
         "draws": 0,
         "losses": 3,
         "trend": "cold",
-        "total_exclusions": 35
+        "total_exclusions": 38
       }
     },
     "C.N. MONTJUIC A": {
       "team_id": "15617365",
       "last_results": [
+        {
+          "team1": "C.N. MONTJUIC A",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027325/results"
+        },
         {
           "team1": "C.N. ATL BARCELONETA",
           "team2": "C.N. MONTJUIC A",
@@ -1527,7 +1537,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
           "score": "26-7",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027320/results"
         },
         {
@@ -1537,7 +1547,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
           "score": "8-12",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027318/results"
         },
         {
@@ -1547,7 +1557,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
           "score": "17-9",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027315/results"
         },
         {
@@ -1557,18 +1567,8 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
           "score": "23-6",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027310/results"
-        },
-        {
-          "team1": "C.N. MONTJUIC A",
-          "team2": "C.N. SANT ANDREU",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
-          "score": "12-15",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027306/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027310/results"
         }
       ],
       "form": [
@@ -1581,60 +1581,60 @@
       "form_string": "LLLLL",
       "top_scorers": [
         {
-          "name": "GABRIEL GARCIA SORIA",
-          "goals": 28,
-          "games": 13,
-          "exclusions": 12,
-          "penalty_goals": 1,
-          "avg_goals": 2.15
+          "name": "PAU RUEDA CAMINS",
+          "goals": 33,
+          "games": 12,
+          "exclusions": 8,
+          "penalty_goals": 9,
+          "avg_goals": 2.75
         },
         {
-          "name": "PAU RUEDA CAMINS",
-          "goals": 28,
-          "games": 11,
-          "exclusions": 7,
-          "penalty_goals": 7,
-          "avg_goals": 2.55
+          "name": "GABRIEL GARCIA SORIA",
+          "goals": 31,
+          "games": 14,
+          "exclusions": 12,
+          "penalty_goals": 1,
+          "avg_goals": 2.21
         },
         {
           "name": "MARC PARERA ALONSO",
-          "goals": 20,
-          "games": 12,
+          "goals": 23,
+          "games": 13,
           "exclusions": 12,
           "penalty_goals": 9,
-          "avg_goals": 1.67
+          "avg_goals": 1.77
         },
         {
           "name": "MARIO PERIBAÑEZ GISBERT",
           "goals": 18,
-          "games": 11,
-          "exclusions": 11,
+          "games": 12,
+          "exclusions": 12,
           "penalty_goals": 4,
-          "avg_goals": 1.64
+          "avg_goals": 1.5
         },
         {
           "name": "LUCA JOVANOVSKI GALLEGO",
           "goals": 15,
-          "games": 12,
+          "games": 13,
           "exclusions": 8,
           "penalty_goals": 2,
-          "avg_goals": 1.25
+          "avg_goals": 1.15
         }
       ],
       "stats": {
-        "total_gf": 42,
-        "total_gc": 93,
-        "avg_gf": 8.4,
-        "avg_gc": 18.6,
+        "total_gf": 41,
+        "total_gc": 95,
+        "avg_gf": 8.2,
+        "avg_gc": 19.0,
         "matches_played": 5,
         "wins": 0,
         "draws": 0,
         "losses": 5,
         "trend": "cold",
-        "total_exclusions": 50
+        "total_exclusions": 52
       }
     }
   },
-  "last_update": "2026-03-08T14:01:08.932678+01:00",
-  "workflow_run": "2785"
+  "last_update": "2026-03-08T14:59:19.303099+01:00",
+  "workflow_run": "2786"
 }
