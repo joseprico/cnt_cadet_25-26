@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-03-10T16:59:36.102481",
+    "downloaded_at": "2026-03-10T17:56:23.562502",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -1166,6 +1166,123 @@
         "total_exclusions": 28
       }
     },
+    "U.E. D'HORTA": {
+      "team_id": "15609765",
+      "last_results": [
+        {
+          "team1": "C.N. MONTJUIC A",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "11-17",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027325/results"
+        },
+        {
+          "team1": "U.E. D'HORTA",
+          "team2": "C.N. BARCELONA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "15-20",
+          "date": "",
+          "jornada": 2,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027313/results"
+        },
+        {
+          "team1": "U.E. D'HORTA",
+          "team2": "C.E. MEDITERRANI",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "score": "10-8",
+          "date": "",
+          "jornada": 3,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027311/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "17-11",
+          "date": "",
+          "jornada": 4,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027304/results"
+        },
+        {
+          "team1": "U.E. D'HORTA",
+          "team2": "C.N. TERRASSA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "score": "16-13",
+          "date": "",
+          "jornada": 5,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027300/results"
+        }
+      ],
+      "form": [
+        "W",
+        "L",
+        "W",
+        "L",
+        "W"
+      ],
+      "form_string": "WLWLW",
+      "top_scorers": [
+        {
+          "name": "POL FONT SUAREZ",
+          "goals": 38,
+          "games": 12,
+          "exclusions": 6,
+          "penalty_goals": 9,
+          "avg_goals": 3.17
+        },
+        {
+          "name": "JEFFERSON FERRERAS SALDAÑA",
+          "goals": 34,
+          "games": 12,
+          "exclusions": 11,
+          "penalty_goals": 2,
+          "avg_goals": 2.83
+        },
+        {
+          "name": "MARC SUAREZ VAN DAM",
+          "goals": 34,
+          "games": 13,
+          "exclusions": 8,
+          "penalty_goals": 0,
+          "avg_goals": 2.62
+        },
+        {
+          "name": "ORIOL HURTADO CLOPES",
+          "goals": 33,
+          "games": 8,
+          "exclusions": 12,
+          "penalty_goals": 13,
+          "avg_goals": 4.12
+        },
+        {
+          "name": "BERNAL PARIENTE LOPEZ",
+          "goals": 12,
+          "games": 13,
+          "exclusions": 6,
+          "penalty_goals": 1,
+          "avg_goals": 0.92
+        }
+      ],
+      "stats": {
+        "total_gf": 69,
+        "total_gc": 69,
+        "avg_gf": 13.8,
+        "avg_gc": 13.8,
+        "matches_played": 5,
+        "wins": 3,
+        "draws": 0,
+        "losses": 2,
+        "trend": "hot",
+        "total_exclusions": 43
+      }
+    },
     "C.E. MEDITERRANI": {
       "team_id": "15609737",
       "last_results": [
@@ -1518,6 +1635,6 @@
       }
     }
   },
-  "last_update": "2026-03-10T18:02:19.352335+01:00",
-  "workflow_run": "2821"
+  "last_update": "2026-03-10T18:58:59.956189+01:00",
+  "workflow_run": "2822"
 }
