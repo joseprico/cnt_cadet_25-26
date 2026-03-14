@@ -6,7 +6,7 @@
   "scoreRival": 13,
   "lineups": {
     "q1": [
-      1,
+      13,
       2,
       4,
       6,
@@ -939,8 +939,8 @@
       "type": "save",
       "saveType": "atrapa",
       "team": "cnt",
-      "playerNum": 1,
-      "playerName": "DAVID CASADO"
+      "playerNum": 13,
+      "playerName": "GUILLEM POLEY"
     },
     {
       "timestamp": 1773479707930,
@@ -1164,24 +1164,6 @@
       "team": "cnt",
       "playerNum": 2,
       "playerName": "SAMUEL DIAZ"
-    },
-    {
-      "timestamp": 1773480172044,
-      "quarter": "q1",
-      "type": "water-change",
-      "action": "out",
-      "team": "cnt",
-      "playerNum": 1,
-      "playerName": "DAVID CASADO"
-    },
-    {
-      "timestamp": 1773480174287,
-      "quarter": "q1",
-      "type": "water-change",
-      "action": "in",
-      "team": "cnt",
-      "playerNum": 13,
-      "playerName": "GUILLEM POLEY"
     },
     {
       "timestamp": 1773480175897,
