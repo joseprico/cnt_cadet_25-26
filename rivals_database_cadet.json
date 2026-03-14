@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-03-07",
+    "lastUpdated": "2026-03-14",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -247,9 +247,9 @@
     },
     "U.E. D'HORTA": {
       "fullName": "U.E. D'HORTA",
-      "lastPlayed": "2026-03-07",
-      "lastUpdated": "2026-03-07",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027463/stats",
+      "lastPlayed": "2026-03-14",
+      "lastUpdated": "2026-03-14",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027439/stats",
       "players": [
         {
           "num": 1,
