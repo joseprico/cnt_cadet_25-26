@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-03-14T14:02:02.455059",
+    "downloaded_at": "2026-03-14T14:56:01.719573",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -179,7 +179,7 @@
     },
     {
       "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
-      "PJ": 14,
+      "PJ": 15,
       "GT": 11,
       "G": 11,
       "GP": 0,
@@ -284,7 +284,7 @@
     },
     {
       "Nombre": "OLIVER HERRERA MENDOZA",
-      "PJ": 14,
+      "PJ": 15,
       "GT": 4,
       "G": 4,
       "GP": 0,
@@ -1572,6 +1572,6 @@
       }
     }
   },
-  "last_update": "2026-03-14T15:03:28.353581+01:00",
-  "workflow_run": "2878"
+  "last_update": "2026-03-14T15:57:23.054362+01:00",
+  "workflow_run": "2879"
 }
