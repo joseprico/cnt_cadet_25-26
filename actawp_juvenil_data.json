@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-03-21T19:30:07.262034",
+    "downloaded_at": "2026-03-21T19:49:57.024421",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -930,6 +930,123 @@
         "total_exclusions": 41
       }
     },
+    "C.N. ATL BARCELONETA": {
+      "team_id": "15617346",
+      "last_results": [
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "12-14",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027331/results"
+        },
+        {
+          "team1": "C.N. TERRASSA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "7-16",
+          "date": "",
+          "jornada": 2,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027324/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. MONTJUIC A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "score": "26-7",
+          "date": "",
+          "jornada": 3,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027320/results"
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "19-17",
+          "date": "",
+          "jornada": 4,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027316/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "17-11",
+          "date": "",
+          "jornada": 5,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027304/results"
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "L",
+        "W"
+      ],
+      "form_string": "WWWLW",
+      "top_scorers": [
+        {
+          "name": "ENZO FERNANDEZ PERRIER",
+          "goals": 35,
+          "games": 11,
+          "exclusions": 7,
+          "penalty_goals": 5,
+          "avg_goals": 3.18
+        },
+        {
+          "name": "DANIEL MERIDA OROZCO",
+          "goals": 32,
+          "games": 9,
+          "exclusions": 9,
+          "penalty_goals": 2,
+          "avg_goals": 3.56
+        },
+        {
+          "name": "MARCOS ELCHE HERNANDEZ",
+          "goals": 28,
+          "games": 11,
+          "exclusions": 7,
+          "penalty_goals": 6,
+          "avg_goals": 2.55
+        },
+        {
+          "name": "CESC AGUIRRE RUBIO",
+          "goals": 26,
+          "games": 14,
+          "exclusions": 3,
+          "penalty_goals": 7,
+          "avg_goals": 1.86
+        },
+        {
+          "name": "RICHARD ALEXANDRE CEREÑO MALDONADO",
+          "goals": 24,
+          "games": 13,
+          "exclusions": 4,
+          "penalty_goals": 3,
+          "avg_goals": 1.85
+        }
+      ],
+      "stats": {
+        "total_gf": 90,
+        "total_gc": 56,
+        "avg_gf": 18.0,
+        "avg_gc": 11.2,
+        "matches_played": 5,
+        "wins": 4,
+        "draws": 0,
+        "losses": 1,
+        "trend": "hot",
+        "total_exclusions": 30
+      }
+    },
     "C.N. SABADELL": {
       "team_id": "15616560",
       "last_results": [
@@ -1516,6 +1633,6 @@
       }
     }
   },
-  "last_update": "2026-03-21T20:36:38.231018+01:00",
-  "workflow_run": "2981"
+  "last_update": "2026-03-21T20:54:11.917022+01:00",
+  "workflow_run": "2982"
 }
