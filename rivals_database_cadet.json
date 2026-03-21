@@ -371,65 +371,65 @@
     },
     "C.N. BARCELONA A": {
       "fullName": "C.N. BARCELONA A",
-      "lastPlayed": "2026-01-28",
-      "lastUpdated": "2026-01-28",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027417/stats",
+      "lastPlayed": "2026-03-21",
+      "lastUpdated": "2026-03-21",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027441/stats",
       "players": [
         {
           "num": 1,
-          "name": "ALEX VILAR TORRENT"
+          "name": "JAN SINGH PEDROSA"
         },
         {
           "num": 2,
-          "name": "PAU LOPEZ FERNANDEZ (C)"
+          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
         },
         {
           "num": 3,
-          "name": "RUY GONZALVO GONZALEZ"
+          "name": "PABLO RODRIGUEZ LAGUNA"
         },
         {
           "num": 4,
-          "name": "NICOLAS PONS LOPEZ-MIGOYA"
+          "name": "LLUIS BOLINCHES PALLARES"
         },
         {
           "num": 5,
-          "name": "PAU JANE VIÑALS"
+          "name": "KRISTOF TATRAI"
         },
         {
           "num": 6,
-          "name": "NICOLAU SAVARIS CATAFAL"
+          "name": "MARIO CARDONA SESA"
         },
         {
           "num": 7,
-          "name": "RAMON FEDERICO OZZOLA"
+          "name": "ARNAU FORTUNATO BENITO"
         },
         {
           "num": 8,
-          "name": "BRUC GONZALEZ I MARTIN"
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
         },
         {
           "num": 9,
-          "name": "LUCA SOMMA"
+          "name": "TEO RODRIGUEZ MARTINEZ"
         },
         {
           "num": 10,
-          "name": "GUERAU NAVARRO BUENO"
+          "name": "ARNAU  ZURITA CILLERO"
         },
         {
           "num": 11,
-          "name": "HECTOR MOYANO MORAY"
+          "name": "CALIN BORCEA"
         },
         {
           "num": 12,
-          "name": "ALEIX VALERO COLLADO"
+          "name": "GERARD ROMERO PUJOL"
         },
         {
           "num": 13,
-          "name": "GERARD TEJADA CHECAS"
+          "name": "ISAAC JIMENEZ ZUÑIGA"
         },
         {
           "num": 14,
-          "name": "SANTIAGO  ARBOLEDA SUAREZ"
+          "name": "ARNAU PRUNA RONDON"
         }
       ]
     },
