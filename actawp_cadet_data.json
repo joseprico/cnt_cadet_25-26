@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-03-28T13:08:56.713015",
+    "downloaded_at": "2026-03-28T16:42:11.572348",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -179,7 +179,7 @@
     },
     {
       "Nombre": "JOSE MANUEL LLENIN SANTIAGO",
-      "PJ": 15,
+      "PJ": 16,
       "GT": 11,
       "G": 11,
       "GP": 0,
@@ -1571,6 +1571,6 @@
       }
     }
   },
-  "last_update": "2026-03-28T16:41:15.198286+01:00",
-  "workflow_run": "3073"
+  "last_update": "2026-03-28T17:43:30.290418+01:00",
+  "workflow_run": "3074"
 }
