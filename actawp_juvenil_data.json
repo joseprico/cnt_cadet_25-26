@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-03-28T21:35:42.997529",
+    "downloaded_at": "2026-03-29T08:49:58.403680",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -724,14 +724,14 @@
       "equip": "C.N. BARCELONA",
       "team_id": "15612054",
       "logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-      "punts": 21,
-      "partits": 7,
-      "guanyats": 7,
+      "punts": 24,
+      "partits": 8,
+      "guanyats": 8,
       "empatats": 0,
       "perduts": 0,
-      "gols_favor": 124,
-      "gols_contra": 52,
-      "diferencia": 72
+      "gols_favor": 134,
+      "gols_contra": 61,
+      "diferencia": 73
     },
     {
       "posicio": "2",
@@ -739,13 +739,13 @@
       "team_id": "15617346",
       "logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
       "punts": 18,
-      "partits": 7,
+      "partits": 8,
       "guanyats": 6,
       "empatats": 0,
-      "perduts": 1,
-      "gols_favor": 115,
-      "gols_contra": 73,
-      "diferencia": 42
+      "perduts": 2,
+      "gols_favor": 124,
+      "gols_contra": 83,
+      "diferencia": 41
     },
     {
       "posicio": "3",
@@ -838,12 +838,22 @@
       "last_results": [
         {
           "team1": "C.N. BARCELONA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "10-9",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027308/results"
+        },
+        {
+          "team1": "C.N. BARCELONA",
           "team2": "C.N. TERRASSA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
           "score": "22-6",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027333/results"
         },
         {
@@ -853,7 +863,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "8-16",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027329/results"
         },
         {
@@ -863,7 +873,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "6-16",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027305/results"
         },
         {
@@ -873,18 +883,8 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
           "score": "10-7",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027322/results"
-        },
-        {
-          "team1": "C.N. BARCELONA",
-          "team2": "C.E. MEDITERRANI",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-          "score": "17-7",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027319/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027322/results"
         }
       ],
       "form": [
@@ -898,27 +898,27 @@
       "top_scorers": [
         {
           "name": "SVILEN PIRALKOV COELLO",
-          "goals": 46,
-          "games": 15,
+          "goals": 47,
+          "games": 16,
           "exclusions": 8,
-          "penalty_goals": 8,
-          "avg_goals": 3.07
+          "penalty_goals": 9,
+          "avg_goals": 2.94
         },
         {
           "name": "MARIO PAZ NUÑEZ",
-          "goals": 36,
-          "games": 15,
-          "exclusions": 15,
+          "goals": 39,
+          "games": 16,
+          "exclusions": 16,
           "penalty_goals": 2,
-          "avg_goals": 2.4
+          "avg_goals": 2.44
         },
         {
           "name": "ERIC PEDREROL SARDAÑA",
-          "goals": 26,
-          "games": 14,
+          "goals": 28,
+          "games": 15,
           "exclusions": 10,
           "penalty_goals": 5,
-          "avg_goals": 1.86
+          "avg_goals": 1.87
         },
         {
           "name": "MAURO MILLAN MARTIN",
@@ -929,30 +929,40 @@
           "avg_goals": 3.57
         },
         {
-          "name": "PAU ORTIZ MINGUET",
+          "name": "MARC-NICOLAS ANGELESCU",
           "goals": 21,
-          "games": 14,
-          "exclusions": 12,
-          "penalty_goals": 0,
-          "avg_goals": 1.5
+          "games": 7,
+          "exclusions": 2,
+          "penalty_goals": 4,
+          "avg_goals": 3.0
         }
       ],
       "stats": {
-        "total_gf": 81,
-        "total_gc": 34,
-        "avg_gf": 16.2,
-        "avg_gc": 6.8,
+        "total_gf": 74,
+        "total_gc": 36,
+        "avg_gf": 14.8,
+        "avg_gc": 7.2,
         "matches_played": 5,
         "wins": 5,
         "draws": 0,
         "losses": 0,
         "trend": "hot",
-        "total_exclusions": 51
+        "total_exclusions": 42
       }
     },
     "C.N. ATL BARCELONETA": {
       "team_id": "15617346",
       "last_results": [
+        {
+          "team1": "C.N. BARCELONA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "10-9",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027308/results"
+        },
         {
           "team1": "U.E. D'HORTA",
           "team2": "C.N. ATL BARCELONETA",
@@ -960,7 +970,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
           "score": "12-14",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027332/results"
         },
         {
@@ -970,7 +980,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
           "score": "12-14",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027331/results"
         },
         {
@@ -980,7 +990,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
           "score": "7-16",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027324/results"
         },
         {
@@ -990,36 +1000,26 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
           "score": "26-7",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027320/results"
-        },
-        {
-          "team1": "C.N. SABADELL",
-          "team2": "C.N. ATL BARCELONETA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "score": "19-17",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027316/results"
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027320/results"
         }
       ],
       "form": [
+        "L",
         "W",
         "W",
         "W",
-        "W",
-        "L"
+        "W"
       ],
-      "form_string": "WWWWL",
+      "form_string": "LWWWW",
       "top_scorers": [
         {
           "name": "ENZO FERNANDEZ PERRIER",
-          "goals": 38,
-          "games": 12,
-          "exclusions": 8,
-          "penalty_goals": 7,
-          "avg_goals": 3.17
+          "goals": 43,
+          "games": 13,
+          "exclusions": 10,
+          "penalty_goals": 9,
+          "avg_goals": 3.31
         },
         {
           "name": "DANIEL MERIDA OROZCO",
@@ -1031,40 +1031,40 @@
         },
         {
           "name": "MARCOS ELCHE HERNANDEZ",
-          "goals": 29,
-          "games": 12,
+          "goals": 30,
+          "games": 13,
           "exclusions": 7,
           "penalty_goals": 6,
-          "avg_goals": 2.42
+          "avg_goals": 2.31
+        },
+        {
+          "name": "RICHARD ALEXANDRE CEREÑO MALDONADO",
+          "goals": 27,
+          "games": 15,
+          "exclusions": 4,
+          "penalty_goals": 3,
+          "avg_goals": 1.8
         },
         {
           "name": "CESC AGUIRRE RUBIO",
           "goals": 26,
-          "games": 15,
+          "games": 16,
           "exclusions": 3,
           "penalty_goals": 7,
-          "avg_goals": 1.73
-        },
-        {
-          "name": "RICHARD ALEXANDRE CEREÑO MALDONADO",
-          "goals": 25,
-          "games": 14,
-          "exclusions": 4,
-          "penalty_goals": 3,
-          "avg_goals": 1.79
+          "avg_goals": 1.62
         }
       ],
       "stats": {
-        "total_gf": 87,
-        "total_gc": 57,
-        "avg_gf": 17.4,
-        "avg_gc": 11.4,
+        "total_gf": 79,
+        "total_gc": 48,
+        "avg_gf": 15.8,
+        "avg_gc": 9.6,
         "matches_played": 5,
         "wins": 4,
         "draws": 0,
         "losses": 1,
         "trend": "hot",
-        "total_exclusions": 31
+        "total_exclusions": 33
       }
     },
     "C.N. SABADELL": {
@@ -1653,6 +1653,6 @@
       }
     }
   },
-  "last_update": "2026-03-29T08:53:53.707323+01:00",
-  "workflow_run": "3080"
+  "last_update": "2026-03-29T09:52:35.059952+01:00",
+  "workflow_run": "3081"
 }
