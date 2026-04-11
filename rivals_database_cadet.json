@@ -435,65 +435,65 @@
     },
     "C.N. POBLE NOU A": {
       "fullName": "C.N. POBLE NOU A",
-      "lastPlayed": "2026-02-05",
-      "lastUpdated": "2026-02-05",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027421/stats",
+      "lastPlayed": "2026-04-11",
+      "lastUpdated": "2026-04-11",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027446/stats",
       "players": [
         {
           "num": 1,
-          "name": "MAXIMILIANO SCHMIDT QUIRINO"
+          "name": "JAN SINGH PEDROSA"
         },
         {
           "num": 2,
-          "name": "JAN AVIÑO SANCHEZ"
+          "name": "JORDI DANIEL ÁLVAREZ MUÑOZ"
         },
         {
           "num": 3,
-          "name": "DANIEL GORDO NATAL"
+          "name": "PABLO RODRIGUEZ LAGUNA"
         },
         {
           "num": 4,
-          "name": "JAN LLORCA PEÑA"
+          "name": "LLUIS BOLINCHES PALLARES"
         },
         {
           "num": 5,
-          "name": "DANIEL SUPRYHAN LATUKHIN "
+          "name": "KRISTOF TATRAI"
         },
         {
           "num": 6,
-          "name": "ARON LUKACS"
+          "name": "MARIO CARDONA SESA"
         },
         {
           "num": 7,
-          "name": "PAU PERISSE I GOMEZ"
+          "name": "ARNAU FORTUNATO BENITO"
         },
         {
           "num": 8,
-          "name": "POL GALLARIN ROMERO"
+          "name": "DANIEL ANDRES CLEMENTE DOMINGUEZ"
         },
         {
           "num": 9,
-          "name": "LUIS IGNACIO LLANOS SHIMABUKURO"
+          "name": "TEO RODRIGUEZ MARTINEZ"
         },
         {
           "num": 10,
-          "name": "ARNAU PERISSE I GOMEZ"
+          "name": "ARNAU  ZURITA CILLERO"
         },
         {
           "num": 11,
-          "name": "SIMON VICIEN LERA"
+          "name": "CALIN BORCEA"
         },
         {
           "num": 12,
-          "name": "ADRIA LOPEZ FILELLA"
+          "name": "GERARD ROMERO PUJOL"
         },
         {
           "num": 13,
-          "name": "PAU ORTEGA ARABOU"
+          "name": "ISAAC JIMENEZ ZUÑIGA"
         },
         {
           "num": 14,
-          "name": "SALVADOR LEONARDO CASTILLO RAMOS"
+          "name": "ARNAU PRUNA RONDON"
         }
       ]
     },
