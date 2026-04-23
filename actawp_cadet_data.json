@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-04-23T13:59:58.864443",
+    "downloaded_at": "2026-04-23T16:03:12.361265",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -749,6 +749,123 @@
     }
   ],
   "rivals_form": {
+    "C.N. SABADELL": {
+      "team_id": "15616558",
+      "last_results": [
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. SANT ANDREU A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "score": "10-9",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027454/results"
+        },
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "11-20",
+          "date": "",
+          "jornada": 2,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027450/results"
+        },
+        {
+          "team1": "C.N. POBLE NOU A",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AavYwrQJ36uU.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "9-13",
+          "date": "",
+          "jornada": 3,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027414/results"
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "33-32",
+          "date": "",
+          "jornada": 4,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027461/results"
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. TERRASSA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "score": "18-19",
+          "date": "",
+          "jornada": 5,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027428/results"
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "L"
+      ],
+      "form_string": "WWWWL",
+      "top_scorers": [
+        {
+          "name": "HUGO RODRIGUEZ BELTRAN",
+          "goals": 59,
+          "games": 16,
+          "exclusions": 11,
+          "penalty_goals": 18,
+          "avg_goals": 3.69
+        },
+        {
+          "name": "ASIER RUIZ GARCIA",
+          "goals": 55,
+          "games": 17,
+          "exclusions": 13,
+          "penalty_goals": 3,
+          "avg_goals": 3.24
+        },
+        {
+          "name": "BINE STROMAJER",
+          "goals": 41,
+          "games": 14,
+          "exclusions": 15,
+          "penalty_goals": 2,
+          "avg_goals": 2.93
+        },
+        {
+          "name": "MARC CAAMAÑO LEÓN",
+          "goals": 39,
+          "games": 17,
+          "exclusions": 18,
+          "penalty_goals": 2,
+          "avg_goals": 2.29
+        },
+        {
+          "name": "ALEJANDRO CABERO GALLARDO",
+          "goals": 28,
+          "games": 15,
+          "exclusions": 18,
+          "penalty_goals": 0,
+          "avg_goals": 1.87
+        }
+      ],
+      "stats": {
+        "total_gf": 94,
+        "total_gc": 80,
+        "avg_gf": 18.8,
+        "avg_gc": 16.0,
+        "matches_played": 5,
+        "wins": 4,
+        "draws": 0,
+        "losses": 1,
+        "trend": "hot",
+        "total_exclusions": 75
+      }
+    },
     "C.N. BARCELONA A": {
       "team_id": "15612052",
       "last_results": [
@@ -1452,6 +1569,6 @@
       }
     }
   },
-  "last_update": "2026-04-23T15:01:19.526152+01:00",
-  "workflow_run": "3388"
+  "last_update": "2026-04-23T17:04:38.475321+01:00",
+  "workflow_run": "3389"
 }
