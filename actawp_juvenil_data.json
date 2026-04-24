@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-04-24T18:06:38.604316",
+    "downloaded_at": "2026-04-24T19:30:18.537029",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -1532,125 +1532,8 @@
         "trend": "cold",
         "total_exclusions": 65
       }
-    },
-    "C.N. MONTJUIC A": {
-      "team_id": "15617365",
-      "last_results": [
-        {
-          "team1": "C.N. MONTJUIC A",
-          "team2": "C.E. MEDITERRANI",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-          "score": "7-15",
-          "date": "",
-          "jornada": 1,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027343/results"
-        },
-        {
-          "team1": "C.N. MONTJUIC A",
-          "team2": "C.N. SABADELL",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-          "score": "8-17",
-          "date": "",
-          "jornada": 2,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027338/results"
-        },
-        {
-          "team1": "C.N. SANT ANDREU",
-          "team2": "C.N. MONTJUIC A",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "score": "15-12",
-          "date": "",
-          "jornada": 3,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027334/results"
-        },
-        {
-          "team1": "C.N. MONTJUIC A",
-          "team2": "C.N. BARCELONA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-          "score": "8-16",
-          "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027329/results"
-        },
-        {
-          "team1": "C.N. MONTJUIC A",
-          "team2": "U.E. D'HORTA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
-          "score": "11-17",
-          "date": "",
-          "jornada": 5,
-          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027325/results"
-        }
-      ],
-      "form": [
-        "L",
-        "L",
-        "L",
-        "L",
-        "L"
-      ],
-      "form_string": "LLLLL",
-      "top_scorers": [
-        {
-          "name": "PAU RUEDA CAMINS",
-          "goals": 43,
-          "games": 16,
-          "exclusions": 12,
-          "penalty_goals": 12,
-          "avg_goals": 2.69
-        },
-        {
-          "name": "GABRIEL GARCIA SORIA",
-          "goals": 36,
-          "games": 17,
-          "exclusions": 14,
-          "penalty_goals": 2,
-          "avg_goals": 2.12
-        },
-        {
-          "name": "MARC PARERA ALONSO",
-          "goals": 25,
-          "games": 17,
-          "exclusions": 15,
-          "penalty_goals": 9,
-          "avg_goals": 1.47
-        },
-        {
-          "name": "MARIO PERIBAÑEZ GISBERT",
-          "goals": 21,
-          "games": 15,
-          "exclusions": 14,
-          "penalty_goals": 5,
-          "avg_goals": 1.4
-        },
-        {
-          "name": "LUCA JOVANOVSKI GALLEGO",
-          "goals": 17,
-          "games": 17,
-          "exclusions": 10,
-          "penalty_goals": 2,
-          "avg_goals": 1.0
-        }
-      ],
-      "stats": {
-        "total_gf": 46,
-        "total_gc": 80,
-        "avg_gf": 9.2,
-        "avg_gc": 16.0,
-        "matches_played": 5,
-        "wins": 0,
-        "draws": 0,
-        "losses": 5,
-        "trend": "cold",
-        "total_exclusions": 65
-      }
     }
   },
-  "last_update": "2026-04-24T19:13:56.608484+01:00",
-  "workflow_run": "3400"
+  "last_update": "2026-04-24T20:38:36.185504+01:00",
+  "workflow_run": "3401"
 }
