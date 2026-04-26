@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-04-26T15:10:29.820977",
+    "downloaded_at": "2026-04-26T17:10:23.380163",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -892,48 +892,7 @@
         "W"
       ],
       "form_string": "WLWLW",
-      "top_scorers": [
-        {
-          "name": "SVILEN PIRALKOV COELLO",
-          "goals": 60,
-          "games": 20,
-          "exclusions": 11,
-          "penalty_goals": 12,
-          "avg_goals": 3.0
-        },
-        {
-          "name": "MARIO PAZ NUÑEZ",
-          "goals": 41,
-          "games": 20,
-          "exclusions": 21,
-          "penalty_goals": 2,
-          "avg_goals": 2.05
-        },
-        {
-          "name": "ERIC PEDREROL SARDAÑA",
-          "goals": 32,
-          "games": 19,
-          "exclusions": 12,
-          "penalty_goals": 5,
-          "avg_goals": 1.68
-        },
-        {
-          "name": "MAURO MILLAN MARTIN",
-          "goals": 32,
-          "games": 10,
-          "exclusions": 8,
-          "penalty_goals": 11,
-          "avg_goals": 3.2
-        },
-        {
-          "name": "MARC COMABELLA CIVES",
-          "goals": 28,
-          "games": 10,
-          "exclusions": 7,
-          "penalty_goals": 1,
-          "avg_goals": 2.8
-        }
-      ],
+      "top_scorers": [],
       "stats": {
         "total_gf": 58,
         "total_gc": 51,
@@ -944,7 +903,7 @@
         "draws": 0,
         "losses": 2,
         "trend": "hot",
-        "total_exclusions": 59
+        "total_exclusions": 0
       }
     },
     "C.N. ATL BARCELONETA": {
@@ -1650,6 +1609,6 @@
       }
     }
   },
-  "last_update": "2026-04-26T17:07:27.367558+01:00",
-  "workflow_run": "3425"
+  "last_update": "2026-04-26T18:15:31.807919+01:00",
+  "workflow_run": "3426"
 }
