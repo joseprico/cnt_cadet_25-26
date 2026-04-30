@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-04-30T17:01:01.558351",
+    "downloaded_at": "2026-04-30T18:52:38.747049",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -830,6 +830,123 @@
     }
   ],
   "rivals_form": {
+    "C.N. BARCELONA": {
+      "team_id": "15612054",
+      "last_results": [
+        {
+          "team1": "C.E. MEDITERRANI",
+          "team2": "C.N. BARCELONA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "8-15",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027347/results"
+        },
+        {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. BARCELONA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "10-8",
+          "date": "",
+          "jornada": 2,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027326/results"
+        },
+        {
+          "team1": "C.N. BARCELONA",
+          "team2": "U.E. D'HORTA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "score": "16-13",
+          "date": "",
+          "jornada": 3,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027341/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. BARCELONA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "11-9",
+          "date": "",
+          "jornada": 4,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027336/results"
+        },
+        {
+          "team1": "C.N. BARCELONA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "10-9",
+          "date": "",
+          "jornada": 5,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027308/results"
+        }
+      ],
+      "form": [
+        "W",
+        "L",
+        "W",
+        "L",
+        "W"
+      ],
+      "form_string": "WLWLW",
+      "top_scorers": [
+        {
+          "name": "SVILEN PIRALKOV COELLO",
+          "goals": 60,
+          "games": 20,
+          "exclusions": 11,
+          "penalty_goals": 12,
+          "avg_goals": 3.0
+        },
+        {
+          "name": "MARIO PAZ NUÑEZ",
+          "goals": 41,
+          "games": 20,
+          "exclusions": 21,
+          "penalty_goals": 2,
+          "avg_goals": 2.05
+        },
+        {
+          "name": "ERIC PEDREROL SARDAÑA",
+          "goals": 32,
+          "games": 19,
+          "exclusions": 12,
+          "penalty_goals": 5,
+          "avg_goals": 1.68
+        },
+        {
+          "name": "MAURO MILLAN MARTIN",
+          "goals": 32,
+          "games": 10,
+          "exclusions": 8,
+          "penalty_goals": 11,
+          "avg_goals": 3.2
+        },
+        {
+          "name": "MARC COMABELLA CIVES",
+          "goals": 28,
+          "games": 10,
+          "exclusions": 7,
+          "penalty_goals": 1,
+          "avg_goals": 2.8
+        }
+      ],
+      "stats": {
+        "total_gf": 58,
+        "total_gc": 51,
+        "avg_gf": 11.6,
+        "avg_gc": 10.2,
+        "matches_played": 5,
+        "wins": 3,
+        "draws": 0,
+        "losses": 2,
+        "trend": "hot",
+        "total_exclusions": 59
+      }
+    },
     "C.N. ATL BARCELONETA": {
       "team_id": "15617346",
       "last_results": [
@@ -1533,6 +1650,6 @@
       }
     }
   },
-  "last_update": "2026-04-30T18:16:06.985695+01:00",
-  "workflow_run": "3460"
+  "last_update": "2026-04-30T19:55:12.522201+01:00",
+  "workflow_run": "3461"
 }
