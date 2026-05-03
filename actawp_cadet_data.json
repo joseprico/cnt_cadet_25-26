@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-05-02T22:13:51.874572",
+    "downloaded_at": "2026-05-03T10:11:54.502030",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -640,14 +640,14 @@
       "equip": "C.N. BARCELONA A",
       "team_id": "15612052",
       "logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-      "punts": 24,
-      "partits": 9,
-      "guanyats": 8,
+      "punts": 27,
+      "partits": 10,
+      "guanyats": 9,
       "empatats": 0,
       "perduts": 1,
-      "gols_favor": 151,
-      "gols_contra": 107,
-      "diferencia": 44
+      "gols_favor": 162,
+      "gols_contra": 115,
+      "diferencia": 47
     },
     {
       "posicio": "2",
@@ -655,13 +655,13 @@
       "team_id": "15616558",
       "logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
       "punts": 24,
-      "partits": 10,
+      "partits": 11,
       "guanyats": 8,
       "empatats": 0,
-      "perduts": 2,
-      "gols_favor": 168,
-      "gols_contra": 129,
-      "diferencia": 39
+      "perduts": 3,
+      "gols_favor": 176,
+      "gols_contra": 140,
+      "diferencia": 36
     },
     {
       "posicio": "3",
@@ -753,13 +753,23 @@
       "team_id": "15612052",
       "last_results": [
         {
+          "team1": "C.N. SABADELL",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "8-11",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027438/results"
+        },
+        {
           "team1": "C.N. BARCELONA A",
           "team2": "C.N. TERRASSA A",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
           "score": "11-10",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027420/results"
         },
         {
@@ -769,7 +779,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "16-20",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027459/results"
         },
         {
@@ -779,7 +789,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "13-12",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027448/results"
         },
         {
@@ -789,81 +799,71 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
           "score": "17-18",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027425/results"
-        },
-        {
-          "team1": "C.E. MEDITERRANI",
-          "team2": "C.N. BARCELONA A",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-          "score": "10-22",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027441/results"
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027425/results"
         }
       ],
       "form": [
         "W",
         "W",
-        "L",
         "W",
+        "L",
         "W"
       ],
-      "form_string": "WWLWW",
+      "form_string": "WWWLW",
       "top_scorers": [
         {
           "name": "GUERAU NAVARRO BUENO",
-          "goals": 89,
-          "games": 17,
-          "exclusions": 17,
+          "goals": 91,
+          "games": 18,
+          "exclusions": 18,
           "penalty_goals": 17,
-          "avg_goals": 5.24
+          "avg_goals": 5.06
         },
         {
           "name": "PAU LOPEZ FERNANDEZ",
-          "goals": 84,
-          "games": 17,
-          "exclusions": 15,
-          "penalty_goals": 28,
-          "avg_goals": 4.94
+          "goals": 87,
+          "games": 18,
+          "exclusions": 16,
+          "penalty_goals": 30,
+          "avg_goals": 4.83
         },
         {
           "name": "ALEIX VALERO COLLADO",
-          "goals": 21,
-          "games": 15,
-          "exclusions": 19,
+          "goals": 23,
+          "games": 16,
+          "exclusions": 20,
           "penalty_goals": 0,
-          "avg_goals": 1.4
+          "avg_goals": 1.44
         },
         {
           "name": "PAU JANE VIÑALS",
           "goals": 21,
-          "games": 17,
-          "exclusions": 19,
+          "games": 18,
+          "exclusions": 22,
           "penalty_goals": 0,
-          "avg_goals": 1.24
+          "avg_goals": 1.17
         },
         {
-          "name": "BRUC GONZALEZ I MARTIN",
-          "goals": 18,
-          "games": 28,
-          "exclusions": 12,
+          "name": "RAMON FEDERICO OZZOLA",
+          "goals": 19,
+          "games": 32,
+          "exclusions": 24,
           "penalty_goals": 0,
-          "avg_goals": 0.64
+          "avg_goals": 0.59
         }
       ],
       "stats": {
-        "total_gf": 83,
-        "total_gc": 66,
-        "avg_gf": 16.6,
-        "avg_gc": 13.2,
+        "total_gf": 72,
+        "total_gc": 64,
+        "avg_gf": 14.4,
+        "avg_gc": 12.8,
         "matches_played": 5,
         "wins": 4,
         "draws": 0,
         "losses": 1,
         "trend": "hot",
-        "total_exclusions": 82
+        "total_exclusions": 100
       }
     },
     "C.N. SABADELL": {
@@ -871,12 +871,22 @@
       "last_results": [
         {
           "team1": "C.N. SABADELL",
+          "team2": "C.N. BARCELONA A",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
+          "score": "8-11",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027438/results"
+        },
+        {
+          "team1": "C.N. SABADELL",
           "team2": "U.E. D'HORTA",
           "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
           "score": "16-9",
           "date": "",
-          "jornada": 1,
+          "jornada": 2,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027447/results"
         },
         {
@@ -886,7 +896,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
           "score": "10-9",
           "date": "",
-          "jornada": 2,
+          "jornada": 3,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027454/results"
         },
         {
@@ -896,7 +906,7 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
           "score": "11-20",
           "date": "",
-          "jornada": 3,
+          "jornada": 4,
           "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027450/results"
         },
         {
@@ -906,81 +916,71 @@
           "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
           "score": "9-13",
           "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027414/results"
-        },
-        {
-          "team1": "C.N. SABADELL",
-          "team2": "C.N. ATL BARCELONETA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "score": "33-32",
-          "date": "",
           "jornada": 5,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027461/results"
+          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027414/results"
         }
       ],
       "form": [
-        "W",
+        "L",
         "W",
         "W",
         "W",
         "W"
       ],
-      "form_string": "WWWWW",
+      "form_string": "LWWWW",
       "top_scorers": [
         {
           "name": "HUGO RODRIGUEZ BELTRAN",
-          "goals": 61,
-          "games": 17,
-          "exclusions": 13,
-          "penalty_goals": 19,
-          "avg_goals": 3.59
+          "goals": 64,
+          "games": 18,
+          "exclusions": 14,
+          "penalty_goals": 20,
+          "avg_goals": 3.56
         },
         {
           "name": "ASIER RUIZ GARCIA",
-          "goals": 57,
-          "games": 18,
+          "goals": 58,
+          "games": 19,
           "exclusions": 14,
           "penalty_goals": 3,
-          "avg_goals": 3.17
+          "avg_goals": 3.05
         },
         {
           "name": "BINE STROMAJER",
-          "goals": 45,
-          "games": 15,
-          "exclusions": 16,
-          "penalty_goals": 3,
-          "avg_goals": 3.0
+          "goals": 47,
+          "games": 16,
+          "exclusions": 19,
+          "penalty_goals": 4,
+          "avg_goals": 2.94
         },
         {
           "name": "MARC CAAMAÑO LEÓN",
-          "goals": 40,
-          "games": 18,
-          "exclusions": 19,
+          "goals": 41,
+          "games": 19,
+          "exclusions": 21,
           "penalty_goals": 2,
-          "avg_goals": 2.22
+          "avg_goals": 2.16
         },
         {
           "name": "ALEJANDRO CABERO GALLARDO",
           "goals": 30,
-          "games": 16,
+          "games": 17,
           "exclusions": 21,
           "penalty_goals": 0,
-          "avg_goals": 1.88
+          "avg_goals": 1.76
         }
       ],
       "stats": {
-        "total_gf": 92,
-        "total_gc": 70,
-        "avg_gf": 18.4,
-        "avg_gc": 14.0,
+        "total_gf": 67,
+        "total_gc": 49,
+        "avg_gf": 13.4,
+        "avg_gc": 9.8,
         "matches_played": 5,
-        "wins": 5,
+        "wins": 4,
         "draws": 0,
-        "losses": 0,
+        "losses": 1,
         "trend": "hot",
-        "total_exclusions": 83
+        "total_exclusions": 89
       }
     },
     "C.N. ATL BARCELONETA": {
@@ -1569,6 +1569,6 @@
       }
     }
   },
-  "last_update": "2026-05-03T09:50:29.688296+01:00",
-  "workflow_run": "3487"
+  "last_update": "2026-05-03T11:13:23.774003+01:00",
+  "workflow_run": "3488"
 }
