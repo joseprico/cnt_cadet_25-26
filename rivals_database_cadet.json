@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-05-06",
+    "lastUpdated": "2026-05-09",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -307,65 +307,65 @@
     },
     "C.N. ATL BARCELONETA": {
       "fullName": "C.N. ATL BARCELONETA",
-      "lastPlayed": "2026-03-21",
-      "lastUpdated": "2026-03-21",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027412/stats",
+      "lastPlayed": "2026-05-09",
+      "lastUpdated": "2026-05-09",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027433/stats",
       "players": [
         {
           "num": 1,
-          "name": "DARIO BURGADA RICCARDI"
+          "name": "HUMBERTO MATA ALVAREZ"
         },
         {
           "num": 2,
-          "name": "POL GINABREDA CABELLO"
+          "name": "MAX PALMA INS"
         },
         {
           "num": 3,
-          "name": "JOHN JOSEPH SHINSKE MARTIN"
+          "name": "LEO SEGURA REVALIENTE"
         },
         {
           "num": 4,
-          "name": "TON COLL POCH"
+          "name": "ARNAU CONESA ALONSO"
         },
         {
           "num": 5,
-          "name": "BIEL FONT SUAREZ"
+          "name": "ALEJANDRO CABERO  GALLARDO"
         },
         {
           "num": 6,
-          "name": "JAN PEREZ CABALLERO"
+          "name": "MAX MARTIN SASSELLI"
         },
         {
           "num": 7,
-          "name": "CESC AGUIRRE RUBIO (C)"
+          "name": "MATIAS SANGUINO DE ABREU"
         },
         {
           "num": 8,
-          "name": "YAGO MARTIN LOPEZ"
+          "name": "ARNAU ARREGUI GARRIDO"
         },
         {
           "num": 9,
-          "name": "JAN MITRANI DELGADO"
+          "name": "HUGO RODRIGUEZ BELTRAN"
         },
         {
           "num": 10,
-          "name": "ENZO MARTIN LOPEZ"
+          "name": "ASIER RUIZ GARCIA"
         },
         {
           "num": 11,
-          "name": "GRAYSON THEODORE TAYLOR"
+          "name": "BINE STROMAJER"
         },
         {
           "num": 12,
-          "name": "MARC HAM-MAN ROMERO"
+          "name": "MARC CAAMAÑO LEÓN"
         },
         {
           "num": 13,
-          "name": "MARIO RODRIGUEZ HIDALGO"
+          "name": "GUILLEM NADAL MONTERROSO"
         },
         {
           "num": 14,
-          "name": "INAKI OLIVE HAM-MAN"
+          "name": "ADRIAN DORADO GARCIA"
         }
       ]
     },
