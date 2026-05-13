@@ -310,62 +310,62 @@
       "lastPlayed": "2026-05-09",
       "lastUpdated": "2026-05-09",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027433/stats",
-      "players": [
+       "players": [
         {
           "num": 1,
-          "name": "HUMBERTO MATA ALVAREZ"
+          "name": "DARIO BURGADA"
         },
         {
           "num": 2,
-          "name": "MAX PALMA INS"
+          "name": "POL GINABREDA CABELLO"
         },
         {
           "num": 3,
-          "name": "LEO SEGURA REVALIENTE"
+          "name": "JOHN JOSEPH SHINSKE MARTIN"
         },
         {
           "num": 4,
-          "name": "ARNAU CONESA ALONSO"
+          "name": "TON COLL POCH"
         },
         {
           "num": 5,
-          "name": "ALEJANDRO CABERO  GALLARDO"
+          "name": "BIEL FONT SUAREZ"
         },
         {
           "num": 6,
-          "name": "MAX MARTIN SASSELLI"
+          "name": "JAN PEREZ CABALLERO"
         },
         {
           "num": 7,
-          "name": "MATIAS SANGUINO DE ABREU"
+          "name": "CESC AGUIRRE RUBIO"
         },
         {
           "num": 8,
-          "name": "ARNAU ARREGUI GARRIDO"
+          "name": "YAGO MARTIN LOPEZ"
         },
         {
           "num": 9,
-          "name": "HUGO RODRIGUEZ BELTRAN"
+          "name": "JAN MITRANI DELGADO"
         },
         {
           "num": 10,
-          "name": "ASIER RUIZ GARCIA"
+          "name": "ENZO MARTIN LOPEZ"
         },
         {
           "num": 11,
-          "name": "BINE STROMAJER"
+          "name": "GRAYSON TEODORE TAYLOR"
         },
         {
           "num": 12,
-          "name": "MARC CAAMAÑO LEÓN"
+          "name": "MARC HAM-MAN ROMERO"
         },
         {
           "num": 13,
-          "name": "GUILLEM NADAL MONTERROSO"
+          "name": "MARIO RODRIGUEZ HIDALGO"
         },
         {
           "num": 14,
-          "name": "ADRIAN DORADO GARCIA"
+          "name": "INAKI OLIVE HAM-MAN"
         }
       ]
     },
