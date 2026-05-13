@@ -20,8 +20,9 @@
     ,"cnt_stats_2026-04-30_cn_barcelona_a.json"
     ,"cnt_stats_2026-05-06_cn_sabadell.json"
     ,"cnt_stats_2026-05-09_ce_mediterrani.json"
+    ,"cnt_stats_2026-05-13_cn_atl_barceloneta.json"
   ],
   "team": "cadet",
-  "last_updated": "2026-05-13T19:54:09Z",
-  "total_files": 20
+  "last_updated": "2026-05-13T20:05:10Z",
+  "total_files": 21
 }
