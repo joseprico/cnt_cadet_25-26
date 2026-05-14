@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-05-09",
+    "lastUpdated": "2026-05-14",
     "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
   },
   "teams": {
@@ -310,7 +310,7 @@
       "lastPlayed": "2026-05-09",
       "lastUpdated": "2026-05-09",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027433/stats",
-       "players": [
+      "players": [
         {
           "num": 1,
           "name": "DARIO BURGADA"
@@ -627,65 +627,65 @@
     },
     "C.N. SANT ANDREU A": {
       "fullName": "C.N. SANT ANDREU A",
-      "lastPlayed": "2026-03-07",
-      "lastUpdated": "2026-03-07",
-      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027430/stats",
+      "lastPlayed": "2026-05-14",
+      "lastUpdated": "2026-05-14",
+      "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027445/stats",
       "players": [
         {
           "num": 1,
-          "name": "POL MARTÍNEZ"
+          "name": "ALEX VILAR TORRENT"
         },
         {
           "num": 2,
-          "name": "ALEJANDRO RUDZEVICH RAMIREZ"
+          "name": "SANTIAGO  FUSARO"
         },
         {
           "num": 3,
-          "name": "ALVARO GARROTE GOMEZ"
+          "name": "RUY GONZALVO GONZALEZ"
         },
         {
           "num": 4,
-          "name": "HUGO TEJERA DIAZ"
+          "name": "NICOLAS PONS LOPEZ-MIGOYA"
         },
         {
           "num": 5,
-          "name": "AXEL GUICH JIMENEZ"
+          "name": "PAU JANE VIÑALS"
         },
         {
           "num": 6,
-          "name": "MARTI PIÑEIRA GONZALEZ"
+          "name": "ELOI ROVIRA MARTIINEZ"
         },
         {
           "num": 7,
-          "name": "ANGEL BOLANO"
+          "name": "RAMON FEDERICO OZZOLA"
         },
         {
           "num": 8,
-          "name": "ANTOLIN SERRANO"
+          "name": "BRUC GONZALEZ I MARTIN"
         },
         {
           "num": 9,
-          "name": "TARIQ ADAM"
+          "name": "LUCA SOMMA"
         },
         {
           "num": 10,
-          "name": "DANIEL MAKSIMOV"
+          "name": "SANTIAGO  ARBOLEDA SUAREZ"
         },
         {
           "num": 11,
-          "name": "ALVARO FERNANDEZ"
+          "name": "HECTOR MOYANO MORAY"
         },
         {
           "num": 12,
-          "name": "MARC ASTOR"
+          "name": "ALEIX VALERO COLLADO"
         },
         {
           "num": 13,
-          "name": "HECTOR GALLEGO"
+          "name": "GERARD TEJADA CHECAS"
         },
         {
           "num": 14,
-          "name": "LLUC LLORENTE"
+          "name": "NICOLAS  CANTONI MILLAN"
         }
       ]
     }
