@@ -630,62 +630,62 @@
       "lastPlayed": "2026-05-14",
       "lastUpdated": "2026-05-14",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027445/stats",
-      "players": [
+     "players": [
         {
           "num": 1,
-          "name": "ALEX VILAR TORRENT"
+          "name": "POL MARTINEZ ENJUANES"
         },
         {
           "num": 2,
-          "name": "SANTIAGO  FUSARO"
+          "name": "ALEJANDRO RUDZEVICH RAMIREZ"
         },
         {
           "num": 3,
-          "name": "RUY GONZALVO GONZALEZ"
+          "name": "ALVARO GARROTE GOMEZ"
         },
         {
           "num": 4,
-          "name": "NICOLAS PONS LOPEZ-MIGOYA"
+          "name": "HUGO TEJERA DIAZ"
         },
         {
           "num": 5,
-          "name": "PAU JANE VIÑALS"
+          "name": "AXEL GUICH JIMENEZ (C)"
         },
         {
           "num": 6,
-          "name": "ELOI ROVIRA MARTIINEZ"
+          "name": "MARTI PIÑEIRA GONZALEZ"
         },
         {
           "num": 7,
-          "name": "RAMON FEDERICO OZZOLA"
+          "name": "LLUC LORENTE CACERES"
         },
         {
           "num": 8,
-          "name": "BRUC GONZALEZ I MARTIN"
+          "name": "ANTOLIN SERRANO BARCIA"
         },
         {
           "num": 9,
-          "name": "LUCA SOMMA"
+          "name": "TARIQ ADAM RABASA"
         },
         {
           "num": 10,
-          "name": "SANTIAGO  ARBOLEDA SUAREZ"
+          "name": "DANIEL MAKSIMOV MOROZOV"
         },
         {
           "num": 11,
-          "name": "HECTOR MOYANO MORAY"
+          "name": "ALVARO FERNANDEZ PASSOLS"
         },
         {
           "num": 12,
-          "name": "ALEIX VALERO COLLADO"
+          "name": "MARC ASTOR MUNTANE"
         },
         {
           "num": 13,
-          "name": "GERARD TEJADA CHECAS"
+          "name": "HECTOR GALLEGO HERNANDEZ"
         },
         {
           "num": 14,
-          "name": "NICOLAS  CANTONI MILLAN"
+          "name": ""
         }
       ]
     }
