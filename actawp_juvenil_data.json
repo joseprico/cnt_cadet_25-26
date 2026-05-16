@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-05-15T18:06:47.815554",
+    "downloaded_at": "2026-05-16T08:50:21.490992",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -346,6 +346,27 @@
       "MVP": 0
     },
     {
+      "Nombre": "MAX CEREZO CAVERO",
+      "PJ": 0,
+      "GT": 0,
+      "G": 0,
+      "GP": 0,
+      "G5P": 0,
+      "TA": 0,
+      "TR": 0,
+      "EX": 0,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
+      "EP": 0,
+      "P": 0,
+      "PF": 0,
+      "O": 0,
+      "TM": 0,
+      "JL": 0,
+      "MVP": 0
+    },
+    {
       "Nombre": "MAX VALLS FORNIELES",
       "PJ": 16,
       "GT": 0,
@@ -355,6 +376,27 @@
       "TA": 0,
       "TR": 0,
       "EX": 3,
+      "ED": 0,
+      "EB": 0,
+      "EN": 0,
+      "EP": 0,
+      "P": 0,
+      "PF": 0,
+      "O": 0,
+      "TM": 0,
+      "JL": 0,
+      "MVP": 0
+    },
+    {
+      "Nombre": "NIL CARDENAS SAMPIETRO",
+      "PJ": 0,
+      "GT": 0,
+      "G": 0,
+      "GP": 0,
+      "G5P": 0,
+      "TA": 0,
+      "TR": 0,
+      "EX": 0,
       "ED": 0,
       "EB": 0,
       "EN": 0,
@@ -1670,6 +1712,6 @@
       }
     }
   },
-  "last_update": "2026-05-15T22:34:26.846343+01:00",
-  "workflow_run": "3595"
+  "last_update": "2026-05-16T09:52:49.196507+01:00",
+  "workflow_run": "3596"
 }

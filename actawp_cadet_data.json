@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-05-15T18:07:58.790601",
+    "downloaded_at": "2026-05-16T08:51:34.369795",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -1566,6 +1566,6 @@
       }
     }
   },
-  "last_update": "2026-05-15T22:34:26.846343+01:00",
-  "workflow_run": "3595"
+  "last_update": "2026-05-16T09:52:49.196507+01:00",
+  "workflow_run": "3596"
 }
