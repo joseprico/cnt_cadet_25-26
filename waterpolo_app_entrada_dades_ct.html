@@ -543,7 +543,7 @@ let currentMatchRef = null;
 let isLocalUpdate = false; // Flag per evitar loops
 let firebaseSyncEnabled = false;
 let currentMatchID = null;
-let players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'JORDI FARRE'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'JOSE MANUEL LLENIN'}];
+let players=[{num:1,name:'DAVID CASADO'},{num:2,name:'SAMUEL DIAZ'},{num:3,name:'MAX CEREZO'},{num:4,name:'POL RICO'},{num:5,name:'OLIVER HERRERA'},{num:6,name:'NIL CARDENAS'},{num:7,name:'LLATZER PEREZ'},{num:8,name:'YAHEL MUÑOZ'},{num:9,name:'IVAN GALLEGO'},{num:10,name:'ADAY ACUÑA'},{num:11,name:'HECTOR DIOS'},{num:12,name:'BIEL COBACHO'},{num:13,name:'GUILLEM POLEY'},{num:14,name:'PAU VELASCO'}];
 let stats={},rivalStats=[],lineups={q1:[],q2:[],q3:[],q4:[]},periodScores={q1:{cnt:0,rival:0},q2:{cnt:0,rival:0},q3:{cnt:0,rival:0},q4:{cnt:0,rival:0}},tempsMortCNT=0,tempsMortRival=0,rivalTeam='',matchLocation='home',observacions='',currentGoalContext=null,currentExclusionContext=null,currentSaveContext=null,currentActionContext=null,actionsHistory=[],compactMode=true,chronologicalActions=[];
 let githubConfig={token:'',repo:'joseprico/cnt_cadet_25-26',branch:'main'};
 let playersInWater=new Set();
@@ -2066,13 +2066,13 @@ function resetAll() {
             { num: 5, name: 'OLIVER HERRERA' },
             { num: 6, name: 'NIL CARDENAS' },
             { num: 7, name: 'LLATZER PEREZ' },
-            { num: 8, name: 'JORDI FARRE' },
+            { num: 8, name: 'YAHEL MUÑOZ' },
             { num: 9, name: 'IVAN GALLEGO' },
             { num: 10, name: 'ADAY ACUÑA' },
             { num: 11, name: 'HECTOR DIOS' },
             { num: 12, name: 'BIEL COBACHO' },
             { num: 13, name: 'GUILLEM POLEY' },
-            { num: 14, name: 'JOSE MANUEL LLENIN' }
+            { num: 14, name: 'PAU VELASCO' }
         ];
 
         // Resetear estadísticas de jugadores
