@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "1.0",
-    "lastUpdated": "2026-05-14",
-    "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET"
+    "lastUpdated": "2026-07-01",
+    "description": "Base de dades de plantilles d'equips rivals - CN Terrassa CADET (inclou Campionat d'Espanya 2026)"
   },
   "teams": {
     "CN Molins de Rei": {
@@ -630,7 +630,7 @@
       "lastPlayed": "2026-05-14",
       "lastUpdated": "2026-05-14",
       "sourceMatch": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027445/stats",
-     "players": [
+      "players": [
         {
           "num": 1,
           "name": "POL MARTINEZ ENJUANES"
@@ -682,6 +682,1608 @@
         {
           "num": 13,
           "name": "HECTOR GALLEGO HERNANDEZ"
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.N. BARCELONA": {
+      "fullName": "C.N. BARCELONA",
+      "competition": "espanya",
+      "aliasOf": "C.N. BARCELONA A",
+      "lastPlayed": "2026-04-25",
+      "lastUpdated": "2026-04-25",
+      "players": [
+        {
+          "num": 1,
+          "name": "ALEX VILAR TORRENT"
+        },
+        {
+          "num": 2,
+          "name": "PAU LOPEZ FERNANDEZ (C)"
+        },
+        {
+          "num": 3,
+          "name": "RUY GONZALVO GONZALEZ"
+        },
+        {
+          "num": 4,
+          "name": "NICOLAS PONS LOPEZ-MIGOYA"
+        },
+        {
+          "num": 5,
+          "name": "PAU JANE VIÑALS"
+        },
+        {
+          "num": 6,
+          "name": "ELOI ROVIRA MARTIINEZ"
+        },
+        {
+          "num": 7,
+          "name": "RAMON FEDERICO OZZOLA"
+        },
+        {
+          "num": 8,
+          "name": "BRUC GONZALEZ I MARTIN"
+        },
+        {
+          "num": 9,
+          "name": "LUCA SOMMA"
+        },
+        {
+          "num": 10,
+          "name": "GUERAU NAVARRO BUENO"
+        },
+        {
+          "num": 11,
+          "name": "HECTOR MOYANO MORAY"
+        },
+        {
+          "num": 12,
+          "name": "ALEIX VALERO COLLADO"
+        },
+        {
+          "num": 13,
+          "name": "SANTIAGO ISERTE TRINCADO"
+        },
+        {
+          "num": 14,
+          "name": "PHILIPPE KRYKORKA CERQUEIRA CESAR"
+        }
+      ]
+    },
+    "C.N. ATLETIC-BARCELONETA": {
+      "fullName": "C.N. ATLETIC-BARCELONETA",
+      "competition": "espanya",
+      "aliasOf": "C.N. ATL BARCELONETA",
+      "lastPlayed": "2026-05-09",
+      "lastUpdated": "2026-05-09",
+      "players": [
+        {
+          "num": 1,
+          "name": "DARIO BURGADA"
+        },
+        {
+          "num": 2,
+          "name": "POL GINABREDA CABELLO"
+        },
+        {
+          "num": 3,
+          "name": "JOHN JOSEPH SHINSKE MARTIN"
+        },
+        {
+          "num": 4,
+          "name": "TON COLL POCH"
+        },
+        {
+          "num": 5,
+          "name": "BIEL FONT SUAREZ"
+        },
+        {
+          "num": 6,
+          "name": "JAN PEREZ CABALLERO"
+        },
+        {
+          "num": 7,
+          "name": "CESC AGUIRRE RUBIO"
+        },
+        {
+          "num": 8,
+          "name": "YAGO MARTIN LOPEZ"
+        },
+        {
+          "num": 9,
+          "name": "JAN MITRANI DELGADO"
+        },
+        {
+          "num": 10,
+          "name": "ENZO MARTIN LOPEZ"
+        },
+        {
+          "num": 11,
+          "name": "GRAYSON TEODORE TAYLOR"
+        },
+        {
+          "num": 12,
+          "name": "MARC HAM-MAN ROMERO"
+        },
+        {
+          "num": 13,
+          "name": "MARIO RODRIGUEZ HIDALGO"
+        },
+        {
+          "num": 14,
+          "name": "INAKI OLIVE HAM-MAN"
+        }
+      ]
+    },
+    "C. ASKARTZA": {
+      "fullName": "C. ASKARTZA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C. ENCINAS DE BOADILLA": {
+      "fullName": "C. ENCINAS DE BOADILLA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C. MARINA FERROL": {
+      "fullName": "C. MARINA FERROL",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C. WATERPOLO SEVILLA": {
+      "fullName": "C. WATERPOLO SEVILLA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.D. WATERPOLO MALAGA": {
+      "fullName": "C.D. WATERPOLO MALAGA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.D.UNION WATERPOLO CIUDAD DE JEREZ": {
+      "fullName": "C.D.UNION WATERPOLO CIUDAD DE JEREZ",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.N. CABALLA - CIUDAD DE CEUTA": {
+      "fullName": "C.N. CABALLA - CIUDAD DE CEUTA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.N. CIUDAD DE ALCORCON": {
+      "fullName": "C.N. CIUDAD DE ALCORCON",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.N. HELIOS": {
+      "fullName": "C.N. HELIOS",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.N. LAS PALMAS": {
+      "fullName": "C.N. LAS PALMAS",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.W. CASTELLO": {
+      "fullName": "C.W. CASTELLO",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "C.W. DOS HERMANAS": {
+      "fullName": "C.W. DOS HERMANAS",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "CDW TRUDGEON SESTAO": {
+      "fullName": "CDW TRUDGEON SESTAO",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "CLUB ESPORTIU ILLES BALEARS - GOBYCAR": {
+      "fullName": "CLUB ESPORTIU ILLES BALEARS - GOBYCAR",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "CLUB NATACION ACUATICO MORVEDRE SAGUNTO": {
+      "fullName": "CLUB NATACION ACUATICO MORVEDRE SAGUNTO",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "CLUB WATERPOLO ELX": {
+      "fullName": "CLUB WATERPOLO ELX",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "CLUB WATERPOLO MURCIA": {
+      "fullName": "CLUB WATERPOLO MURCIA",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "Colegio Brains": {
+      "fullName": "Colegio Brains",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "E.M. EL OLIVAR": {
+      "fullName": "E.M. EL OLIVAR",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "REAL CANOE N.C.": {
+      "fullName": "REAL CANOE N.C.",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "URBAT IKE": {
+      "fullName": "URBAT IKE",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "WATERPOLO CARTHAGO SAES": {
+      "fullName": "WATERPOLO CARTHAGO SAES",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
+        },
+        {
+          "num": 14,
+          "name": ""
+        }
+      ]
+    },
+    "WATERPOLO CLUB LOGROÑO": {
+      "fullName": "WATERPOLO CLUB LOGROÑO",
+      "competition": "espanya",
+      "lastPlayed": null,
+      "lastUpdated": null,
+      "players": [
+        {
+          "num": 1,
+          "name": ""
+        },
+        {
+          "num": 2,
+          "name": ""
+        },
+        {
+          "num": 3,
+          "name": ""
+        },
+        {
+          "num": 4,
+          "name": ""
+        },
+        {
+          "num": 5,
+          "name": ""
+        },
+        {
+          "num": 6,
+          "name": ""
+        },
+        {
+          "num": 7,
+          "name": ""
+        },
+        {
+          "num": 8,
+          "name": ""
+        },
+        {
+          "num": 9,
+          "name": ""
+        },
+        {
+          "num": 10,
+          "name": ""
+        },
+        {
+          "num": 11,
+          "name": ""
+        },
+        {
+          "num": 12,
+          "name": ""
+        },
+        {
+          "num": 13,
+          "name": ""
         },
         {
           "num": 14,
