@@ -5,7 +5,7 @@
     "team_id": "15621223",
     "team_name": "CN Terrassa Juvenil",
     "coach": "Jordi Busquets",
-    "downloaded_at": "2026-08-20T15:37:55.919200",
+    "downloaded_at": "2026-08-20T16:39:22.011191",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -535,7 +535,23 @@
       "MVP": 0
     }
   ],
-  "team_stats": {},
+  "team_stats": {
+    "Puntos": 30,
+    "A favor": 272,
+    "En contra": 279,
+    "Partidos jugados": 22,
+    "Partidos ganados": 10,
+    "Partidos empatados": 0,
+    "Partidos perdidos": 12,
+    "Goles de penalti": 24,
+    "Expulsiones por 20 segundos": 210,
+    "Tarjetas amarillas": 1,
+    "Goles": 248,
+    "Faltas por penalti": 46,
+    "Expulsiones definitivas, con sustitución disciplinaria": 2,
+    "Penaltis fallados": 12,
+    "Tiempos muertos": 32
+  },
   "upcoming_matches": [],
   "last_results": [
     {
@@ -989,6 +1005,123 @@
         "losses": 1,
         "trend": "hot",
         "total_exclusions": 51
+      }
+    },
+    "C.N. ATL BARCELONETA": {
+      "team_id": "15617346",
+      "last_results": [
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. TERRASSA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
+          "score": "20-6",
+          "date": "",
+          "jornada": 1,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027352/results"
+        },
+        {
+          "team1": "C.N. MONTJUIC A",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaLZ2cLfo4fC.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "8-25",
+          "date": "",
+          "jornada": 2,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027348/results"
+        },
+        {
+          "team1": "U.E. D'HORTA",
+          "team2": "C.N. ATL BARCELONETA",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "score": "12-14",
+          "date": "",
+          "jornada": 3,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027332/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. SANT ANDREU",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaTcV9fsgKzp.30x30.jpg",
+          "score": "15-6",
+          "date": "",
+          "jornada": 4,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027312/results"
+        },
+        {
+          "team1": "C.N. ATL BARCELONETA",
+          "team2": "C.N. SABADELL",
+          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
+          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
+          "score": "15-9",
+          "date": "",
+          "jornada": 5,
+          "url": "https://actawp.natacio.cat/es/tournament/1317471/match/144027344/results"
+        }
+      ],
+      "form": [
+        "W",
+        "W",
+        "W",
+        "W",
+        "W"
+      ],
+      "form_string": "WWWWW",
+      "top_scorers": [
+        {
+          "name": "ENZO FERNANDEZ PERRIER",
+          "goals": 58,
+          "games": 18,
+          "exclusions": 11,
+          "penalty_goals": 9,
+          "avg_goals": 3.22
+        },
+        {
+          "name": "DANIEL MERIDA OROZCO",
+          "goals": 52,
+          "games": 14,
+          "exclusions": 9,
+          "penalty_goals": 3,
+          "avg_goals": 3.71
+        },
+        {
+          "name": "MARCOS ELCHE HERNANDEZ",
+          "goals": 44,
+          "games": 18,
+          "exclusions": 10,
+          "penalty_goals": 7,
+          "avg_goals": 2.44
+        },
+        {
+          "name": "RICHARD ALEXANDRE CEREÑO MALDONADO",
+          "goals": 34,
+          "games": 21,
+          "exclusions": 8,
+          "penalty_goals": 3,
+          "avg_goals": 1.62
+        },
+        {
+          "name": "CESC AGUIRRE RUBIO",
+          "goals": 28,
+          "games": 20,
+          "exclusions": 5,
+          "penalty_goals": 8,
+          "avg_goals": 1.4
+        }
+      ],
+      "stats": {
+        "total_gf": 89,
+        "total_gc": 41,
+        "avg_gf": 17.8,
+        "avg_gc": 8.2,
+        "matches_played": 5,
+        "wins": 5,
+        "draws": 0,
+        "losses": 0,
+        "trend": "hot",
+        "total_exclusions": 43
       }
     },
     "C.N. BARCELONA": {
@@ -1577,6 +1710,6 @@
       }
     }
   },
-  "last_update": "2026-08-20T16:44:59.894133+01:00",
-  "workflow_run": "4396"
+  "last_update": "2026-08-20T17:46:21.060332+01:00",
+  "workflow_run": "4397"
 }

@@ -5,7 +5,7 @@
     "team_id": "15621224",
     "team_name": "CN Terrassa Cadet",
     "coach": "Didac Cobacho",
-    "downloaded_at": "2026-08-20T15:43:32.927066",
+    "downloaded_at": "2026-08-20T16:42:24.874604",
     "parser_version": "6.3_calendar_dates"
   },
   "players": [
@@ -744,123 +744,6 @@
     }
   ],
   "rivals_form": {
-    "C.N. ATL BARCELONETA": {
-      "team_id": "15617348",
-      "last_results": [
-        {
-          "team1": "C.N. BARCELONA A",
-          "team2": "C.N. ATL BARCELONETA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaT38Tf1E4Fg.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "score": "22-23",
-          "date": "",
-          "jornada": 1,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027453/results"
-        },
-        {
-          "team1": "C.N. ATL BARCELONETA",
-          "team2": "C.E. MEDITERRANI",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AasntmnZMsxi.30x30.jpg",
-          "score": "17-2",
-          "date": "",
-          "jornada": 2,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027465/results"
-        },
-        {
-          "team1": "C.N. TERRASSA A",
-          "team2": "C.N. ATL BARCELONETA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/rfen_f74fa6fe.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "score": "14-13",
-          "date": "",
-          "jornada": 3,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027416/results"
-        },
-        {
-          "team1": "C.N. ATL BARCELONETA",
-          "team2": "C.N. SABADELL",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaJFwTq1SdZo.30x30.jpg",
-          "score": "15-11",
-          "date": "",
-          "jornada": 4,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027433/results"
-        },
-        {
-          "team1": "C.N. ATL BARCELONETA",
-          "team2": "U.E. D'HORTA",
-          "team1_logo": "https://cdn.leverade.com/thumbnails/AaS9iMCevN9M.30x30.jpg",
-          "team2_logo": "https://cdn.leverade.com/thumbnails/AaEBEa7OVvwB.30x30.jpg",
-          "score": "20-13",
-          "date": "",
-          "jornada": 5,
-          "url": "https://actawp.natacio.cat/ca/tournament/1317474/match/144027423/results"
-        }
-      ],
-      "form": [
-        "W",
-        "W",
-        "L",
-        "W",
-        "W"
-      ],
-      "form_string": "WWLWW",
-      "top_scorers": [
-        {
-          "name": "CESC AGUIRRE RUBIO",
-          "goals": 87,
-          "games": 22,
-          "exclusions": 7,
-          "penalty_goals": 27,
-          "avg_goals": 3.95
-        },
-        {
-          "name": "JOHN JOSEPH SHINSKE MARTIN",
-          "goals": 80,
-          "games": 21,
-          "exclusions": 14,
-          "penalty_goals": 18,
-          "avg_goals": 3.81
-        },
-        {
-          "name": "GRAYSON THEODORE TAYLOR",
-          "goals": 42,
-          "games": 12,
-          "exclusions": 13,
-          "penalty_goals": 0,
-          "avg_goals": 3.5
-        },
-        {
-          "name": "BIEL FONT SUAREZ",
-          "goals": 38,
-          "games": 22,
-          "exclusions": 17,
-          "penalty_goals": 6,
-          "avg_goals": 1.73
-        },
-        {
-          "name": "POL GINABREDA CABELLO",
-          "goals": 36,
-          "games": 22,
-          "exclusions": 14,
-          "penalty_goals": 0,
-          "avg_goals": 1.64
-        }
-      ],
-      "stats": {
-        "total_gf": 88,
-        "total_gc": 62,
-        "avg_gf": 17.6,
-        "avg_gc": 12.4,
-        "matches_played": 5,
-        "wins": 4,
-        "draws": 0,
-        "losses": 1,
-        "trend": "hot",
-        "total_exclusions": 65
-      }
-    },
     "C.N. BARCELONA A": {
       "team_id": "15612052",
       "last_results": [
@@ -1564,6 +1447,6 @@
       }
     }
   },
-  "last_update": "2026-08-20T16:44:59.894133+01:00",
-  "workflow_run": "4396"
+  "last_update": "2026-08-20T17:46:21.060332+01:00",
+  "workflow_run": "4397"
 }
